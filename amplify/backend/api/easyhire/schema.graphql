@@ -1,0 +1,637 @@
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+type User @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String! @index(name: "byCode", queryField: "listUsersByCode")
+  cognitoId: String
+  fullName: String!
+  email: String
+  phone: String
+  avatarURL: String
+  verifyStatus: VerifyStatus @default(value: "PENDING")
+  role: UserRole! @default(value: "HELPER")
+  completeProgress: Int! @default(value: "0")
+  isOnline: Boolean
+  accountstatus: AccountStatus @default(value: "ACTIVATED")
+  personalityType: String
+  skills: [String]
+  nationality: String
+  languagesSpoken: [String]
+  age: Int
+  height: Int
+  weight: Int
+  totalExperiences: Int
+  expectedSalary: Int
+  deviceToken: String
+  passportStatus: DocumentStatus
+  medicalStatus: DocumentStatus
+  tranningStatus: DocumentStatus
+  helperStatus: HelperStatus
+  currentAddress: String
+  isVIP: Boolean @default(value: "False")
+  otherDocuments: AWSJSON
+
+  # One-to-One Relationships (Amplify uses references and @hasOne)
+  personalInformation: PersonalInformation @hasOne
+  contactFamilyDetails: ContactFamilyDetails @hasOne
+  medicalHistory: MedicalHistory @hasOne
+  otherPersonalInfo: OtherPersonalInfo @hasOne
+  jobPreferences: JobPreferences @hasOne
+  uploadedDocuments: UploadedDocuments @hasOne
+  employerContact: EmployerContact @hasOne
+
+  # One-to-Many Relationships (Amplify uses @hasMany)
+  workHistories: [WorkHistory] @hasMany(indexName: "byHelper", fields: ["id"])
+  testAnswers: [TestAnswers] @hasMany(indexName: "byUser", fields: ["id"])
+  createdJobs: [Job] @hasMany(indexName: "byCreator", fields: ["id"])
+  appliedJobs: [AppliedJob] @hasMany(indexName: "byHelperApplication", fields: ["id"])
+  interviewAsHelper: [Interview] @hasMany(indexName: "byHelperInterview", fields: ["id"])
+  interviewAsEmployer: [Interview] @hasMany(indexName: "byEmployerInterview", fields: ["id"])
+  offeredToHelper: [JobOffer] @hasMany(indexName: "byOfferedToHelper", fields: ["id"])
+  offeredByEmployer: [JobOffer] @hasMany(indexName: "byOfferedByEmployer", fields: ["id"])
+  hiredToHelper: [HiredJob] @hasMany(indexName: "byHiredToHelper", fields: ["id"])
+  hiredByEmployer: [HiredJob] @hasMany(indexName: "byHiredByEmployer", fields: ["id"])
+  urgentByHelper: [UrgentAction] @hasMany(indexName: "byUrgentHelper", fields: ["id"])
+  urgentByEmployer: [UrgentAction] @hasMany(indexName: "byUrgentEmployer", fields: ["id"])
+  savedJobs: [SavedJob] @hasMany(indexName: "byUser", fields: ["id"])
+  savedhelper: [SavedHelper] @hasMany(indexName: "byHelper", fields: ["id"])
+  favouritedBy: [SavedHelper] @hasMany(indexName: "byEmployer", fields: ["id"])
+  viewHelpers: [ViewHelper] @hasMany(indexName: "byHelper", fields: ["id"])
+  viewedBy: [ViewHelper] @hasMany(indexName: "byEmployer", fields: ["id"])
+  notificationReceiver: [NotificationModel] @hasMany(indexName: "byReceiver", fields: ["id"])
+  chatRoomsA: [ChatRoom] @hasMany(indexName: "byUserA", fields: ["id"]) 
+  chatRoomsB: [ChatRoom] @hasMany(indexName: "byUserB", fields: ["id"])
+  sentMessages: [ChatMessage] @hasMany(indexName: "bySender", fields: ["id"])
+  receivedMessages: [ChatMessage] @hasMany(indexName: "byReceiver", fields: ["id"])
+  reviewedToUser: [Review] @hasMany(indexName: "byReviewedTo", fields: ["id"])
+  reviewedByUser: [Review] @hasMany(indexName: "byReviewedBy", fields: ["id"])
+  trainingRecord: [TrainingRecord] @hasMany(indexName: "byHelper", fields: ["id"])
+  walletsByHelper: [Wallet] @hasMany(indexName: "byHelperWallet", fields: ["id"])
+  walletsByEmployer: [Wallet] @hasMany(indexName: "byEmployerWallet", fields: ["id"])
+  transactionsSent: [Transaction] @hasMany(indexName: "transferBy", fields: ["id"])
+  transactionsReceived: [Transaction] @hasMany(indexName: "transferTo", fields: ["id"])
+  sentReports: [ConversationReport] @hasMany(indexName: "bySender", fields: ["id"])
+  receivedReports: [ConversationReport] @hasMany(indexName: "byReceiver", fields: ["id"])
+  recentActions: [RecentAction] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type PersonalInformation @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  dateOfBirth: AWSDate
+  placeOfBirth: String
+  gender: String
+  userID: ID! @index(name: "byUser", queryField: "personalInformationByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type ContactFamilyDetails @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  residentialAddress: String
+  contactNumber: String
+  airPort: String
+  email: String
+  religion: String
+  educationLevel: String
+  numOfSiblings: String
+  martialStatus: String
+  numOfChild: String
+  ageOfChild: String
+  userID: ID! @index(name: "byUser", queryField: "contactFamilyDetailsByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type MedicalHistory @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  type: String
+  anyAllergies: String
+  pastAndExistingIllnesses: [String]
+  otherIllnesses: String
+  physicalDisabilities: String
+  dietaryRestrictions: String
+  userID: ID! @index(name: "byUser", queryField: "medicalHistoryByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type OtherPersonalInfo @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  foodPreferences: [String]
+  accommodationPreferences: [String]
+  languagesSpoken: [String]
+  userID: ID! @index(name: "byUser", queryField: "otherPersonalInfoByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type JobPreferences @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  preferredOffDaysPerMonth: String
+  preferredLocationInSingapore: String
+  willingWorkOnRestDays: Boolean
+  userID: ID! @index(name: "byUser", queryField: "jobPreferencesByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type UploadedDocuments @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  profilePhoto: String
+  passport: String
+  medicalCertificate: String
+  policeClearance: String
+  educationalCertificates: String
+  workReferences: String
+  introductionVideo: String
+  userID: ID! @index(name: "byUser", queryField: "uploadedDocumentsByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type EmployerContact @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  mobile: String
+  adress: String
+  employerID: ID! @index(name: "byEmployerContact", queryField: "employerContactByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+}
+
+type WorkHistory @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  location: String
+  duration: String
+  description: String
+  duties: String
+  helperID: ID! @index(name: "byHelper", queryField: "workHistoryByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+}
+
+type TestAnswers @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  questionId: Int
+  question: String
+  dimension: String
+  answerText: String
+  answerScore: Int
+  answerPole: String
+  userID: ID! @index(name: "byUser", queryField: "testAnswersByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+type Job @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  title: String!
+  location: String!
+  salary: Int!
+  currency: String
+  payPeriod: String
+  familyMembers: Int
+  childCount: Int
+  adultCount: Int
+  childAges: String
+  elderlyCount: Int
+  homeType: String
+  roomType: String
+  requiredSkills: [String]
+  note: String
+  accommodation: String
+  offdays: String
+  tags: [String]
+  requiredPersonalityType: String
+  status: JobStatus!
+
+  # Relationships
+  creatorID: ID! @index(name: "byCreator", queryField: "jobsByCreator")
+  creator: User @belongsTo(fields: ["creatorID"])
+  
+  applications: [AppliedJob] @hasMany(indexName: "byJobApplication", fields: ["id"])
+  interviews: [Interview] @hasMany(indexName: "byJobInterview", fields: ["id"])
+  savedJobs: [SavedJob] @hasMany(indexName: "byJobSaved", fields: ["id"])
+  jobsOffer: [JobOffer] @hasMany(indexName: "byJobOffer", fields: ["id"])
+  hiredJobs: [HiredJob] @hasMany(indexName: "byHiredJob", fields: ["id"])
+}
+
+type AppliedJob @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  status: ApplicationStatus!
+  adminActionStatus: AdminActionStatus!
+  updatedBy: UserRole
+  completedProcesses: AWSJSON
+
+  jobID: ID! @index(name: "byJobApplication", queryField: "applicationsByJob")
+  job: Job @belongsTo(fields: ["jobID"])
+
+  helperID: ID! @index(name: "byHelperApplication", queryField: "applicationsByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+}
+
+type Interview @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  interviewDateOptions: [AWSDateTime]
+  confirmedDateTime: AWSDateTime
+  status: InterviewStatus!
+  updatedBy: UserRole
+  conversationReports: [ConversationReport] @hasMany(indexName: "byInterview", fields: ["id"])
+
+  jobID: ID! @index(name: "byJobInterview", queryField: "interviewsByJob")
+  job: Job @belongsTo(fields: ["jobID"])
+
+  helperID: ID! @index(name: "byHelperInterview", queryField: "interviewsByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+
+  employerID: ID! @index(name: "byEmployerInterview", queryField: "interviewsByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+}
+
+type SavedJob @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  userID: ID! @index(name: "byUser", queryField: "savedJobsByUser")
+  user: User @belongsTo(fields: ["userID"])
+
+  jobID: ID! @index(name: "byJobSaved", queryField: "savedJobsByJob")
+  job: Job @belongsTo(fields: ["jobID"])
+}
+
+type JobOffer @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  status: ApplicationStatus!
+  adminActionStatus: AdminActionStatus!
+  updatedBy: UserRole
+  customFields: AWSJSON
+  completedProcesses: AWSJSON
+
+  jobID: ID! @index(name: "byJobOffer", queryField: "offersByJob")
+  job: Job @belongsTo(fields: ["jobID"])
+
+  helperID: ID! @index(name: "byOfferedToHelper", queryField: "offersToHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+
+  employerID: ID! @index(name: "byOfferedByEmployer", queryField: "offersByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+}
+
+type HiredJob @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  status: HiredJobStatus!
+  adminActionStatus: AdminActionStatus!
+  updatedBy: UserRole
+  startDate: AWSDateTime
+  endDate: AWSDateTime
+  completedProcesses: AWSJSON
+  
+  jobID: ID! @index(name: "byHiredJob", queryField: "hiredJobsByJob")
+  job: Job @belongsTo(fields: ["jobID"])
+
+  helperID: ID! @index(name: "byHiredToHelper", queryField: "hiredJobsToHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+
+  employerID: ID! @index(name: "byHiredByEmployer", queryField: "hiredJobsByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+
+  urgentActions: [UrgentAction] @hasMany(indexName: "byHiredJob", fields: ["id"])
+}
+
+type SavedHelper @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  employerID: ID! @index(name: "byEmployer", queryField: "savedHelpersByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+
+  helperID: ID! @index(name: "byHelper", queryField: "savedHelpersByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+}
+
+type ViewHelper @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  employerID: ID! @index(name: "byEmployer", queryField: "viewedHelpersByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+
+  helperID: ID! @index(name: "byHelper", queryField: "viewedHelpersByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+}
+
+type NotificationModel @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  title: String
+  body: String
+  notificationType: NotificationType!
+
+  receiverID: ID! @index(name: "byReceiver", queryField: "notificationsByReceiver")
+  receiver: User @belongsTo(fields: ["receiverID"])
+}
+
+type ChatRoom @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  name: String
+  
+  userAID: ID! @index(name: "byUserA", queryField: "chatRoomsByUserA")
+  userA: User @belongsTo(fields: ["userAID"])
+
+  userBID: ID! @index(name: "byUserB", queryField: "chatRoomsByUserB")
+  userB: User @belongsTo(fields: ["userBID"])
+
+  chatMessages: [ChatMessage] @hasMany(indexName: "byChatRoom", fields: ["id"])
+}
+
+type ChatMessage @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  content: AWSJSON!
+  status: ChatStatus!
+
+  chatRoomID: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom")
+  chatRoom: ChatRoom @belongsTo(fields: ["chatRoomID"])
+
+  senderID: ID! @index(name: "bySender", queryField: "messagesBySender")
+  sender: User @belongsTo(fields: ["senderID"])
+
+  receiverID: ID! @index(name: "byReceiver", queryField: "messagesByReceiver")
+  receiver: User @belongsTo(fields: ["receiverID"])
+}
+
+type UrgentAction @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  issue: String!
+  deadline: String
+  status: UrgetnActionStatus!
+  custonFields: AWSJSON
+
+  helperID: ID! @index(name: "byUrgentHelper", queryField: "urgentActionsByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+
+  employerID: ID! @index(name: "byUrgentEmployer", queryField: "urgentActionsByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+
+  hiredJobID: ID! @index(name: "byHiredJob", queryField: "urgentActionsByHiredJob")
+  hiredJob: HiredJob @belongsTo(fields: ["hiredJobID"])
+}
+
+type Review @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  review: String
+  rating: Float
+
+  reviewedToID: ID! @index(name: "byReviewedTo", queryField: "reviewsToUser")
+  reviewedTo: User @belongsTo(fields: ["reviewedToID"])
+
+  reviewedByID: ID! @index(name: "byReviewedBy", queryField: "reviewsByUser")
+  reviewedBy: User @belongsTo(fields: ["reviewedByID"])
+}
+
+type TrainingRecord @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  moduleName: String!
+  score: Int
+
+  helperID: ID! @index(name: "byHelper", queryField: "trainingRecordsByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+}
+
+type Wallet @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  outstanding_balance: Float
+  
+  helperID: ID! @index(name: "byHelperWallet", queryField: "walletsByHelper")
+  helper: User @belongsTo(fields: ["helperID"])
+  
+  employerID: ID! @index(name: "byEmployerWallet", queryField: "walletsByEmployer")
+  employer: User @belongsTo(fields: ["employerID"])
+  
+  transactions: [Transaction] @hasMany(indexName: "byWallet", fields: ["id"])
+  financialAlert: FinancialAlert @hasOne
+}
+
+type Transaction @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  amount: Float!
+  currency: String
+  status: TransactionStatus!
+  actionBy: UserRole
+
+  transferByID: ID! @index(name: "transferBy", queryField: "transactionsByTransferer")
+  transferBy: User @belongsTo(fields: ["transferByID"]) # Employer
+
+  walletID: ID! @index(name: "byWallet", queryField: "transactionsByWallet")
+  wallet: Wallet @belongsTo(fields: ["walletID"])
+
+  transferToID: ID! @index(name: "transferTo", queryField: "transactionsByRecipient")
+  transferTo: User @belongsTo(fields: ["transferToID"]) # Helper
+
+  financialAlert: FinancialAlert @hasOne
+}
+
+type Invoice @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  code: String!
+  amount: Float!
+  status: TransactionStatus!
+  actionBy: UserRole
+}
+
+type FinancialAlert @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  title: String!
+  description: String
+  
+  walletID: ID! @index(name: "byWallet", queryField: "alertByWallet")
+  wallet: Wallet @belongsTo(fields: ["walletID"])
+
+  transactionID: ID! @index(name: "byTransaction", queryField: "alertByTransaction")
+  transaction: Transaction @belongsTo(fields: ["transactionID"])
+}
+
+type ConversationReport @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  content: AWSJSON!
+
+  interviewID: ID! @index(name: "byInterview", queryField: "reportsByInterview")
+  interview: Interview @belongsTo(fields: ["interviewID"])
+
+  senderID: ID! @index(name: "bySender", queryField: "reportsBySender")
+  sender: User @belongsTo(fields: ["senderID"])
+
+  receiverID: ID! @index(name: "byReceiver", queryField: "reportsByReceiver")
+  receiver: User @belongsTo(fields: ["receiverID"])
+}
+
+type RecentAction @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+  id: ID!
+  title: String!
+  description: String
+  
+  userID: ID! @index(name: "byUser", queryField: "actionsByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
+
+# --- ENUMS (Standard GraphQL format for the original data types) ---
+enum VerifyStatus { PENDING VERIFIED UNVERIFIED }
+enum UserRole { ADMIN EMPLOYER HELPER }
+enum AccountStatus { ACTIVATED DEACTIVATED }
+enum DocumentStatus { PENDING READY VERIFIED }
+enum ApplicationStatus { PENDING REJECTED ACCEPTED }
+enum AdminActionStatus { PENDING APPROVED REJECTED }
+enum InterviewStatus { PENDING ACCEPTED PROCESSING COMPLETED CANCELLED NO_SHOW }
+enum NotificationType { CHAT LIKEPROFILE INTERVIEW APPLIEDJOB JOBOFFER OTHER }
+enum ChatStatus { PENDING TYPING SENT RECEIVED SEEN }
+enum HiredJobStatus { PENDING TRANSFERRED ACTIVE TERMINATED REFUNDREQUEST }
+enum UrgetnActionStatus { PENDING RESOLVE }
+enum HelperStatus { PENDING INTRANNING }
+enum TransactionStatus { PENDING PAID REFUND_PROCESSING OVERDUE }
+enum JobStatus { PENDING APPROVE REJECT URGENT_FILL }

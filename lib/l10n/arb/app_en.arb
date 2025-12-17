@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Easy Hire",
+  "appSubtitle": "Find jobs in Singapore easily",
+
+  "welcomeBack": "Welcome Back",
+  "signInSubtitle": "Sign in to continue to your account",
+
+  "phoneNumber": "Phone Number",
+  "password": "Password",
+
+  "enterPassword": "Enter password",
+
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  
+
+  "signUpSubtitle": "Create your account to get started",
+
+  "createAccountTitle": "Create Account",
+  "createAccountSubtitle": "Sign up with your phone number",
+
+  "fullNameLabel": "Full Name",
+  "fullNameHint": "Enter your full name",
+
+  "phoneNumberLabel": "Phone Number",
+
+  "passwordLabel": "Password",
+  "passwordHint": "Enter password"
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979862230998",
+    "project_id": "easy-hire-2e687",
+    "storage_bucket": "easy-hire-2e687.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979862230998:android:8378947463441b2f477677",
+        "android_client_info": {
+          "package_name": "com.kzn.easyhire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBch0zQ1w-A8GjYpCLrBrbksObW2TLtHsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

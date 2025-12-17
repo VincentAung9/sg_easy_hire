@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "api": {
+      "easyhire": [
+        "Query"
+      ]
+    },
+    "storage": {
+      "Interview:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

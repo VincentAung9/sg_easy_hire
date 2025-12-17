@@ -1,0 +1,112 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easyhire-dev-68a36-authRole",
+      "UnauthRoleArn": "arn:aws:iam::756393303462:role/amplify-easyhire-dev-68a36-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::756393303462:role/amplify-easyhire-dev-68a36-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-easyhire-dev-68a36-deployment",
+      "UnauthRoleName": "amplify-easyhire-dev-68a36-unauthRole",
+      "StackName": "amplify-easyhire-dev-68a36",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:756393303462:stack/amplify-easyhire-dev-68a36/9e5160b0-c5d3-11f0-a6ec-02d9f934ea7d",
+      "AmplifyAppId": "d39fzlqlcjnjty"
+    },
+    "categories": {
+      "api": {
+        "easyhire": {}
+      },
+      "auth": {
+        "easyhireauth1": {}
+      },
+      "function": {
+        "easyhire50916256": {
+          "deploymentBucketName": "amplify-easyhire-dev-68a36-deployment",
+          "s3Key": "amplify-builds/easyhire50916256-4f36516c634478756864-build.zip"
+        },
+        "pinpointNotificationHandler": {
+          "deploymentBucketName": "amplify-easyhire-dev-68a36-deployment",
+          "s3Key": "amplify-builds/pinpointNotificationHandler-67664b5144396d6d5473-build.zip",
+          "pinpointAppId": "7d7ed5ee07364bac93ccb7b91a7ecc37"
+        },
+        "interviewWeeklyQuota": {
+          "deploymentBucketName": "amplify-easyhire-dev-68a36-deployment",
+          "s3Key": "amplify-builds/interviewWeeklyQuota-63634f384a336c2b5466-build.zip"
+        },
+        "easyhire": {}
+      },
+      "storage": {
+        "media": {}
+      },
+      "analytics": {
+        "Pinpoint": {
+          "Name": "easyhire-dev",
+          "Id": "7d7ed5ee07364bac93ccb7b91a7ecc37",
+          "Region": "ap-southeast-1"
+        },
+        "easyhire": {}
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "easyhire-dev",
+          "Id": "7d7ed5ee07364bac93ccb7b91a7ecc37",
+          "Region": "ap-southeast-1"
+        }
+      }
+    }
+  },
+  "deveasy": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easyhire-deveasy-42907-authRole",
+      "UnauthRoleArn": "arn:aws:iam::756393303462:role/amplify-easyhire-deveasy-42907-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::756393303462:role/amplify-easyhire-deveasy-42907-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
+      "UnauthRoleName": "amplify-easyhire-deveasy-42907-unauthRole",
+      "StackName": "amplify-easyhire-deveasy-42907",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:756393303462:stack/amplify-easyhire-deveasy-42907/c60f0ac0-d9e8-11f0-8fa3-0264d12373f5",
+      "AmplifyAppId": "d39fzlqlcjnjty"
+    },
+    "categories": {
+      "auth": {
+        "easyhireauth1": {}
+      },
+      "analytics": {
+        "easyhire": {},
+        "Pinpoint": {
+          "Name": "easyhire-deveasy",
+          "Id": "d3b0ac10184a46a2af8e7df2fcf283f7",
+          "Region": "ap-southeast-1"
+        }
+      },
+      "api": {
+        "easyhire": {}
+      },
+      "function": {
+        "easyhire50916256": {
+          "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
+          "s3Key": "amplify-builds/easyhire50916256-4f36516c634478756864-build.zip"
+        },
+        "interviewWeeklyQuota": {
+          "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
+          "s3Key": "amplify-builds/interviewWeeklyQuota-63634f384a336c2b5466-build.zip"
+        },
+        "pinpointNotificationHandler": {
+          "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
+          "s3Key": "amplify-builds/pinpointNotificationHandler-67664b5144396d6d5473-build.zip",
+          "pinpointAppId": "7d7ed5ee07364bac93ccb7b91a7ecc37"
+        },
+        "easyhire": {}
+      },
+      "storage": {
+        "media": {}
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "easyhire-deveasy",
+          "Id": "d3b0ac10184a46a2af8e7df2fcf283f7",
+          "Region": "ap-southeast-1"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "appName": "easyhire",
+    "roleName": "pinpointLambdaRole85d8cc5f",
+    "cloudformationPolicyName": "cloudformationPolicy85d8cc5f",
+    "cloudWatchPolicyName": "cloudWatchPolicy85d8cc5f",
+    "pinpointPolicyName": "pinpointPolicy85d8cc5f",
+    "authPolicyName": "pinpoint_amplify_85d8cc5f",
+    "unauthPolicyName": "pinpoint_amplify_85d8cc5f",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

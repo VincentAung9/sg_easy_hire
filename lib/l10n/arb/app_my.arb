@@ -1,0 +1,30 @@
+{
+  "@@locale": "my",
+
+  "appTitle": "Easy Hire",
+  "appSubtitle": "စင်ကာပူရှိ အလုပ်များကို ရှာဖွေလိုက်ပါ",
+
+  "welcomeBack": "ပြန်လည်ကြိုဆိုပါတယ်",
+  "signInSubtitle": "သင့်အကောင့်သို့ ဝင်ရောက်ရန် စာရင်းဝင်ပါ",
+
+  "phoneNumber": "ဖုန်းနံပါတ်",
+  "password": "စကားဝှက်",
+
+  "enterPassword": "စကားဝှက် ရိုက်ထည့်ပါ",
+
+  "noAccount": "အကောင့်မရှိဘူးလား?",
+  "signUp": "စာရင်းသွင်းမည်",
+
+  "signUpSubtitle": "အကောင့်အသစ် ဖန်တီးပြီး စတင်ပါ",
+
+  "createAccountTitle": "အကောင့် ဖန်တီးခြင်း",
+  "createAccountSubtitle": "ဖုန်းနံပါတ်ဖြင့် စာရင်းသွင်းပါ",
+
+  "fullNameLabel": "အမည်အပြည့်အစုံ",
+  "fullNameHint": "အမည်အပြည့်အစုံ ရိုက်ထည့်ပါ",
+
+  "phoneNumberLabel": "ဖုန်းနံပါတ်",
+
+  "passwordLabel": "စကားဝှက်",
+  "passwordHint": "စကားဝှက်ရိုက်ထည့်ပါ"
+}

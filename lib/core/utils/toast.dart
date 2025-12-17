@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+
+void showSuccess(BuildContext context, String message) {
+  final textTheme = Theme.of(context).textTheme;
+  showToastWidget(
+    context: context,
+    animation: StyledToastAnimation.slideFromRight,
+    reverseAnimation: StyledToastAnimation.fade,
+    position: StyledToastPosition.top,
+    animDuration: const Duration(seconds: 1),
+    duration: const Duration(seconds: 4),
+    curve: Curves.elasticOut,
+    reverseCurve: Curves.linear,
+    Container(
+      height: 60,
+      width: 96.w,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.green,
+        boxShadow: [
+          BoxShadow(
+            // ignore: deprecated_member_use
+            color: Colors.green.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(3, 3),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Row(
+          spacing: 6,
+          children: [
+            const Icon(Icons.check_circle, color: Colors.white, size: 20),
+            Text(
+              message,
+              style: textTheme.titleSmall?.copyWith(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+void showError(BuildContext context, String message) {
+  final textTheme = Theme.of(context).textTheme;
+  showToastWidget(
+    context: context,
+    animation: StyledToastAnimation.slideFromRight,
+    reverseAnimation: StyledToastAnimation.fade,
+    position: StyledToastPosition.top,
+    animDuration: const Duration(seconds: 1),
+    duration: const Duration(seconds: 4),
+    curve: Curves.elasticOut,
+    reverseCurve: Curves.linear,
+    Container(
+      height: 60,
+      //width: 96.w,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.red,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(3, 3),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Row(
+          spacing: 6,
+          children: [
+            const Icon(Icons.warning, color: Colors.white, size: 20),
+            Text(
+              message,
+              style: textTheme.titleSmall?.copyWith(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

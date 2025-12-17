@@ -1,0 +1,18 @@
+{
+  "Addresses": {
+    "chyY3LnxT7CpbUoaDAiR0_:APA91bFFWVz953fgX1znQLf5zdlNTHlVcjdYUPArAVG1BMSykFgmNNQHlVr8N_vJSqzE99F-lLqXKuFoXL85LCAoYN74lIWII9XNARtEGXzIpNf1c_-3cy4": {
+      "ChannelType": "GCM"
+    }
+  },
+  "MessageConfiguration": {
+    "GCMMessage": {
+      "Action": "URL",
+      "Body": "This is a sample message",
+      "Priority": "high",
+      "SilentPush": false,
+      "Title": "My sample message",
+      "TimeToLive": 30,
+      "Url": "https://www.example.com"
+    }
+  }
+}
