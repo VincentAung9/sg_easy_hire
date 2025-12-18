@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
+import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -89,6 +93,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                             child: Text(
                               "Hello, ${user?.fullName ?? ""}!",
                               style: textTheme.titleLarge?.copyWith(
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -97,6 +102,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                             "Ready to find your next opportunity?",
                             style: textTheme.bodySmall?.copyWith(
                               color: AppColors.textWhite80,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -157,72 +163,45 @@ class JobSearchDashboardHeader extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               // Bottom section: Stats
-              /*  Row(
+              Row(
                 children: [
-                  BlocSelector<HelperCoreBloc, HelperAuthState, User?>(
-                    selector: (state) => state.user,
-                    builder: (context, user) {
+                  BlocSelector<HomeBloc, HomeState, List<ViewHelper>>(
+                    selector: (state) => state.profileViews,
+                    builder: (context, profileViews) {
                       return Expanded(
-                        child: QueryBuilder(
-                          query: ViewProfileService.getViewHelpers(
-                            user?.id ?? "",
-                          ),
-                          builder: (_, state) {
-                            return JobSearchDashboardStateItem(
-                              value: state.isLoading || state.isError
-                                  ? "0"
-                                  : "${state.data?.length ?? 0}",
-                              label: "Profile Views",
-                            );
-                          },
+                        child: JobSearchDashboardStateItem(
+                          value: "${profileViews.length}",
+                          label: "Profile Views",
                         ),
                       );
                     },
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child:
-                        BlocSelector<HelperAuthCubic, HelperAuthState, User?>(
-                          selector: (state) => state.user,
-                          builder: (context, user) {
-                            return QueryBuilder(
-                              query: JobService.getAppliedJobs(user?.id ?? ""),
-                              builder: (_, state) {
-                                return JobSearchDashboardStateItem(
-                                  value: state.isLoading || state.isError
-                                      ? "0"
-                                      : "${state.data?.length ?? 0}",
-                                  label: "Applied Jobs",
-                                );
-                              },
-                            );
-                          },
-                        ),
+                    child: BlocSelector<HomeBloc, HomeState, List<AppliedJob>>(
+                      selector: (state) => state.appliedJobs,
+                      builder: (context, appliedJobs) {
+                        return JobSearchDashboardStateItem(
+                          value: "${appliedJobs.length}",
+                          label: "Applied Jobs",
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child:
-                        BlocSelector<HelperAuthCubic, HelperAuthState, User?>(
-                          selector: (state) => state.user,
-                          builder: (context, user) {
-                            return QueryBuilder(
-                              query: InterviewService.getInterviewsCountByHeper(
-                                user?.id ?? "",
-                              ),
-                              builder: (_, state) {
-                                return JobSearchDashboardStateItem(
-                                  value: state.isLoading || state.isError
-                                      ? "0"
-                                      : "${state.data?.length ?? 0}",
-                                  label: "Interviews",
-                                );
-                              },
-                            );
-                          },
-                        ),
+                    child: BlocSelector<HomeBloc, HomeState, List<Interview>>(
+                      selector: (state) => state.interviews,
+                      builder: (context, interviews) {
+                        return JobSearchDashboardStateItem(
+                          value: "${interviews.length}",
+                          label: "Interviews",
+                        );
+                      },
+                    ),
                   ),
                 ],
-              ), */
+              ),
             ],
           ),
         ),

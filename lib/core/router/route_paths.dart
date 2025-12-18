@@ -38,6 +38,10 @@ class RoutePaths {
   static const String progressTracking = "/progress_tracking";
   static const String helpSupport = "/help_support";
   static const String settings = "/settings";
+  static const String helperInterviewPending = "pending";
+  static const String helperInterviewAccepted = "accept";
+  static const String helperInterviewCompleted = "completed";
+  static const String hellperInterviewCancelled = "cancelled";
   //-----EMPLOYER----------
   static const String employerSignin = "/employer_signin";
   static const String employerRegister = "/employer_register";

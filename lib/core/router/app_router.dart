@@ -125,12 +125,31 @@ class AppRouter {
                 ),
               ],
             ),
-            StatefulShellBranch(
+            /* StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
                   path: RoutePaths.helperInterviews,
                   name: RouteNames.helperInterviews,
                   builder: (context, state) => const HelperInterviewsPage(),
+                ),
+              ],
+            ), */
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: '${RoutePaths.helperInterviews}/:status',
+                  name: RouteNames.helperInterviews,
+                  // Default redirect to 'pending' when the main tab is pressed
+                  redirect: (context, state) =>
+                      state.uri.path == RoutePaths.helperInterviews
+                      ? '${RoutePaths.helperInterviews}/${RoutePaths.helperInterviewPending}'
+                      : null,
+                  builder: (context, state) {
+                    final status = state.pathParameters['status'] ?? 'pending';
+                    return HelperInterviewsPage(
+                      status: status,
+                    );
+                  },
                 ),
               ],
             ),

@@ -18,14 +18,14 @@ class HelperHomeView extends StatelessWidget {
             ),
           ),
 
-          /*      SliverList(
+          SliverList(
             delegate: SliverChildListDelegate([
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 24.0,
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ProfileCompletion(),
@@ -41,7 +41,6 @@ class HelperHomeView extends StatelessWidget {
               ),
             ]),
           ),
-       */
         ],
       ),
     );

@@ -43,6 +43,10 @@ class AppTheme {
             fontWeight: FontWeight.w400,
           ),
           bodySmall: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          labelSmall: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+          ),
         );
   }
 

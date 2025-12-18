@@ -231,6 +231,17 @@ type TestAnswers @model @auth(
   user: User @belongsTo(fields: ["userID"])
 }
 
+type JobTag @model
+  @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]) {
+      id: ID!
+      name:String!
+      createdAt: AWSDateTime
+    }
+    
 type Job @model @auth(
     rules: [
       { allow: private, operations: [read, create, update, delete] }
