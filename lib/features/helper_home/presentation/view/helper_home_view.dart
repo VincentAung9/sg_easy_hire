@@ -18,7 +18,7 @@ class HelperHomeView extends StatelessWidget {
             ),
           ),
 
-          /*      SliverList(
+          SliverList(
             delegate: SliverChildListDelegate([
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -41,7 +41,6 @@ class HelperHomeView extends StatelessWidget {
               ),
             ]),
           ),
-       */
         ],
       ),
     );

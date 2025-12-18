@@ -9,6 +9,9 @@ import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/page/helper_home_page.dart';
+import 'package:sg_easy_hire/features/helper_home/presentation/page/onboarding_biodata_page.dart';
+import 'package:sg_easy_hire/features/helper_home/presentation/page/personality_text_page.dart';
+import 'package:sg_easy_hire/features/helper_home/presentation/page/upload_documents_page.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interviews_page.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/page/helper_jobs_page.dart';
 import 'package:sg_easy_hire/features/helper_profile/presentation/page/helper_profile_page.dart';
@@ -113,6 +116,26 @@ class AppRouter {
                   path: RoutePaths.home,
                   name: RouteNames.home,
                   builder: (context, state) => const HelperHomePage(),
+                  routes: <RouteBase>[
+                    GoRoute(
+                      name: RouteNames.onboardingBiodata,
+                      path: RoutePaths.onboardingBiodata,
+                      builder: (BuildContext context, GoRouterState state) =>
+                          const OnboardingBiodataPage(),
+                    ),
+                    GoRoute(
+                      name: RouteNames.personalityTest,
+                      path: RoutePaths.personalityTest,
+                      builder: (BuildContext context, GoRouterState state) =>
+                          const PersonalityTextPage(),
+                    ),
+                    GoRoute(
+                      name: RouteNames.uploadDocuments,
+                      path: RoutePaths.uploadDocuments,
+                      builder: (BuildContext context, GoRouterState state) =>
+                          const UploadDocumentsPage(),
+                    ),
+                  ],
                 ),
               ],
             ),

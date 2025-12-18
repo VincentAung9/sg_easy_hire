@@ -89,6 +89,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                             child: Text(
                               "Hello, ${user?.fullName ?? ""}!",
                               style: textTheme.titleLarge?.copyWith(
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -97,6 +98,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                             "Ready to find your next opportunity?",
                             style: textTheme.bodySmall?.copyWith(
                               color: AppColors.textWhite80,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
