@@ -83,7 +83,7 @@ unlinked_spec.ds
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-
+easy-hire-service-account.json
 # Coverage
 coverage/
 amplifyconfiguration.dart
