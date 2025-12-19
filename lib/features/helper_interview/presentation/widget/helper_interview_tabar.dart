@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
+import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 
 class HelperInterviewTabBar extends StatelessWidget {
@@ -22,7 +23,10 @@ class HelperInterviewTabBar extends StatelessWidget {
         children: [
           Expanded(
             child: TextButton(
-              onPressed: () => context.go(RoutePaths.helperInterviewPending),
+              onPressed: () => context.goNamed(
+                RouteNames.helperInterviews,
+                queryParameters: {"status": RoutePaths.helperInterviewPending},
+              ),
               style: TextButton.styleFrom(
                 backgroundColor: selectedIndex == 0
                     ? AppColors.primary
@@ -45,7 +49,10 @@ class HelperInterviewTabBar extends StatelessWidget {
 
           Expanded(
             child: TextButton(
-              onPressed: () => context.go(RoutePaths.helperInterviewAccepted),
+              onPressed: () => context.goNamed(
+                RouteNames.helperInterviews,
+                queryParameters: {"status": RoutePaths.helperInterviewAccepted},
+              ),
               style: TextButton.styleFrom(
                 backgroundColor: selectedIndex == 1
                     ? AppColors.primary
@@ -67,7 +74,12 @@ class HelperInterviewTabBar extends StatelessWidget {
 
           Expanded(
             child: TextButton(
-              onPressed: () => context.go(RoutePaths.helperInterviewCompleted),
+              onPressed: () => context.goNamed(
+                RouteNames.helperInterviews,
+                queryParameters: {
+                  "status": RoutePaths.helperInterviewCompleted,
+                },
+              ),
               style: TextButton.styleFrom(
                 backgroundColor: selectedIndex == 2
                     ? AppColors.primary
@@ -87,9 +99,14 @@ class HelperInterviewTabBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
+          /*   Expanded(
             child: TextButton(
-              onPressed: () => context.go(RoutePaths.helperInterviewsCancelled),
+              onPressed: () => context.goNamed(
+                RouteNames.helperInterviews,
+                queryParameters: {
+                  "status": RoutePaths.hellperInterviewCancelled,
+                },
+              ),
               style: TextButton.styleFrom(
                 backgroundColor: selectedIndex == 2
                     ? AppColors.primary
@@ -108,7 +125,7 @@ class HelperInterviewTabBar extends StatelessWidget {
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
             ),
-          ),
+          ), */
         ],
       ),
     );

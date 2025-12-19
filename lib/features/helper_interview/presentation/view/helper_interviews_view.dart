@@ -13,29 +13,33 @@ class HelperInterviewsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final activeIndex = getInterviewStatusIndex(status);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             backgroundColor: AppColors.primary,
             pinned: true,
-            expandedHeight: 70.0,
+            expandedHeight: 70,
             automaticallyImplyLeading: false,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
             ),
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                "My Interviews",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-
-                  fontSize: 15,
+              background: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 25, left: 16),
+                  child: Text(
+                    "My Interviews",
+                    style: textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-              titlePadding: EdgeInsets.only(left: 16, bottom: 16),
               centerTitle: false,
             ),
           ),
@@ -66,11 +70,11 @@ class HelperInterviewsView extends StatelessWidget {
                   builder: (_, interviews) =>
                       InterviewList(interviews: interviews),
                 ),
-                BlocSelector<HomeBloc, HomeState, List<Interview>>(
+                /* BlocSelector<HomeBloc, HomeState, List<Interview>>(
                   selector: (state) => state.cancelled,
                   builder: (_, interviews) =>
                       InterviewList(interviews: interviews),
-                ),
+                ), */
               ],
             ),
           ),

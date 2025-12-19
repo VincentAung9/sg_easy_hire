@@ -8,11 +8,6 @@ import 'package:sg_easy_hire/features/helper_home/repository/helper_home_reposit
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  StreamSubscription<List<Interview>>? _interviewSub;
-  StreamSubscription<List<AppliedJob>>? _appliedJobSub;
-  StreamSubscription<List<ViewHelper>>? _profileViewSub;
-  StreamSubscription<Interview?>? _nextInterviewSub;
-
   final HelperHomeRepository repository;
   HomeBloc({
     required this.repository,
@@ -85,13 +80,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     StartListenProfileView event,
     Emitter<HomeState> emit,
   ) async {
-    await _profileViewSub?.cancel();
-    _profileViewSub = repository.profileView.listen(
-      (profileViews) => emit(
+    await emit.onEach(
+      repository.profileView,
+      onData: (profileViews) => emit(
         state.copyWith(profileViews: profileViews),
       ),
       // ignore: inference_failure_on_untyped_parameter
-      onError: (error) {
+      onError: (_, error) {
         debugPrint("Listen interviews error: $error");
       },
     );
@@ -101,13 +96,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     StartListenAppliedJobs event,
     Emitter<HomeState> emit,
   ) async {
-    await _appliedJobSub?.cancel();
-    _appliedJobSub = repository.appliedJobs.listen(
-      (appliedJobs) => emit(
+    await emit.onEach(
+      repository.appliedJobs,
+      onData: (appliedJobs) => emit(
         state.copyWith(appliedJobs: appliedJobs),
       ),
       // ignore: inference_failure_on_untyped_parameter
-      onError: (e) {
+      onError: (_, e) {
         debugPrint("Listen applied jobs error: $e");
       },
     );
@@ -117,9 +112,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     StartListenInterviews event,
     Emitter<HomeState> emit,
   ) async {
-    await _interviewSub?.cancel();
-    _interviewSub = repository.interviews.listen(
-      (interviews) {
+    await emit.onEach(
+      repository.interviews,
+      onData: (interviews) {
         final pending = interviews
             .where(
               (i) => i.status == InterviewStatus.PENDING,
@@ -151,18 +146,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       },
       // ignore: inference_failure_on_untyped_parameter
-      onError: (e) {
+      onError: (_, e) {
         debugPrint("Listen applied jobs error: $e");
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    _interviewSub?.cancel();
-    _appliedJobSub?.cancel();
-    _profileViewSub?.cancel();
-    _nextInterviewSub?.cancel();
-    return super.close();
   }
 }

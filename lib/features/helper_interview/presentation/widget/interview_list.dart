@@ -21,7 +21,7 @@ class InterviewList extends StatelessWidget {
               children: [
                 Text(
                   "No matching results found.",
-                  style: textTheme.titleLarge,
+                  style: textTheme.titleMedium,
                 ),
               ],
             ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
@@ -108,6 +107,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                         interviewAction["text"] as String,
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
+                          color: interviewAction["fgColor"] as Color,
                         ),
                       ),
                     ),
@@ -135,6 +135,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                               "Cancel",
                               style: textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
+                                color: Colors.red[500],
                               ),
                             ),
                           ),

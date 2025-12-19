@@ -25,6 +25,7 @@ class _FindJobHeaderState extends State<FindJobHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Container(
       height: 180, // Header height
       padding: const EdgeInsets.all(24),
@@ -36,12 +37,11 @@ class _FindJobHeaderState extends State<FindJobHeader> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Find Jobs",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
+              style: textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 24),

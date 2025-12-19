@@ -25,7 +25,7 @@ class HelperJobRepository {
   Future<List<JobTag>> getJobTags() async {
     return Amplify.DataStore.query(
       JobTag.classType,
-      sortBy: [JobTag.ID.ascending()],
+      sortBy: [JobTag.CREATEDAT.descending()],
     );
   }
 
@@ -56,7 +56,7 @@ class HelperJobRepository {
     return Amplify.DataStore.query(
       Job.classType,
       where: filter,
-      sortBy: [Job.ID.ascending()],
+      sortBy: [Job.CREATEDAT.descending()],
       pagination: QueryPagination(
         page: page,
         limit: limit,

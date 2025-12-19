@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_state.dart';
 import 'package:sg_easy_hire/features/helper_jobs/repository/helper_job_repository.dart';
-import 'package:sg_easy_hire/models/Job.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
-import 'package:sg_easy_hire/models/VerifyStatus.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 
 class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
@@ -150,6 +149,7 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
       ),
     );
     final result = await repository.getJobTags();
+    debugPrint("🌈 Job Tags: ${result.length}");
     emit(
       state.copyWith(
         jobTags: result,

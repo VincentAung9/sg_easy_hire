@@ -4,6 +4,7 @@ import 'package:sg_easy_hire/core/widgets/shimmer_container.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_state.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/widget/job_filter_chip.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class FindJobFilterChip extends StatelessWidget {
   const FindJobFilterChip({super.key});
@@ -29,9 +30,12 @@ class FindJobFilterChip extends StatelessWidget {
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: state.jobTags.length,
+            itemCount: state.jobTags.length + 1,
             itemBuilder: (_, index) {
-              final jobTag = state.jobTags[index].name;
+              final jobTag = [
+                JobTag(name: "All"),
+                ...state.jobTags,
+              ][index].name;
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: JobFilterChip(

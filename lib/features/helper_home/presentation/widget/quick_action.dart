@@ -40,8 +40,7 @@ class QuickActions extends StatelessWidget {
                     icon: Icons.person_outline,
                     label: "Update Biodata",
                     color: AppColors.primary,
-                    onPressed: () =>
-                        context.goNamed(RouteNames.onboardingBiodata),
+                    onPressed: () => context.go(RoutePaths.onboardingBiodata),
                   ),
                   ActionItem(
                     icon: Icons.psychology_alt,

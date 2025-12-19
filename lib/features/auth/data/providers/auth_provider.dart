@@ -223,25 +223,25 @@ class AuthProvider {
       if (oldUserResponse != null) {
         box.put(userBoxKey, oldUserResponse);
         return oldUserResponse;
+      } else {
+        // Create new user object
+        final user = User(
+          code: nanoid(10),
+          cognitoId: attributes.cognitoId,
+          role: role ?? UserRole.HELPER,
+          fullName: attributes.fullName,
+          phone: attributes.phone,
+          deviceToken: hiveUser?.deviceToken,
+          completeProgress: 0,
+        );
+        // Save with the same protected wrapper
+        await performDataStoreOperation(() async {
+          return Amplify.DataStore.save(user);
+        });
+
+        box.put(userBoxKey, user);
+        return user;
       }
-
-      // Create new user object
-      final user = User(
-        code: nanoid(10),
-        cognitoId: attributes.cognitoId,
-        role: role ?? UserRole.HELPER,
-        fullName: attributes.fullName,
-        phone: attributes.phone,
-        deviceToken: hiveUser?.deviceToken,
-        completeProgress: 0,
-      );
-      // Save with the same protected wrapper
-      await performDataStoreOperation(() async {
-        return Amplify.DataStore.save(user);
-      });
-
-      box.put(userBoxKey, user);
-      return user;
     } catch (e) {
       safePrint("🔥 Create user failed: $e");
       return null;

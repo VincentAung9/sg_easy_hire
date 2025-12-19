@@ -1,136 +1,184 @@
+import 'dart:math';
+
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:sg_easy_hire/models/ContactFamilyDetails.dart';
-import 'package:sg_easy_hire/models/JobPreferences.dart';
-import 'package:sg_easy_hire/models/MedicalHistory.dart';
-import 'package:sg_easy_hire/models/OtherPersonalInformations.dart';
-import 'package:sg_easy_hire/models/PersonalInformation.dart';
-import 'package:sg_easy_hire/models/UploadedDocuments.dart';
-import 'package:sg_easy_hire/models/User.dart';
-import 'package:sg_easy_hire/models/UserRole.dart';
+import 'package:nanoid/nanoid.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 
-/* class MockRepository {
-  static Future<void> seedMockData() async {
+class MockRepository {
+  static final List<String> jobTagPool = [
+    "Cleaner",
+    "Maid",
+    "Housekeeper",
+    "Helper",
+    "Babysitter",
+    "Nanny",
+    "Caregiver",
+    "Elder Care",
+    "Child Care",
+    "Cook",
+    "Private Chef",
+    "Nurse Aid",
+    "Care Assistant",
+  ];
+
+  static final List<String> skillsPool = [
+    "Cleaning",
+    "Cooking",
+    "Baby Care",
+    "Elderly Care",
+    "Ironing",
+    "Pet Care",
+    "Grocery Shopping",
+    "Gardening",
+    "Car Wash",
+    "Tutoring",
+  ];
+
+  static final List<String> locationPool = [
+    "Orchard Road",
+    "Bukit Timah",
+    "Sentosa Cove",
+    "Tampines",
+    "Jurong East",
+    "Woodlands",
+    "Ang Mo Kio",
+    "Bedok",
+    "Punggol",
+    "Sengkang",
+    "Yishun",
+    "Pasir Ris",
+    "Choa Chu Kang",
+    "Novena",
+    "Newton",
+    "Marine Parade",
+    "Toa Payoh",
+    "Clementi",
+    "Hougang",
+    "River Valley",
+  ];
+  static final List<String> homeTypes = ["Condo", "HDB", "Landed", "Penthouse"];
+  static final List<String> roomTypes = [
+    "Private Room",
+    "Shared Room",
+    "Partition Room",
+  ];
+  static final List<String> accommodationPool = ["Live-in", "Live-out"];
+  static final List<String> offDaysPool = [
+    "1 day/week",
+    "2 days/month",
+    "All Sundays off",
+    "Flexible",
+  ];
+
+  Future<void> seedMockData(User currentHelper) async {
+    final random = Random();
     try {
-      // USERS
-      final employer = await _createEmployer();
-      final helper = await _createHelper();
+      safePrint("🚀 Starting Seed with all variables restored...");
 
-      // HELPER RELATED DATA
-      await _createHelperProfile(helper);
-      await _createWorkHistory(helper);
+      // 1. Create Mock Employer with ALL your original variables
+      User mockEmployer = User(
+        code: nanoid(10),
+        fullName: "Global Agencies Ltd",
+        email: "recruiter@example.sg",
+        phone: "+65 8888 9999",
+        role: UserRole.EMPLOYER,
+        verifyStatus: VerifyStatus.VERIFIED,
+        accountstatus: AccountStatus.ACTIVATED,
+        completeProgress: 100,
+        personalityType: "Managerial",
+        nationality: "Singaporean",
+        // The one we just added
+        createdAt: TemporalDateTime(
+          DateTime.now().subtract(const Duration(days: 10)),
+        ),
+      );
+      await Amplify.DataStore.save(mockEmployer);
 
-      // JOB
-      final job = await _createJob(employer);
+      List<Job> createdJobs = [];
 
-      // APPLICATION
-      final appliedJob = await _applyJob(helper, job);
+      // 2. Generate 20 Jobs
+      for (int i = 0; i < 20; i++) {
+        List<String> shufflableTags = List.from(jobTagPool);
+        shufflableTags.shuffle();
+        List<String> selectedTags = shufflableTags.take(2).toList();
+        List<String> shufflableSkills = List.from(skillsPool)..shuffle();
+        List<String> selectedSkills = shufflableSkills.take(3).toList();
+        List<String> shufflableLocations = List.from(locationPool)..shuffle();
+        String selectedLocation = shufflableLocations.first;
 
-      // INTERVIEW
-      await _createInterview(employer, helper, job);
+        // Random Family Composition
+        int cCount = random.nextInt(4); // 0 to 3 children
+        int aCount = random.nextInt(3) + 1; // 1 to 3 adults
+        int eCount = random.nextInt(2); // 0 or 1 elderly
 
-      // JOB OFFER
-      await _createJobOffer(employer, helper, job);
+        // Generate dynamic ages string if children exist
+        String cAges = cCount > 0
+            ? List.generate(
+                    cCount,
+                    (_) => "${random.nextInt(12) + 1}",
+                  ).join(" and ") +
+                  " years old"
+            : "No children";
 
-      // SAVED & VIEW
-      await _saveJob(helper, job);
-      await _saveHelper(employer, helper);
-      await _viewHelper(employer, helper);
+        String selectedHome = homeTypes[random.nextInt(homeTypes.length)];
 
-      // NOTIFICATION
-      await _createNotification(helper);
+        Job newJob = Job(
+          code: nanoid(10),
+          title: "${selectedTags.first} needed for ${i + 2} kids",
+          creator: mockEmployer,
+          location: selectedLocation,
+          salary: 600 + (i * 25),
+          currency: "SGD",
+          payPeriod: "month",
+          familyMembers: cCount + aCount + eCount,
+          status: JobStatus.APPROVE,
+          childCount: cCount,
+          adultCount: aCount,
+          childAges: cAges,
+          elderlyCount: eCount,
+          homeType: selectedHome,
+          tags: selectedTags,
+          requiredSkills: selectedSkills,
+          roomType: roomTypes[random.nextInt(roomTypes.length)],
+          accommodation:
+              accommodationPool[random.nextInt(accommodationPool.length)],
+          offdays: offDaysPool[random.nextInt(offDaysPool.length)],
+          note:
+              "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          createdAt: TemporalDateTime(
+            DateTime.now().subtract(Duration(hours: i)),
+          ),
+        );
 
-      safePrint('✅ Mock data seeded successfully');
+        await Amplify.DataStore.save(newJob);
+        createdJobs.add(newJob);
+      }
+
+      // 3. Generate 20 Interviews
+      final List<InterviewStatus> statuses = InterviewStatus.values;
+
+      for (int i = 0; i < 20; i++) {
+        Interview newInterview = Interview(
+          code: nanoid(10),
+          job: createdJobs[i],
+          helper: currentHelper,
+          employer: mockEmployer,
+          status: statuses[i % statuses.length],
+          interviewDateOptions: [
+            TemporalDateTime(DateTime.now().add(Duration(days: i + 1))),
+          ],
+          updatedBy: UserRole.EMPLOYER,
+          createdAt: TemporalDateTime(
+            DateTime.now().subtract(Duration(minutes: i * 20)),
+          ),
+        );
+
+        await Amplify.DataStore.save(newInterview);
+      }
+
+      safePrint("✅ Done. All variables restored and createdAt added.");
     } catch (e) {
-      safePrint('❌ Seed error: $e');
+      safePrint("❌ Seed error: $e");
     }
   }
-
-  Future<User> _createEmployer() async {
-    final user = User(
-      cognitoId: 'employer-001',
-      fullName: 'John Employer',
-      role: UserRole.EMPLOYER,
-      isActive: true,
-    );
-
-    await Amplify.DataStore.save(user);
-    return user;
-  }
-
-  Future<User> _createHelper() async {
-    final user = User(
-      cognitoId: 'helper-001',
-      fullName: 'Mary Helper',
-      role: UserRole.HELPER,
-      isActive: true,
-    );
-
-    await Amplify.DataStore.save(user);
-    return user;
-  }
-
-  Future<void> _createHelperProfile(User helper) async {
-  await Amplify.DataStore.save(
-    PersonalInformation(
-      fullName: helper.fullName!,
-      dateOfBirth: '1998-05-01',
-      placeOfBirth: 'Myanmar',
-      nationality: 'Myanmar',
-      gender: 'Female',
-      height: '160cm',
-      weight: '50kg',
-      userID: helper.id,
-    ),
-  );
-
-  await Amplify.DataStore.save(
-    ContactFamilyDetails(
-      residentialAddress: 'Yangon',
-      contactNumber: '0912345678',
-      portAriport: 'Yangon Airport',
-      religion: 'Buddhist',
-      educationLevel: 'High School',
-      numberOfSiblings: '2',
-      martialStatus: 'Single',
-      userID: helper.id,
-    ),
-  );
-
-  await Amplify.DataStore.save(
-    MedicalHistory(
-      anyAllergies: 'None',
-      dietaryRestrictions: 'Halal',
-      userID: helper.id,
-    ),
-  );
-
-  await Amplify.DataStore.save(
-    OtherPersonalInformations(
-      foodPreferences: ['Asian'],
-      languagesSpoken: ['English', 'Burmese'],
-      userID: helper.id,
-    ),
-  );
-
-  await Amplify.DataStore.save(
-    JobPreferences(
-      experience: '2 years',
-      skills: ['Cleaning', 'Cooking'],
-      expectedMonthlySalary: '600',
-      preferredOffDaysPerMonth: '4',
-      willingWorkOnRestDays: true,
-      userID: helper.id,
-    ),
-  );
-
-  await Amplify.DataStore.save(
-    UploadedDocuments(
-      profilePhoto: 'profile.jpg',
-      passport: 'passport.pdf',
-      userID: helper.id,
-    ),
-  );
 }
-
-}
- */

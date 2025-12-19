@@ -30,10 +30,11 @@ class HelperHomeRepository {
         ); // <-- Works only when dynamically typed
       }
     }
+    
     final response = await Amplify.DataStore.query(
       Job.classType,
       where: predicate as QueryPredicate,
-      sortBy: [Job.ID.ascending()],
+      sortBy: [Job.CREATEDAT.descending()],
     );
     return response;
   }
@@ -44,7 +45,7 @@ class HelperHomeRepository {
     return Amplify.DataStore.observeQuery(
       Interview.classType,
       where: Interview.HELPER.eq(hiveUser?.id),
-      sortBy: [Interview.ID.ascending()],
+      sortBy: [Interview.CREATEDAT.descending()],
     ).map((i) {
       debugPrint("🌈 Interviews Data Change Event: ${i.items.length}");
       return i.items;
@@ -58,6 +59,7 @@ class HelperHomeRepository {
     return Amplify.DataStore.observeQuery(
       AppliedJob.classType,
       where: AppliedJob.HELPER.eq(hiveUser?.id),
+      sortBy: [AppliedJob.CREATEDAT.descending()],
     ).map((i) {
       debugPrint("🌈 Applied Job Data Change Event: ${i.items.length}");
       return i.items;
@@ -71,6 +73,7 @@ class HelperHomeRepository {
     return Amplify.DataStore.observeQuery(
       ViewHelper.classType,
       where: ViewHelper.HELPER.eq(hiveUser?.id),
+      sortBy: [ViewHelper.CREATEDAT.descending()],
     ).map((i) {
       debugPrint("🌈 Profile View Data Change Event: ${i.items.length}");
       return i.items;

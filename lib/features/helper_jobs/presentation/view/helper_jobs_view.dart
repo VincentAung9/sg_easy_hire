@@ -64,7 +64,8 @@ class _HelperJobsViewState extends State<HelperJobsView> {
                                 spacing: 16,
                                 children: [JobCardShimmer()],
                               )
-                            : state.jobs.isEmpty
+                            : state.status == HelperJobsStatus.failure &&
+                                  state.action == HelperJobsActions.getJobs
                             ? SizedBox(
                                 height: size.maxHeight * 0.5,
                                 child: Column(
@@ -73,7 +74,7 @@ class _HelperJobsViewState extends State<HelperJobsView> {
                                   children: [
                                     Text(
                                       "No matching results found.",
-                                      style: textTheme.titleLarge,
+                                      style: textTheme.titleMedium,
                                     ),
                                   ],
                                 ),

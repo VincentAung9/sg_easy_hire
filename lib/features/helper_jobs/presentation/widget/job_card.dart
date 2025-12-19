@@ -39,6 +39,7 @@ class JobCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            spacing: 20,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,7 +55,9 @@ class JobCard extends StatelessWidget {
                     ),
                     Text(
                       job.creator?.fullName ?? "",
-                      style: textTheme.titleSmall,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: AppColors.textMutedLight,
+                      ),
                     ),
                   ],
                 ),
@@ -63,6 +66,7 @@ class JobCard extends StatelessWidget {
                 children: [
                   Chip(
                     label: Text("\$${job.salary}"),
+                    side: BorderSide.none,
                     backgroundColor: Colors.green[100],
                     labelStyle: TextStyle(
                       color: Colors.green[600],
@@ -91,7 +95,7 @@ class JobCard extends StatelessWidget {
                             ),
                           ),
                     child: Icon(
-                      !isFavourite ? Icons.favorite : Icons.favorite_border,
+                      !isFavourite ? Icons.favorite_border : Icons.favorite,
                       color: isFavourite ? Colors.red[500] : Colors.grey[300],
                       size: 28,
                     ),
@@ -105,6 +109,7 @@ class JobCard extends StatelessWidget {
             job.note ?? "",
             style: textTheme.titleSmall?.copyWith(
               height: 1.5,
+              color: AppColors.textGrayLight,
             ),
           ),
           const SizedBox(height: 10),
@@ -130,7 +135,7 @@ class JobCard extends StatelessWidget {
                   ? const SizedBox()
                   : Chip(
                       label: Text(job.offdays ?? ""),
-                      backgroundColor: AppColors.chipBackground,
+                      backgroundColor: Colors.grey.shade200,
                       labelStyle: textTheme.labelSmall?.copyWith(
                         color: AppColors.textGrayLight,
                       ),
@@ -240,4 +245,3 @@ class JobCard extends StatelessWidget {
     );
   }
 }
-

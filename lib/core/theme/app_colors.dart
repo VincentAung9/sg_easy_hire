@@ -60,4 +60,5 @@ class AppColors {
   static const error = Color(0xFFEF4444);
   static const chipColor = Color(0xFF2563EB);
   static const chipBackground = Color(0xFFDBEAFE);
+  static const Color kSecondaryColor = Color(0xFF6B7280);
 }

@@ -5,6 +5,8 @@ import 'package:sg_easy_hire/core/router/go_refresh_stream.dart';
 import 'package:sg_easy_hire/core/router/route_names.dart' show RouteNames;
 import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/features/auth/models/confirm_sign_up_param.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/onboarding_biodata_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/personal_info_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
@@ -71,6 +73,18 @@ class AppRouter {
             );
           },
         ),
+        GoRoute(
+          path: RoutePaths.onboardingBiodata,
+          name: RouteNames.onboardingBiodata,
+          builder: (context, state) {
+            return const OnboardingBiodatapage();
+          },
+        ),
+        GoRoute(
+          path: RoutePaths.personalInformation,
+          name: RouteNames.personalInformation,
+          builder: (context, state) => const PersonalInfoPage(),
+        ),
         /* 
         GoRoute(
           path: RoutePaths.notifications,
@@ -125,6 +139,7 @@ class AppRouter {
                 ),
               ],
             ),
+
             /* StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
@@ -137,18 +152,14 @@ class AppRouter {
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
-                  path: '${RoutePaths.helperInterviews}/:status',
+                  path: RoutePaths.helperInterviews, // No :status here!
                   name: RouteNames.helperInterviews,
-                  // Default redirect to 'pending' when the main tab is pressed
-                  redirect: (context, state) =>
-                      state.uri.path == RoutePaths.helperInterviews
-                      ? '${RoutePaths.helperInterviews}/${RoutePaths.helperInterviewPending}'
-                      : null,
                   builder: (context, state) {
-                    final status = state.pathParameters['status'] ?? 'pending';
-                    return HelperInterviewsPage(
-                      status: status,
-                    );
+                    // Look for ?status=... in the URL
+                    final status =
+                        state.uri.queryParameters['status'] ??
+                        RoutePaths.helperInterviewPending;
+                    return HelperInterviewsPage(status: status);
                   },
                 ),
               ],
@@ -207,11 +218,7 @@ class AppRouter {
               name: RouteNames.onboardingBiodata,
               builder: (context, state) => OnboardingBiodataPage(),
             ),
-            GoRoute(
-              path: RoutePaths.personalInformation,
-              name: RouteNames.personalInformation,
-              builder: (context, state) => PersonalInformationPage(),
-            ),
+            
             GoRoute(
               path: RoutePaths.contactFamilyDetails,
               name: RouteNames.contactFamilyDetails,
