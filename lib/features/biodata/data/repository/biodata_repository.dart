@@ -2,6 +2,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:sg_easy_hire/models/ContactFamilyDetails.dart';
 import 'package:sg_easy_hire/models/JobPreferences.dart';
 import 'package:sg_easy_hire/models/MedicalHistory.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/OtherPersonalInfo.dart';
 import 'package:sg_easy_hire/models/PersonalInformation.dart';
 import 'package:sg_easy_hire/models/UploadedDocuments.dart';
@@ -67,8 +68,32 @@ class BiodataRepository {
     }
   }
 
+  Future<List<WorkHistory>> getWorkHistories(String userID) async {
+    final result = await Amplify.DataStore.query(
+      WorkHistory.classType,
+      where: WorkHistory.HELPER.eq(userID),
+    );
+    if (result.isNotEmpty) {
+      return result;
+    } else {
+      return [];
+    }
+  }
+
   Future<void> addOtherPersonalInfo(OtherPersonalInfo info) async {
     return Amplify.DataStore.save(info);
+  }
+
+  Future<void> removeWorkHistory(List<WorkHistory> histories) async {
+    await Future.wait(
+      histories.map(Amplify.DataStore.delete),
+    );
+  }
+
+  Future<void> addWorkHistories(List<WorkHistory> histories) async {
+    await Future.wait(
+      histories.map(Amplify.DataStore.save),
+    );
   }
 
   Future<JobPreferences?> getJobPreferences(String userID) async {

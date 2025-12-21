@@ -10,7 +10,7 @@ import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class RecommendJobCard extends StatelessWidget {
   final Job job;
-  final User currentUser;
+  final User? currentUser;
   const RecommendJobCard({
     super.key,
     required this.job,
@@ -24,6 +24,7 @@ class RecommendJobCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.cardLight,
         borderRadius: BorderRadius.circular(12),
@@ -45,12 +46,14 @@ class RecommendJobCard extends StatelessWidget {
           ),
           Text(
             job.location,
-            style: textTheme.titleSmall,
+            style: textTheme.titleSmall?.copyWith(color: Colors.grey.shade600),
           ),
           const SizedBox(height: 12),
           Text(
             job.note ?? "",
-            style: textTheme.titleSmall,
+            style: textTheme.titleSmall?.copyWith(
+              color: Colors.grey.shade600,
+            ),
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -75,6 +78,7 @@ class RecommendJobCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Chip(
+            side: const BorderSide(color: Colors.green),
             label: Text("\$${job.salary}/${job.payPeriod}"),
             backgroundColor: Colors.green[100],
             labelStyle: TextStyle(
@@ -89,7 +93,7 @@ class RecommendJobCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           (job.applications ?? [])
-                  .where((ap) => ap.helper?.id == currentUser.id)
+                  .where((ap) => ap.helper?.id == currentUser?.id)
                   .isNotEmpty
               ? SizedBox(
                   width: double.infinity,
@@ -132,7 +136,7 @@ class RecommendJobCard extends StatelessWidget {
                           job: job,
                           helper: currentUser,
                         ),
-                        currentUser: currentUser,
+                        currentUser: currentUser!,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(

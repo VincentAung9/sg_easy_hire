@@ -30,6 +30,7 @@ class BiodataState with _$BiodataState {
     MedicalHistory? medicalHistory,
     OtherPersonalInfo? otherInfo,
     JobPreferences? jobPreference,
+    @Default([]) List<WorkHistory> workHistories,
     UploadedDocuments? documents,
   }) = _BiodataState;
 }

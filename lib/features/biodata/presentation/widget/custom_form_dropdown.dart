@@ -51,6 +51,13 @@ class CustomFormDropDown extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
+          validator: (v) {
+            if (isRequired && (v == null || v.isEmpty)) {
+              return "";
+            } else {
+              return null;
+            }
+          },
           initialValue: initialValue,
           hint: Text(
             placeholder,
@@ -68,6 +75,7 @@ class CustomFormDropDown extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColors.cardLight,
+            errorStyle: const TextStyle(height: 0, fontSize: 0),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,
@@ -79,6 +87,11 @@ class CustomFormDropDown extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: AppColors.borderLight),
+            ),
+
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.error),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -95,6 +108,7 @@ class CustomFormDropDown extends StatelessWidget {
         ),
 
         InputError(
+          padding: EdgeInsets.zero,
           isError: isRequired && isFirstTimePressed && initialValue == null,
           error: "$label is required",
         ),

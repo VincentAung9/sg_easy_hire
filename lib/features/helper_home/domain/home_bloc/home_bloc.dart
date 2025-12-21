@@ -17,6 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<StartListenAppliedJobs>(_onStartListenAppliedJobs);
     on<StartListenInterviews>(_onStartListenInterviews);
     on<ApplyJobEvent>(_onApplyJob);
+    on<GetRecommendJobsEvent>(_onGetRecommendJobs);
   }
 
   FutureOr<void> _onStartListenNextInterview(
@@ -149,6 +150,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       onError: (_, e) {
         debugPrint("Listen applied jobs error: $e");
       },
+    );
+  }
+
+  FutureOr<void> _onGetRecommendJobs(
+    GetRecommendJobsEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        action: HomeStateActions.recommendJob,
+        status: HomeStateStatus.pending,
+      ),
+    );
+    final result = await repository.getRecommendedJobs(event.skills);
+    emit(
+      state.copyWith(
+        recommendJobs: result,
+        action: HomeStateActions.recommendJob,
+        status: HomeStateStatus.success,
+      ),
     );
   }
 }

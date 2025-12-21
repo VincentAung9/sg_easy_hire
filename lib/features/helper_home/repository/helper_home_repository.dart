@@ -11,7 +11,7 @@ class HelperHomeRepository {
   }
 
   //get recommend job
-  Future<List<Job?>?> getRecommendedJobs(String? skills) async {
+  Future<List<Job>> getRecommendedJobs(String? skills) async {
     if (skills?.isEmpty ?? false) {
       return [];
     }
@@ -30,7 +30,7 @@ class HelperHomeRepository {
         ); // <-- Works only when dynamically typed
       }
     }
-    
+
     final response = await Amplify.DataStore.query(
       Job.classType,
       where: predicate as QueryPredicate,
@@ -42,12 +42,15 @@ class HelperHomeRepository {
   Stream<List<Interview>> get interviews {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
+    debugPrint("🌈 Interviews stream hive user: ${hiveUser?.id}");
     return Amplify.DataStore.observeQuery(
       Interview.classType,
       where: Interview.HELPER.eq(hiveUser?.id),
       sortBy: [Interview.CREATEDAT.descending()],
     ).map((i) {
-      debugPrint("🌈 Interviews Data Change Event: ${i.items.length}");
+      debugPrint(
+        "🌈 Snapshot: ${i.items.length} items. Syncing: ${!i.isSynced}",
+      );
       return i.items;
     });
   }
@@ -56,6 +59,7 @@ class HelperHomeRepository {
   Stream<List<AppliedJob>> get appliedJobs {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
+    debugPrint("🌈 Applied jobs stream hive user: ${hiveUser?.id}");
     return Amplify.DataStore.observeQuery(
       AppliedJob.classType,
       where: AppliedJob.HELPER.eq(hiveUser?.id),
@@ -70,6 +74,7 @@ class HelperHomeRepository {
   Stream<List<ViewHelper>> get profileView {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
+    debugPrint("🌈 Profile view stream hive user: ${hiveUser?.id}");
     return Amplify.DataStore.observeQuery(
       ViewHelper.classType,
       where: ViewHelper.HELPER.eq(hiveUser?.id),
@@ -84,6 +89,7 @@ class HelperHomeRepository {
   Stream<Interview?> get nextInterview {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
+    debugPrint("🌈 Next interview stream hive user: ${hiveUser?.id}");
     final currentDateTime = TemporalDateTime(DateTime.now());
     return Amplify.DataStore.observeQuery(
       Interview.classType,

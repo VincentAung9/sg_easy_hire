@@ -1,16 +1,21 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_bloc.dart';
+import 'package:sg_easy_hire/features/biodata/domain/biodata_event.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_state.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_datepicker.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_form_dropdown.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/models/PersonalInformation.dart';
 
 class PersonalInfoView extends StatefulWidget {
   const PersonalInfoView({super.key});
@@ -20,6 +25,7 @@ class PersonalInfoView extends StatefulWidget {
 }
 
 class _PersonalInfoViewState extends State<PersonalInfoView> {
+  PersonalInformation? oldData;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController placeController = TextEditingController();
   TextEditingController heightController = TextEditingController();
@@ -38,6 +44,10 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
     heightController.text = currentUser?.height ?? "";
     weightController.text = currentUser?.weight ?? "";
     nationality = currentUser?.nationality;
+    if (mounted) {
+      setState(() {});
+    }
+    context.read<BiodataBloc>().add(GetPersonalInformation());
     super.initState();
   }
 
@@ -52,6 +62,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -91,18 +102,31 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
       ),
       body: BlocConsumer<BiodataBloc, BiodataState>(
         listener: (context, state) {
-          if (!isInitialized) {
+          if (state.action == BiodataStateAction.personalInfo &&
+              state.status == BiodataStateStatus.success) {
+            showSuccess(context, "Your information has been saved");
+            //TODO:GO NEXT
+            context.go(RoutePaths.contactFamilyDetails);
+          }
+          if (state.action == BiodataStateAction.personalInfo &&
+              state.status == BiodataStateStatus.failure) {
+            showError(
+              context,
+              "Failed to save your information. Please try again.",
+            );
+          }
+          if (!isInitialized && !(state.personalInformation == null)) {
             //setState
-            if (!(state.personalInformation == null)) {
-              isInitialized = true;
-              dateOfBirth = state.personalInformation!.dateOfBirth!
-                  .getDateTime()
-                  .toLocal();
-              placeController.text =
-                  state.personalInformation?.placeOfBirth ?? "";
+            isInitialized = true;
+            oldData = state.personalInformation;
+            dateOfBirth = state.personalInformation!.dateOfBirth!
+                .getDateTime()
+                .toLocal();
+            placeController.text =
+                state.personalInformation?.placeOfBirth ?? "";
 
-              gender = state.personalInformation?.gender ?? "";
-            }
+            gender = state.personalInformation?.gender ?? "";
+
             setState(() {});
           }
         },
@@ -258,16 +282,80 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
           setState(() {
             isFirstTimePressed = true;
           });
-          if (formKey.currentState?.validate() == true) {
+          if (formKey.currentState?.validate() ?? false) {
             //TODO: Save and Next
+            context.read<BiodataBloc>().add(
+              AddPersonalInformation(
+                data: oldData == null
+                    ? PersonalInformation(
+                        code: nanoid(10),
+                        createdAt: TemporalDateTime(DateTime.now()),
+                        dateOfBirth: TemporalDate(dateOfBirth!),
+                        placeOfBirth: placeController.text,
+                        gender: gender,
+                        user: currentUser?.copyWith(
+                          fullName: fullNameController.text,
+                          nationality: nationality,
+                          height: heightController.text,
+                          weight: weightController.text,
+                        ),
+                        isPublished: true,
+                      )
+                    : oldData!.copyWith(
+                        updatedAt: TemporalDateTime(DateTime.now()),
+                        dateOfBirth: TemporalDate(dateOfBirth!),
+                        placeOfBirth: placeController.text,
+                        gender: gender,
+                        user: currentUser?.copyWith(
+                          fullName: fullNameController.text,
+                          nationality: nationality,
+                          height: heightController.text,
+                          weight: weightController.text,
+                        ),
+                        isPublished: true,
+                      ),
+              ),
+            );
           }
         },
         onSave: () {
           setState(() {
             isFirstTimePressed = true;
           });
-          if (formKey.currentState?.validate() == true) {
+          if (formKey.currentState?.validate() ?? false) {
             //TODO: Save and Next
+            context.read<BiodataBloc>().add(
+              AddPersonalInformation(
+                data: oldData == null
+                    ? PersonalInformation(
+                        code: nanoid(10),
+                        createdAt: TemporalDateTime(DateTime.now()),
+                        dateOfBirth: TemporalDate(dateOfBirth!),
+                        placeOfBirth: placeController.text,
+                        gender: gender,
+                        user: currentUser?.copyWith(
+                          fullName: fullNameController.text,
+                          nationality: nationality,
+                          height: heightController.text,
+                          weight: weightController.text,
+                        ),
+                        isPublished: false,
+                      )
+                    : oldData!.copyWith(
+                        updatedAt: TemporalDateTime(DateTime.now()),
+                        dateOfBirth: TemporalDate(dateOfBirth!),
+                        placeOfBirth: placeController.text,
+                        gender: gender,
+                        user: currentUser?.copyWith(
+                          fullName: fullNameController.text,
+                          nationality: nationality,
+                          height: heightController.text,
+                          weight: weightController.text,
+                        ),
+                        isPublished: false,
+                      ),
+              ),
+            );
           } else {
             //draft
           }

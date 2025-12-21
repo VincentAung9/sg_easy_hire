@@ -50,6 +50,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   Hive.box<User>(name: userBox);
   // ignore: inference_failure_on_function_invocation
   Hive.box<bool>(name: signInBox);
+  //save as draf only for upload-document
+  Hive.box<UploadedDocuments>(name: helperPersonalDocuments);
 
   await _configureAmplify(); /* 
   await Amplify.DataStore.clear(); // Wipes the local SQLite cache */

@@ -21,6 +21,10 @@ class RecommendedJobs extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+ final currentUser =   context
+                      .read<HelperCoreBloc>()
+                      .state
+                      .currentUser;
     return BlocListener<HelperCoreBloc, HelperCoreState>(
       listener: (_, userState) {
         if (userState.currentUser?.skills?.isNotEmpty ?? false) {
@@ -89,13 +93,10 @@ class RecommendedJobs extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              ...jobs.map(
+           ...jobs.map(
                 (j) => RecommendJobCard(
                   job: j,
-                  currentUser: context
-                      .read<HelperCoreBloc>()
-                      .state
-                      .currentUser!,
+                  currentUser: currentUser,
                 ),
               ),
             ],

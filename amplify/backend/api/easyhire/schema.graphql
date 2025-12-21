@@ -28,8 +28,8 @@ type User @model @auth(
   age: Int
   height: String
   weight: String
-  totalExperiences: Int
-  expectedSalary: Int
+  totalExperiences: String
+  expectedSalary: AWSJSON
   deviceToken: String
   passportStatus: DocumentStatus
   medicalStatus: DocumentStatus
@@ -37,6 +37,7 @@ type User @model @auth(
   helperStatus: HelperStatus
   currentAddress: String
   isVIP: Boolean @default(value: "False")
+  isPublished: Boolean @default(value: "False")
   otherDocuments: AWSJSON
 
   # One-to-One Relationships (Amplify uses references and @hasOne)

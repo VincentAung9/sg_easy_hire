@@ -32,7 +32,11 @@ class GetOtherPersonalInfo extends BiodataEvent {}
 
 class AddJobPreference extends BiodataEvent {
   final JobPreferences data;
-  AddJobPreference({required this.data});
+  final List<WorkHistory> workHistories;
+  AddJobPreference({
+    required this.data,
+    required this.workHistories,
+  });
 }
 
 class GetJobPreference extends BiodataEvent {}

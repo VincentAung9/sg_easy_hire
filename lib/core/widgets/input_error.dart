@@ -4,10 +4,12 @@ class InputError extends StatelessWidget {
   final bool isError;
   final String? error;
   final Widget? child;
+  final EdgeInsetsGeometry? padding;
   const InputError({
     required this.isError,
     this.error,
     super.key,
+    this.padding,
     this.child,
   });
 
@@ -17,7 +19,7 @@ class InputError extends StatelessWidget {
     return isError
         ? child ??
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: padding ?? const EdgeInsets.only(top: 10),
                 child: Text(
                   error ?? "",
                   style: textTheme.bodySmall?.copyWith(

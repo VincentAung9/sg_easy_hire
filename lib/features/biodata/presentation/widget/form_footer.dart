@@ -39,12 +39,18 @@ class FormFooter extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12), // rounded-lg
                   ),
                 ),
-                child: const Text(
-                  "Save",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
+                child: const Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Save Draft",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

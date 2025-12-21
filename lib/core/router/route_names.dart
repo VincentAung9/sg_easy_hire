@@ -35,6 +35,7 @@ class RouteNames {
   static const String progressTracking = "progress_tracking";
   static const String helpSupport = "help_support";
   static const String settings = "settings";
+  static const String foodHandling = "food_handling";
   //-----EMPLOYER----------
   static const String employerSignin = "employer_signin";
   static const String employerRegister = "employer_register";

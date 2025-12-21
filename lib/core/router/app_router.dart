@@ -5,6 +5,11 @@ import 'package:sg_easy_hire/core/router/go_refresh_stream.dart';
 import 'package:sg_easy_hire/core/router/route_names.dart' show RouteNames;
 import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/features/auth/models/confirm_sign_up_param.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/contact_family_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/food_handling_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/job_preference_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/language_spoken_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/medical_history_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/onboarding_biodata_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/personal_info_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
@@ -85,6 +90,32 @@ class AppRouter {
           name: RouteNames.personalInformation,
           builder: (context, state) => const PersonalInfoPage(),
         ),
+        GoRoute(
+          path: RoutePaths.contactFamilyDetails,
+          name: RouteNames.contactFamilyDetails,
+          builder: (context, state) => const ContactFamilyPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.medicalHistor,
+          name: RouteNames.medicalHistor,
+          builder: (context, state) => const MedicalHistoryPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.foodHandling,
+          name: RouteNames.foodHandling,
+          builder: (context, state) => const FoodHandlingPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.languagesSpoken,
+          name: RouteNames.languagesSpoken,
+          builder: (context, state) => const LanguageSpokenPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.preferences,
+          name: RouteNames.preferences,
+          builder: (context, state) => const JobPreferencePage(),
+        ),
+
         /* 
         GoRoute(
           path: RoutePaths.notifications,
@@ -219,11 +250,7 @@ class AppRouter {
               builder: (context, state) => OnboardingBiodataPage(),
             ),
             
-            GoRoute(
-              path: RoutePaths.contactFamilyDetails,
-              name: RouteNames.contactFamilyDetails,
-              builder: (context, state) => ContactFamilyPage(),
-            ),
+          
             GoRoute(
               path: RoutePaths.medicalHistor,
               name: RouteNames.medicalHistor,

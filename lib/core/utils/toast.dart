@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 void showSuccess(BuildContext context, String message) {
-  final textTheme = Theme.of(context).textTheme;
   showToastWidget(
     context: context,
     animation: StyledToastAnimation.slideFromRight,
@@ -15,8 +14,9 @@ void showSuccess(BuildContext context, String message) {
     reverseCurve: Curves.linear,
     Container(
       height: 60,
-      width: 96.w,
+      width: 80.sw,
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.green,
@@ -37,7 +37,7 @@ void showSuccess(BuildContext context, String message) {
             const Icon(Icons.check_circle, color: Colors.white, size: 20),
             Text(
               message,
-              style: textTheme.titleSmall?.copyWith(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ],
         ),
@@ -47,7 +47,6 @@ void showSuccess(BuildContext context, String message) {
 }
 
 void showError(BuildContext context, String message) {
-  final textTheme = Theme.of(context).textTheme;
   showToastWidget(
     context: context,
     animation: StyledToastAnimation.slideFromRight,
@@ -59,8 +58,9 @@ void showError(BuildContext context, String message) {
     reverseCurve: Curves.linear,
     Container(
       height: 60,
-      //width: 96.w,
+      width: 80.sw,
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.red,
@@ -80,7 +80,7 @@ void showError(BuildContext context, String message) {
             const Icon(Icons.warning, color: Colors.white, size: 20),
             Text(
               message,
-              style: textTheme.titleSmall?.copyWith(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ],
         ),

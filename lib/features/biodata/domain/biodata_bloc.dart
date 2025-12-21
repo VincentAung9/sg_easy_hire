@@ -1,17 +1,32 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:sg_easy_hire/core/constants/constants.dart';
+import 'package:sg_easy_hire/features/auth/data/repositories/auth_repository.dart';
 import 'package:sg_easy_hire/features/biodata/data/repository/biodata_repository.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_event.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_state.dart';
 import 'package:sg_easy_hire/models/User.dart';
+import 'package:sg_easy_hire/models/WorkHistory.dart';
+
+class WorkHistoryDiff {
+  final List<WorkHistory> added;
+  final List<WorkHistory> removed;
+
+  WorkHistoryDiff({
+    required this.added,
+    required this.removed,
+  });
+}
 
 class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
   Box<User> box = Hive.box<User>(name: userBox);
   final BiodataRepository repository;
-  BiodataBloc({required this.repository}) : super(BiodataState()) {
+  final AuthRepository authRepository;
+  BiodataBloc({required this.repository, required this.authRepository})
+    : super(BiodataState()) {
     on<GetPersonalInformation>(_onGetPersonalInfo);
     on<AddPersonalInformation>(_onAddPersonalInfo);
     on<GetContactFamilyInfo>(_onGetContactFamily);
@@ -42,7 +57,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       state.copyWith(
         personalInformation: result,
         action: BiodataStateAction.personalInfo,
-        status: BiodataStateStatus.success,
+        status: BiodataStateStatus.none,
       ),
     );
   }
@@ -59,6 +74,11 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     );
     try {
       await repository.addPersonalinfo(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          personalInformation: event.data,
+        ),
+      );
       emit(
         state.copyWith(
           personalInformation: event.data,
@@ -67,8 +87,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         ),
       );
     } catch (e) {
+      debugPrint("❌ Error: $e");
       emit(
         state.copyWith(
+          personalInformation: null,
           action: BiodataStateAction.personalInfo,
           status: BiodataStateStatus.failure,
         ),
@@ -92,7 +114,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       state.copyWith(
         contactFamilyDetails: result,
         action: BiodataStateAction.contactFam,
-        status: BiodataStateStatus.success,
+        status: BiodataStateStatus.none,
       ),
     );
   }
@@ -109,6 +131,11 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     );
     try {
       await repository.addContactFamily(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          contactFamilyDetails: event.data,
+        ),
+      );
       emit(
         state.copyWith(
           contactFamilyDetails: event.data,
@@ -117,8 +144,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         ),
       );
     } catch (e) {
+      debugPrint("❌ Error: $e");
       emit(
         state.copyWith(
+          contactFamilyDetails: null,
           action: BiodataStateAction.contactFam,
           status: BiodataStateStatus.failure,
         ),
@@ -142,7 +171,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       state.copyWith(
         medicalHistory: result,
         action: BiodataStateAction.medicalHis,
-        status: BiodataStateStatus.success,
+        status: BiodataStateStatus.none,
       ),
     );
   }
@@ -159,6 +188,11 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     );
     try {
       await repository.addMedicalHistory(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          medicalHistory: event.data,
+        ),
+      );
       emit(
         state.copyWith(
           medicalHistory: event.data,
@@ -167,8 +201,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         ),
       );
     } catch (e) {
+      debugPrint("❌ Error: $e");
       emit(
         state.copyWith(
+          medicalHistory: null,
           action: BiodataStateAction.medicalHis,
           status: BiodataStateStatus.failure,
         ),
@@ -192,7 +228,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       state.copyWith(
         otherInfo: result,
         action: BiodataStateAction.otherPersonalInfo,
-        status: BiodataStateStatus.success,
+        status: BiodataStateStatus.none,
       ),
     );
   }
@@ -209,6 +245,12 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     );
     try {
       await repository.addOtherPersonalInfo(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          otherPersonalInfo: event.data,
+        ),
+      );
+
       emit(
         state.copyWith(
           otherInfo: event.data,
@@ -217,8 +259,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         ),
       );
     } catch (e) {
+      debugPrint("❌ Error: $e");
       emit(
         state.copyWith(
+          otherInfo: null,
           action: BiodataStateAction.otherPersonalInfo,
           status: BiodataStateStatus.failure,
         ),
@@ -238,11 +282,14 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       ),
     );
     final result = await repository.getJobPreferences(hiveUser?.id ?? "");
+    final workHistories = await repository.getWorkHistories(hiveUser?.id ?? "");
+
     emit(
       state.copyWith(
         jobPreference: result,
+        workHistories: workHistories,
         action: BiodataStateAction.jobPrefer,
-        status: BiodataStateStatus.success,
+        status: BiodataStateStatus.none,
       ),
     );
   }
@@ -259,6 +306,36 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     );
     try {
       await repository.addJobPreferences(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          jobPreferences: event.data,
+        ),
+      );
+      if (event.workHistories.isNotEmpty) {
+        //add workHistory
+        if (state.workHistories.isNotEmpty) {
+          //need to check remove or add
+          final previous = state.workHistories;
+          final current = event.workHistories;
+
+          final diff = diffWorkHistories(
+            oldList: previous,
+            newList: current,
+          );
+
+          // 1. Remove deleted items
+          if (diff.removed.isNotEmpty) {
+            await repository.removeWorkHistory(diff.removed);
+          }
+
+          // 2. Add new items
+          if (diff.added.isNotEmpty) {
+            await repository.addWorkHistories(diff.added);
+          }
+        } else {
+          await repository.addWorkHistories(event.workHistories);
+        }
+      }
       emit(
         state.copyWith(
           jobPreference: event.data,
@@ -267,8 +344,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         ),
       );
     } catch (e) {
+      debugPrint("❌ Error: $e");
       emit(
         state.copyWith(
+          jobPreference: null,
           action: BiodataStateAction.jobPrefer,
           status: BiodataStateStatus.failure,
         ),
@@ -279,10 +358,85 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
   FutureOr<void> _onGetUploadedDocument(
     GetUploadedDocument event,
     Emitter<BiodataState> emit,
-  ) {}
+  ) async {
+    final hiveUser = box.get(userBoxKey);
+    emit(
+      state.copyWith(
+        action: BiodataStateAction.uploadDoc,
+        status: BiodataStateStatus.loading,
+      ),
+    );
+    final result = await repository.getUploadedDocuments(hiveUser?.id ?? "");
+    emit(
+      state.copyWith(
+        documents: result,
+        action: BiodataStateAction.uploadDoc,
+        status: BiodataStateStatus.none,
+      ),
+    );
+  }
 
   FutureOr<void> _onAddUploadedDocument(
     AddUploadDocument event,
     Emitter<BiodataState> emit,
-  ) {}
+  ) async {
+    emit(
+      state.copyWith(
+        action: BiodataStateAction.uploadDoc,
+        status: BiodataStateStatus.loading,
+      ),
+    );
+    try {
+      await repository.addUploadedDocuments(event.data);
+      await authRepository.updateUser(
+        user: event.data.user?.copyWith(
+          uploadedDocuments: event.data,
+        ),
+      );
+      emit(
+        state.copyWith(
+          documents: event.data,
+          action: BiodataStateAction.uploadDoc,
+          status: BiodataStateStatus.success,
+        ),
+      );
+    } catch (e) {
+      debugPrint("❌ Error: $e");
+      emit(
+        state.copyWith(
+          documents: null,
+          action: BiodataStateAction.uploadDoc,
+          status: BiodataStateStatus.failure,
+        ),
+      );
+    }
+  }
+
+  WorkHistoryDiff diffWorkHistories({
+    required List<WorkHistory> oldList,
+    required List<WorkHistory> newList,
+  }) {
+    final oldMap = {for (var e in oldList) e.id: e};
+    final newMap = {for (var e in newList) e.id: e};
+
+    final added = <WorkHistory>[];
+    final removed = <WorkHistory>[];
+
+    for (final id in newMap.keys) {
+      if (!oldMap.containsKey(id)) {
+        added.add(newMap[id]!);
+      }
+    }
+
+    for (final id in oldMap.keys) {
+      if (!newMap.containsKey(id)) {
+        removed.add(oldMap[id]!);
+      }
+    }
+
+    return WorkHistoryDiff(
+      added: added,
+      removed: removed,
+    );
+  }
 }

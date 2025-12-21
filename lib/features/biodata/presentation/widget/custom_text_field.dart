@@ -13,6 +13,11 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool? isReadOnly;
   final void Function()? onTap;
+  final int maxLines;
+  final TextStyle? labelStyle;
+  final String? Function(String?)? customValidator;
+  final bool? customIsError;
+  final String? customError;
   const CustomTextField({
     required this.label,
     required this.placeholder,
@@ -22,7 +27,12 @@ class CustomTextField extends StatelessWidget {
     this.onTap,
     this.isRequired = false,
     this.isReadOnly = false,
+    this.maxLines = 1,
     this.keyboardType,
+    this.labelStyle,
+    this.customValidator,
+    this.customIsError,
+    this.customError,
     super.key,
   });
 
@@ -34,12 +44,14 @@ class CustomTextField extends StatelessWidget {
         RichText(
           text: TextSpan(
             text: label,
-            style: const TextStyle(
-              color: AppColors.textSecondaryLight,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'Inter',
-            ),
+            style:
+                labelStyle ??
+                const TextStyle(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Inter',
+                ),
             children: [
               if (isRequired)
                 const TextSpan(
@@ -55,18 +67,28 @@ class CustomTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          maxLines: maxLines,
           readOnly: isReadOnly ?? false,
           controller: controller,
           keyboardType: keyboardType,
           onTap: onTap,
 
           style: const TextStyle(color: AppColors.textPrimaryLight),
-
+          validator:
+              customValidator ??
+              (v) {
+                if (isRequired && (v?.isEmpty ?? false)) {
+                  return "";
+                } else {
+                  return null;
+                }
+              },
           decoration: InputDecoration(
             hintText: placeholder,
             hintStyle: const TextStyle(color: AppColors.inputPlaceholderLight),
             filled: true,
             fillColor: AppColors.cardLight,
+            errorStyle: const TextStyle(height: 0, fontSize: 0),
             suffixIcon: suffixIcon != null
                 ? Icon(
                     suffixIcon,
@@ -97,8 +119,11 @@ class CustomTextField extends StatelessWidget {
         ),
 
         InputError(
-          isError: isRequired && isFirstTimePressed && controller.text.isEmpty,
-          error: "$label is required",
+          padding: EdgeInsets.zero,
+          isError:
+              customIsError ??
+              isRequired && isFirstTimePressed && controller.text.isEmpty,
+          error: customError ?? "$label is required",
         ),
       ],
     );

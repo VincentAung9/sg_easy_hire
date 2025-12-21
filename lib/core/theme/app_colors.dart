@@ -5,7 +5,7 @@ class AppColors {
   static const primary = Color(0xFF6D28D9);
   static const primaryLight = Color(0xFFA020F0);
   static const primaryDark = Color(0xFF4B0082);
-
+  static const Color checkboxBorderLight = Color(0xFF94A3B8);
   // Light Mode
   static const backgroundLight = Color(0xFFF8FAFC);
   static const cardLight = Colors.white;
