@@ -1,9 +1,15 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/helper_user_stream.dart';
+import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
 import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class AppView extends StatefulWidget {
@@ -18,11 +24,7 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
-  @override
-  void initState() {
-    subscribeUserOr(context);
-    super.initState();
-  }
+  bool isInitialized = false;
 
   /*   @override
   void initState() {
@@ -82,27 +84,58 @@ class _AppViewState extends State<AppView> {
  */
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          locale: const Locale('my'),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en'),
-            Locale('my'),
-          ],
-          routerConfig: widget.router,
-        );
+    return BlocListener<HelperCoreBloc, HelperCoreState>(
+      listener: (context, state) {
+        if (state.currentUser?.skills?.isNotEmpty ?? false) {
+          //everytime skills changed, need to retrieve recommended jobs
+          debugPrint("🌈 Getting recommended job........");
+          context.read<HomeBloc>().add(
+            GetRecommendJobsEvent(
+              skills: state.currentUser?.skills?.join(",") ?? "",
+            ),
+          );
+        }
+        if (!isInitialized && !(state.currentUser == null)) {
+          debugPrint(
+            "🔥-------🌈 Only one time User in App View State: ${state.currentUser}",
+          );
+          context.read<HelperCoreBloc>().add(StartSubscribeToUser());
+          context.read<HomeBloc>()
+            ..add(StartListenCreateNextInterview())
+            ..add(StartListenUpdateNextInterview())
+            ..add(StartGetProfileViews())
+            ..add(StartListenCreateProfileView())
+            ..add(StartGetAppliedJobs())
+            ..add(StartGetInterviews())
+            ..add(StartListenCreateInterviews())
+            ..add(StartListenUpdateInterviews());
+          setState(() {
+            isInitialized = true;
+          });
+        }
       },
+      child: ScreenUtilInit(
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            locale: const Locale('my'),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('my'),
+            ],
+            routerConfig: widget.router,
+          );
+        },
+      ),
     );
   }
 }

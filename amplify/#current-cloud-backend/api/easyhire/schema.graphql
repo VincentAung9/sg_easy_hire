@@ -194,13 +194,13 @@ type UploadedDocuments @model @auth(
     updatedAt:AWSDateTime
   id: ID!
   code: String!
-  profilePhoto: String
-  passport: String
-  medicalCertificate: String
-  policeClearance: String
-  educationalCertificates: String
-  workReferences: String
-  introductionVideo: String
+  profilePhoto: AWSJSON
+  passport: AWSJSON
+  medicalCertificate: AWSJSON
+  policeClearance: AWSJSON
+  educationalCertificates: [AWSJSON!]
+  workReferences: [AWSJSON!]
+  introductionVideo: AWSJSON
   userID: ID! @index(name: "byUser", queryField: "uploadedDocumentsByUser")
   user: User @belongsTo(fields: ["userID"])
    isPublished: Boolean @default(value: "False")

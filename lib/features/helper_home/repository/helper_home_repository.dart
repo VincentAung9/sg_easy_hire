@@ -1,3 +1,4 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -7,104 +8,238 @@ import 'package:sg_easy_hire/models/ModelProvider.dart';
 class HelperHomeRepository {
   //applied job
   Future<void> applyJob(AppliedJob job) async {
-    return Amplify.DataStore.save(job);
+    final request = ModelMutations.create(job);
+    await Amplify.API.mutate(request: request).response;
+  }
+
+  Future<List<Interview>> getInterviews() async {
+    final box = Hive.box<User>(name: userBox);
+    final hiveUser = box.get(userBoxKey);
+
+    // 3. Create the request using the signature you provided
+    final request = ModelQueries.list<Interview>(
+      Interview.classType,
+      where: Interview.HELPER.eq(hiveUser?.id),
+    );
+
+    try {
+      final response = await Amplify.API.query(request: request).response;
+      final items = response.data?.items ?? [];
+
+      // 4. Local Sort (Since list queries don't support 'sortBy' directly)
+      final sortedItems = List<Interview?>.from(items)
+        ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+
+      return sortedItems.whereType<Interview>().toList();
+    } on ApiException catch (e) {
+      debugPrint('Query failed: $e');
+      return [];
+    }
+  }
+
+  Future<List<AppliedJob>> getAppliedJobs() async {
+    final box = Hive.box<User>(name: userBox);
+    final hiveUser = box.get(userBoxKey);
+
+    // 3. Create the request using the signature you provided
+    final request = ModelQueries.list<AppliedJob>(
+      AppliedJob.classType,
+      where: AppliedJob.HELPER.eq(hiveUser?.id),
+    );
+
+    try {
+      final response = await Amplify.API.query(request: request).response;
+      final items = response.data?.items ?? [];
+
+      // 4. Local Sort (Since list queries don't support 'sortBy' directly)
+      final sortedItems = List<AppliedJob?>.from(items)
+        ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+
+      return sortedItems.whereType<AppliedJob>().toList();
+    } on ApiException catch (e) {
+      debugPrint('Query failed: $e');
+      return [];
+    }
+  }
+
+  Future<List<ViewHelper>> getProfileViews() async {
+    final box = Hive.box<User>(name: userBox);
+    final hiveUser = box.get(userBoxKey);
+
+    // 3. Create the request using the signature you provided
+    final request = ModelQueries.list<ViewHelper>(
+      ViewHelper.classType,
+      where: ViewHelper.HELPER.eq(hiveUser?.id),
+    );
+
+    try {
+      final response = await Amplify.API.query(request: request).response;
+      final items = response.data?.items ?? [];
+
+      // 4. Local Sort (Since list queries don't support 'sortBy' directly)
+      final sortedItems = List<ViewHelper?>.from(items)
+        ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+
+      return sortedItems.whereType<ViewHelper>().toList();
+    } on ApiException catch (e) {
+      debugPrint('Query failed: $e');
+      return [];
+    }
   }
 
   //get recommend job
   Future<List<Job>> getRecommendedJobs(String? skills) async {
-    if (skills?.isEmpty ?? false) {
+    if (skills == null || skills.isEmpty) return [];
+
+    final skillsList = skills.split(",");
+
+    // 1. Create the list of predicates for each skill
+    final List<QueryPredicate> predicates = skillsList.map((skill) {
+      return Job.REQUIREDSKILLS.contains(skill.trim());
+    }).toList();
+
+    // 2. Build the group.
+    // This class implements QueryPredicate<Model>, so it fits the 'where' parameter.
+    final QueryPredicate groupPredicate = QueryPredicateGroup(
+      QueryPredicateGroupType.or,
+      predicates,
+    );
+
+    // 3. Create the request using the signature you provided
+    final request = ModelQueries.list<Job>(
+      Job.classType,
+      where: groupPredicate,
+    );
+
+    try {
+      final response = await Amplify.API.query(request: request).response;
+      final items = response.data?.items ?? [];
+
+      // 4. Local Sort (Since list queries don't support 'sortBy' directly)
+      final sortedItems = List<Job?>.from(items)
+        ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+
+      return sortedItems.whereType<Job>().toList();
+    } on ApiException catch (e) {
+      debugPrint('Query failed: $e');
       return [];
     }
-    final skillsList = skills!.split(",");
-
-    dynamic predicate;
-
-    for (final skill in skillsList) {
-      final p = Job.REQUIREDSKILLS.contains(skill);
-
-      if (predicate == null) {
-        predicate = p;
-      } else {
-        predicate = predicate.or(
-          p,
-        ); // <-- Works only when dynamically typed
-      }
-    }
-
-    final response = await Amplify.DataStore.query(
-      Job.classType,
-      where: predicate as QueryPredicate,
-      sortBy: [Job.CREATEDAT.descending()],
-    );
-    return response;
   }
 
-  Stream<List<Interview>> get interviews {
+  Stream<Interview?> get createInterviews {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
     debugPrint("🌈 Interviews stream hive user: ${hiveUser?.id}");
-    return Amplify.DataStore.observeQuery(
+    final subscriptionRequest = ModelSubscriptions.onCreate(
       Interview.classType,
       where: Interview.HELPER.eq(hiveUser?.id),
-      sortBy: [Interview.CREATEDAT.descending()],
-    ).map((i) {
-      debugPrint(
-        "🌈 Snapshot: ${i.items.length} items. Syncing: ${!i.isSynced}",
-      );
-      return i.items;
-    });
+    );
+    return Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () => safePrint('Subscription established'),
+        )
+        .map((i) {
+          debugPrint(
+            "🌈 Snapshot: ${i.data} items.",
+          );
+          return i.data;
+        });
   }
 
-  //listen profile views
-  Stream<List<AppliedJob>> get appliedJobs {
+  Stream<Interview?> get updateInterviews {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
-    debugPrint("🌈 Applied jobs stream hive user: ${hiveUser?.id}");
-    return Amplify.DataStore.observeQuery(
-      AppliedJob.classType,
-      where: AppliedJob.HELPER.eq(hiveUser?.id),
-      sortBy: [AppliedJob.CREATEDAT.descending()],
-    ).map((i) {
-      debugPrint("🌈 Applied Job Data Change Event: ${i.items.length}");
-      return i.items;
-    });
+    debugPrint("🌈 Interviews stream hive user: ${hiveUser?.id}");
+    final subscriptionRequest = ModelSubscriptions.onUpdate(
+      Interview.classType,
+      where: Interview.HELPER.eq(hiveUser?.id),
+    );
+    return Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () => safePrint('Subscription established'),
+        )
+        .map((i) {
+          debugPrint(
+            "🌈 Snapshot: ${i.data} items.",
+          );
+          return i.data;
+        });
   }
 
   //listen profile views
-  Stream<List<ViewHelper>> get profileView {
+  Stream<ViewHelper?> get profileView {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
     debugPrint("🌈 Profile view stream hive user: ${hiveUser?.id}");
-    return Amplify.DataStore.observeQuery(
+    final subscriptionRequest = ModelSubscriptions.onCreate(
       ViewHelper.classType,
       where: ViewHelper.HELPER.eq(hiveUser?.id),
-      sortBy: [ViewHelper.CREATEDAT.descending()],
-    ).map((i) {
-      debugPrint("🌈 Profile View Data Change Event: ${i.items.length}");
-      return i.items;
-    });
+    );
+    return Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () => safePrint('Subscription established'),
+        )
+        .map((i) {
+          debugPrint(
+            "🌈 Snapshot: ${i.data} items.",
+          );
+          return i.data;
+        });
   }
 
   //listen next interviews
-  Stream<Interview?> get nextInterview {
+  Stream<Interview?> get createNextInterview {
     final box = Hive.box<User>(name: userBox);
     final hiveUser = box.get(userBoxKey);
     debugPrint("🌈 Next interview stream hive user: ${hiveUser?.id}");
     final currentDateTime = TemporalDateTime(DateTime.now());
-    return Amplify.DataStore.observeQuery(
+    final subscriptionRequest = ModelSubscriptions.onCreate(
       Interview.classType,
       where: Interview.HELPER
           .eq(hiveUser?.id)
           .and(Interview.STATUS.eq(InterviewStatus.ACCEPTED))
           .and(Interview.CONFIRMEDDATETIME.gt(currentDateTime))
           .or(Interview.CONFIRMEDDATETIME.eq(currentDateTime)),
-      sortBy: [Interview.CONFIRMEDDATETIME.ascending()],
-    ).map((i) {
-      debugPrint("🌈 Next Interview Data Change Event: ${i.items.toString()}");
-      if (i.items.isNotEmpty) {
-        return i.items.first;
-      }
-      return null;
-    });
+    );
+    return Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () => safePrint('Subscription established'),
+        )
+        .map((i) {
+          debugPrint(
+            "🌈 Snapshot: ${i.data} items.",
+          );
+          return i.data;
+        });
+  }
+
+  Stream<Interview?> get updateNextInterview {
+    final box = Hive.box<User>(name: userBox);
+    final hiveUser = box.get(userBoxKey);
+    debugPrint("🌈 Next interview stream hive user: ${hiveUser?.id}");
+    final currentDateTime = TemporalDateTime(DateTime.now());
+    final subscriptionRequest = ModelSubscriptions.onUpdate(
+      Interview.classType,
+      where: Interview.HELPER
+          .eq(hiveUser?.id)
+          .and(Interview.STATUS.eq(InterviewStatus.ACCEPTED))
+          .and(Interview.CONFIRMEDDATETIME.gt(currentDateTime))
+          .or(Interview.CONFIRMEDDATETIME.eq(currentDateTime)),
+    );
+    return Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () => safePrint('Subscription established'),
+        )
+        .map((i) {
+          debugPrint(
+            "🌈 Snapshot: ${i.data} items.",
+          );
+          return i.data;
+        });
   }
 }

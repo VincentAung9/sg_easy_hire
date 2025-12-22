@@ -113,7 +113,7 @@ class _SignInViewState extends State<SignInView> {
                     if (state.status == SignInStatus.success &&
                         state.action == SignInActions.signin) {
                       //subscribe to user
-                      hiveBox.put(isSignIn, true);
+                      context.go(RoutePaths.onboardingBiodata);
                       /* context.read<HelperCoreBloc>().add(
                         StartSubscribeToUser(),
                       );

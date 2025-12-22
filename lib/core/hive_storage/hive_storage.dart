@@ -9,6 +9,7 @@ class AuthLocalDataSource {
   AuthLocalDataSource(this.box);
 
   bool get isLoggedIn => box.get(isSignIn) != null;
+  bool get isFirstTime => box.get(isFirstTimeLoggedIn) != null;
 
   Stream<void> get authChanges => box.watch();
 }

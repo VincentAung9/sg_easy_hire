@@ -2,7 +2,9 @@ import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class HomeEvent {}
 
-class StartListenNextInterview extends HomeEvent {}
+class StartListenCreateNextInterview extends HomeEvent {}
+
+class StartListenUpdateNextInterview extends HomeEvent {}
 
 class GetRecommendJobsEvent extends HomeEvent {
   final String skills;
@@ -20,8 +22,16 @@ class ApplyJobEvent extends HomeEvent {
   });
 }
 
+class StartListenCreateInterviews extends HomeEvent {}
+
+class StartListenUpdateInterviews extends HomeEvent {}
+
 class StartListenProfileView extends HomeEvent {}
 
-class StartListenAppliedJobs extends HomeEvent {}
+class StartGetProfileViews extends HomeEvent {}
 
-class StartListenInterviews extends HomeEvent {}
+class StartGetAppliedJobs extends HomeEvent {}
+
+class StartGetInterviews extends HomeEvent {}
+
+class StartListenCreateProfileView extends HomeEvent {}

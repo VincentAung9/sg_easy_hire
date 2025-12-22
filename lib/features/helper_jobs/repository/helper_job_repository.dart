@@ -1,41 +1,66 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class HelperJobRepository {
   Future<void> unfavouriteJob(SavedJob job) async {
-    final result = await Amplify.DataStore.query(
-      SavedJob.classType,
-      where: SavedJob.JOB.eq(job.job?.id).and(SavedJob.USER.eq(job.user?.id)),
-    );
-    if (result.isNotEmpty) {
-      return Amplify.DataStore.delete(result.first);
-    } else {
-      throw Exception();
-    }
+    final request = ModelMutations.delete(job);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<void> favouriteJob(SavedJob job) async {
-    return Amplify.DataStore.save(job);
+    final request = ModelMutations.create(job);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<void> applyJob(AppliedJob job) async {
-    return Amplify.DataStore.save(job);
+    final request = ModelMutations.create(job);
+    await Amplify.API.mutate(request: request).response;
   }
+
+  /* final sortedItems = List<Job?>.from(items)
+        ..sort((a, b) {
+          if (a?.createdAt == null || b?.createdAt == null) return 0;
+          // Use getDateTime() to compare TemporalDateTime
+          return b!.createdAt!.getDateTimeInUtc().compareTo(
+            a!.createdAt!.getDateTimeInUtc(),
+          );
+        });
+
+      // 5. Filter nulls and return List<Job>
+      return sortedItems.whereType<Job>().toList(); */
 
   Future<List<JobTag>> getJobTags() async {
-    return Amplify.DataStore.query(
+    final request = ModelQueries.list(
       JobTag.classType,
-      sortBy: [JobTag.CREATEDAT.descending()],
     );
+    final response = await Amplify.API.query(request: request).response;
+    final items = response.data?.items ?? [];
+
+    // 4. Local Sort (Since list queries don't support 'sortBy' directly)
+    final sortedItems = List<JobTag?>.from(items)
+      ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+
+    return sortedItems.whereType<JobTag>().toList();
   }
 
-  Future<List<Job>> getJobs({
-    required int page,
-    required int limit,
+  Future<PaginatedResult<Job>?> getJobs({
+    int limit = 10,
+    PaginatedResult<Job>? previousResult,
     String query = "",
     String tag = "All",
   }) async {
+    if (!(previousResult == null) && (previousResult.hasNextResult)) {
+      final secondRequest = previousResult.requestForNextResult;
+      final secondResult = await Amplify.API
+          .query(request: secondRequest!)
+          .response;
+      return secondResult.data;
+    }
+
     QueryPredicate? filter;
+
+    // 1. Logic remains the same (This is already a QueryPredicate)
     if (query.isNotEmpty && tag != "All") {
       filter = Job.TAGS
           .contains(tag)
@@ -53,14 +78,12 @@ class HelperJobRepository {
     } else if (tag != "All") {
       filter = Job.TAGS.contains(tag);
     }
-    return Amplify.DataStore.query(
+    final firstRequest = ModelQueries.list<Job>(
       Job.classType,
+      limit: limit,
       where: filter,
-      sortBy: [Job.CREATEDAT.descending()],
-      pagination: QueryPagination(
-        page: page,
-        limit: limit,
-      ),
     );
+    final firstResult = await Amplify.API.query(request: firstRequest).response;
+    return firstResult.data;
   }
 }

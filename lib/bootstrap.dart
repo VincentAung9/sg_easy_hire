@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_push_notifications_pinpoint/amplify_push_notifications_pinpoint.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
@@ -46,6 +45,12 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     (dynamic v) =>
         v == null ? null : User.fromJson(Map<String, dynamic>.from(v as Map)),
   );
+  Hive.registerAdapter<UploadedDocuments>(
+    'UploadedDocuments',
+    (dynamic v) => v == null
+        ? null
+        : UploadedDocuments.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
   // ignore: inference_failure_on_function_invocation
   Hive.box<User>(name: userBox);
   // ignore: inference_failure_on_function_invocation
@@ -65,15 +70,20 @@ Future<void> _configureAmplify() async {
     final api = AmplifyAPI(
       options: APIPluginOptions(modelProvider: ModelProvider.instance),
     );
-    final datastorePlugin = AmplifyDataStore(
+    /*  final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
-    );
+    ); */
     final pushPlugin = AmplifyPushNotificationsPinpoint()
       ..onNotificationReceivedInBackground(
         myAsyncNotificationReceivedHandler,
       );
 
-    await Amplify.addPlugins([auth, api, datastorePlugin, storage, pushPlugin]);
+    await Amplify.addPlugins([
+      auth,
+      api,
+      /* datastorePlugin, */ storage,
+      pushPlugin,
+    ]);
 
     // call Amplify.configure to use the initialized categories in your app
     await Amplify.configure(amplifyconfig);

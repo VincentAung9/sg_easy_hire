@@ -9,7 +9,7 @@ class AppColors {
   // Light Mode
   static const backgroundLight = Color(0xFFF8FAFC);
   static const cardLight = Colors.white;
-
+  static const Color cardBackgroundLight = Color(0xFFF1F5F9);
   static const textPrimaryLight = Color(0xFF111827);
   static const textSecondaryLight = Color(0xFF6B7280);
   static const textMutedLight = Color(0xFF4A5568);

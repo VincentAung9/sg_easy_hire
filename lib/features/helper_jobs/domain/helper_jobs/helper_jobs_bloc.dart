@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:amplify_flutter/amplify_flutter.dart' hide Emitter;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart';
@@ -33,18 +34,29 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
         ),
       );
       final result = await repository.getJobs(
-        page: state.page,
         limit: state.limit,
         query: state.query,
       );
-      final hasNext = result.length < state.limit;
+      final hasNext = result?.nextToken != null;
+      final sortedItems = List<Job?>.from(result?.items ?? [])
+        ..sort((a, b) {
+          if (a?.createdAt == null || b?.createdAt == null) return 0;
+          // Use getDateTime() to compare TemporalDateTime
+          return b!.createdAt!.getDateTimeInUtc().compareTo(
+            a!.createdAt!.getDateTimeInUtc(),
+          );
+        });
+
+      // 5. Filter nulls and return List<Job>
+      final finalResult = sortedItems.whereType<Job>().toList();
       return emit(
         state.copyWith(
           action: HelperJobsActions.getJobs,
           status: HelperJobsStatus.success,
           hasNext: hasNext,
           page: hasNext ? 1 : 0,
-          jobs: result,
+          jobs: finalResult,
+          previousResult: result,
         ),
       );
     }
@@ -55,18 +67,30 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
       ),
     );
     final jobs = await repository.getJobs(
-      page: state.page,
+      previousResult: state.previousResult,
       limit: state.limit,
       query: state.query,
     );
-    final hasNext = jobs.length < 20;
+    final hasNext = jobs?.nextToken != null;
+    final sortedItems = List<Job?>.from(jobs?.items ?? [])
+      ..sort((a, b) {
+        if (a?.createdAt == null || b?.createdAt == null) return 0;
+        // Use getDateTime() to compare TemporalDateTime
+        return b!.createdAt!.getDateTimeInUtc().compareTo(
+          a!.createdAt!.getDateTimeInUtc(),
+        );
+      });
+
+    // 5. Filter nulls and return List<Job>
+    final finalResult = sortedItems.whereType<Job>().toList();
     emit(
       state.copyWith(
         action: HelperJobsActions.getJobs,
         status: HelperJobsStatus.none,
         hasNext: hasNext,
         page: hasNext ? state.page + 1 : state.page,
-        jobs: List.of(state.jobs)..addAll(jobs),
+        jobs: List.of(state.jobs)..addAll(finalResult),
+        previousResult: jobs,
       ),
     );
   }
@@ -123,15 +147,26 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
 
     // 2. Fetch first page of search
     final jobs = await repository.getJobs(
-      page: 0,
       limit: state.limit,
       query: event.query,
     );
-    final hasNext = jobs.length < 20;
+    final hasNext = jobs?.nextToken != null;
+    final sortedItems = List<Job?>.from(jobs?.items ?? [])
+      ..sort((a, b) {
+        if (a?.createdAt == null || b?.createdAt == null) return 0;
+        // Use getDateTime() to compare TemporalDateTime
+        return b!.createdAt!.getDateTimeInUtc().compareTo(
+          a!.createdAt!.getDateTimeInUtc(),
+        );
+      });
+
+    // 5. Filter nulls and return List<Job>
+    final finalResult = sortedItems.whereType<Job>().toList();
     emit(
       state.copyWith(
         status: HelperJobsStatus.success,
-        jobs: jobs,
+        jobs: finalResult,
+        previousResult: jobs,
         hasNext: hasNext,
         page: hasNext ? 1 : 0,
       ),
@@ -175,17 +210,28 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
     );
 
     final jobs = await repository.getJobs(
-      page: 0,
       limit: state.limit,
       tag: event.tag,
     );
-    final hasNext = jobs.length < 20;
+    final hasNext = jobs?.nextToken != null;
+    final sortedItems = List<Job?>.from(jobs?.items ?? [])
+      ..sort((a, b) {
+        if (a?.createdAt == null || b?.createdAt == null) return 0;
+        // Use getDateTime() to compare TemporalDateTime
+        return b!.createdAt!.getDateTimeInUtc().compareTo(
+          a!.createdAt!.getDateTimeInUtc(),
+        );
+      });
+
+    // 5. Filter nulls and return List<Job>
+    final finalResult = sortedItems.whereType<Job>().toList();
     emit(
       state.copyWith(
         status: HelperJobsStatus.success,
-        jobs: jobs,
+        jobs: finalResult,
         hasNext: hasNext,
         page: hasNext ? 1 : 0,
+        previousResult: jobs,
       ),
     );
   }
@@ -200,6 +246,7 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
     final savedJob = SavedJob(
       user: event.currentUser,
       job: event.oldJob,
+      createdAt: TemporalDateTime(DateTime.now()),
     );
     newJobs[jobIndex] = event.oldJob.copyWith(
       savedJobs: [...(event.oldJob.savedJobs ?? []), savedJob],

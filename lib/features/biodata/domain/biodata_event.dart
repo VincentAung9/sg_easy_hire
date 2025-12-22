@@ -46,4 +46,9 @@ class AddUploadDocument extends BiodataEvent {
   AddUploadDocument({required this.data});
 }
 
+class SaveDraftDocuments extends BiodataEvent {
+  final UploadedDocuments data;
+  SaveDraftDocuments({required this.data});
+}
+
 class GetUploadedDocument extends BiodataEvent {}

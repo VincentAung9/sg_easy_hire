@@ -12,6 +12,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/page/language_spoken_
 import 'package:sg_easy_hire/features/biodata/presentation/page/medical_history_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/onboarding_biodata_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/personal_info_page.dart';
+import 'package:sg_easy_hire/features/biodata/presentation/page/upload_document_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
@@ -31,7 +32,9 @@ class AppRouter {
     return GoRouter(
       refreshListenable: GoRouterRefreshStream(auth.authChanges),
       navigatorKey: _rootNavigatorKey,
-      initialLocation: auth.isLoggedIn
+      initialLocation: auth.isFirstTime
+          ? RoutePaths.onboardingBiodata
+          : auth.isLoggedIn
           ? RoutePaths.home
           : RoutePaths.helperSignin,
       debugLogDiagnostics: true,
@@ -44,6 +47,9 @@ class AppRouter {
             state.matchedLocation == RoutePaths.verifyCode;
         final goingToRegister =
             state.matchedLocation == RoutePaths.helperRegister;
+        final goingToOnboarding =
+            state.matchedLocation == RoutePaths.onboardingBiodata;
+        final goingToHome = state.matchedLocation == RoutePaths.home;
 
         // User NOT logged in → allow signin & register only
         if (!isLoggedIn) {
@@ -58,10 +64,17 @@ class AppRouter {
 
         // User logged in → prevent going back to signin/register
         if (isLoggedIn) {
+          if (auth.isFirstTime && goingToHome) {
+            return RoutePaths.onboardingBiodata;
+          }
           if (goingToSignin || goingToRegister) {
             return RoutePaths.home;
           }
           return null;
+        }
+
+        if (!auth.isFirstTime && goingToOnboarding) {
+          return RoutePaths.onboardingBiodata;
         }
 
         return null;
@@ -114,6 +127,11 @@ class AppRouter {
           path: RoutePaths.preferences,
           name: RouteNames.preferences,
           builder: (context, state) => const JobPreferencePage(),
+        ),
+        GoRoute(
+          path: RoutePaths.uploadDocuments,
+          name: RouteNames.uploadDocuments,
+          builder: (context, state) => const UploadDocumentPage(),
         ),
 
         /* 

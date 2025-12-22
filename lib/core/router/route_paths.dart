@@ -1,6 +1,7 @@
 class RoutePaths {
   static const String splash = "/";
   static const String verifyCode = "/verify_code";
+  static const String syncing = "/syncing";
   //--------COMMON----
   static const String notifications = "/notifications";
   static const String notificationDetail = "/notifications/:id";

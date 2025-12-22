@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -538,4 +541,50 @@ Widget getChatStatus(ChatStatus status) {
 String capitalize(String value) {
   if (value.isEmpty) return value;
   return value[0].toUpperCase() + value.substring(1);
+}
+
+String formatFileSize(int bytes) {
+  if (bytes <= 0) return '0 B';
+
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  int unitIndex = 0;
+  double size = bytes.toDouble();
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  return '${size.toStringAsFixed(2)} ${units[unitIndex]}';
+}
+
+String platformFileToAWSJson(PlatformFile file) {
+  return jsonEncode({
+    'name': file.name,
+    'size': file.size,
+    'path': file.path, // optional (mobile only)
+    'extension': _getExtension(file.name),
+  });
+}
+
+PlatformFile awsJsonToPlatformFile(String awsJson) {
+  final json = jsonDecode(awsJson) as Map<String, dynamic>;
+
+  return PlatformFile(
+    name: json['name'] as String,
+    size: json['size'] as int,
+    path: json['path'] as String?, // may be null (expected for drafts)
+  );
+}
+
+String? _getExtension(String fileName) {
+  final index = fileName.lastIndexOf('.');
+  if (index == -1) return null;
+  return fileName.substring(index + 1).toLowerCase();
+}
+
+String? getFileExtension(PlatformFile file) {
+  final name = file.name;
+  final index = name.lastIndexOf('.');
+  return index != -1 ? name.substring(index + 1) : null;
 }

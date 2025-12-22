@@ -3,7 +3,14 @@ import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 part 'home_state.freezed.dart';
 
-enum HomeStateActions { recommendJob, nextInterview, applyJob, interview, none }
+enum HomeStateActions {
+  recommendJob,
+  nextInterview,
+  applyJob,
+  interview,
+  profileViews,
+  none,
+}
 
 enum HomeStateStatus { pending, success, failure, none }
 

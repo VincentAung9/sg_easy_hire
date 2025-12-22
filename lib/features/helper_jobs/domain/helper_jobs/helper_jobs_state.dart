@@ -1,3 +1,4 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
@@ -26,6 +27,7 @@ class HelperJobsState with _$HelperJobsState {
   factory HelperJobsState({
     @Default(HelperJobsActions.getJobs) HelperJobsActions action,
     @Default(HelperJobsStatus.initialPending) HelperJobsStatus status,
+    PaginatedResult<Job>? previousResult,
     @Default([]) List<Job> jobs,
     @Default([]) List<JobTag> jobTags,
     @Default(0) int page,

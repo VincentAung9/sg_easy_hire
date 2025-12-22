@@ -8,6 +8,7 @@ import 'package:sg_easy_hire/features/auth/data/repositories/auth_repository.dar
 import 'package:sg_easy_hire/features/biodata/data/repository/biodata_repository.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_event.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_state.dart';
+import 'package:sg_easy_hire/models/UploadedDocuments.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:sg_easy_hire/models/WorkHistory.dart';
 
@@ -39,6 +40,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     on<AddJobPreference>(_onAddJobPreference);
     on<GetUploadedDocument>(_onGetUploadedDocument);
     on<AddUploadDocument>(_onAddUploadedDocument);
+    on<SaveDraftDocuments>(_onSaveDraftDocuments);
   }
 
   FutureOr<void> _onGetPersonalInfo(
@@ -366,10 +368,13 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
         status: BiodataStateStatus.loading,
       ),
     );
+    final hiveDraft = Hive.box<UploadedDocuments>(
+      name: helperPersonalDocuments,
+    ).get(helperPersonalDocumentsKey);
     final result = await repository.getUploadedDocuments(hiveUser?.id ?? "");
     emit(
       state.copyWith(
-        documents: result,
+        documents: hiveDraft ?? result,
         action: BiodataStateAction.uploadDoc,
         status: BiodataStateStatus.none,
       ),
@@ -393,6 +398,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
           uploadedDocuments: event.data,
         ),
       );
+      //need to clear previous draft if exist
+      Hive.box<UploadedDocuments>(
+        name: helperPersonalDocuments,
+      ).delete(helperPersonalDocumentsKey);
       emit(
         state.copyWith(
           documents: event.data,
@@ -437,6 +446,22 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     return WorkHistoryDiff(
       added: added,
       removed: removed,
+    );
+  }
+
+  FutureOr<void> _onSaveDraftDocuments(
+    SaveDraftDocuments event,
+    Emitter<BiodataState> emit,
+  ) {
+    Hive.box<UploadedDocuments>(
+      name: helperPersonalDocuments,
+    ).put(helperPersonalDocumentsKey, event.data);
+    emit(
+      state.copyWith(
+        documents: event.data,
+        action: BiodataStateAction.saveDoc,
+        status: BiodataStateStatus.success,
+      ),
     );
   }
 }

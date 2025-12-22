@@ -1,18 +1,15 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:sg_easy_hire/models/ContactFamilyDetails.dart';
-import 'package:sg_easy_hire/models/JobPreferences.dart';
-import 'package:sg_easy_hire/models/MedicalHistory.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
-import 'package:sg_easy_hire/models/OtherPersonalInfo.dart';
-import 'package:sg_easy_hire/models/PersonalInformation.dart';
-import 'package:sg_easy_hire/models/UploadedDocuments.dart';
 
 class BiodataRepository {
   Future<PersonalInformation?> getPersonalInfo(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       PersonalInformation.classType,
       where: PersonalInformation.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -21,14 +18,18 @@ class BiodataRepository {
   }
 
   Future<void> addPersonalinfo(PersonalInformation info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<ContactFamilyDetails?> getContactFamily(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       ContactFamilyDetails.classType,
       where: ContactFamilyDetails.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -37,14 +38,18 @@ class BiodataRepository {
   }
 
   Future<void> addContactFamily(ContactFamilyDetails info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<MedicalHistory?> getMedicalHistory(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       MedicalHistory.classType,
       where: MedicalHistory.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -53,14 +58,18 @@ class BiodataRepository {
   }
 
   Future<void> addMedicalHistory(MedicalHistory info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<OtherPersonalInfo?> getOtherPersonalInfo(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       OtherPersonalInfo.classType,
       where: OtherPersonalInfo.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -69,38 +78,51 @@ class BiodataRepository {
   }
 
   Future<List<WorkHistory>> getWorkHistories(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       WorkHistory.classType,
       where: WorkHistory.HELPER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
-      return result;
+      return result.whereType<WorkHistory>().toList();
     } else {
       return [];
     }
   }
 
   Future<void> addOtherPersonalInfo(OtherPersonalInfo info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<void> removeWorkHistory(List<WorkHistory> histories) async {
     await Future.wait(
-      histories.map(Amplify.DataStore.delete),
+      histories.map((h) async {
+        final request = ModelMutations.delete(h);
+        await Amplify.API.mutate(request: request).response;
+      }),
     );
   }
 
   Future<void> addWorkHistories(List<WorkHistory> histories) async {
     await Future.wait(
-      histories.map(Amplify.DataStore.save),
+      histories.map((h) async {
+        final request = ModelMutations.create(h);
+        await Amplify.API.mutate(request: request).response;
+      }),
     );
   }
 
   Future<JobPreferences?> getJobPreferences(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       JobPreferences.classType,
       where: JobPreferences.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -109,14 +131,18 @@ class BiodataRepository {
   }
 
   Future<void> addJobPreferences(JobPreferences info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 
   Future<UploadedDocuments?> getUploadedDocuments(String userID) async {
-    final result = await Amplify.DataStore.query(
+    final request = ModelQueries.list(
       UploadedDocuments.classType,
       where: UploadedDocuments.USER.eq(userID),
     );
+    final response = await Amplify.API.query(request: request).response;
+    final result = response.data?.items ?? [];
+
     if (result.isNotEmpty) {
       return result.first;
     } else {
@@ -125,6 +151,7 @@ class BiodataRepository {
   }
 
   Future<void> addUploadedDocuments(UploadedDocuments info) async {
-    return Amplify.DataStore.save(info);
+    final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
   }
 }

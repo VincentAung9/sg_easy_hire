@@ -40,23 +40,13 @@ class AuthProvider {
 
   Future<SignInReturnType> signInUserWithEmail(SignInParam param) async {
     try {
-      ///await Amplify.DataStore.stop();
       final result = await Amplify.Auth.signIn(
         username: param.phone, // or email, depending on your setup
         password: param.password,
       );
 
       safePrint("🌈 Sign in successful. Cleaning local store...");
-
-      ///await Amplify.DataStore.clear();
-      // 3. Re-initialize and create user record
-      final createdUser = await createUser(role: param.role);
-
-      if (createdUser != null) {
-        return SignInReturnType(result: result);
-      } else {
-        return SignInReturnType(error: "User creation failed");
-      }
+      return SignInReturnType(result: result);
     } on AuthException catch (e) {
       debugPrint('🔥 Email sign in failed: ${e.message}');
       return SignInReturnType(error: e.message);
@@ -93,13 +83,7 @@ class AuthProvider {
         password: param.password,
       );
       //after signin,we create user if don't have
-      safePrint("🌈 Creating user");
-      final createdUser = await createUser(role: param.role);
-      if (createdUser != null) {
-        return SignInReturnType(result: result);
-      } else {
-        return SignInReturnType(error: "User creation failed");
-      }
+      return SignInReturnType(result: result);
     } on AuthException catch (e) {
       debugPrint('🔥 Email sign in failed: ${e.message}');
       return SignInReturnType(error: e.message);
@@ -145,75 +129,13 @@ class AuthProvider {
     }
   }
 
-  Future<T?> performDataStoreOperation<T>(
-    Future<T> Function() operation,
-  ) async {
+  Future<User?> createUser({
+    required UserAttributes attributes,
+    UserRole? role = UserRole.HELPER,
+  }) async {
     try {
-      // 1. Force refresh/check auth session
-      final session = await Amplify.Auth.fetchAuthSession();
-
-      if (!session.isSignedIn) {
-        safePrint("User not signed in. Aborting DataStore operation.");
-        return null;
-      }
-
-      // 2. Execute the operation
-      return await operation();
-    } on ApiException catch (e) {
-      if (e.message.contains('Interrupted')) {
-        safePrint("Auth token not ready, retrying in 2 seconds...");
-        // ignore: inference_failure_on_instance_creation
-        await Future.delayed(const Duration(seconds: 2));
-        return await operation(); // Single retry
-      }
-      rethrow;
-    } catch (e) {
-      safePrint("Operation failed: $e");
-      return null;
-    }
-  }
-
-  Future<void> syncDataStoreSafely() async {
-    try {
-      // Force native side to resolve the Cognito session first
-      final session = await Amplify.Auth.fetchAuthSession();
-
-      if (session.isSignedIn) {
-        // Start the engine
-        await Amplify.DataStore.start();
-
-        // Wait a short moment for the subscription websocket to open
-        // This specifically prevents the 'Interrupted' semaphore error
-        // ignore: inference_failure_on_instance_creation
-        await Future.delayed(const Duration(seconds: 1));
-      }
-    } catch (e) {
-      print("Sync Initialization Failed: $e");
-    }
-  }
-
-  Future<User?> createUser({UserRole? role = UserRole.HELPER}) async {
-    try {
-      await syncDataStoreSafely();
-      final attributes = await getUserAttributes();
-      if (attributes == null) return null;
       final box = Hive.box<User>(name: userBox);
       final hiveUser = box.get(userBoxKey);
-
-      // 1. Try Local DataStore first
-      final localResults = await Amplify.DataStore.query(
-        User.classType,
-        where: User.COGNITOID.eq(attributes.cognitoId),
-      );
-
-      if (localResults.isNotEmpty) {
-        safePrint("✅ User found in Local DataStore");
-        return localResults.first;
-      }
-
-      // 2. FALLBACK: Query the Cloud directly via API (GraphQL)
-      // This bypasses the DataStore sync lag completely
-      safePrint("🔍 Not in local DB. Checking Cloud directly...");
       final request = ModelQueries.list(
         User.classType,
         where: User.COGNITOID.eq(attributes.cognitoId),
@@ -226,7 +148,6 @@ class AuthProvider {
         safePrint(
           "✅ User exists in Cloud (ID: ${cloudUser?.id}). Waiting for Sync...",
         );
-        box.put(userBoxKey, cloudUser!);
         return cloudUser;
       }
       // 3. If Cloud also says no, THEN create new
@@ -240,53 +161,13 @@ class AuthProvider {
         deviceToken: hiveUser?.deviceToken,
         completeProgress: 0,
       );
-      box.put(userBoxKey, newUser);
-      await Amplify.DataStore.save(newUser);
+      final saveRequest = ModelMutations.create(newUser);
+      await Amplify.API.mutate(request: saveRequest).response;
       return newUser;
     } catch (e) {
       safePrint("❌ Error: $e");
       return null;
     }
-    /*   try {
-      // Ensure engine is running
-      await syncDataStoreSafely();
-
-      // Get attributes
-      final attributes = await getUserAttributes();
-      if (attributes == null) return null;
-
-      final box = Hive.box<User>(name: userBox);
-      final hiveUser = box.get(userBoxKey);
-
-      // Use your wrapper to handle the "Interrupted" exception automatically
-      final oldUserResponse = await Amplify.DataStore.query(
-        User.classType,
-        where: User.COGNITOID.eq(attributes.cognitoId),
-      );
-      debugPrint("🌈 Old User Response: ${oldUserResponse.toString()}");
-      if (oldUserResponse.isNotEmpty) {
-        box.put(userBoxKey, oldUserResponse.first);
-        return oldUserResponse.first;
-      } else {
-        // Create new user object
-        final user = User(
-          code: nanoid(10),
-          cognitoId: attributes.cognitoId,
-          role: role ?? UserRole.HELPER,
-          fullName: attributes.fullName,
-          phone: attributes.phone,
-          deviceToken: hiveUser?.deviceToken,
-          completeProgress: 0,
-        );
-        // Save with the same protected wrapper
-        await Amplify.DataStore.save(user);
-        box.put(userBoxKey, user);
-        return user;
-      }
-    } catch (e) {
-      safePrint("🔥 Create user failed: $e");
-      return null;
-    } */
   }
 
   Future<User?> updateUser({required User? user}) async {
@@ -294,9 +175,10 @@ class AuthProvider {
       if (user == null) {
         return null;
       }
-      await Amplify.DataStore.save(user);
+      final request = ModelMutations.update(user);
+      await Amplify.API.mutate(request: request).response;
       return user;
-    } on DataStoreException catch (e) {
+    } catch (e) {
       safePrint("🔥 Update user failed: $e");
       return null;
     }
@@ -328,20 +210,11 @@ class AuthProvider {
 
   Future<User?> getCurrentUser() async {
     try {
-      final attrs = await Amplify.Auth.fetchUserAttributes();
+      final attrs = await getUserAttributes();
 
-      final cognitoID = attrs
-          .firstWhere((a) => a.userAttributeKey == CognitoUserAttributeKey.sub)
-          .value;
-      final user = await Amplify.DataStore.query(
-        User.classType,
-        where: User.COGNITOID.eq(cognitoID),
-      );
-      if (user.isEmpty) {
-        return null;
-      }
-      return user.first;
-    } on DataStoreException catch (e) {
+      final createdUser = await createUser(attributes: attrs!);
+      return createdUser;
+    } catch (e) {
       safePrint("🔥 Create user failed: $e");
       return null;
     }

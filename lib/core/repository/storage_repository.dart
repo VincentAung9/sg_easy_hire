@@ -1,7 +1,26 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 
-class StorageService {
+class StorageRepository {
+  static Future<List<PlatformFile>?> pickFile({
+    List<String>? allowedExtensions = const ["pdf", "jpg", "png"],
+    bool allowMultiple = false,
+  }) async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: allowMultiple,
+      type: FileType.custom,
+      withData: false,
+      withReadStream: true,
+      allowedExtensions: allowedExtensions,
+    );
+
+    if (result == null) {
+      safePrint('No file selected');
+      return null;
+    }
+    return result.files;
+  }
+
   static Future<String?> uploadFile(
     PlatformFile platformFile,
     String folderPath,

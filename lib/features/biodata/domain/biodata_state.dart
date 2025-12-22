@@ -10,6 +10,7 @@ enum BiodataStateAction {
   otherPersonalInfo,
   jobPrefer,
   uploadDoc,
+  saveDoc,
   none,
 }
 

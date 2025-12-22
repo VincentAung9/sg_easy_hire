@@ -4,9 +4,11 @@ import 'package:sg_easy_hire/core/theme/theme.dart';
 class FormFooter extends StatelessWidget {
   final void Function()? onSave;
   final void Function()? onNext;
+  final String? nextBtnString;
   const FormFooter({
     required this.onNext,
     required this.onSave,
+    this.nextBtnString,
     super.key,
   });
 
@@ -68,9 +70,9 @@ class FormFooter extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  "Next",
-                  style: TextStyle(
+                child: Text(
+                  nextBtnString ?? "Next",
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),

@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
+import 'package:sg_easy_hire/core/constants/constants.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 
-class OnboardingBiodataView extends StatelessWidget {
+class OnboardingBiodataView extends StatefulWidget {
   const OnboardingBiodataView({super.key});
+
+  @override
+  State<OnboardingBiodataView> createState() => _OnboardingBiodataViewState();
+}
+
+class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
+  Box<bool> signBox = Hive.box<bool>(name: signInBox);
+  @override
+  void initState() {
+    signBox.delete(isFirstTimeLoggedIn);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
