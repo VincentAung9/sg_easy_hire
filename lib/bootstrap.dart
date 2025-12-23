@@ -10,7 +10,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sg_easy_hire/amplifyconfiguration.dart';
-import 'package:sg_easy_hire/core/constants/box_keys.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -38,6 +37,14 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
+  await _initHiveBox();
+
+  await _configureAmplify(); /* 
+  await Amplify.DataStore.clear(); // Wipes the local SQLite cache */
+  runApp(await builder());
+}
+
+Future<void> _initHiveBox() async {
   final dir = await getApplicationDocumentsDirectory();
   Hive.defaultDirectory = dir.path;
   Hive.registerAdapter<User>(
@@ -51,16 +58,42 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         ? null
         : UploadedDocuments.fromJson(Map<String, dynamic>.from(v as Map)),
   );
-  // ignore: inference_failure_on_function_invocation
-  Hive.box<User>(name: userBox);
-  // ignore: inference_failure_on_function_invocation
-  Hive.box<bool>(name: signInBox);
-  //save as draf only for upload-document
-  Hive.box<UploadedDocuments>(name: helperPersonalDocuments);
-
-  await _configureAmplify(); /* 
-  await Amplify.DataStore.clear(); // Wipes the local SQLite cache */
-  runApp(await builder());
+  Hive.registerAdapter<PersonalInformation>(
+    'PersonalInformations',
+    (dynamic v) => v == null
+        ? null
+        : PersonalInformation.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
+  Hive.registerAdapter<ContactFamilyDetails>(
+    'ContactFamilyDetails',
+    (dynamic v) => v == null
+        ? null
+        : ContactFamilyDetails.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
+  Hive.registerAdapter<MedicalHistory>(
+    'MedicalHistory',
+    (dynamic v) => v == null
+        ? null
+        : MedicalHistory.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
+  Hive.registerAdapter<OtherPersonalInfo>(
+    'OtherPersonalInfo',
+    (dynamic v) => v == null
+        ? null
+        : OtherPersonalInfo.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
+  Hive.registerAdapter<JobPreferences>(
+    'JobPreferences',
+    (dynamic v) => v == null
+        ? null
+        : JobPreferences.fromJson(Map<String, dynamic>.from(v as Map)),
+  );
+  Hive.registerAdapter<List<WorkHistory>>(
+    'WorkHistory',
+    (dynamic v) => v == null
+        ? null
+        : [WorkHistory.fromJson(Map<String, dynamic>.from(v as Map))],
+  );
 }
 
 Future<void> _configureAmplify() async {

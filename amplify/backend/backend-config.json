@@ -72,7 +72,7 @@
     }
   },
   "function": {
-    "easyhire50916256": {
+    "helperProfileProgressTrack": {
       "build": true,
       "dependsOn": [
         {
@@ -154,19 +154,19 @@
         }
       ]
     },
-    "AMPLIFY_function_easyhire50916256_deploymentBucketName": {
+    "AMPLIFY_function_helperProfileProgressTrack_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "easyhire50916256"
+          "resourceName": "helperProfileProgressTrack"
         }
       ]
     },
-    "AMPLIFY_function_easyhire50916256_s3Key": {
+    "AMPLIFY_function_helperProfileProgressTrack_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "easyhire50916256"
+          "resourceName": "helperProfileProgressTrack"
         }
       ]
     },

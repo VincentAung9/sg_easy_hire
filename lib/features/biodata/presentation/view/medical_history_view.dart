@@ -73,9 +73,27 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
     super.dispose();
   }
 
+  void setInitialData(MedicalHistory medicalHistory) {
+    isInitialized = true;
+    oldData = medicalHistory;
+    _allergiesController.text = medicalHistory.anyAllergies ?? "";
+    _otherIllnessesController.text = medicalHistory.otherIllnesses ?? "";
+    _disabilitiesController.text = medicalHistory.physicalDisabilities ?? "";
+    _dietaryController.text = medicalHistory.dietaryRestrictions ?? "";
+    (medicalHistory.pastAndExistingIllnesses ?? []).forEach((
+      v,
+    ) {
+      if (_illnesses.containsKey(v)) {
+        //mean it is checked
+        _illnesses[v] = true;
+      }
+    });
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.lightBgColor,
@@ -111,12 +129,16 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
         toolbarHeight: 60,
       ),
       backgroundColor: AppColors.lightBgColor,
-      body: BlocConsumer<BiodataBloc, BiodataState>(
+      body: BlocListener<BiodataBloc, BiodataState>(
         listener: (context, state) {
           if (state.action == BiodataStateAction.medicalHis &&
               state.status == BiodataStateStatus.success) {
             showSuccess(context, "Your information has been saved");
             context.go(RoutePaths.foodHandling);
+          }
+          if (state.action == BiodataStateAction.medicalHis &&
+              state.status == BiodataStateStatus.saveDraftSuccess) {
+            showSuccess(context, "Draft saved successfully");
           }
           if (state.action == BiodataStateAction.medicalHis &&
               state.status == BiodataStateStatus.failure) {
@@ -126,244 +148,206 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
             );
           }
           if (!isInitialized && !(state.medicalHistory == null)) {
-            setState(() {
-              isInitialized = true;
-              oldData = state.medicalHistory;
-              _allergiesController.text =
-                  state.medicalHistory?.anyAllergies ?? "";
-              _otherIllnessesController.text =
-                  state.medicalHistory?.otherIllnesses ?? "";
-              _disabilitiesController.text =
-                  state.medicalHistory?.physicalDisabilities ?? "";
-              _dietaryController.text =
-                  state.medicalHistory?.dietaryRestrictions ?? "";
-              (state.medicalHistory?.pastAndExistingIllnesses ?? []).forEach((
-                v,
-              ) {
-                if (_illnesses.containsKey(v)) {
-                  //mean it is checked
-                  _illnesses[v] = true;
-                }
-              });
-            });
+            setInitialData(state.medicalHistory!);
           }
         },
-        builder: (context, state) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              // Main content padding (p-6)
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header
-                  const Text(
-                    'Medical History',
-                    style: TextStyle(
-                      fontSize: 18, // text-2xl
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1e293b), // slate-800
-                    ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            // Main content padding (p-6)
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                const Text(
+                  'Medical History',
+                  style: TextStyle(
+                    fontSize: 18, // text-2xl
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1e293b), // slate-800
                   ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Please provide your medical information',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.secondaryTextColor, // slate-500
-                    ),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Please provide your medical information',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.secondaryTextColor, // slate-500
                   ),
-                  const SizedBox(height: 32), // space-y-8
-                  // Form Content
-                  CustomTextField(
-                    isFirstTimePressed: isFirstTimePressed,
-                    label: 'Do you have any allergies?',
-                    placeholder: "List any allergies (or write 'NIL' if none)",
-                    controller: _allergiesController,
-                  ),
-                  const SizedBox(height: 32), // space-y-8
-                  // Checkbox Section
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Past and Existing Illnesses',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF334155), // slate-700
-                        ),
+                ),
+                const SizedBox(height: 32), // space-y-8
+                // Form Content
+                CustomTextField(
+                  isFirstTimePressed: isFirstTimePressed,
+                  label: 'Do you have any allergies?',
+                  placeholder: "List any allergies (or write 'NIL' if none)",
+                  controller: _allergiesController,
+                ),
+                const SizedBox(height: 32), // space-y-8
+                // Checkbox Section
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Past and Existing Illnesses',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF334155), // slate-700
                       ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'Select any conditions you have or had:',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.secondaryTextColor, // slate-500
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Select any conditions you have or had:',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.secondaryTextColor, // slate-500
                       ),
-                      const SizedBox(height: 12),
-                      /*  GridView.count(
+                    ),
+                    const SizedBox(height: 12),
+                    /*  GridView.count(
                         crossAxisCount: 2,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         crossAxisSpacing: 12.0, // gap-3
                         mainAxisSpacing: 12.0, */
-                      // gap-3
-                      //childAspectRatio: 3.5, // Adjust aspect ratio as needed
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Wrap(
-                            spacing: 12,
-                            runSpacing: 12,
-                            children: _illnessLabels.entries
-                                .map(
-                                  (entry) => SizedBox(
-                                    width: constraints.maxWidth * 0.45,
-                                    child: CustomCheckboxTile(
-                                      inputKey: entry.key,
-                                      label: entry.value,
-                                      items: _illnesses,
-                                      onChanged: (v) => setState(() {
-                                        _illnesses[entry.key] = v!;
-                                      }),
-                                      onTap: () => setState(() {
-                                        _illnesses[entry.key] =
-                                            !_illnesses[entry.key]!;
-                                      }),
-                                    ),
+                    // gap-3
+                    //childAspectRatio: 3.5, // Adjust aspect ratio as needed
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Wrap(
+                          spacing: 12,
+                          runSpacing: 12,
+                          children: _illnessLabels.entries
+                              .map(
+                                (entry) => SizedBox(
+                                  width: constraints.maxWidth * 0.45,
+                                  child: CustomCheckboxTile(
+                                    inputKey: entry.key,
+                                    label: entry.value,
+                                    items: _illnesses,
+                                    onChanged: (v) => setState(() {
+                                      _illnesses[entry.key] = v!;
+                                    }),
+                                    onTap: () => setState(() {
+                                      _illnesses[entry.key] =
+                                          !_illnesses[entry.key]!;
+                                    }),
                                   ),
-                                )
-                                .toList(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32), // space-y-8
+                                ),
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32), // space-y-8
 
-                  CustomTextField(
-                    isFirstTimePressed: isFirstTimePressed,
-                    label: 'Other Illnesses (if any)',
-                    placeholder: 'Please specify',
-                    controller: _otherIllnessesController,
-                  ),
-                  const SizedBox(height: 32), // space-y-8
+                CustomTextField(
+                  isFirstTimePressed: isFirstTimePressed,
+                  label: 'Other Illnesses (if any)',
+                  placeholder: 'Please specify',
+                  controller: _otherIllnessesController,
+                ),
+                const SizedBox(height: 32), // space-y-8
 
-                  CustomTextField(
-                    isFirstTimePressed: isFirstTimePressed,
-                    label: 'Physical Disabilities',
-                    placeholder:
-                        "List any physical disabilities (or write 'NIL' if none)",
-                    controller: _disabilitiesController,
-                  ),
-                  const SizedBox(height: 32), // space-y-8
+                CustomTextField(
+                  isFirstTimePressed: isFirstTimePressed,
+                  label: 'Physical Disabilities',
+                  placeholder:
+                      "List any physical disabilities (or write 'NIL' if none)",
+                  controller: _disabilitiesController,
+                ),
+                const SizedBox(height: 32), // space-y-8
 
-                  CustomTextField(
-                    isFirstTimePressed: isFirstTimePressed,
-                    label: 'Dietary Restrictions',
-                    placeholder:
-                        "Any dietary restrictions? (or write 'NIL' if none)",
-                    controller: _dietaryController,
-                  ),
-                ],
-              ),
+                CustomTextField(
+                  isFirstTimePressed: isFirstTimePressed,
+                  label: 'Dietary Restrictions',
+                  placeholder:
+                      "Any dietary restrictions? (or write 'NIL' if none)",
+                  controller: _dietaryController,
+                ),
+                const SizedBox(height: 32),
+              ],
             ),
+          ),
+        ),
+      ),
+      // Footer
+      bottomNavigationBar: BlocBuilder<BiodataBloc, BiodataState>(
+        builder: (context, state) {
+          return FormFooter(
+            isNextLoading: state.status == BiodataStateStatus.loading,
+            isSaveLoading: state.status == BiodataStateStatus.saveDraftLoading,
+            onNext: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.foodHandling);
+                return;
+              } else {
+                //save
+                final data = getData();
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddMedicalHistory(data: data),
+                      )
+                    : context.read<BiodataBloc>().add(
+                        UpdateMedicalHistory(data: data),
+                      );
+              }
+            },
+            onSave: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.foodHandling);
+                return;
+              } else {
+                //save
+                final data = getData();
+                context.read<BiodataBloc>().add(
+                  SaveDraftMedicalHistory(data: data),
+                );
+              }
+            },
           );
         },
       ),
-      // Footer
-      bottomNavigationBar: FormFooter(
-        onNext: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.foodHandling);
-            return;
-          } else {
-            //save
-            context.read<BiodataBloc>().add(
-              AddMedicalHistory(
-                data: oldData == null
-                    ? MedicalHistory(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        type: "",
-                        anyAllergies: _allergiesController.text,
-                        pastAndExistingIllnesses: _illnesses.entries
-                            .where((kv) => kv.value == true)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        otherIllnesses: _otherIllnessesController.text,
-                        physicalDisabilities: _disabilitiesController.text,
-                        dietaryRestrictions: _dietaryController.text,
-                        user: currentUser,
-                        isPublished: true,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        type: "",
-                        anyAllergies: _allergiesController.text,
-                        pastAndExistingIllnesses: _illnesses.entries
-                            .where((kv) => kv.value == true)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        otherIllnesses: _otherIllnessesController.text,
-                        physicalDisabilities: _disabilitiesController.text,
-                        dietaryRestrictions: _dietaryController.text,
-                        user: currentUser,
-                        isPublished: true,
-                      ),
-              ),
-            );
-          }
-        },
-        onSave: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.foodHandling);
-            return;
-          } else {
-            //save
-            context.read<BiodataBloc>().add(
-              AddMedicalHistory(
-                data: oldData == null
-                    ? MedicalHistory(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        type: "",
-                        anyAllergies: _allergiesController.text,
-                        pastAndExistingIllnesses: _illnesses.entries
-                            .where((kv) => kv.value == true)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        otherIllnesses: _otherIllnessesController.text,
-                        physicalDisabilities: _disabilitiesController.text,
-                        dietaryRestrictions: _dietaryController.text,
-                        user: currentUser,
-                        isPublished: false,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        type: "",
-                        anyAllergies: _allergiesController.text,
-                        pastAndExistingIllnesses: _illnesses.entries
-                            .where((kv) => kv.value == true)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        otherIllnesses: _otherIllnessesController.text,
-                        physicalDisabilities: _disabilitiesController.text,
-                        dietaryRestrictions: _dietaryController.text,
-                        user: currentUser,
-                        isPublished: false,
-                      ),
-              ),
-            );
-          }
-        },
-      ),
     );
+  }
+
+  MedicalHistory getData() {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    return oldData == null
+        ? MedicalHistory(
+            code: nanoid(10),
+            createdAt: TemporalDateTime(DateTime.now()),
+            type: "",
+            anyAllergies: _allergiesController.text,
+            pastAndExistingIllnesses: _illnesses.entries
+                .where((kv) => kv.value == true)
+                .toList()
+                .map((kv) => kv.key)
+                .toList(),
+            otherIllnesses: _otherIllnessesController.text,
+            physicalDisabilities: _disabilitiesController.text,
+            dietaryRestrictions: _dietaryController.text,
+            user: currentUser,
+            isPublished: true,
+          )
+        : oldData!.copyWith(
+            updatedAt: TemporalDateTime(DateTime.now()),
+            type: "",
+            anyAllergies: _allergiesController.text,
+            pastAndExistingIllnesses: _illnesses.entries
+                .where((kv) => kv.value == true)
+                .toList()
+                .map((kv) => kv.key)
+                .toList(),
+            otherIllnesses: _otherIllnessesController.text,
+            physicalDisabilities: _disabilitiesController.text,
+            dietaryRestrictions: _dietaryController.text,
+            user: currentUser,
+            isPublished: true,
+          );
   }
 
   bool checkEmpty() {

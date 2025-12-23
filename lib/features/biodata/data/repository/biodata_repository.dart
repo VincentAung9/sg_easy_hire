@@ -17,9 +17,20 @@ class BiodataRepository {
     }
   }
 
-  Future<void> addPersonalinfo(PersonalInformation info) async {
+  Future<GraphQLResponse<PersonalInformation>> addPersonalinfo(
+    PersonalInformation info,
+  ) async {
     final request = ModelMutations.create(info);
-    await Amplify.API.mutate(request: request).response;
+    final mutation = await Amplify.API.mutate(request: request).response;
+    return mutation;
+  }
+
+  Future<GraphQLResponse<PersonalInformation>> updatePersonalinfo(
+    PersonalInformation info,
+  ) async {
+    final request = ModelMutations.update(info);
+    final mutation = await Amplify.API.mutate(request: request).response;
+    return mutation;
   }
 
   Future<ContactFamilyDetails?> getContactFamily(String userID) async {
@@ -42,6 +53,11 @@ class BiodataRepository {
     await Amplify.API.mutate(request: request).response;
   }
 
+  Future<void> updateContactFamily(ContactFamilyDetails info) async {
+    final request = ModelMutations.update(info);
+    await Amplify.API.mutate(request: request).response;
+  }
+
   Future<MedicalHistory?> getMedicalHistory(String userID) async {
     final request = ModelQueries.list(
       MedicalHistory.classType,
@@ -59,6 +75,11 @@ class BiodataRepository {
 
   Future<void> addMedicalHistory(MedicalHistory info) async {
     final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
+  }
+
+  Future<void> updateMedicalHistory(MedicalHistory info) async {
+    final request = ModelMutations.update(info);
     await Amplify.API.mutate(request: request).response;
   }
 
@@ -94,6 +115,11 @@ class BiodataRepository {
 
   Future<void> addOtherPersonalInfo(OtherPersonalInfo info) async {
     final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
+  }
+
+  Future<void> updateOtherPersonalInfo(OtherPersonalInfo info) async {
+    final request = ModelMutations.update(info);
     await Amplify.API.mutate(request: request).response;
   }
 
@@ -135,6 +161,11 @@ class BiodataRepository {
     await Amplify.API.mutate(request: request).response;
   }
 
+  Future<void> updateJobPreferences(JobPreferences info) async {
+    final request = ModelMutations.update(info);
+    await Amplify.API.mutate(request: request).response;
+  }
+
   Future<UploadedDocuments?> getUploadedDocuments(String userID) async {
     final request = ModelQueries.list(
       UploadedDocuments.classType,
@@ -152,6 +183,11 @@ class BiodataRepository {
 
   Future<void> addUploadedDocuments(UploadedDocuments info) async {
     final request = ModelMutations.create(info);
+    await Amplify.API.mutate(request: request).response;
+  }
+
+  Future<void> updateUploadedDocuments(UploadedDocuments info) async {
+    final request = ModelMutations.update(info);
     await Amplify.API.mutate(request: request).response;
   }
 }

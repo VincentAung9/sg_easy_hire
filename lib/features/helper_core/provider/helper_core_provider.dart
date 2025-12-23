@@ -19,13 +19,11 @@ class HelperCoreProvider {
   }
 
   //list profile
-  Stream<User?> get user {
+  Stream<User?> user(String userID) {
     final box = Hive.box<User>(name: userBox);
-    final hiveUser = box.get(userBoxKey);
-    debugPrint("🌈 Current User ID: ${hiveUser?.id}");
     final subscriptionRequest = ModelSubscriptions.onUpdate(
       User.classType,
-      where: User.ID.eq(hiveUser?.id),
+      where: User.ID.eq(userID),
     );
     return Amplify.API
         .subscribe(

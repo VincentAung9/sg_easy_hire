@@ -44,7 +44,7 @@ class ProfileCompletion extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Profile: ${user?.completeProgress ?? 0}% Complete",
+                        "Profile: ${user?.completeProgress.round() ?? 0}% Complete",
                         style: textTheme.titleMedium?.copyWith(
                           color: AppColors.textPrimaryLight,
                           fontWeight: FontWeight.bold,

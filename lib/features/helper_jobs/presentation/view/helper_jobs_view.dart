@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/widgets/widgets.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
@@ -64,8 +65,13 @@ class _HelperJobsViewState extends State<HelperJobsView> {
                                 spacing: 16,
                                 children: [JobCardShimmer()],
                               )
-                            : state.status == HelperJobsStatus.failure &&
-                                  state.action == HelperJobsActions.getJobs
+                            : (state.status == HelperJobsStatus.failure &&
+                                      state.action ==
+                                          HelperJobsActions.getJobs ||
+                                  (state.status == HelperJobsStatus.success &&
+                                      state.action ==
+                                          HelperJobsActions.getJobs &&
+                                      state.jobs.isEmpty))
                             ? SizedBox(
                                 height: size.maxHeight * 0.5,
                                 child: Column(
@@ -84,7 +90,9 @@ class _HelperJobsViewState extends State<HelperJobsView> {
                                 children: [
                                   ...state.jobs.map((job) => JobCard(job: job)),
                                   state.status == HelperJobsStatus.subPending
-                                      ? const ButtonLoading()
+                                      ? const ButtonLoading(
+                                          color: AppColors.primary,
+                                        )
                                       : const SizedBox(),
                                 ],
                               );

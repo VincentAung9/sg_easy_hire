@@ -28,9 +28,22 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
     emit(
       state.copyWith(currentUser: hiveUser),
     );
+    if (hiveUser == null) {
+      debugPrint("❗️ User : $hiveUser");
+      return null;
+    }
     return emit.onEach(
-      provider.user,
-      onData: (u) => emit(state.copyWith(currentUser: u)),
+      provider.user(hiveUser.id),
+      onData: (u) {
+        debugPrint("🌈 User Event: ${u?.toJson()}");
+        if (u != null) {
+          emit(
+            state.copyWith(
+              currentUser: u,
+            ),
+          );
+        }
+      },
       onError: (error, _) {
         debugPrint("❗️ Subscribe To User Error: ${error.toString()}");
       },

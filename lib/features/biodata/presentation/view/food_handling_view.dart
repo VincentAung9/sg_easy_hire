@@ -62,9 +62,36 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
     super.dispose();
   }
 
+  void setInitialData(OtherPersonalInfo otherInfo) {
+    isInitialized = true;
+    oldData = otherInfo;
+    for (String v in otherInfo.foodPreferences ?? []) {
+      if (v.contains("handle")) {
+        _handlePork = true;
+      }
+      if (v.contains("eat pork")) {
+        _eatPork = true;
+      }
+      if (v.contains("handle beef")) {
+        _handleBeef = true;
+      }
+      if (v.contains("eat beef")) {
+        _eatBeef = true;
+      }
+    }
+    for (String v in otherInfo.accommodationPreferences ?? []) {
+      if (v.contains("share")) {
+        _shareRoom = true;
+      }
+      if (v.contains("private")) {
+        _privateRoom = true;
+      }
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -101,12 +128,16 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
         toolbarHeight: 60,
       ),
 
-      body: BlocConsumer<BiodataBloc, BiodataState>(
+      body: BlocListener<BiodataBloc, BiodataState>(
         listener: (_, state) {
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.success) {
             showSuccess(context, "Your information has been saved");
             context.go(RoutePaths.languagesSpoken);
+          }
+          if (state.action == BiodataStateAction.otherPersonalInfo &&
+              state.status == BiodataStateStatus.saveDraftSuccess) {
+            showSuccess(context, "Draft saved successfully");
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.failure) {
@@ -116,284 +147,239 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
             );
           }
           if (!isInitialized && !(state.otherInfo == null)) {
-            setState(() {
-              isInitialized = true;
-              oldData = state.otherInfo;
-              for (String v in state.otherInfo?.foodPreferences ?? []) {
-                if (v.contains("handle")) {
-                  _handlePork = true;
-                }
-                if (v.contains("eat pork")) {
-                  _eatPork = true;
-                }
-                if (v.contains("handle beef")) {
-                  _handleBeef = true;
-                }
-                if (v.contains("eat beef")) {
-                  _eatBeef = true;
-                }
-              }
-              for (String v
-                  in state.otherInfo?.accommodationPreferences ?? []) {
-                if (v.contains("share")) {
-                  _shareRoom = true;
-                }
-                if (v.contains("private")) {
-                  _privateRoom = true;
-                }
-              }
-            });
+            setInitialData(state.otherInfo!);
           }
         },
-        builder: (context, state) {
-          return SafeArea(
-            child: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.all(24.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.cardLight,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withAlpha(
-                                  13,
-                                ), // Updated to avoid deprecated withOpacity
-                                blurRadius: 10,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Food Handling Preferences",
-                                style: TextStyle(
-                                  color: AppColors.textPrimaryLight,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                "Select all that apply to you",
-                                style: TextStyle(
-                                  color: AppColors.textSecondaryLight,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Column(
-                                children: [
-                                  CustomCheckboxItem(
-                                    label: "Able to handle pork",
-                                    value: _handlePork,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _handlePork = newValue!;
-                                      });
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomCheckboxItem(
-                                    label: "Able to eat pork",
-                                    value: _eatPork,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _eatPork = newValue!;
-                                      });
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomCheckboxItem(
-                                    label: "Able to handle beef",
-                                    value: _handleBeef,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _handleBeef = newValue!;
-                                      });
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomCheckboxItem(
-                                    label: "Able to eat beef",
-                                    value: _eatBeef,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _eatBeef = newValue!;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+        child: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(24.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardLight,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withAlpha(
+                                13,
+                              ), // Updated to avoid deprecated withOpacity
+                              blurRadius: 10,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 24),
-                        Container(
-                          padding: const EdgeInsets.all(24.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.cardLight,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withAlpha(
-                                  13,
-                                ), // Updated to avoid deprecated withOpacity
-                                blurRadius: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Food Handling Preferences",
+                              style: TextStyle(
+                                color: AppColors.textPrimaryLight,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Accommodation Preferences",
-                                style: TextStyle(
-                                  color: AppColors.textPrimaryLight,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                            ),
+                            const SizedBox(height: 4),
+                            const Text(
+                              "Select all that apply to you",
+                              style: TextStyle(
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Column(
+                              children: [
+                                CustomCheckboxItem(
+                                  label: "Able to handle pork",
+                                  value: _handlePork,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _handlePork = newValue!;
+                                    });
+                                  },
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                "Select all that apply to you",
-                                style: TextStyle(
-                                  color: AppColors.textSecondaryLight,
-                                  fontSize: 15,
+                                const SizedBox(height: 16),
+                                CustomCheckboxItem(
+                                  label: "Able to eat pork",
+                                  value: _eatPork,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _eatPork = newValue!;
+                                    });
+                                  },
                                 ),
-                              ),
-                              const SizedBox(height: 24),
-                              Column(
-                                children: [
-                                  CustomCheckboxItem(
-                                    label: "Willing to share a room",
-                                    value: _shareRoom,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _shareRoom = newValue!;
-                                      });
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomCheckboxItem(
-                                    label: "Prefer a private room",
-                                    value: _privateRoom,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _privateRoom = newValue!;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                const SizedBox(height: 16),
+                                CustomCheckboxItem(
+                                  label: "Able to handle beef",
+                                  value: _handleBeef,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _handleBeef = newValue!;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                CustomCheckboxItem(
+                                  label: "Able to eat beef",
+                                  value: _eatBeef,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _eatBeef = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        const Spacer(),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        padding: const EdgeInsets.all(24.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardLight,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withAlpha(
+                                13,
+                              ), // Updated to avoid deprecated withOpacity
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Accommodation Preferences",
+                              style: TextStyle(
+                                color: AppColors.textPrimaryLight,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            const Text(
+                              "Select all that apply to you",
+                              style: TextStyle(
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Column(
+                              children: [
+                                CustomCheckboxItem(
+                                  label: "Willing to share a room",
+                                  value: _shareRoom,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _shareRoom = newValue!;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                CustomCheckboxItem(
+                                  label: "Prefer a private room",
+                                  value: _privateRoom,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _privateRoom = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BlocBuilder<BiodataBloc, BiodataState>(
+        builder: (context, state) {
+          return FormFooter(
+            isNextLoading: state.status == BiodataStateStatus.loading,
+            isSaveLoading: state.status == BiodataStateStatus.saveDraftLoading,
+            onNext: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.languagesSpoken);
+                return;
+              } else {
+                final data = getData();
+                //save
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddOtherPersonalInfo(data: data),
+                      )
+                    : //save
+                      context.read<BiodataBloc>().add(
+                        UpdateOtherPersonalInfo(data: data),
+                      );
+              }
+            },
+            onSave: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.languagesSpoken);
+                return;
+              } else {
+                final data = getData();
+                //save
+                context.read<BiodataBloc>().add(
+                  SaveDraftOtherPersonalInfo(data: data),
+                );
+              }
+            },
           );
         },
       ),
-      bottomNavigationBar: FormFooter(
-        onNext: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.languagesSpoken);
-            return;
-          } else {
-            List<String> foodPreferences = [];
-            if (_handlePork) foodPreferences.add("Able to handle pork");
-            if (_eatPork) foodPreferences.add("Able to eat pork");
-            if (_handleBeef) foodPreferences.add("Able to handle beef");
-            if (_eatBeef) foodPreferences.add("Able to eat beef");
-            List<String> accommodationPreferences = [];
-            if (_shareRoom)
-              accommodationPreferences.add("Willing to share a room");
-            if (_privateRoom)
-              accommodationPreferences.add("Prefer a private room");
-            //save
-            context.read<BiodataBloc>().add(
-              AddOtherPersonalInfo(
-                data: oldData == null
-                    ?
-                      //new
-                      OtherPersonalInfo(
-                        code: nanoid(),
-                        foodPreferences: foodPreferences,
-                        accommodationPreferences: accommodationPreferences,
-                        user: currentUser,
-                        isPublished: true,
-                        createdAt: TemporalDateTime(DateTime.now()),
-                      )
-                    :
-                      //old
-                      oldData!.copyWith(
-                        foodPreferences: foodPreferences,
-                        accommodationPreferences: accommodationPreferences,
-                        user: currentUser,
-                        isPublished: true,
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                      ),
-              ),
-            );
-          }
-        },
-        onSave: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.languagesSpoken);
-            return;
-          } else {
-            List<String> foodPreferences = [];
-            if (_handlePork) foodPreferences.add("Able to handle pork");
-            if (_eatPork) foodPreferences.add("Able to eat pork");
-            if (_handleBeef) foodPreferences.add("Able to handle beef");
-            if (_eatBeef) foodPreferences.add("Able to eat beef");
-            List<String> accommodationPreferences = [];
-            if (_shareRoom)
-              accommodationPreferences.add("Willing to share a room");
-            if (_privateRoom)
-              accommodationPreferences.add("Prefer a private room");
-            //save
-            context.read<BiodataBloc>().add(
-              AddOtherPersonalInfo(
-                data: oldData == null
-                    ?
-                      //new
-                      OtherPersonalInfo(
-                        code: nanoid(),
-                        foodPreferences: foodPreferences,
-                        accommodationPreferences: accommodationPreferences,
-                        user: currentUser,
-                        isPublished: false,
-                        createdAt: TemporalDateTime(DateTime.now()),
-                      )
-                    :
-                      //old
-                      oldData!.copyWith(
-                        foodPreferences: foodPreferences,
-                        accommodationPreferences: accommodationPreferences,
-                        user: currentUser,
-                        isPublished: false,
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                      ),
-              ),
-            );
-          }
-        },
-      ),
     );
+  }
+
+  OtherPersonalInfo getData() {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    List<String> foodPreferences = [];
+    if (_handlePork) foodPreferences.add("Able to handle pork");
+    if (_eatPork) foodPreferences.add("Able to eat pork");
+    if (_handleBeef) foodPreferences.add("Able to handle beef");
+    if (_eatBeef) foodPreferences.add("Able to eat beef");
+    List<String> accommodationPreferences = [];
+    if (_shareRoom) accommodationPreferences.add("Willing to share a room");
+    if (_privateRoom) accommodationPreferences.add("Prefer a private room");
+    return oldData == null
+        ?
+          //new
+          OtherPersonalInfo(
+            code: nanoid(),
+            foodPreferences: foodPreferences,
+            accommodationPreferences: accommodationPreferences,
+            user: currentUser,
+            isPublished: true,
+            createdAt: TemporalDateTime(DateTime.now()),
+          )
+        :
+          //old
+          oldData!.copyWith(
+            foodPreferences: foodPreferences,
+            accommodationPreferences: accommodationPreferences,
+            user: currentUser,
+            isPublished: true,
+            updatedAt: TemporalDateTime(DateTime.now()),
+          );
   }
 }

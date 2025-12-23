@@ -1,11 +1,9 @@
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
-import 'package:sg_easy_hire/core/utils/helper_user_stream.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';

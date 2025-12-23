@@ -1,6 +1,8 @@
 {
   "version": "1",
   "cognitoConfig": {
+    "identityPoolName": "easyhirebc403e95_identitypool_bc403e95",
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "easyhi7d41006b",
     "userPoolName": "userpool1",
     "autoVerifiedAttributes": [
@@ -40,10 +42,10 @@
       "phone_number_verified"
     ],
     "userpoolClientLambdaRole": "easyhi7d41006b_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
+    "userpoolClientSetAttributes": false,
     "sharedId": "7d41006b",
     "resourceName": "easyhireauth1",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "usernameAttributes": [
       "email, phone_number"
@@ -74,6 +76,7 @@
       "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "authProviders": []
+    "authProviders": [],
+    "thirdPartyAuth": false
   }
-} 
+}

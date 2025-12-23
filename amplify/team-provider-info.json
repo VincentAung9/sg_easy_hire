@@ -82,10 +82,6 @@
         "easyhire": {}
       },
       "function": {
-        "easyhire50916256": {
-          "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
-          "s3Key": "amplify-builds/easyhire50916256-4f36516c634478756864-build.zip"
-        },
         "interviewWeeklyQuota": {
           "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
           "s3Key": "amplify-builds/interviewWeeklyQuota-63634f384a336c2b5466-build.zip"
@@ -95,7 +91,11 @@
           "s3Key": "amplify-builds/pinpointNotificationHandler-67664b5144396d6d5473-build.zip",
           "pinpointAppId": "7d7ed5ee07364bac93ccb7b91a7ecc37"
         },
-        "easyhire": {}
+        "easyhire": {},
+        "helperProfileProgressTrack": {
+          "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
+          "s3Key": "amplify-builds/helperProfileProgressTrack-55487241624c6d634e2f-build.zip"
+        }
       },
       "storage": {
         "media": {}

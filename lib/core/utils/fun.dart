@@ -7,10 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:nanoid/nanoid.dart';
+import 'package:sg_easy_hire/core/domain/document_upload/document_upload_state.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/JobOfferStatus.dart';
+import 'package:sg_easy_hire/models/UploadedDocuments.dart';
+import 'package:sg_easy_hire/models/User.dart';
 import 'package:sg_easy_hire/models/VerifyStatus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -558,12 +562,15 @@ String formatFileSize(int bytes) {
   return '${size.toStringAsFixed(2)} ${units[unitIndex]}';
 }
 
-String platformFileToAWSJson(PlatformFile file) {
+String platformFileToAWSJson(
+  PlatformFile file, {
+  String? uploadedUrl,
+}) {
   return jsonEncode({
     'name': file.name,
     'size': file.size,
-    'path': file.path, // optional (mobile only)
     'extension': _getExtension(file.name),
+    'url': uploadedUrl, // null for draft, set after upload
   });
 }
 
@@ -587,4 +594,49 @@ String? getFileExtension(PlatformFile file) {
   final name = file.name;
   final index = name.lastIndexOf('.');
   return index != -1 ? name.substring(index + 1) : null;
+}
+
+String fileKey(PlatformFile f) => f.path ?? f.name;
+
+UploadedDocuments uploadedResultsToUploadedDocuments({
+  required Map<DocumentType, String> uploadedResults,
+  required User user,
+  UploadedDocuments? oldData,
+}) {
+  return oldData == null
+      ? UploadedDocuments(
+          code: nanoid(10),
+          createdAt: TemporalDateTime(DateTime.now()),
+          profilePhoto: uploadedResults[DocumentType.profilePhoto],
+          passport: uploadedResults[DocumentType.passport],
+          medicalCertificate: uploadedResults[DocumentType.medicalCertificate],
+          policeClearance: uploadedResults[DocumentType.policeClearance],
+          educationalCertificates:
+              uploadedResults[DocumentType.educationalCertificates] != null
+              ? [uploadedResults[DocumentType.educationalCertificates]!]
+              : null,
+          workReferences: uploadedResults[DocumentType.workReferences] != null
+              ? [uploadedResults[DocumentType.workReferences]!]
+              : null,
+          introductionVideo: uploadedResults[DocumentType.introductionVideo],
+          isPublished: true,
+          user: user,
+        )
+      : oldData.copyWith(
+          updatedAt: TemporalDateTime(DateTime.now()),
+          profilePhoto: uploadedResults[DocumentType.profilePhoto],
+          passport: uploadedResults[DocumentType.passport],
+          medicalCertificate: uploadedResults[DocumentType.medicalCertificate],
+          policeClearance: uploadedResults[DocumentType.policeClearance],
+          educationalCertificates:
+              uploadedResults[DocumentType.educationalCertificates] != null
+              ? [uploadedResults[DocumentType.educationalCertificates]!]
+              : oldData.educationalCertificates,
+          workReferences: uploadedResults[DocumentType.workReferences] != null
+              ? [uploadedResults[DocumentType.workReferences]!]
+              : oldData.workReferences,
+          introductionVideo: uploadedResults[DocumentType.introductionVideo],
+          isPublished: true,
+          user: user,
+        );
 }

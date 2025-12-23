@@ -16,6 +16,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_fi
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/models/PersonalInformation.dart';
+import 'package:sg_easy_hire/models/User.dart';
 
 class PersonalInfoView extends StatefulWidget {
   const PersonalInfoView({super.key});
@@ -39,14 +40,6 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
 
   @override
   void initState() {
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
-    fullNameController.text = currentUser?.fullName ?? "";
-    heightController.text = currentUser?.height ?? "";
-    weightController.text = currentUser?.weight ?? "";
-    nationality = currentUser?.nationality;
-    if (mounted) {
-      setState(() {});
-    }
     context.read<BiodataBloc>().add(GetPersonalInformation());
     super.initState();
   }
@@ -58,6 +51,28 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
     heightController.dispose();
     weightController.dispose();
     super.dispose();
+  }
+
+  void setInitialData(
+    PersonalInformation personalInformation,
+    User? currentUser,
+  ) {
+    isInitialized = true;
+    oldData = personalInformation;
+    fullNameController.text =
+        personalInformation.user?.fullName ?? currentUser?.fullName ?? "";
+    heightController.text =
+        personalInformation.user?.height ?? currentUser?.height ?? "";
+    weightController.text =
+        personalInformation.user?.weight ?? currentUser?.weight ?? "";
+    nationality =
+        personalInformation.user?.nationality ?? currentUser?.nationality;
+    dateOfBirth = personalInformation.dateOfBirth!.getDateTime().toLocal();
+    placeController.text = personalInformation.placeOfBirth ?? "";
+
+    gender = personalInformation.gender ?? "";
+
+    setState(() {});
   }
 
   @override
@@ -100,13 +115,19 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
         ),
         toolbarHeight: 60,
       ),
-      body: BlocConsumer<BiodataBloc, BiodataState>(
+      body: BlocListener<BiodataBloc, BiodataState>(
         listener: (context, state) {
           if (state.action == BiodataStateAction.personalInfo &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been saved");
+            showSuccess(context, "Your information has been submitted");
             //TODO:GO NEXT
             context.go(RoutePaths.contactFamilyDetails);
+          }
+          if (state.action == BiodataStateAction.personalInfo &&
+              state.status == BiodataStateStatus.saveDraftSuccess) {
+            showSuccess(context, "Draft saved successfully.");
+            //TODO:GO NEXT
+            //context.go(RoutePaths.contactFamilyDetails);
           }
           if (state.action == BiodataStateAction.personalInfo &&
               state.status == BiodataStateStatus.failure) {
@@ -117,250 +138,222 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
           }
           if (!isInitialized && !(state.personalInformation == null)) {
             //setState
-            isInitialized = true;
-            oldData = state.personalInformation;
-            dateOfBirth = state.personalInformation!.dateOfBirth!
-                .getDateTime()
-                .toLocal();
-            placeController.text =
-                state.personalInformation?.placeOfBirth ?? "";
-
-            gender = state.personalInformation?.gender ?? "";
-
-            setState(() {});
+            setInitialData(state.personalInformation!, currentUser);
           }
         },
-        builder: (context, state) {
-          return Form(
-            key: formKey,
-            autovalidateMode: isFirstTimePressed
-                ? AutovalidateMode.onUserInteraction
-                : AutovalidateMode.disabled,
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(24.0),
-                  decoration: BoxDecoration(
-                    color: AppColors.cardLight,
-                    borderRadius: BorderRadius.circular(16), // rounded-2xl
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
+        child: Form(
+          key: formKey,
+          autovalidateMode: isFirstTimePressed
+              ? AutovalidateMode.onUserInteraction
+              : AutovalidateMode.disabled,
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24.0),
+                decoration: BoxDecoration(
+                  color: AppColors.cardLight,
+                  borderRadius: BorderRadius.circular(16), // rounded-2xl
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Personal Information",
+                      style: TextStyle(
+                        color: AppColors.textPrimaryLight,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Personal Information",
-                        style: TextStyle(
-                          color: AppColors.textPrimaryLight,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Inter',
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      "Let's start with your basic details",
+                      style: TextStyle(
+                        color: AppColors.textSecondaryLight,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
                       ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        "Let's start with your basic details",
-                        style: TextStyle(
-                          color: AppColors.textSecondaryLight,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      CustomTextField(
-                        controller: fullNameController,
-                        label: "Full Name",
-                        placeholder: "Enter your full name",
-                        isRequired: true,
-                        isFirstTimePressed: isFirstTimePressed,
-                      ),
-                      const SizedBox(height: 24),
-                      CustomDatePicker(
-                        isFirstTimePressed: isFirstTimePressed,
-                        initialDate: dateOfBirth,
-                        onChange: (d) => setState(() {
-                          dateOfBirth = d;
-                        }),
-                      ),
-                      /* CustomTextField(
+                    ),
+                    const SizedBox(height: 32),
+                    CustomTextField(
+                      controller: fullNameController,
+                      label: "Full Name",
+                      placeholder: "Enter your full name",
+                      isRequired: true,
+                      isFirstTimePressed: isFirstTimePressed,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomDatePicker(
+                      isFirstTimePressed: isFirstTimePressed,
+                      initialDate: dateOfBirth,
+                      onChange: (d) => setState(() {
+                        dateOfBirth = d;
+                      }),
+                    ),
+                    /* CustomTextField(
                         controller: dateOfBirthController,
                         label: "Date of Birth",
                         placeholder: "dd/mm/yyyy",
                         isRequired: true,
                         suffixIcon: Icons.calendar_today_outlined,
                       ), */
-                      const SizedBox(height: 24),
-                      CustomTextField(
-                        controller: placeController,
-                        label: "Place of Birth",
-                        placeholder: "City/Town",
-                        isRequired: true,
-                        isFirstTimePressed: isFirstTimePressed,
-                      ),
-                      const SizedBox(height: 24),
-                      CustomFormDropDown(
-                        isFirstTimePressed: isFirstTimePressed,
-                        initialValue: nationality,
-                        onChanged: (v) {
-                          setState(() {
-                            nationality = v ?? "";
-                          });
-                        },
-                        label: "Nationality",
-                        placeholder: "Select nationality",
-                        items: const [
-                          "Bruneian",
-                          "Cambodian",
-                          "Indonesian",
-                          "Lao",
-                          "Malaysian",
-                          "Burmese",
-                          "Filipino",
-                          "Singaporean",
-                          "Thai",
-                          "Timorese",
-                          "Vietnamese",
-                        ],
-                        isRequired: true,
-                      ),
-                      const SizedBox(height: 24),
-                      CustomFormDropDown(
-                        isFirstTimePressed: isFirstTimePressed,
-                        initialValue: gender,
-                        onChanged: (v) {
-                          setState(() {
-                            gender = v ?? "";
-                          });
-                        },
-                        label: "Gender",
-                        placeholder: "Select gender",
-                        items: const ["Male", "Female", "Other"],
-                        isRequired: true,
-                      ),
-                      const SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              controller: heightController,
-                              label: "Height (cm)",
-                              placeholder: "e.g., 161",
-                              isRequired: true,
-                              keyboardType: TextInputType.number,
-                              isFirstTimePressed: isFirstTimePressed,
-                            ),
+                    const SizedBox(height: 24),
+                    CustomTextField(
+                      controller: placeController,
+                      label: "Place of Birth",
+                      placeholder: "City/Town",
+                      isRequired: true,
+                      isFirstTimePressed: isFirstTimePressed,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomFormDropDown(
+                      isFirstTimePressed: isFirstTimePressed,
+                      initialValue: nationality,
+                      onChanged: (v) {
+                        setState(() {
+                          nationality = v ?? "";
+                        });
+                      },
+                      label: "Nationality",
+                      placeholder: "Select nationality",
+                      items: const [
+                        "Bruneian",
+                        "Cambodian",
+                        "Indonesian",
+                        "Lao",
+                        "Malaysian",
+                        "Burmese",
+                        "Filipino",
+                        "Singaporean",
+                        "Thai",
+                        "Timorese",
+                        "Vietnamese",
+                      ],
+                      isRequired: true,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomFormDropDown(
+                      isFirstTimePressed: isFirstTimePressed,
+                      initialValue: gender,
+                      onChanged: (v) {
+                        setState(() {
+                          gender = v ?? "";
+                        });
+                      },
+                      label: "Gender",
+                      placeholder: "Select gender",
+                      items: const ["Male", "Female", "Other"],
+                      isRequired: true,
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: CustomTextField(
+                            controller: heightController,
+                            label: "Height (cm)",
+                            placeholder: "e.g., 161",
+                            isRequired: true,
+                            keyboardType: TextInputType.number,
+                            isFirstTimePressed: isFirstTimePressed,
                           ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: CustomTextField(
-                              controller: weightController,
-                              label: "Weight (kg)",
-                              placeholder: "e.g., 41",
-                              isRequired: true,
-                              keyboardType: TextInputType.number,
-                              isFirstTimePressed: isFirstTimePressed,
-                            ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: CustomTextField(
+                            controller: weightController,
+                            label: "Weight (kg)",
+                            placeholder: "e.g., 41",
+                            isRequired: true,
+                            keyboardType: TextInputType.number,
+                            isFirstTimePressed: isFirstTimePressed,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BlocBuilder<BiodataBloc, BiodataState>(
+        builder: (context, state) {
+          return FormFooter(
+            isNextLoading: state.status == BiodataStateStatus.loading,
+            isSaveLoading: state.status == BiodataStateStatus.saveDraftLoading,
+            onNext: () {
+              setState(() {
+                isFirstTimePressed = true;
+              });
+              if (formKey.currentState?.validate() ?? false) {
+                //TODO: Save and Next
+                final data = getData(true);
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddPersonalInformation(data: data),
+                      )
+                    : context.read<BiodataBloc>().add(
+                        UpdatePersonalInformation(data: data),
+                      );
+              }
+            },
+            onSave: () {
+              setState(() {
+                isFirstTimePressed = true;
+              });
+              if (formKey.currentState?.validate() ?? false) {
+                final data = getData(false);
+                context.read<BiodataBloc>().add(
+                  SaveDraftPersonalInformation(data: data),
+                );
+              }
+            },
           );
         },
       ),
-      bottomNavigationBar: FormFooter(
-        onNext: () {
-          setState(() {
-            isFirstTimePressed = true;
-          });
-          if (formKey.currentState?.validate() ?? false) {
-            //TODO: Save and Next
-            context.read<BiodataBloc>().add(
-              AddPersonalInformation(
-                data: oldData == null
-                    ? PersonalInformation(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        dateOfBirth: TemporalDate(dateOfBirth!),
-                        placeOfBirth: placeController.text,
-                        gender: gender,
-                        user: currentUser?.copyWith(
-                          fullName: fullNameController.text,
-                          nationality: nationality,
-                          height: heightController.text,
-                          weight: weightController.text,
-                        ),
-                        isPublished: true,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        dateOfBirth: TemporalDate(dateOfBirth!),
-                        placeOfBirth: placeController.text,
-                        gender: gender,
-                        user: currentUser?.copyWith(
-                          fullName: fullNameController.text,
-                          nationality: nationality,
-                          height: heightController.text,
-                          weight: weightController.text,
-                        ),
-                        isPublished: true,
-                      ),
-              ),
-            );
-          }
-        },
-        onSave: () {
-          setState(() {
-            isFirstTimePressed = true;
-          });
-          if (formKey.currentState?.validate() ?? false) {
-            //TODO: Save and Next
-            context.read<BiodataBloc>().add(
-              AddPersonalInformation(
-                data: oldData == null
-                    ? PersonalInformation(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        dateOfBirth: TemporalDate(dateOfBirth!),
-                        placeOfBirth: placeController.text,
-                        gender: gender,
-                        user: currentUser?.copyWith(
-                          fullName: fullNameController.text,
-                          nationality: nationality,
-                          height: heightController.text,
-                          weight: weightController.text,
-                        ),
-                        isPublished: false,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        dateOfBirth: TemporalDate(dateOfBirth!),
-                        placeOfBirth: placeController.text,
-                        gender: gender,
-                        user: currentUser?.copyWith(
-                          fullName: fullNameController.text,
-                          nationality: nationality,
-                          height: heightController.text,
-                          weight: weightController.text,
-                        ),
-                        isPublished: false,
-                      ),
-              ),
-            );
-          } else {
-            //draft
-          }
-        },
-      ),
     );
+  }
+
+  PersonalInformation getData(bool isPublished) {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    return oldData == null
+        ? PersonalInformation(
+            code: nanoid(10),
+            createdAt: TemporalDateTime(DateTime.now()),
+            dateOfBirth: TemporalDate(dateOfBirth!),
+            placeOfBirth: placeController.text,
+            gender: gender,
+            user: currentUser?.copyWith(
+              fullName: fullNameController.text,
+              nationality: nationality,
+              height: heightController.text,
+              weight: weightController.text,
+            ),
+            isPublished: isPublished,
+          )
+        : oldData!.copyWith(
+            updatedAt: TemporalDateTime(DateTime.now()),
+            dateOfBirth: TemporalDate(dateOfBirth!),
+            placeOfBirth: placeController.text,
+            gender: gender,
+            user: currentUser?.copyWith(
+              fullName: fullNameController.text,
+              nationality: nationality,
+              height: heightController.text,
+              weight: weightController.text,
+            ),
+            isPublished: isPublished,
+          );
   }
 }

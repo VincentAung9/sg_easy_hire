@@ -1,5 +1,6 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class HelperJobRepository {
@@ -68,13 +69,13 @@ class HelperJobRepository {
             Job.TITLE
                 .contains(query)
                 .or(Job.LOCATION.contains(query))
-                .or(Job.FAMILYMEMBERS.contains(query)),
+                .or(Job.FAMILYMEMBERS.eq(int.tryParse(query))),
           );
     } else if (query.isNotEmpty) {
       filter = Job.TITLE
           .contains(query)
           .or(Job.LOCATION.contains(query))
-          .or(Job.FAMILYMEMBERS.contains(query));
+          .or(Job.FAMILYMEMBERS.eq(int.tryParse(query)));
     } else if (tag != "All") {
       filter = Job.TAGS.contains(tag);
     }
@@ -84,6 +85,9 @@ class HelperJobRepository {
       where: filter,
     );
     final firstResult = await Amplify.API.query(request: firstRequest).response;
+    if (firstResult.hasErrors) {
+      debugPrint("❗️Query Jobs Error: ${firstResult.errors}");
+    }
     return firstResult.data;
   }
 }

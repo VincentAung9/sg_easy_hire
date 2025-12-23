@@ -57,9 +57,24 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
     super.dispose();
   }
 
+  void setInitialData(ContactFamilyDetails contactFamilyDetails) {
+    isInitialized = true;
+    oldData = contactFamilyDetails;
+    addressController.text = contactFamilyDetails.residentialAddress ?? "";
+    contactNumberController.text = contactFamilyDetails.contactNumber ?? "";
+    emailController.text = contactFamilyDetails.email ?? "";
+    portController.text = contactFamilyDetails.airPort ?? "";
+    siblingController.text = contactFamilyDetails.numOfSiblings ?? "";
+    childrenController.text = contactFamilyDetails.numOfChild ?? "";
+    ageOfChildrenController.text = contactFamilyDetails.ageOfChild ?? "";
+    religion = contactFamilyDetails.religion ?? "";
+    education = contactFamilyDetails.educationLevel ?? "";
+    maritalStatus = contactFamilyDetails.martialStatus ?? "";
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -98,12 +113,16 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
         toolbarHeight: 60,
       ),
 
-      body: BlocConsumer<BiodataBloc, BiodataState>(
+      body: BlocListener<BiodataBloc, BiodataState>(
         listener: (context, state) {
           if (state.action == BiodataStateAction.contactFam &&
               state.status == BiodataStateStatus.success) {
             showSuccess(context, "Your information has been saved");
             context.go(RoutePaths.medicalHistor);
+          }
+          if (state.action == BiodataStateAction.contactFam &&
+              state.status == BiodataStateStatus.saveDraftSuccess) {
+            showSuccess(context, "Draft saved successfully");
           }
           if (state.action == BiodataStateAction.contactFam &&
               state.status == BiodataStateStatus.failure) {
@@ -113,284 +132,247 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
             );
           }
           if (!isInitialized && !(state.contactFamilyDetails == null)) {
-            isInitialized = true;
-            oldData = state.contactFamilyDetails;
-            addressController.text =
-                state.contactFamilyDetails?.residentialAddress ?? "";
-            contactNumberController.text =
-                state.contactFamilyDetails?.contactNumber ?? "";
-            emailController.text = state.contactFamilyDetails?.email ?? "";
-            portController.text = state.contactFamilyDetails?.airPort ?? "";
-            siblingController.text =
-                state.contactFamilyDetails?.numOfSiblings ?? "";
-            childrenController.text =
-                state.contactFamilyDetails?.numOfChild ?? "";
-            ageOfChildrenController.text =
-                state.contactFamilyDetails?.ageOfChild ?? "";
-            religion = state.contactFamilyDetails?.religion ?? "";
-            education = state.contactFamilyDetails?.educationLevel ?? "";
-            maritalStatus = state.contactFamilyDetails?.martialStatus ?? "";
+            setInitialData(state.contactFamilyDetails!);
           }
-          setState(() {});
         },
-        builder: (context, state) {
-          return Form(
-            key: formKey,
-            autovalidateMode: isFirstTimePressed
-                ? AutovalidateMode.onUserInteraction
-                : AutovalidateMode.disabled,
-            child: SafeArea(
-              child: ListView(
-                padding: const EdgeInsets.all(16.0),
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(24.0),
-                    decoration: BoxDecoration(
-                      color: AppColors.cardLight,
-                      borderRadius: BorderRadius.circular(12), // rounded-lg
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Contact & Family Details",
-                          style: TextStyle(
-                            color: AppColors.textPrimaryLight,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "How can we reach you and your family information",
-                          style: TextStyle(
-                            color: AppColors.textSecondaryLight,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          controller: addressController,
-                          label: "Residential Address in Home Country",
-                          placeholder: "Enter your full address",
-                          isRequired: true,
-                          isFirstTimePressed: isFirstTimePressed,
-                          maxLines: 3,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          controller: contactNumberController,
-                          label: "Contact Number in Home Country",
-                          placeholder: "e.g., +95 123456789",
-                          isRequired: true,
-                          keyboardType: TextInputType.phone,
-                          isFirstTimePressed: isFirstTimePressed,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          controller: portController,
-                          label: "Port/Airport for Repatriation",
-                          placeholder: "e.g., Yangon International Airport",
-                          isRequired: true,
-                          isFirstTimePressed: isFirstTimePressed,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          controller: emailController,
-                          label: "Email Address (Optional)",
-                          placeholder: "your.email@example.com",
-                          keyboardType: TextInputType.emailAddress,
-                          isFirstTimePressed: isFirstTimePressed,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomFormDropDown(
-                          isFirstTimePressed: isFirstTimePressed,
-                          initialValue: religion,
-                          onChanged: (v) {
-                            setState(() {
-                              religion = v ?? "";
-                            });
-                          },
-                          label: "Religion",
-                          placeholder: "Select religion",
-                          items: const [
-                            "Christianity",
-                            "Islam",
-                            "Hinduism",
-                            "Buddhism",
-                            "Judaism",
-                            "Other",
-                            "Prefer not to say",
-                          ],
-                          isRequired: true,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomFormDropDown(
-                          isFirstTimePressed: isFirstTimePressed,
-                          initialValue: education,
-                          onChanged: (v) {
-                            setState(() {
-                              education = v ?? "";
-                            });
-                          },
-                          label: "Education Level",
-                          placeholder: "Select education level",
-                          items: const [
-                            "High School",
-                            "Diploma",
-                            "Bachelor's Degree",
-                            "Master's Degree",
-                            "Doctorate",
-                          ],
-                          isRequired: true,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          isFirstTimePressed: isFirstTimePressed,
-                          controller: siblingController,
-                          label: "Number of Siblings",
-                          placeholder: "0",
-                          isRequired: true,
-                          keyboardType: TextInputType.number,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomFormDropDown(
-                          isFirstTimePressed: isFirstTimePressed,
-                          initialValue: maritalStatus,
-                          onChanged: (v) {
-                            setState(() {
-                              maritalStatus = v ?? "";
-                            });
-                          },
-                          label: "Marital Status",
-                          placeholder: "Select marital status",
-                          items: const [
-                            "Single",
-                            "Married",
-                            "Divorced",
-                            "Widowed",
-                          ],
-                          isRequired: true,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          isFirstTimePressed: isFirstTimePressed,
-                          controller: childrenController,
-                          label: "Number of Children",
-                          placeholder: "0",
-                          keyboardType: TextInputType.number,
-                        ),
-                        const SizedBox(height: 24),
-                        CustomTextField(
-                          isFirstTimePressed: isFirstTimePressed,
-                          controller: ageOfChildrenController,
-                          label: "Age(s) of Children (if any)",
-                          placeholder: "e.g., 5, 8, 12",
-                        ),
-                      ],
-                    ),
+        child: Form(
+          key: formKey,
+          autovalidateMode: isFirstTimePressed
+              ? AutovalidateMode.onUserInteraction
+              : AutovalidateMode.disabled,
+          child: SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(24.0),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardLight,
+                    borderRadius: BorderRadius.circular(12), // rounded-lg
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Contact & Family Details",
+                        style: TextStyle(
+                          color: AppColors.textPrimaryLight,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        "How can we reach you and your family information",
+                        style: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        controller: addressController,
+                        label: "Residential Address in Home Country",
+                        placeholder: "Enter your full address",
+                        isRequired: true,
+                        isFirstTimePressed: isFirstTimePressed,
+                        maxLines: 3,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        controller: contactNumberController,
+                        label: "Contact Number in Home Country",
+                        placeholder: "e.g., +95 123456789",
+                        isRequired: true,
+                        keyboardType: TextInputType.phone,
+                        isFirstTimePressed: isFirstTimePressed,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        controller: portController,
+                        label: "Port/Airport for Repatriation",
+                        placeholder: "e.g., Yangon International Airport",
+                        isRequired: true,
+                        isFirstTimePressed: isFirstTimePressed,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        controller: emailController,
+                        label: "Email Address (Optional)",
+                        placeholder: "your.email@example.com",
+                        keyboardType: TextInputType.emailAddress,
+                        isFirstTimePressed: isFirstTimePressed,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomFormDropDown(
+                        isFirstTimePressed: isFirstTimePressed,
+                        initialValue: religion,
+                        onChanged: (v) {
+                          setState(() {
+                            religion = v ?? "";
+                          });
+                        },
+                        label: "Religion",
+                        placeholder: "Select religion",
+                        items: const [
+                          "Christianity",
+                          "Islam",
+                          "Hinduism",
+                          "Buddhism",
+                          "Judaism",
+                          "Other",
+                          "Prefer not to say",
+                        ],
+                        isRequired: true,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomFormDropDown(
+                        isFirstTimePressed: isFirstTimePressed,
+                        initialValue: education,
+                        onChanged: (v) {
+                          setState(() {
+                            education = v ?? "";
+                          });
+                        },
+                        label: "Education Level",
+                        placeholder: "Select education level",
+                        items: const [
+                          "High School",
+                          "Diploma",
+                          "Bachelor's Degree",
+                          "Master's Degree",
+                          "Doctorate",
+                        ],
+                        isRequired: true,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        isFirstTimePressed: isFirstTimePressed,
+                        controller: siblingController,
+                        label: "Number of Siblings",
+                        placeholder: "0",
+                        isRequired: true,
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomFormDropDown(
+                        isFirstTimePressed: isFirstTimePressed,
+                        initialValue: maritalStatus,
+                        onChanged: (v) {
+                          setState(() {
+                            maritalStatus = v ?? "";
+                          });
+                        },
+                        label: "Marital Status",
+                        placeholder: "Select marital status",
+                        items: const [
+                          "Single",
+                          "Married",
+                          "Divorced",
+                          "Widowed",
+                        ],
+                        isRequired: true,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        isFirstTimePressed: isFirstTimePressed,
+                        controller: childrenController,
+                        label: "Number of Children",
+                        placeholder: "0",
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 24),
+                      CustomTextField(
+                        isFirstTimePressed: isFirstTimePressed,
+                        controller: ageOfChildrenController,
+                        label: "Age(s) of Children (if any)",
+                        placeholder: "e.g., 5, 8, 12",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BlocBuilder<BiodataBloc, BiodataState>(
+        builder: (context, state) {
+          return FormFooter(
+            isNextLoading: state.status == BiodataStateStatus.loading,
+            isSaveLoading: state.status == BiodataStateStatus.saveDraftLoading,
+            onNext: () {
+              setState(() {
+                isFirstTimePressed = true;
+              });
+              if (checkValid() && (formKey.currentState?.validate() ?? false)) {
+                final data = getData();
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddContactFamilyInfo(data: data),
+                      )
+                    : context.read<BiodataBloc>().add(
+                        UpdateContactFamilyInfo(data: data),
+                      );
+              }
+            },
+            onSave: () {
+              setState(() {
+                isFirstTimePressed = true;
+              });
+              if (checkValid() && (formKey.currentState?.validate() ?? false)) {
+                final data = getData();
+                context.read<BiodataBloc>().add(
+                  SaveDraftContactFamilyInfo(data: data),
+                );
+              }
+            },
           );
         },
       ),
-      bottomNavigationBar: FormFooter(
-        onNext: () {
-          setState(() {
-            isFirstTimePressed = true;
-          });
-          if (checkValid() && (formKey.currentState?.validate() ?? false)) {
-            context.read<BiodataBloc>().add(
-              AddContactFamilyInfo(
-                data: oldData == null
-                    ? ContactFamilyDetails(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        residentialAddress: addressController.text,
-                        contactNumber: contactNumberController.text,
-                        email: emailController.text,
-                        airPort: portController.text,
-                        religion: religion,
-                        educationLevel: education,
-                        numOfSiblings: siblingController.text,
-                        martialStatus: maritalStatus,
-                        numOfChild: childrenController.text,
-                        ageOfChild: ageOfChildrenController.text,
-                        user: currentUser,
-                        isPublished: true,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        residentialAddress: addressController.text,
-                        contactNumber: contactNumberController.text,
-                        email: emailController.text,
-                        airPort: portController.text,
-                        religion: religion,
-                        educationLevel: education,
-                        numOfSiblings: siblingController.text,
-                        martialStatus: maritalStatus,
-                        numOfChild: childrenController.text,
-                        ageOfChild: ageOfChildrenController.text,
-                        user: currentUser,
-                        isPublished: true,
-                      ),
-              ),
-            );
-          }
-        },
-        onSave: () {
-          setState(() {
-            isFirstTimePressed = true;
-          });
-          if (checkValid() && (formKey.currentState?.validate() ?? false)) {
-            context.read<BiodataBloc>().add(
-              AddContactFamilyInfo(
-                data: oldData == null
-                    ? ContactFamilyDetails(
-                        code: nanoid(10),
-                        createdAt: TemporalDateTime(DateTime.now()),
-                        residentialAddress: addressController.text,
-                        contactNumber: contactNumberController.text,
-                        email: emailController.text,
-                        airPort: portController.text,
-                        religion: religion,
-                        educationLevel: education,
-                        numOfSiblings: siblingController.text,
-                        martialStatus: maritalStatus,
-                        numOfChild: childrenController.text,
-                        ageOfChild: ageOfChildrenController.text,
-                        user: currentUser,
-                        isPublished: false,
-                      )
-                    : oldData!.copyWith(
-                        updatedAt: TemporalDateTime(DateTime.now()),
-                        residentialAddress: addressController.text,
-                        contactNumber: contactNumberController.text,
-                        email: emailController.text,
-                        airPort: portController.text,
-                        religion: religion,
-                        educationLevel: education,
-                        numOfSiblings: siblingController.text,
-                        martialStatus: maritalStatus,
-                        numOfChild: childrenController.text,
-                        ageOfChild: ageOfChildrenController.text,
-                        user: currentUser,
-                        isPublished: false,
-                      ),
-              ),
-            );
-          }
-        },
-      ),
     );
+  }
+
+  ContactFamilyDetails getData() {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    return oldData == null
+        ? ContactFamilyDetails(
+            code: nanoid(10),
+            createdAt: TemporalDateTime(DateTime.now()),
+            residentialAddress: addressController.text,
+            contactNumber: contactNumberController.text,
+            email: emailController.text,
+            airPort: portController.text,
+            religion: religion,
+            educationLevel: education,
+            numOfSiblings: siblingController.text,
+            martialStatus: maritalStatus,
+            numOfChild: childrenController.text,
+            ageOfChild: ageOfChildrenController.text,
+            user: currentUser,
+            isPublished: false,
+          )
+        : oldData!.copyWith(
+            updatedAt: TemporalDateTime(DateTime.now()),
+            residentialAddress: addressController.text,
+            contactNumber: contactNumberController.text,
+            email: emailController.text,
+            airPort: portController.text,
+            religion: religion,
+            educationLevel: education,
+            numOfSiblings: siblingController.text,
+            martialStatus: maritalStatus,
+            numOfChild: childrenController.text,
+            ageOfChild: ageOfChildrenController.text,
+            user: currentUser,
+            isPublished: false,
+          );
   }
 
   bool checkValid() {

@@ -140,15 +140,25 @@ class AuthProvider {
         User.classType,
         where: User.COGNITOID.eq(attributes.cognitoId),
       );
+      safePrint(
+        "🪪 cognitoID: ${attributes.cognitoId}.",
+      );
 
       final response = await Amplify.API.query(request: request).response;
       final userList = response.data;
-      if (userList != null && userList.items.isNotEmpty) {
+      if (userList != null &&
+          userList.items.isNotEmpty &&
+          userList.items.first != null) {
         final cloudUser = userList.items.first;
         safePrint(
-          "✅ User exists in Cloud (ID: ${cloudUser?.id}). Waiting for Sync...",
+          "✅ User exists in Cloud (ID: ${cloudUser?.toJson()}).",
         );
         return cloudUser;
+      }
+      if (response.hasErrors) {
+        safePrint(
+          "❗️ User Query ERROR:  (ID: ${response.errors}).",
+        );
       }
       // 3. If Cloud also says no, THEN create new
       safePrint("🆕 No record in Cloud or Local. Creating new...");

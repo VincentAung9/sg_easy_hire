@@ -1,5 +1,6 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 
 class StorageRepository {
   static Future<List<PlatformFile>?> pickFile({
@@ -24,9 +25,11 @@ class StorageRepository {
   static Future<String?> uploadFile(
     PlatformFile platformFile,
     String folderPath,
+    void Function(double v)? onProgress,
+    void Function(String? v)? onError,
   ) async {
     try {
-      const bucket = 'media68a36-dev';
+      const bucket = 'media42907-deveasy';
       const region = 'ap-southeast-1';
       final result = await Amplify.Storage.uploadFile(
         localFile: AWSFile.fromStream(
@@ -35,7 +38,9 @@ class StorageRepository {
         ),
         path: StoragePath.fromString('${folderPath}/${platformFile.name}'),
         onProgress: (progress) {
-          safePrint('Fraction completed: ${progress.fractionCompleted}');
+          if (!(onProgress == null)) {
+            onProgress(progress.fractionCompleted);
+          }
         },
       ).result;
 
@@ -48,6 +53,10 @@ class StorageRepository {
           'https://$bucket.s3.$region.amazonaws.com/$uploadedPath';
       return publicUrl;
     } catch (e) {
+      debugPrint("🔥 Upload File Storage Error: $e");
+      if (!(onError == null)) {
+        onError("$e");
+      }
       return null;
     }
   }

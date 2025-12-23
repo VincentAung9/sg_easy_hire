@@ -40,9 +40,20 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
     super.initState();
   }
 
+  void setInitialData(OtherPersonalInfo otherInfo) {
+    isInitialized = true;
+    oldData = otherInfo;
+    for (String v in otherInfo.languagesSpoken ?? []) {
+      if (_languages.containsKey(v)) {
+        //mean it is checked
+        _languages[v] = true;
+      }
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -78,12 +89,16 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
         ),
         toolbarHeight: 60,
       ),
-      body: BlocConsumer<BiodataBloc, BiodataState>(
+      body: BlocListener<BiodataBloc, BiodataState>(
         listener: (_, state) {
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.success) {
             showSuccess(context, "Your information has been saved");
             context.go(RoutePaths.preferences);
+          }
+          if (state.action == BiodataStateAction.otherPersonalInfo &&
+              state.status == BiodataStateStatus.saveDraftSuccess) {
+            showSuccess(context, "Draft saved successfully");
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.failure) {
@@ -93,205 +108,187 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
             );
           }
           if (!isInitialized && !(state.otherInfo == null)) {
-            setState(() {
-              isInitialized = true;
-              oldData = state.otherInfo;
-              for (String v in state.otherInfo?.languagesSpoken ?? []) {
-                if (_languages.containsKey(v)) {
-                  //mean it is checked
-                  _languages[v] = true;
-                }
-              }
-            });
+            setInitialData(state.otherInfo!);
           }
         },
-        builder: (context, state) {
-          return SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.all(24.0), // p-6
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(24.0), // p-6
-                  decoration: BoxDecoration(
-                    color: AppColors.cardLight,
-                    borderRadius: BorderRadius.circular(16), // rounded-2xl
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(13),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Languages Spoken",
-                        style: TextStyle(
-                          color: AppColors.textPrimaryLight,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        "Select all languages you can speak",
-                        style: TextStyle(
-                          color: AppColors.textSecondaryLight,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Column(
-                        children: [
-                          CustomCheckboxItem(
-                            label: "English",
-                            value: _languages['english'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['english'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Mandarin Chinese",
-                            value: _languages['mandarin'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['mandarin'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Malay",
-                            value: _languages['malay'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['malay'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Tamil",
-                            value: _languages['tamil'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['tamil'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Tagalog",
-                            value: _languages['tagalog'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['tagalog'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Indonesian/Bahasa",
-                            value: _languages['indonesian'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['indonesian'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Burmese",
-                            value: _languages['burmese'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['burmese'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Cantonese",
-                            value: _languages['cantonese'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['cantonese'] = v!;
-                            }),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomCheckboxItem(
-                            label: "Hindi",
-                            value: _languages['hindi'] as bool,
-                            onChanged: (v) => setState(() {
-                              _languages['hindi'] = v!;
-                            }),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+        child: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(24.0), // p-6
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24.0), // p-6
+                decoration: BoxDecoration(
+                  color: AppColors.cardLight,
+                  borderRadius: BorderRadius.circular(16), // rounded-2xl
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(13),
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Languages Spoken",
+                      style: TextStyle(
+                        color: AppColors.textPrimaryLight,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      "Select all languages you can speak",
+                      style: TextStyle(
+                        color: AppColors.textSecondaryLight,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Column(
+                      children: [
+                        CustomCheckboxItem(
+                          label: "English",
+                          value: _languages['english'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['english'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Mandarin Chinese",
+                          value: _languages['mandarin'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['mandarin'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Malay",
+                          value: _languages['malay'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['malay'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Tamil",
+                          value: _languages['tamil'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['tamil'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Tagalog",
+                          value: _languages['tagalog'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['tagalog'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Indonesian/Bahasa",
+                          value: _languages['indonesian'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['indonesian'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Burmese",
+                          value: _languages['burmese'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['burmese'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Cantonese",
+                          value: _languages['cantonese'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['cantonese'] = v!;
+                          }),
+                        ),
+                        const SizedBox(height: 12),
+                        CustomCheckboxItem(
+                          label: "Hindi",
+                          value: _languages['hindi'] as bool,
+                          onChanged: (v) => setState(() {
+                            _languages['hindi'] = v!;
+                          }),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BlocBuilder<BiodataBloc, BiodataState>(
+        builder: (context, state) {
+          return FormFooter(
+            isNextLoading: state.status == BiodataStateStatus.loading,
+            isSaveLoading: state.status == BiodataStateStatus.saveDraftLoading,
+            onNext: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.preferences);
+                return;
+              } else {
+                //save
+                final data = getData();
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddOtherPersonalInfo(data: data),
+                      )
+                    : context.read<BiodataBloc>().add(
+                        UpdateOtherPersonalInfo(data: data),
+                      );
+              }
+            },
+            onSave: () {
+              if (checkEmpty()) {
+                context.go(RoutePaths.preferences);
+                return;
+              } else {
+                final data = getData();
+                context.read<BiodataBloc>().add(
+                  SaveDraftOtherPersonalInfo(data: data),
+                );
+              }
+            },
           );
         },
       ),
-      bottomNavigationBar: FormFooter(
-        onNext: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.preferences);
-            return;
-          } else {
-            //save
-            context.read<BiodataBloc>().add(
-              AddOtherPersonalInfo(
-                data: oldData == null
-                    ? OtherPersonalInfo(
-                        code: nanoid(10),
-                        languagesSpoken: _languages.entries
-                            .where((kv) => kv.value)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        isPublished: true,
-                        user: currentUser,
-                      )
-                    : oldData!.copyWith(
-                        languagesSpoken: _languages.entries
-                            .where((kv) => kv.value)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        isPublished: true,
-                        user: currentUser,
-                      ),
-              ),
-            );
-          }
-        },
-        onSave: () {
-          if (checkEmpty()) {
-            context.go(RoutePaths.preferences);
-            return;
-          } else {
-            //save
-            context.read<BiodataBloc>().add(
-              AddOtherPersonalInfo(
-                data: oldData == null
-                    ? OtherPersonalInfo(
-                        code: nanoid(10),
-                        languagesSpoken: _languages.entries
-                            .where((kv) => kv.value)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        isPublished: false,
-                        user: currentUser,
-                      )
-                    : oldData!.copyWith(
-                        languagesSpoken: _languages.entries
-                            .where((kv) => kv.value)
-                            .toList()
-                            .map((kv) => kv.key)
-                            .toList(),
-                        isPublished: false,
-                        user: currentUser,
-                      ),
-              ),
-            );
-          }
-        },
-      ),
     );
+  }
+
+  OtherPersonalInfo getData() {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    return oldData == null
+        ? OtherPersonalInfo(
+            code: nanoid(10),
+            languagesSpoken: _languages.entries
+                .where((kv) => kv.value)
+                .toList()
+                .map((kv) => kv.key)
+                .toList(),
+            isPublished: true,
+            user: currentUser,
+          )
+        : oldData!.copyWith(
+            languagesSpoken: _languages.entries
+                .where((kv) => kv.value)
+                .toList()
+                .map((kv) => kv.key)
+                .toList(),
+            isPublished: true,
+            user: currentUser,
+          );
   }
 
   bool checkEmpty() {

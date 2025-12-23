@@ -15,15 +15,18 @@ class FindJobFilterChip extends StatelessWidget {
       height: 40, // Increased height for chips
       child: BlocBuilder<HelperJobsBloc, HelperJobsState>(
         builder: (context, state) {
-          if (state.status == HelperJobsStatus.initialPending &&
-              state.action == HelperJobsActions.getJobTags) {
+          if (state.status == HelperJobsStatus.initialPending) {
             return ListView.builder(
               itemCount: 10,
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (_, index) => const Padding(
                 padding: EdgeInsets.only(right: 8),
-                child: ShimmerContainer(width: 100, height: 40),
+                child: ShimmerContainer(
+                  width: 100,
+                  height: 40,
+                  radius: 26,
+                ),
               ),
             );
           }

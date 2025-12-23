@@ -15,9 +15,12 @@ enum BiodataStateAction {
 }
 
 enum BiodataStateStatus {
+  saveDraftLoading,
   loading,
   success,
+  saveDraftSuccess,
   failure,
+  saveDraftFailure,
   none,
 }
 
@@ -33,5 +36,6 @@ class BiodataState with _$BiodataState {
     JobPreferences? jobPreference,
     @Default([]) List<WorkHistory> workHistories,
     UploadedDocuments? documents,
+    @Default(false) bool hasFileUploadError,
   }) = _BiodataState;
 }

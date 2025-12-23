@@ -1,0 +1,319 @@
+1) MVP goal
+Employer can: Singpass log in/sign up ? onboarding screen ? post 1 job ? ill family + own personality type ? browse helpers ? schedule interview ? real time translated video call ? chat (with translation) ? extend ofer ? sign contract via DocuSign email ? pay in 2 phases ? receive progress updates/notiications until "Completed". ? request for terminated or refund.
+Employer MVP Flow (Phase 1)
+0) Key Rules
+* Employer can have max 1 active Job Listing at a time.
+* Employer can browse helpers before/after posting job (chosen flow is: post job ? browse helpers). Schedule interview is allowed after Job Post
+* Employer interacts with Helper + Admin via:
+o Real-time translated video call (interview)
+o Chat with translation
+* Contract signing uses DocuSign + PandaDoc (system supports either/both based on admin settings).
+* Employer can submit Termination/Refund request (admin processes manually).
+
+
+1) Employer Screens (Minimum)
+1. Singpass Login
+2. Onboarding
+3. Job Listing (Create/Edit)
+4. Family Proile + Personality Type
+5. Browse Helpers (List + Detail)
+6. Interview Scheduling (Create/Reschedule/Cancel)
+7. Interview Room (Video Call + live translation controls)
+8. Chat (Translation toggle)
+9. Ofer (Create/View/Status)
+10. Contracts (DocuSign/PandaDoc Status + History)
+
+11. Payments (Phase 1 + Phase 2)
+12. Progress Timeline (Status bar + milestones + admin custom messages)
+13. Documents (Upload + Download)
+14. Termination/Refund Request (Form + Status)
+
+
+2) Employer Step-by-Step Flow (Happy Path) Step A - Authentication & Setup
+1. Singpass Login/Sign up
+o Create employer account if first-time.
+o Store Singpass unique identifier and basic profile fields (minimal).
+2. Onboarding Screen
+o User Guide for the app and the purpose of the app
+o Collect essentials: contact, preferred language, agreement checkboxes.
+o Redirect to Job Listing creation.
+
+
+Step B - Post Job + Employer Profile
+3. Post 1 Job Listing
+o Enforce: if an active job exists ? employer can only "Edit current job" (no new listing).
+o Job fields (MVP): role needs, number of household members, number of children of elderly and their ages, start date, expected duties, salary, number of of days per month (minimum 1 of per month), room type, notes.
+4. Fill Family Dynamics + Employer Personality Type
+o Family: household size, kids/elderly, rooms/toilets, pets, cooking needs, allergies, language environment.
+o Personality type: preset dropdown + optional note.
+o Employer can edit later.
+
+
+Step C - Browse Helpers + Select
+5. Browse Helpers
+o Helper list + helper detail page.
+o MVP filters: language, childcare/elderly, cooking, experience, availability.
+o CTA: "Schedule Interview"
+
+
+Step D - Interview Scheduling + Notifications
+6. Schedule Interview
+o Employer selects slot (based on helper availability and system rules).
+o Create Interview record: datetime, duration, language settings
+7. Reschedule / Cancel Interview
+o Employer can reschedule/cancel.
+o System sends notifications to both employer & helper (+ admin optionally).
+8. Interview Reminders
+o Notify employer & helper (e.g., 24h + 1h before).
+
+
+Step E - Real-time Translated Video Call + Chat
+9. Join Video Call Interview
+o Employer enters interview room.
+o Must support real-time translation
+     o Store: call start/end timestamps, transcript 1O. Chat with Translation
+* Employer can message helper/admin.
+* Chat translation toggle: show translated + "view original".
+
+
+Step F - Ofer
+11. Extend Ofer to Helper
+
+* Employer fills offer form (from template):
+o salary, rest day policy, start date, duties summary, room, other terms.
+* Ofer status: Draft ? Sent ? Accepted/Declined/Expired
+* After extending job ofer, employer is required to ill up his or her and their household members particulars for Helper Work Permit Application
+12. On helper acceptance
+* Trigger: case moves into "Post-ofer workflow"
+* Admin is notiied to begin documentation + contract preparation.
+
+
+Step G - Contract Signing (DocuSign + PandaDoc)
+13. Generate & Send Contract for Signature
+* System automate contact generation for Admin to review before sending to employer
+* Admin triggers sending via DocuSign or PandaDoc
+* Employer sees in app: "Contract sent to your email" + provider label (DocuSign/PandaDoc).
+* Auto-update signature status in the App
+o Use webhook callbacks from DocuSign/PandaDoc to update:
+o Sent ? Viewed ? Signed ? Completed (or Declined/Void)
+* Employer timeline updates automatically.
+
+
+Step H - Payments (2 phases)
+15. Payment Phase 1
+* Employer pays Phase 1 when required (deine milestone; common options: after ofer accepted / before contract sending).
+* Store transaction id + receipt.
+16. Payment Phase 2
+* Employer pays Phase 2 at milestone (e.g., after second contract signed / on deployment day).
+
+* Store transaction id + receipt.
+
+
+Step I - Progress Timeline + Status Bar (Admin-controlled)
+17. Employer sees a timeline status bar showing each stage:
+* Each stage includes:
+o Stage name
+o Timestamp
+o Admin custom message (editable)
+o Attachments (optional)
+MVP requirement: Admin can write custom text for each stage, and employer gets notified when updated.
+
+
+Step J - Documents (Two-way)
+18. Employer uploads supporting docs to Admin
+* Supported formats: PDF, PNG, JPEG
+* Stored under the case + tagged category.
+19. Admin uploads documents for Employer to view/download
+* Employer has a "Documents" section:
+o "From Admin" (download-only)
+o "Uploaded by Me" (view + download)
+
+
+Step K - Termination / Refund Request (manual admin processing)
+20. Employer can submit a Request Termination/Refund
+* Form: reason, description, optional attachments (PDF/PNG/JPEG)
+* Status: Submitted ? Under Review ? Approved/Rejected ? Closed
+* Any refunds are manual by admin, but tracked in the case timeline.
+
+
+3) Employer Notifications (MVP)
+
+Employer receives:
+* Interview confirmed / rescheduled / cancelled
+* Interview reminders
+* New messages
+* Ofer accepted/declined
+* Contract sent + contract signed status updates
+* Payment success/failure + receipts ready
+* Timeline/progress updates
+* Termination/refund request status updates
+
+
+4) Integrations (Phase 1)
+* Singpass: authentication + basic profile mapping
+* Video Call + Real-time Translation: existing dev module; app must link interview_id H call_room_id
+* Chat Translation: translate per message + store original text
+* DocuSign or PandaDoc:
+o Template mapping
+o Envelope/document send
+o Webhooks for status updates
+* Payment Gateway: supports 2 separate payments + webhook confirmation
+* File Storage: secure object storage (case-based permissions)
+
+
+5) Acceptance Criteria (for your dev) Employer can:
+* Login via Singpass and land in onboarding if first-time
+* Create and edit 1 active job listing only
+* Fill family dynamics + own personality type
+* Browse helpers and view helper details and filter helper profile
+
+* Schedule/reschedule/cancel interviews and receive reminders
+* Join a real-time translated video call from interview page
+* Chat with translation (toggle original/translated)
+* Send ofer and see ofer status changes
+* Receive contract via DocuSign/PandaDoc email and see status updated in app (webhook-driven if implemented)
+* Pay Phase 1 and Phase 2 with receipts and correct gating milestones
+* View timeline status bar with admin custom messages + notifications
+* Upload supporting docs (PDF/PNG/JPEG) to admin
+* Download docs uploaded by admin
+* Submit termination/refund request that admin can manually process and update
+
+
+
+
+
+
+Admin MVP Flow (Phase 1)
+0) Admin Role Purpose
+Admin is the "control tower":
+* controls employer/helper accounts
+* controls timeline stages + custom status bar messages
+* manages interviews, ofers, contracts (DocuSign/PandaDoc), payments verification, documents, and manual termination/refund cases.
+
+
+1) Admin Screens (Minimum)
+1. Statistics of new sign up(helper and employer) / contact ofered, accepted,declined/ On-going application (accepted Job ofer).
+2. Admin Dashboard (queue + alerts)
+3. Employer Management (view/edit/suspend/activate)
+
+4. Helper Management (create/edit/suspend,activate)
+5. Jobs (approve/view/reject)
+6. Interviews (manage schedule + overrides)
+7. Chat Oversight (join threads)
+8. Ofers (review/override)
+9. Contracts (DocuSign/PandaDoc send + status)
+10. Payments (Phase 1/2 tracking + receipts)
+11. Timeline Manager (status bar editor)
+12. Documents Manager (two-way permissions)
+13. Termination/Refund Case Management (manual)
+
+
+2) Admin Step-by-Step Flow (Aligned to Employer Journey) Step A - Account & Data Control
+1. Create/Manage Helper Accounts
+o create helper login
+o enable/disable helper
+o verify helper profile completeness
+2. Review Employer Onboarding (optional)
+o ensure job listing + family/personality profile is completed (or request missing info)
+Step B - Job + Matching Oversight
+3. View Employer Job Listing
+o ensure only 1 active job listing
+o admin can reject job listing and request employer to amend inappropriate fields
+4. Helper visibility control
+o approve/hide helpers
+o ensure profiles are safe/complete
+Step C - Interview Operations
+
+5. Interview scheduling management
+o view upcoming interviews
+o override/reschedule/cancel if necessary
+o configure reminders (24h + 1h)
+6. Interview record keeping
+o store call room id, timestamps, transcript
+o flag "completed/no-show" (optional)
+Step D - Ofer Control
+7. Ofer oversight
+o view ofers sent by employer
+o optionally require admin approval before sending (config toggle)
+o enforce ofer expiry rules (optional)
+Step E - Contract Automation (DocuSign + PandaDoc)
+8. Automate Generation of contract
+o provider: DocuSign or PandaDoc
+o select template
+o map variables (employer + helper + job + ofer terms)
+o send to employer email for signature
+o Admin to hit send after review and verify with helper
+9. Signature status auto-update
+o webhook-driven updates:
+� sent ? viewed ? signed ? completed
+o admin can manually override if webhook fails (backup control)
+Step F - Payments (2 phases)
+10. Payment milestone gating
+* Phase 1 required at configured stage (e.g., after contract is signed by employer)
+* Phase 2 required at configured stage (e.g., after second contract signed and on deployment day)
+
+11. Admin can:
+* verify webhook success
+* mark manual payment (if needed)
+* upload receipts/invoices
+* update timeline status accordingly/ update status in employer
+Step G - Timeline Status Bar (Custom messages)
+12. Admin updates timeline stages for each case:
+* stage name (from predefined list)
+* timestamp
+* custom message
+* attachments (optional)
+13. System pushes notifications to employer/helper on updates.
+Step H - Document Management (Two-way)
+14. Admin receives supporting documents from employer/helper:
+* view/download
+* request re-upload if unclear
+* tag documents to categories
+* Virus scan is required before upload unto the system by employer and helper
+15. Admin uploads documents to employer/helper:
+* choose visibility: Employer only / Helper only / Both
+* users can view/download in their "Documents" section
+Step I - Termination/Refund Requests (Manual)
+16. Admin receives "termination/refund request" ticket
+17. Admin reviews:
+* reason + attachments + timeline context
+* communicate with employer on in-app messaging
+18. Admin updates case status:
+* under review ? approved/rejected ? closed
+
+19. If refund approved:
+* admin processes refund manually (outside gateway if necessary)
+* Send refund invoice /document to employer via Docusign/pandadoc
+* record refund outcome + amount + notes in timeline
+
+
+3) Admin Acceptance Criteria
+* Admin can create/disable helper accounts and edit profiles
+* Admin can view/disable employer profiles + job listing (1 active rule)
+* Admin can manage interviews (reschedule/cancel/override + reminders)
+* Admin can join any chat thread (support/moderation)
+* Admin can manage ofers (view, approve, reject)
+* Admin can send contracts using DocuSign/PandaDoc. Field should be filled automatically with the information obtained by employer. Contact should be traceable easily for each account.
+* Contract signature status updates automatically via webhooks (and admin can override)
+* Admin can track Phase 1/2 payments (webhook + manual marking)
+* Admin can update timeline stages + custom messages and push notifications
+* Admin can manage documents both directions with permissions
+* Admin can manage termination/refund requests manually with tracked statuses
+
+
+Suggested Timeline Stages (Default set you can edit later)
+1. Job Posted
+2. Interview Scheduled
+3. Interview Completed
+4. Ofer Sent
+5. Ofer Accepted
+6. Payment Phase 1 Received
+7. Contract Sent (DocuSign/PandaDoc)
+
+8. Contract Signed
+9. Payment Phase 2 Received
+10. Deployment / Processing
+11. Completed
+12. Termination/Refund Requested (if used)
+13. Under Review
+14. Closed

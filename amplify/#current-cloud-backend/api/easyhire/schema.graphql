@@ -18,7 +18,7 @@ type User @model @auth(
   avatarURL: String
   verifyStatus: VerifyStatus @default(value: "PENDING")
   role: UserRole! @default(value: "HELPER")
-  completeProgress: Int! @default(value: "0")
+  completeProgress: Float! @default(value: "0")
   isOnline: Boolean
   accountstatus: AccountStatus @default(value: "ACTIVATED")
   personalityType: String
@@ -714,3 +714,6 @@ enum UrgetnActionStatus { PENDING RESOLVE }
 enum HelperStatus { PENDING INTRANNING }
 enum TransactionStatus { PENDING PAID REFUND_PROCESSING OVERDUE }
 enum JobStatus { PENDING APPROVE REJECT URGENT_FILL }
+
+
+
