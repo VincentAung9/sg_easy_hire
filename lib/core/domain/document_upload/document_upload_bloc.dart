@@ -40,10 +40,32 @@ class DocumentUploadBloc extends Bloc<UploadAllDocuments, DocumentUploadState> {
 
       progressMap[key] = 1.0;
 
-      results[task.type] = platformFileToAWSJson(
-        task.file,
-        uploadedUrl: url,
-      );
+      if (results.containsKey(task.type) &&
+          (task.type == DocumentType.educationalCertificates ||
+              task.type == DocumentType.workReferences)) {
+        //update
+        results[task.type] = [
+          ...(results[task.type] as List<String>),
+          platformFileToAWSJson(
+            task.file,
+            uploadedUrl: url,
+          ),
+        ];
+      } else if (task.type == DocumentType.educationalCertificates ||
+          task.type == DocumentType.workReferences) {
+        //create
+        results[task.type] = [
+          platformFileToAWSJson(
+            task.file,
+            uploadedUrl: url,
+          ),
+        ];
+      } else {
+        results[task.type] = platformFileToAWSJson(
+          task.file,
+          uploadedUrl: url,
+        );
+      }
 
       emit(
         state.copyWith(

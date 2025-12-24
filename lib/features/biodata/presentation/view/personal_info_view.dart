@@ -41,6 +41,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
   @override
   void initState() {
     context.read<BiodataBloc>().add(GetPersonalInformation());
+    initUserValue();
     super.initState();
   }
 
@@ -53,24 +54,34 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
     super.dispose();
   }
 
+  void initUserValue() {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    fullNameController.text = currentUser?.fullName ?? "";
+    heightController.text = currentUser?.height ?? "";
+    weightController.text = currentUser?.weight ?? "";
+    nationality = currentUser?.nationality;
+    setState(() {});
+  }
+
   void setInitialData(
-    PersonalInformation personalInformation,
+    PersonalInformation? personalInformation,
     User? currentUser,
   ) {
+    debugPrint("🌈 CURRENT USER: ${currentUser?.toJson()}");
     isInitialized = true;
     oldData = personalInformation;
     fullNameController.text =
-        personalInformation.user?.fullName ?? currentUser?.fullName ?? "";
+        personalInformation?.user?.fullName ?? currentUser?.fullName ?? "";
     heightController.text =
-        personalInformation.user?.height ?? currentUser?.height ?? "";
+        personalInformation?.user?.height ?? currentUser?.height ?? "";
     weightController.text =
-        personalInformation.user?.weight ?? currentUser?.weight ?? "";
+        personalInformation?.user?.weight ?? currentUser?.weight ?? "";
     nationality =
-        personalInformation.user?.nationality ?? currentUser?.nationality;
-    dateOfBirth = personalInformation.dateOfBirth!.getDateTime().toLocal();
-    placeController.text = personalInformation.placeOfBirth ?? "";
+        personalInformation?.user?.nationality ?? currentUser?.nationality;
+    dateOfBirth = personalInformation?.dateOfBirth!.getDateTime().toLocal();
+    placeController.text = personalInformation?.placeOfBirth ?? "";
 
-    gender = personalInformation.gender ?? "";
+    gender = personalInformation?.gender ?? "";
 
     setState(() {});
   }

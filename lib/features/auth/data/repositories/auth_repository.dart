@@ -15,6 +15,8 @@ class AuthRepository {
 
   final AuthProvider authProvider;
 
+  StreamSubscription<AuthHubEvent>? _hubSubscription;
+
   // 1. Create a single broadcast controller as a class member
   final _userController = StreamController<User?>.broadcast();
 
@@ -28,8 +30,10 @@ class AuthRepository {
     // Seed the stream immediately with the current Hive value
     // so the UI isn't empty on app start
     _userController.add(box.get(userBoxKey));
-
-    Amplify.Hub.listen(HubChannel.Auth, (AuthHubEvent event) async {
+    _hubSubscription?.cancel();
+    _hubSubscription = Amplify.Hub.listen(HubChannel.Auth, (
+      AuthHubEvent event,
+    ) async {
       switch (event.type) {
         case AuthHubEventType.signedIn:
           signBox.put(isFirstTimeLoggedIn, true);
@@ -45,7 +49,9 @@ class AuthRepository {
         case AuthHubEventType.signedOut:
           signBox.put(isSignIn, false);
           box.delete(userBoxKey);
+          break;
         case AuthHubEventType.sessionExpired:
+          break;
         case AuthHubEventType.userDeleted:
           safePrint('🌈 Hub: Cleared Session (${event.type})');
           signBox.put(isSignIn, false);

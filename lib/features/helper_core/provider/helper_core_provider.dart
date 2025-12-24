@@ -18,6 +18,15 @@ class HelperCoreProvider {
     }
   }
 
+  Future<User?> getUser(String id) async {
+    final request = ModelQueries.get(
+      User.classType,
+      UserModelIdentifier(id: id),
+    );
+    final response = await Amplify.API.query(request: request).response;
+    return response.data;
+  }
+
   //list profile
   Stream<User?> user(String userID) {
     final box = Hive.box<User>(name: userBox);
@@ -25,12 +34,19 @@ class HelperCoreProvider {
       User.classType,
       where: User.ID.eq(userID),
     );
+    debugPrint(
+      "🌈 Listening....to...ID: ${userID}",
+    );
     return Amplify.API
         .subscribe(
           subscriptionRequest,
           onEstablished: () => safePrint('Subscription established'),
         )
         .map((u) {
+          debugPrint(
+            "🌈 Source User Event- completeProgress: ${u.data?.completeProgress}",
+          );
+
           if (!(u.data == null)) {
             box.put(userBoxKey, u.data!);
           }

@@ -41,10 +41,10 @@ class BuildSelectFile extends StatelessWidget {
                 context.read<BiodataBloc>().add(
                   BroadcastFileUploadError(value: true),
                 );
-                showWarnning(
+                /* showWarnning(
                   context,
                   "Some files can’t be uploaded. Try again.",
-                );
+                ); */
               }
             },
             child: Container(
@@ -178,10 +178,11 @@ class BuildSelectFile extends StatelessWidget {
                                       DocumentUploadState
                                     >(
                                       builder: (context, state) {
-                                        return ((state
-                                                        .errorMap[fileKEY]
-                                                        ?.isNotEmpty ??
-                                                    false) &&
+                                        return (((state
+                                                            .errorMap[fileKEY]
+                                                            ?.isEmpty ??
+                                                        false) ||
+                                                    state.errorMap.isEmpty) &&
                                                 (state.progressMap[fileKEY] ??
                                                         0) >
                                                     0)

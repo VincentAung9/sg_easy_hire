@@ -8,10 +8,11 @@ Amplify Params - DO NOT EDIT */const {
   DynamoDBClient,
   QueryCommand,
   UpdateItemCommand,
+  GetItemCommand
 } = require("@aws-sdk/client-dynamodb");
 const { unmarshall } = require("@aws-sdk/util-dynamodb");
-
 const client = new DynamoDBClient();
+
 const apiId = process.env.API_EASYHIRE_GRAPHQLAPIIDOUTPUT;
 const env = process.env.ENV;
 
@@ -28,10 +29,11 @@ const TABLE_MAP = {
 const SECTION_WEIGHTS = {
   PersonalInformation: 16,
   ContactFamilyDetails: 16,
-  MedicalHistory: 16,
+  MedicalHistory: 6,
   OtherPersonalInfo: 16,
   JobPreferences: 16,
   UploadedDocuments: 20,
+  User:10,
 };
 
 const REQUIRED_FIELDS = {
@@ -67,7 +69,9 @@ const REQUIRED_FIELDS = {
     "policeClearance",
     "educationalCertificates",
   ],
+  User: ["skills","nationality","languagesSpoken","age","height","weight","totalExperiences","expectedSalary"],
 };
+
 
 exports.handler = async (event) => {
   console.log("Lambda triggered", JSON.stringify(event, null, 2));
@@ -85,18 +89,25 @@ exports.handler = async (event) => {
     }
 
     const fullTableName = record.eventSourceARN.split("/")[1];
-    const triggerTableName = fullTableName.split("-")[0];
+    const triggerTableName = Object.keys(SECTION_WEIGHTS).find(key => 
+  fullTableName.startsWith(`${key}-`)
+);
 
-    console.log(`Processing update for simple table name: ${triggerTableName}`);
+if (!triggerTableName) {
+   console.log(`Skipping: ${fullTableName} does not match any tracked section.`);
+   continue;
+}
+    let userId;
+if (triggerTableName === "User") {
+  userId = record.dynamodb.NewImage.id.S;
+} else {
+  userId = record.dynamodb.NewImage.userID.S;
+}
 
-    if (!SECTION_WEIGHTS[triggerTableName]) {
-      console.log(
-        `Skipping record because ${triggerTableName} is not a tracked section.`
-      );
-      continue;
-    }
-
-    const userId = record.dynamodb.NewImage.userID.S;
+if (!userId) {
+  console.log("Could not find a valid User ID in this record. Skipping.");
+  continue;
+}
 
     let totalCompletion = 0;
 
@@ -112,27 +123,38 @@ exports.handler = async (event) => {
       }
       // -----------------------------
 
-      const getResponse = await client.send(
-        new QueryCommand({
-          TableName: deployedTableName,
-          IndexName: "byUser", 
-          KeyConditionExpression: "userID = :u",
-          ExpressionAttributeValues: {
-            ":u": { S: userId },
-          },
-          Limit: 1,
-        })
-      );
+      let item;
 
-      if (!getResponse.Items || getResponse.Items.length === 0) {
-        console.log(
-          `Skipping scoring for ${section}: No item found for user ${userId}.`
+      // --- SPECIAL HANDLING FOR USER TABLE ---
+      if (section === "User") {
+        const userResult = await client.send(
+          new GetItemCommand({
+            TableName: deployedTableName,
+            Key: { id: { S: userId } }, // Use 'id' for User table
+          })
         );
-        continue;
+        if (userResult.Item) item = unmarshall(userResult.Item);
+      } 
+      // --- STANDARD HANDLING FOR SECTION TABLES ---
+      else {
+        const getResponse = await client.send(
+          new QueryCommand({
+            TableName: deployedTableName,
+            IndexName: "byUser", // Section tables use the byUser index
+            KeyConditionExpression: "userID = :u",
+            ExpressionAttributeValues: { ":u": { S: userId } },
+            Limit: 1,
+          })
+        );
+        if (getResponse.Items && getResponse.Items.length > 0) {
+          item = unmarshall(getResponse.Items[0]);
+        }
       }
 
-      // Query returns an array of items (Items), get the first one
-      const item = unmarshall(getResponse.Items[0]);
+      if (!item) {
+        console.log(`No data found for section ${section} for user ${userId}.`);
+        continue;
+      }
 
       const requiredFields = REQUIRED_FIELDS[section] || [];
       // Avoid division by zero
@@ -149,6 +171,24 @@ exports.handler = async (event) => {
         (filledCount / requiredFields.length) * SECTION_WEIGHTS[section];
 
       totalCompletion += sectionScore;
+    }
+
+    const userResult = await client.send(
+      new GetItemCommand({
+        TableName: TABLE_MAP.User,
+        Key: { id: { S: userId } },
+      })
+    );
+
+    if (userResult.Item) {
+      const currentUser = unmarshall(userResult.Item);
+      const existingProgress = parseFloat(currentUser.completeProgress || 0);
+
+      // Use Math.abs for float comparison (prevents rounding issues)
+      if (Math.abs(existingProgress - totalCompletion) < 0.01) {
+        console.log(`Skipping update for ${userId}: Progress is already ${existingProgress}%`);
+        continue; // STOP HERE, no change detected
+      }
     }
 
     // Update User table with completion %

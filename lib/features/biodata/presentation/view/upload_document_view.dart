@@ -57,7 +57,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
       parseDocumentsIsolate,
       uploadedDocumentsToRaw(docs),
     );
-    debugPrint("🌈 Parsed result: $parsed");
+    printFull("🌈 Parsed result: $parsed");
     if (!mounted) return;
 
     oldData = docs;
@@ -118,8 +118,8 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
       ),
 
       body: BlocListener<BiodataBloc, BiodataState>(
+        listenWhen: (pre, cur) => pre != cur,
         listener: (context, state) async {
-          debugPrint("🔥------Listener in view ");
           if (state.action == BiodataStateAction.uploadDoc &&
               state.status == BiodataStateStatus.success &&
               !state.hasFileUploadError) {
@@ -365,14 +365,19 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
           BlocConsumer<DocumentUploadBloc, DocumentUploadState>(
             listener: (_, state) {
               if (state.allCompleted && state.uploadedResults.isNotEmpty) {
+                printFull("🌈 Uploaded Result: ${state.uploadedResults}");
                 final data = uploadedResultsToUploadedDocuments(
                   uploadedResults: state.uploadedResults,
                   user: currentUser!,
                   oldData: oldData,
                 );
-                context.read<BiodataBloc>().add(
-                  AddUploadDocument(data: data),
-                );
+                oldData == null
+                    ? context.read<BiodataBloc>().add(
+                        AddUploadDocument(data: data),
+                      )
+                    : context.read<BiodataBloc>().add(
+                        UpdateUploadDocument(data: data),
+                      );
               }
             },
             builder: (context, state) {
@@ -432,7 +437,8 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                                   .map(
                                     (ec) => ec.url == null
                                         ? UploadTask(
-                                            type: DocumentType.policeClearance,
+                                            type: DocumentType
+                                                .educationalCertificates,
                                             file: ec.file!,
                                           )
                                         : null,
@@ -443,7 +449,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                                   .map(
                                     (ec) => ec.url == null
                                         ? UploadTask(
-                                            type: DocumentType.policeClearance,
+                                            type: DocumentType.workReferences,
                                             file: ec.file!,
                                           )
                                         : null,

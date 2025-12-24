@@ -94,7 +94,7 @@
         "easyhire": {},
         "helperProfileProgressTrack": {
           "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
-          "s3Key": "amplify-builds/helperProfileProgressTrack-55487241624c6d634e2f-build.zip"
+          "s3Key": "amplify-builds/helperProfileProgressTrack-70556f586f7252474539-build.zip"
         }
       },
       "storage": {

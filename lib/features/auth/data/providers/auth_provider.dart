@@ -185,8 +185,26 @@ class AuthProvider {
       if (user == null) {
         return null;
       }
-      final request = ModelMutations.update(user);
-      await Amplify.API.mutate(request: request).response;
+      /* final request = ModelMutations.update(user); */
+      // 1. Generate the standard request
+      final originalRequest = ModelMutations.update(user);
+
+      // 2. Extract the variables map
+      final inputMap = Map<String, dynamic>.from(
+        originalRequest.variables['input'] as Map<String, dynamic>,
+      );
+
+      // 3. REMOVE the field you don't want to touch
+      inputMap.remove('completeProgress');
+
+      // 4. Create a new request with the modified input
+      final filteredRequest = GraphQLRequest<User>(
+        document: originalRequest.document,
+        modelType: User.classType,
+        variables: {'input': inputMap},
+        decodePath: originalRequest.decodePath,
+      );
+      await Amplify.API.mutate(request: filteredRequest).response;
       return user;
     } catch (e) {
       safePrint("🔥 Update user failed: $e");

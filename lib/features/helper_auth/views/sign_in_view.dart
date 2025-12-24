@@ -3,9 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
-import 'package:sg_easy_hire/core/constants/box_keys.dart';
 import 'package:sg_easy_hire/core/constants/country_codes.dart';
+import 'package:sg_easy_hire/core/localization/presentation/language_switch_component.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/widgets/input_error.dart';
@@ -13,7 +12,6 @@ import 'package:sg_easy_hire/core/widgets/widgets.dart';
 import 'package:sg_easy_hire/features/auth/domain/sign_in/sign_in.dart';
 import 'package:sg_easy_hire/features/auth/models/sign_in_param.dart';
 import 'package:sg_easy_hire/features/auth/presentation/widgets/widgets.dart';
-import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
 
@@ -67,7 +65,6 @@ class _SignInViewState extends State<SignInView> {
     final t = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final signInBloc = context.read<SignInBloc>();
-    final hiveBox = Hive.box<bool>(name: signInBox);
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Center(
@@ -78,6 +75,10 @@ class _SignInViewState extends State<SignInView> {
             children: [
               const Spacing(
                 height: 40,
+              ),
+              const Align(
+                alignment: Alignment.topRight,
+                child: LanguageSwitchComponent(),
               ),
               // --- Top Logo & Header ---
               LogoHeader(

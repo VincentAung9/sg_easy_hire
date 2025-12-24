@@ -1,7 +1,7 @@
+const String userBox = "userBox";
 const String userBoxKey = "user_box_key";
 const String isSignIn = "user_is_sign_in_key";
 const String isFirstTimeLoggedIn = "is_first_time_logged_in";
-const String userBox = "userBox";
 const String signInBox = "signInBox";
 const String helperPersonalDocuments = "helper_personal_documents";
 const String helperPersonalDocumentsKey = "helper_personal_documents_key";
@@ -17,3 +17,5 @@ const String jobPreferenceBox = "job_preference_box";
 const String jobPreferenceKey = "job_preference_key";
 const String workHistoriesBox = "work_histories_box";
 const String workHistoriesKey = "work_histories_key";
+const String languageBox = "language_box";
+const String languageKey = "language_key";

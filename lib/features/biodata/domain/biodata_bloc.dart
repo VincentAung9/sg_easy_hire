@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:sg_easy_hire/core/constants/constants.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/auth/data/repositories/auth_repository.dart';
 import 'package:sg_easy_hire/features/biodata/data/repository/biodata_repository.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_event.dart';
@@ -461,7 +463,9 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       name: helperPersonalDocuments,
     ).get(helperPersonalDocumentsKey);
     final result = await repository.getUploadedDocuments(hiveUser?.id ?? "");
-    debugPrint("🌈 Hive Document Draft: $hiveDraft......");
+    printFull(
+      "🌈 Hive Document Draft: $hiveDraft......\n🌈Document Remote: ${result?.toJson()}",
+    );
     emit(
       state.copyWith(
         documents: hiveDraft ?? result,
@@ -485,6 +489,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await repository.addUploadedDocuments(event.data);
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
+          avatarURL: event.data.profilePhoto == null
+              ? null
+              // ignore: avoid_dynamic_calls
+              : jsonDecode(event.data.profilePhoto!)["url"] as String,
           uploadedDocuments: event.data,
         ),
       );
@@ -813,6 +821,10 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           uploadedDocuments: event.data,
+          // ignore: avoid_dynamic_calls
+          avatarURL: event.data.profilePhoto == null
+              ? null
+              : jsonDecode(event.data.profilePhoto!)["url"] as String,
         ),
       );
       //need to clear previous draft if exist

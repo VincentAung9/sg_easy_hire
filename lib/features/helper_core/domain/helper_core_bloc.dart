@@ -15,6 +15,7 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
   final Box<User> box = Hive.box<User>(name: userBox);
   final HelperCoreProvider provider;
   HelperCoreBloc({required this.provider}) : super(const HelperCoreState()) {
+    on<GetInitialUserData>(_getInitialUserData);
     on<StartSubscribeToUser>(_onStartSubscribeToUser);
     on<StartSubscribeToHiveUser>(_onStartSubscribeToHiveUser);
   }
@@ -34,14 +35,18 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
     }
     return emit.onEach(
       provider.user(hiveUser.id),
-      onData: (u) {
+      onData: (u) async {
         debugPrint("🌈 User Event: ${u?.toJson()}");
         if (u != null) {
-          emit(
-            state.copyWith(
-              currentUser: u,
-            ),
-          );
+          final currentUser = await provider.getUser(u.id);
+          if (currentUser != null) {
+            debugPrint("🌈 CURRENT USER Event: ${currentUser.toJson()}");
+            emit(
+              state.copyWith(
+                currentUser: currentUser,
+              ),
+            );
+          }
         }
       },
       onError: (error, _) {
@@ -56,10 +61,24 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
   ) {
     return emit.onEach(
       box.watch(),
-      onData: (u) => emit(state.copyWith(currentUser: box.get(userBoxKey))),
+      onData: (_) {
+        final u = box.get(userBoxKey);
+        debugPrint("🌈 Hive User Event: ${u?.toJson()}");
+        emit(state.copyWith(currentUser: box.get(userBoxKey)));
+      },
       onError: (error, _) {
         debugPrint("❗️ Subscribe To Hive User Error: ${error.toString()}");
       },
     );
+  }
+
+  FutureOr<void> _getInitialUserData(
+    GetInitialUserData event,
+    Emitter<HelperCoreState> emit,
+  ) async {
+    final user = await provider.getUser(event.id);
+    if (user != null) {
+      emit(state.copyWith(currentUser: user));
+    }
   }
 }

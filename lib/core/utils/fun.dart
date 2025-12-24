@@ -599,7 +599,7 @@ String? getFileExtension(PlatformFile file) {
 String fileKey(PlatformFile f) => f.path ?? f.name;
 
 UploadedDocuments uploadedResultsToUploadedDocuments({
-  required Map<DocumentType, String> uploadedResults,
+  required Map<DocumentType, dynamic> uploadedResults,
   required User user,
   UploadedDocuments? oldData,
 }) {
@@ -607,36 +607,61 @@ UploadedDocuments uploadedResultsToUploadedDocuments({
       ? UploadedDocuments(
           code: nanoid(10),
           createdAt: TemporalDateTime(DateTime.now()),
-          profilePhoto: uploadedResults[DocumentType.profilePhoto],
-          passport: uploadedResults[DocumentType.passport],
-          medicalCertificate: uploadedResults[DocumentType.medicalCertificate],
-          policeClearance: uploadedResults[DocumentType.policeClearance],
-          educationalCertificates:
-              uploadedResults[DocumentType.educationalCertificates] != null
-              ? [uploadedResults[DocumentType.educationalCertificates]!]
-              : null,
-          workReferences: uploadedResults[DocumentType.workReferences] != null
-              ? [uploadedResults[DocumentType.workReferences]!]
-              : null,
-          introductionVideo: uploadedResults[DocumentType.introductionVideo],
+          profilePhoto: uploadedResults[DocumentType.profilePhoto] as String?,
+          passport: uploadedResults[DocumentType.passport] as String?,
+          medicalCertificate:
+              uploadedResults[DocumentType.medicalCertificate] as String?,
+          policeClearance:
+              uploadedResults[DocumentType.policeClearance] as String?,
+          educationalCertificates: castStringList(
+            uploadedResults[DocumentType.educationalCertificates],
+          ),
+          workReferences: castStringList(
+            uploadedResults[DocumentType.workReferences],
+          ),
+          introductionVideo:
+              uploadedResults[DocumentType.introductionVideo] as String?,
           isPublished: true,
           user: user,
         )
       : oldData.copyWith(
           updatedAt: TemporalDateTime(DateTime.now()),
-          profilePhoto: uploadedResults[DocumentType.profilePhoto],
-          passport: uploadedResults[DocumentType.passport],
-          medicalCertificate: uploadedResults[DocumentType.medicalCertificate],
-          policeClearance: uploadedResults[DocumentType.policeClearance],
-          educationalCertificates:
-              uploadedResults[DocumentType.educationalCertificates] != null
-              ? [uploadedResults[DocumentType.educationalCertificates]!]
-              : oldData.educationalCertificates,
-          workReferences: uploadedResults[DocumentType.workReferences] != null
-              ? [uploadedResults[DocumentType.workReferences]!]
-              : oldData.workReferences,
-          introductionVideo: uploadedResults[DocumentType.introductionVideo],
+          profilePhoto: uploadedResults[DocumentType.profilePhoto] as String?,
+          passport: uploadedResults[DocumentType.passport] as String?,
+          medicalCertificate:
+              uploadedResults[DocumentType.medicalCertificate] as String?,
+          policeClearance:
+              uploadedResults[DocumentType.policeClearance] as String?,
+          educationalCertificates: castStringList(
+            uploadedResults[DocumentType.educationalCertificates],
+          ),
+          workReferences: castStringList(
+            uploadedResults[DocumentType.workReferences],
+          ),
+          introductionVideo:
+              uploadedResults[DocumentType.introductionVideo] as String?,
           isPublished: true,
           user: user,
         );
+}
+
+void printFull(String text) {
+  const chunkSize = 800;
+  for (var i = 0; i < text.length; i += chunkSize) {
+    print(
+      text.substring(
+        i,
+        i + chunkSize > text.length ? text.length : i + chunkSize,
+      ),
+    );
+  }
+}
+
+List<String>? castStringList(dynamic value) {
+  if (value == null) return null;
+  if (value is List<String>) return value;
+  if (value is List) {
+    return value.map((e) => e.toString()).toList();
+  }
+  return null;
 }

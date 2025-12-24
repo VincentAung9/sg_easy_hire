@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/localization/domain/language_switch_cubit.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
@@ -82,6 +83,7 @@ class _AppViewState extends State<AppView> {
  */
   @override
   Widget build(BuildContext context) {
+    debugPrint("🌈App View Build..........");
     return BlocListener<HelperCoreBloc, HelperCoreState>(
       listener: (context, state) {
         if (state.currentUser?.skills?.isNotEmpty ?? false) {
@@ -96,6 +98,9 @@ class _AppViewState extends State<AppView> {
         if (!isInitialized && !(state.currentUser == null)) {
           debugPrint(
             "🔥-------🌈 Only one time User in App View State: ${state.currentUser}",
+          );
+          context.read<HelperCoreBloc>().add(
+            GetInitialUserData(id: state.currentUser!.id),
           );
           context.read<HelperCoreBloc>().add(StartSubscribeToUser());
           context.read<HomeBloc>()
@@ -116,21 +121,25 @@ class _AppViewState extends State<AppView> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            locale: const Locale('my'),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('my'),
-            ],
-            routerConfig: widget.router,
+          return BlocBuilder<LanguageSwitchCubit, String>(
+            builder: (context, lan) {
+              return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme,
+                locale: Locale(lan),
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('en'),
+                  Locale('my'),
+                ],
+                routerConfig: widget.router,
+              );
+            },
           );
         },
       ),
