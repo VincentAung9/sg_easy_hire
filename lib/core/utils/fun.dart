@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/core/domain/document_upload/document_upload_state.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_state.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/JobOfferStatus.dart';
@@ -664,4 +665,13 @@ List<String>? castStringList(dynamic value) {
     return value.map((e) => e.toString()).toList();
   }
   return null;
+}
+
+bool canJoinCall(CountdownState state) {
+  if (state.isFinished) return false;
+
+  final totalMinutes =
+      (state.days * 24 * 60) + (state.hours * 60) + state.minutes;
+
+  return totalMinutes <= 5;
 }

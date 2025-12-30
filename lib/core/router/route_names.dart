@@ -28,6 +28,7 @@ class RouteNames {
   static const String experienceJobPreferences = "experience_job_preferences";
   static const String uploadDocuments = "upload_documents";
   static const String personalityTest = "personality_test";
+  static const String personalityTestResult = "personality_test_result";
   static const String jobOffers = "job_offers";
   static const String jobOfferDetail = "job_offers_detail";
   static const String favouriteJobs = "favourite_jobs";
@@ -36,6 +37,7 @@ class RouteNames {
   static const String helpSupport = "help_support";
   static const String settings = "settings";
   static const String foodHandling = "food_handling";
+  static const String helperQuiz = "helper_quiz";
   //-----EMPLOYER----------
   static const String employerSignin = "employer_signin";
   static const String employerRegister = "employer_register";

@@ -18,6 +18,8 @@ import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/provider/helper_core_provider.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/repository/helper_home_repository.dart';
+import 'package:sg_easy_hire/features/personal_test/data/repository/personality_test_repository.dart';
+import 'package:sg_easy_hire/features/personal_test/domain/personality_test_bloc.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -31,8 +33,15 @@ class App extends StatelessWidget {
     final router = AppRouter.createRouter(authLocal);
 
     // Create the repository here
-    return RepositoryProvider(
-      create: (context) => AuthRepository(authProvider: AuthProvider()),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepository(authProvider: AuthProvider()),
+        ),
+        RepositoryProvider<PersonalityTestRepository>(
+          create: (context) => PersonalityTestRepository(),
+        ),
+      ],
       child: BlocProvider(
         create: (context) => LanguageSwitchCubit(),
         child: AppPage(router: router),
@@ -72,6 +81,11 @@ class AppPage extends StatelessWidget {
           ),
         ),
         BlocProvider(create: (_) => WorkHistoryCubit()),
+        BlocProvider(
+          create: (_) => PersonalityTestBloc(
+            repository: context.read<PersonalityTestRepository>(),
+          ),
+        ),
       ],
 
       child: AppView(

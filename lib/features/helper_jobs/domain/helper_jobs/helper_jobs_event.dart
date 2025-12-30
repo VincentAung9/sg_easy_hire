@@ -15,9 +15,11 @@ class FavouriteJob extends HelperJobsEvent {
 class UnfavouriteJob extends HelperJobsEvent {
   final User currentUser;
   final Job oldJob;
+  final SavedJob savedJob;
   UnfavouriteJob({
     required this.currentUser,
     required this.oldJob,
+    required this.savedJob,
   });
 }
 
@@ -36,6 +38,17 @@ class ApplyJobEvent extends HelperJobsEvent {
   final AppliedJob appliedJob;
   final User currentUser;
   ApplyJobEvent({
+    required this.oldJob,
+    required this.appliedJob,
+    required this.currentUser,
+  });
+}
+
+class ApplyJobForUIEvent extends HelperJobsEvent {
+  final Job oldJob;
+  final AppliedJob appliedJob;
+  final User currentUser;
+  ApplyJobForUIEvent({
     required this.oldJob,
     required this.appliedJob,
     required this.currentUser,

@@ -11,7 +11,8 @@ class RoutePaths {
   static const String helperRegister = "/helper_register";
   static const String home = "/home";
   static const String jobs = "/jobs";
-  static const String jobDetail = "/jobs/:id";
+  static const String jobDetail = "/job_detail";
+  static const String jobDetailFullPath = "/jobs/job_detail";
   static const String helperInterviews = "/helper_interviews";
   static const String helperInterviewsAccepted = "/helper_interviews/accepted";
   static const String helperInterviewsPending = "/helper_interviews/pending";
@@ -32,6 +33,8 @@ class RoutePaths {
   static const String experienceJobPreferences = "/experience_job_preferences";
   static const String uploadDocuments = "/upload_documents";
   static const String personalityTest = "/personality_test";
+  static const String personalityTestResult = "/personality_test_result";
+  static const String helperQuiz = "/helper_quiz";
   static const String jobOffers = "/job_offers";
   static const String jobOfferDetail = "/job_offers/:id";
   static const String favouriteJobs = "/favourite_jobs";

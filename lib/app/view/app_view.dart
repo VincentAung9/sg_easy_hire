@@ -9,6 +9,8 @@ import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
+import 'package:sg_easy_hire/features/personal_test/domain/personality_test_bloc.dart';
+import 'package:sg_easy_hire/features/personal_test/domain/personality_test_event.dart';
 import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class AppView extends StatefulWidget {
@@ -103,15 +105,22 @@ class _AppViewState extends State<AppView> {
             GetInitialUserData(id: state.currentUser!.id),
           );
           context.read<HelperCoreBloc>().add(StartSubscribeToUser());
+          context.read<PersonalityTestBloc>()
+            ..add(GetQuestions())
+            ..add(GetUserAnswers())
+            ..add(GetTypeMeta());
           context.read<HomeBloc>()
             ..add(StartListenCreateNextInterview())
             ..add(StartListenUpdateNextInterview())
             ..add(StartGetProfileViews())
             ..add(StartListenCreateProfileView())
             ..add(StartGetAppliedJobs())
+            ..add(StartListenAppliedJobs())
             ..add(StartGetInterviews())
+            ..add(StartGetNextInterview())
             ..add(StartListenCreateInterviews())
             ..add(StartListenUpdateInterviews());
+
           setState(() {
             isInitialized = true;
           });

@@ -19,6 +19,7 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
     on<ChangeJobTag>(_onChangeJobTag, transformer: restartable());
     on<SearchJobsEvent>(_onSearchJobs, transformer: restartable());
     on<ApplyJobEvent>(_onApplyJobs);
+    on<ApplyJobForUIEvent>(_onApplyJobForUI);
   }
 
   FutureOr<void> _onGetJobs(
@@ -111,15 +112,15 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
     final jobIndex = state.jobs.indexWhere(
       (rj) => rj.id == event.oldJob.id,
     );
-    final oldJobs = state.jobs;
-    final newJobs = state.jobs;
+    final oldJobs = List<Job>.from(state.jobs);
+    final newJobs = List<Job>.from(state.jobs);
     newJobs[jobIndex] = event.oldJob.copyWith(
       applications: [...event.oldJob.applications ?? [], event.appliedJob],
     );
     emit(state.copyWith(jobs: newJobs));
     try {
-      //await repository.applyJob(event.appliedJob);
-      await Future.delayed(const Duration(seconds: 2), () => throw Exception());
+      await repository.applyJob(event.appliedJob);
+      // await Future.delayed(const Duration(seconds: 2), () => throw Exception());
     } on Exception catch (_) {
       emit(
         state.copyWith(
@@ -275,22 +276,25 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
     UnfavouriteJob event,
     Emitter<HelperJobsState> emit,
   ) async {
+    debugPrint("🌈 Calling Unfav");
     final oldJobs = state.jobs;
     final jobIndex = oldJobs.indexWhere((oj) => oj.id == event.oldJob.id);
     List<Job> newJobs = List.from(oldJobs);
-    final savedJobs = event.oldJob.savedJobs ?? []
+    List<SavedJob> savedJobs = List.from(event.oldJob.savedJobs ?? [])
       ..removeWhere(
-        (sj) =>
-            sj.job?.id == event.oldJob.id &&
-            sj.user?.id == event.currentUser.id,
+        (sj) => sj.id == event.savedJob.id,
+        /* sj.job?.id == event.oldJob.id &&
+            sj.user?.id == event.currentUser.id, */
       );
+    debugPrint("🌈 Saved Jobs: ${savedJobs.length}");
     newJobs[jobIndex] = event.oldJob.copyWith(
       savedJobs: [...savedJobs],
     );
     emit(state.copyWith(jobs: newJobs));
     try {
+      debugPrint("🌈 Mutating Unfav");
       await repository.unfavouriteJob(
-        SavedJob(
+        event.savedJob.copyWith(
           user: event.currentUser,
           job: event.oldJob,
         ),
@@ -302,6 +306,7 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
         ),
       );
     } catch (e) {
+      debugPrint("🌈 Unfav Error: $e");
       emit(
         state.copyWith(
           jobs: oldJobs,
@@ -310,5 +315,21 @@ class HelperJobsBloc extends Bloc<HelperJobsEvent, HelperJobsState> {
         ),
       );
     }
+  }
+
+  FutureOr<void> _onApplyJobForUI(
+    ApplyJobForUIEvent event,
+    Emitter<HelperJobsState> emit,
+  ) {
+    try {
+      final jobIndex = state.jobs.indexWhere(
+        (rj) => rj.id == event.oldJob.id,
+      );
+      final newJobs = List<Job>.from(state.jobs);
+      newJobs[jobIndex] = event.oldJob.copyWith(
+        applications: [...event.oldJob.applications ?? [], event.appliedJob],
+      );
+      emit(state.copyWith(jobs: newJobs));
+    } catch (e) {}
   }
 }

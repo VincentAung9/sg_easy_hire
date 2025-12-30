@@ -1,0 +1,302 @@
+{
+  "INFP-A": {
+    "personalityType": "INFP-A",
+    "name": "Mediator",
+    "group": "Diplomat",
+    "codeLong": "Introverted Intuitive Feeling Prospecting - Assertive",
+    "personalityTraits": "As an INFP-A, you are a reflective and idealistic individual with a deep sense of authenticity and creativity. Your introverted nature draws you to solitary activities where you can explore your inner world, while your intuitive mind thrives on imagining possibilities and exploring abstract ideas. You make decisions guided by your values and emotions, seeking harmony and meaning in your actions. Your prospecting approach allows flexibility and spontaneity, adapting to new opportunities with ease. Your assertive identity gives you quiet confidence in your path, though you may sometimes avoid conflict to maintain peace.",
+    "careerPath": "Your INFP-A personality is well-suited to careers that allow you to express creativity and make a positive impact, such as writer, artist, counselor, or social worker. Your empathy and imagination make you excel in roles that involve helping others or exploring innovative ideas. Your flexibility allows you to thrive in dynamic environments, while your assertive nature helps you pursue your passions with confidence.",
+    "personalGrowth": "To grow as an INFP-A, focus on asserting your needs in relationships and managing procrastination, as your prospecting nature may lead to delays. Embrace your confidence to pursue your dreams boldly, and practice setting boundaries to avoid overextending yourself emotionally. Engaging in structured planning can help balance your spontaneous tendencies.",
+    "relationships": "In relationships, you shine as a deeply empathetic and loyal partner, forming meaningful connections rooted in authenticity. You value emotional depth and strive for harmony, but you may avoid conflict to keep the peace. Practice open communication to express your needs clearly, and leverage your assertive confidence to build stronger, balanced relationships."
+  },
+  "INFP-T": {
+    "personalityType": "INFP-T",
+    "name": "Mediator",
+    "group": "Diplomat",
+    "codeLong": "Introverted Intuitive Feeling Prospecting - Turbulent",
+    "personalityTraits": "As an INFP-T, you are a deeply introspective and idealistic soul, driven by a quest for meaning and authenticity. Your introverted nature makes you cherish solitude for reflection, while your intuitive mind loves exploring possibilities and creative ideas. Guided by emotions and values, you seek harmony in your decisions. Your prospecting approach brings flexibility but can lead to indecision. Your turbulent identity fuels a desire for self-improvement, though it may cause you to dwell on doubts or mistakes.",
+    "careerPath": "Your INFP-T personality thrives in creative and meaningful roles like writer, therapist, or non-profit worker. Your empathy and vision make you ideal for helping others, but your turbulent nature may push you to seek roles with clear growth opportunities. Flexible environments suit your spontaneous style, though you may benefit from structured support.",
+    "personalGrowth": "To grow as an INFP-T, work on overcoming self-doubt by practicing self-compassion and celebrating your strengths. Set small, achievable goals to manage procrastination, and establish boundaries to protect your emotional energy. Building confidence in decision-making can help you balance your introspective tendencies.",
+    "relationships": "In relationships, you are a compassionate and devoted partner, seeking deep emotional connections. Your turbulent nature may lead you to overthink others’ actions or fear disappointing them. Practice open communication and self-assurance to foster healthier, more balanced relationships."
+  },
+  "ESTJ-A": {
+    "personalityType": "ESTJ-A",
+    "name": "Executive",
+    "group": "Sentinel",
+    "codeLong": "Extraverted Sensing Thinking Judging - Assertive",
+    "personalityTraits": "As an ESTJ-A, you are a decisive and organized leader who thrives in structured environments. Your extraverted nature energizes you through social interactions and teamwork, while your observant focus keeps you grounded in practical realities. You prioritize logic and efficiency in decision-making, often taking charge to ensure goals are met. Your judging trait drives you to plan meticulously and maintain order. Your assertive identity gives you confidence in your decisions, making you a natural leader who inspires trust.",
+    "careerPath": "Your ESTJ-A personality excels in leadership roles such as manager, administrator, or lawyer, where your organizational skills and logical approach shine. You thrive in structured settings that require clear decision-making and team coordination. Your confidence allows you to take on high-responsibility roles with ease.",
+    "personalGrowth": "To grow as an ESTJ-A, practice flexibility to adapt to unexpected changes and consider others’ emotions to enhance your leadership style. Balancing your drive for efficiency with empathy can lead to more harmonious interactions. Delegating tasks can help you avoid overextending yourself.",
+    "relationships": "In relationships, you are dependable and straightforward, valuing loyalty and clear communication. Your leadership qualities make you a reliable partner, but you may sometimes overlook emotional nuances. Practicing active listening and showing vulnerability can deepen your connections."
+  },
+  "ESTJ-T": {
+    "personalityType": "ESTJ-T",
+    "name": "Executive",
+    "group": "Sentinel",
+    "codeLong": "Extraverted Sensing Thinking Judging - Turbulent",
+    "personalityTraits": "As an ESTJ-T, you are a driven and organized leader who excels in structured settings. Your extraverted nature makes you thrive in social and team-based environments, while your observant focus anchors you in practical details. You prioritize logic and efficiency, taking charge to achieve goals. Your judging trait ensures meticulous planning, but your turbulent identity may lead to stress or self-doubt when outcomes are uncertain, pushing you to constantly improve.",
+    "careerPath": "Your ESTJ-T personality suits leadership roles like project manager, executive, or financial analyst, where your organizational skills and logic shine. Your turbulent nature drives you to seek improvement, making you excel in roles with clear growth paths. Structured environments suit you, but you may benefit from roles that allow adaptability.",
+    "personalGrowth": "To grow as an ESTJ-T, work on managing stress and self-doubt through mindfulness or delegation. Practice flexibility to handle unexpected changes, and incorporate empathy to balance your logical approach. Building emotional resilience can enhance your leadership effectiveness.",
+    "relationships": "In relationships, you are reliable and direct, valuing loyalty and structure. Your turbulent nature may make you sensitive to criticism or overly focused on perfection. Practicing active listening and openness to emotional nuances can strengthen your relationships."
+  },
+  "INFJ-A": {
+    "personalityType": "INFJ-A",
+    "name": "Advocate",
+    "group": "Diplomat",
+    "codeLong": "Introverted Intuitive Feeling Judging - Assertive",
+    "personalityTraits": "As an INFJ-A, you are a visionary idealist with a deep commitment to helping others. Your introverted nature prefers meaningful connections over large crowds, while your intuitive mind seeks patterns and possibilities. You make decisions based on values and empathy, striving for harmony. Your judging trait keeps you organized and goal-oriented, and your assertive identity gives you confidence in your vision.",
+    "careerPath": "Your INFJ-A personality is ideal for roles like counselor, writer, or teacher, where you can inspire and support others. Your empathy and vision make you excel in meaningful, structured roles that align with your values.",
+    "personalGrowth": "To grow, practice setting boundaries to avoid emotional burnout and embrace flexibility to handle disruptions. Your confidence can help you advocate for your needs, balancing your idealism with practicality.",
+    "relationships": "You form deep, empathetic connections, valuing authenticity and harmony. Practice expressing your needs clearly to avoid overextending yourself, and use your confidence to build balanced relationships."
+  },
+  "INFJ-T": {
+    "personalityType": "INFJ-T",
+    "name": "Advocate",
+    "group": "Diplomat",
+    "codeLong": "Introverted Intuitive Feeling Judging - Turbulent",
+    "personalityTraits": "As an INFJ-T, you are a compassionate visionary driven by a desire to make a difference. Your introverted nature seeks solitude for reflection, while your intuitive mind explores big ideas. You prioritize empathy and harmony, with a judging approach to stay organized. Your turbulent identity fuels self-improvement but may lead to self-doubt.",
+    "careerPath": "You thrive in roles like therapist, non-profit leader, or artist, where your empathy and vision shine. Seek environments with growth opportunities to satisfy your turbulent drive for improvement.",
+    "personalGrowth": "Focus on self-compassion to reduce self-doubt and set boundaries to protect your energy. Embracing adaptability can help you manage your structured tendencies.",
+    "relationships": "You seek deep connections but may overthink others’ actions. Practice open communication and self-assurance to foster stronger, balanced relationships."
+  },
+  "INTJ-A": {
+    "personalityType": "INTJ-A",
+    "name": "Architect",
+    "group": "Analyst",
+    "codeLong": "Introverted Intuitive Thinking Judging - Assertive",
+    "personalityTraits": "As an INTJ-A, you are a strategic thinker with a vision for the future. Your introverted nature prefers focused work, while your intuitive mind excels at solving complex problems. You prioritize logic and efficiency, with a judging approach to stay organized. Your assertive identity gives you confidence in your plans.",
+    "careerPath": "You excel in roles like strategist, engineer, or researcher, where your analytical skills and vision shine. Structured, challenging environments suit your strengths.",
+    "personalGrowth": "Practice considering others’ emotions and embracing flexibility to adapt to change. Balancing logic with empathy can enhance your interactions.",
+    "relationships": "You value loyalty and intellectual connection but may seem reserved. Practice openness and emotional expression to deepen relationships."
+  },
+  "INTJ-T": {
+    "personalityType": "INTJ-T",
+    "name": "Architect",
+    "group": "Analyst",
+    "codeLong": "Introverted Intuitive Thinking Judging - Turbulent",
+    "personalityTraits": "As an INTJ-T, you are a driven strategist with a focus on innovation. Your introverted nature values solitude, while your intuitive mind tackles big ideas. You prioritize logic, with a judging approach to planning. Your turbulent identity pushes you to improve but may cause self-doubt.",
+    "careerPath": "You thrive in roles like consultant, scientist, or entrepreneur, where your vision and drive for improvement excel. Seek roles with clear growth paths.",
+    "personalGrowth": "Work on managing self-doubt through self-compassion and consider others’ emotions to balance your logic. Flexibility can enhance your adaptability.",
+    "relationships": "You seek intellectual connections but may struggle with emotional expression. Practice vulnerability and active listening to strengthen bonds."
+  },
+  "ENTJ-A": {
+    "personalityType": "ENTJ-A",
+    "name": "Commander",
+    "group": "Executive",
+    "codeLong": "Extraverted Intuitive Thinking Judging - Assertive",
+    "personalityTraits": "As an ENTJ-A, you are a bold and visionary leader who thrives on challenges. Your extraverted nature energizes you in social settings, while your intuitive mind focuses on big-picture ideas. You prioritize logic and efficiency, with a judging approach to stay organized. Your assertive identity fuels your confidence in leading others.",
+    "careerPath": "You excel in roles like CEO, entrepreneur, or strategist, where your leadership and vision shine. Structured, high-impact environments suit you best.",
+    "personalGrowth": "Practice empathy and flexibility to balance your decisive nature. Delegating tasks can help you avoid overextending yourself.",
+    "relationships": "You are a confident and inspiring partner but may overlook emotional nuances. Practice active listening to build deeper connections."
+  },
+  "ENTJ-T": {
+    "personalityType": "ENTJ-T",
+    "name": "Commander",
+    "group": "Executive",
+    "codeLong": "Extraverted Intuitive Thinking Judging - Turbulent",
+    "personalityTraits": "As an ENTJ-T, you are a driven leader with a passion for innovation. Your extraverted nature thrives in collaboration, while your intuitive mind seeks big ideas. You prioritize logic, with a judging approach to planning. Your turbulent identity drives improvement but may lead to stress.",
+    "careerPath": "You thrive in roles like executive, consultant, or startup founder, where your vision and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage stress through mindfulness and balance logic with empathy. Flexibility can enhance your leadership effectiveness.",
+    "relationships": "You are a dynamic partner but may seem intense. Practice emotional openness and patience to strengthen relationships."
+  },
+  "ENFJ-A": {
+    "personalityType": "ENFJ-A",
+    "name": "Protagonist",
+    "group": "Diplomat",
+    "codeLong": "Extraverted Intuitive Feeling Judging - Assertive",
+    "personalityTraits": "As an ENFJ-A, you are a charismatic and empathetic leader who inspires others. Your extraverted nature thrives in social settings, while your intuitive mind seeks meaning. You prioritize empathy and harmony, with a judging approach to stay organized. Your assertive identity gives you confidence in your vision.",
+    "careerPath": "You excel in roles like teacher, coach, or non-profit leader, where your empathy and leadership shine. Structured, people-oriented roles suit you.",
+    "personalGrowth": "Set boundaries to avoid burnout and practice adaptability to handle disruptions. Your confidence can help you advocate for your needs.",
+    "relationships": "You form deep, supportive connections but may overextend yourself. Practice expressing your needs to maintain balanced relationships."
+  },
+  "ENFJ-T": {
+    "personalityType": "ENFJ-T",
+    "name": "Protagonist",
+    "group": "Diplomat",
+    "codeLong": "Extraverted Intuitive Feeling Judging - Turbulent",
+    "personalityTraits": "As an ENFJ-T, you are a passionate and empathetic leader driven to help others. Your extraverted nature loves collaboration, while your intuitive mind seeks purpose. You prioritize empathy, with a judging approach to planning. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like counselor, community organizer, or educator, where your empathy and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Practice self-compassion to manage self-doubt and set boundaries to protect your energy. Adaptability can balance your structured nature.",
+    "relationships": "You seek deep connections but may overthink others’ feelings. Practice self-assurance and clear communication to strengthen bonds."
+  },
+  "ISFJ-A": {
+    "personalityType": "ISFJ-A",
+    "name": "Defender",
+    "group": "Sentinel",
+    "codeLong": "Introverted Sensing Feeling Judging - Assertive",
+    "personalityTraits": "As an ISFJ-A, you are a nurturing and dependable individual who values tradition. Your introverted nature prefers close connections, while your observant focus keeps you grounded. You prioritize empathy and harmony, with a judging approach to stay organized. Your assertive identity gives you quiet confidence.",
+    "careerPath": "You excel in roles like nurse, teacher, or administrator, where your care and reliability shine. Structured, supportive environments suit you.",
+    "personalGrowth": "Practice asserting your needs and embracing change to balance your routine-driven nature. Your confidence can help you take risks.",
+    "relationships": "You are a loyal and caring partner but may avoid conflict. Practice open communication to build stronger connections."
+  },
+  "ISFJ-T": {
+    "personalityType": "ISFJ-T",
+    "name": "Defender",
+    "group": "Sentinel",
+    "codeLong": "Introverted Sensing Feeling Judging - Turbulent",
+    "personalityTraits": "As an ISFJ-T, you are a compassionate and reliable caretaker driven to support others. Your introverted nature values close bonds, while your observant focus anchors you in reality. You prioritize empathy, with a judging approach to planning. Your turbulent identity fuels improvement but may cause self-doubt.",
+    "careerPath": "You thrive in roles like healthcare worker, social worker, or office manager, where your care and drive excel. Seek growth-oriented roles.",
+    "personalGrowth": "Manage self-doubt through self-compassion and embrace adaptability to handle change. Asserting your needs can enhance your confidence.",
+    "relationships": "You are a devoted partner but may overthink others’ needs. Practice clear communication and self-assurance to strengthen bonds."
+  },
+  "ISTJ-A": {
+    "personalityType": "ISTJ-A",
+    "name": "Logistician",
+    "group": "Sentinel",
+    "codeLong": "Introverted Sensing Thinking Judging - Assertive",
+    "personalityTraits": "As an ISTJ-A, you are a diligent and responsible individual who values structure. Your introverted nature prefers focused work, while your observant focus emphasizes practicality. You prioritize logic, with a judging approach to stay organized. Your assertive identity gives you confidence in your methods.",
+    "careerPath": "You excel in roles like accountant, engineer, or manager, where your reliability and logic shine. Structured environments suit you best.",
+    "personalGrowth": "Practice flexibility and consider others’ emotions to balance your logical approach. Delegating tasks can enhance your efficiency.",
+    "relationships": "You are a dependable partner but may seem reserved. Practice emotional openness to deepen connections."
+  },
+  "ISTJ-T": {
+    "personalityType": "ISTJ-T",
+    "name": "Logistician",
+    "group": "Sentinel",
+    "codeLong": "Introverted Sensing Thinking Judging - Turbulent",
+    "personalityTraits": "As an ISTJ-T, you are a meticulous and responsible individual driven to improve. Your introverted nature values solitude, while your observant focus prioritizes facts. You make logical decisions, with a judging approach to planning. Your turbulent identity pushes you to refine your work but may cause stress.",
+    "careerPath": "You thrive in roles like analyst, inspector, or administrator, where your precision and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage stress through mindfulness and balance logic with empathy. Flexibility can enhance your adaptability.",
+    "relationships": "You are a reliable partner but may struggle with emotional expression. Practice vulnerability to strengthen relationships."
+  },
+  "ESFJ-A": {
+    "personalityType": "ESFJ-A",
+    "name": "Consul",
+    "group": "Sentinel",
+    "codeLong": "Extraverted Sensing Feeling Judging - Assertive",
+    "personalityTraits": "As an ESFJ-A, you are a warm and sociable caretaker who thrives on connection. Your extraverted nature loves social settings, while your observant focus keeps you practical. You prioritize empathy and harmony, with a judging approach to stay organized. Your assertive identity gives you confidence in your role.",
+    "careerPath": "You excel in roles like teacher, event planner, or nurse, where your care and organization shine. People-oriented, structured roles suit you.",
+    "personalGrowth": "Set boundaries to avoid burnout and embrace adaptability to handle change. Your confidence can help you assert your needs.",
+    "relationships": "You form warm, supportive connections but may prioritize others’ needs. Practice expressing your own needs to maintain balance."
+  },
+  "ESFJ-T": {
+    "personalityType": "ESFJ-T",
+    "name": "Consul",
+    "group": "Sentinel",
+    "codeLong": "Extraverted Sensing Feeling Judging - Turbulent",
+    "personalityTraits": "As an ESFJ-T, you are a compassionate and outgoing caretaker driven to help others. Your extraverted nature thrives in social settings, while your observant focus anchors you in reality. You prioritize empathy, with a judging approach to planning. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like social worker, HR manager, or community organizer, where your care and drive excel. Seek growth-oriented roles.",
+    "personalGrowth": "Practice self-compassion to manage self-doubt and set boundaries to protect your energy. Adaptability can balance your structured nature.",
+    "relationships": "You seek warm connections but may overthink others’ feelings. Practice self-assurance and clear communication to strengthen bonds."
+  },
+  "ESTP-A": {
+    "personalityType": "ESTP-A",
+    "name": "Entrepreneur",
+    "group": "Explorer",
+    "codeLong": "Extraverted Sensing Thinking Prospecting - Assertive",
+    "personalityTraits": "As an ESTP-A, you are a dynamic and action-oriented individual who thrives in the moment. Your extraverted nature loves excitement, while your observant focus keeps you grounded. You prioritize logic, with a prospecting approach for flexibility. Your assertive identity gives you confidence in high-energy settings.",
+    "careerPath": "You excel in roles like entrepreneur, salesperson, or emergency responder, where your adaptability and quick thinking shine. Dynamic environments suit you.",
+    "personalGrowth": "Practice long-term planning and consider others’ emotions to balance your spontaneity. Patience can enhance your interactions.",
+    "relationships": "You are a charismatic partner but may avoid deep emotional discussions. Practice active listening to build stronger connections."
+  },
+  "ESTP-T": {
+    "personalityType": "ESTP-T",
+    "name": "Entrepreneur",
+    "group": "Explorer",
+    "codeLong": "Extraverted Sensing Thinking Prospecting - Turbulent",
+    "personalityTraits": "As an ESTP-T, you are an energetic and adaptable individual driven to seize opportunities. Your extraverted nature thrives in action, while your observant focus emphasizes practicality. You prioritize logic, with a prospecting approach for spontaneity. Your turbulent identity pushes you to improve but may cause self-doubt.",
+    "careerPath": "You thrive in roles like marketer, firefighter, or consultant, where your quick thinking and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice long-term planning. Balancing spontaneity with focus can enhance your effectiveness.",
+    "relationships": "You are a lively partner but may struggle with emotional depth. Practice vulnerability and patience to strengthen relationships."
+  },
+  "ISTP-A": {
+    "personalityType": "ISTP-A",
+    "name": "Virtuoso",
+    "group": "Explorer",
+    "codeLong": "Introverted Sensing Thinking Prospecting - Assertive",
+    "personalityTraits": "As an ISTP-A, you are a practical and independent problem-solver who thrives on hands-on challenges. Your introverted nature prefers solitude, while your observant focus emphasizes facts. You prioritize logic, with a prospecting approach for flexibility. Your assertive identity gives you confidence in your skills.",
+    "careerPath": "You excel in roles like mechanic, engineer, or technician, where your practical skills and adaptability shine. Hands-on, flexible roles suit you.",
+    "personalGrowth": "Practice considering others’ emotions and long-term planning to balance your spontaneity. Collaboration can enhance your effectiveness.",
+    "relationships": "You are a reliable but reserved partner. Practice emotional openness to build deeper connections."
+  },
+  "ISTP-T": {
+    "personalityType": "ISTP-T",
+    "name": "Virtuoso",
+    "group": "Explorer",
+    "codeLong": "Introverted Sensing Thinking Prospecting - Turbulent",
+    "personalityTraits": "As an ISTP-T, you are a resourceful and independent problem-solver driven to refine your skills. Your introverted nature values solitude, while your observant focus prioritizes practicality. You make logical decisions, with a prospecting approach for adaptability. Your turbulent identity fuels improvement but may cause self-doubt.",
+    "careerPath": "You thrive in roles like craftsman, programmer, or first responder, where your skills and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice long-term planning. Balancing logic with empathy can enhance your interactions.",
+    "relationships": "You are a dependable partner but may struggle with emotional expression. Practice vulnerability to strengthen relationships."
+  },
+  "ESFP-A": {
+    "personalityType": "ESFP-A",
+    "name": "Entertainer",
+    "group": "Explorer",
+    "codeLong": "Extraverted Sensing Feeling Prospecting - Assertive",
+    "personalityTraits": "As an ESFP-A, you are a vibrant and spontaneous individual who brings energy to any room. Your extraverted nature loves social settings, while your observant focus keeps you grounded. You prioritize empathy and fun, with a prospecting approach for flexibility. Your assertive identity gives you confidence in social situations.",
+    "careerPath": "You excel in roles like entertainer, event planner, or teacher, where your energy and empathy shine. Dynamic, people-oriented roles suit you.",
+    "personalGrowth": "Practice long-term planning and focus to balance your spontaneity. Considering others’ perspectives can enhance your interactions.",
+    "relationships": "You are a lively and caring partner but may avoid serious discussions. Practice deeper communication to build stronger bonds."
+  },
+  "ESFP-T": {
+    "personalityType": "ESFP-T",
+    "name": "Entertainer",
+    "group": "Explorer",
+    "codeLong": "Extraverted Sensing Feeling Prospecting - Turbulent",
+    "personalityTraits": "As an ESFP-T, you are an enthusiastic and adaptable individual driven to connect with others. Your extraverted nature thrives in social settings, while your observant focus emphasizes the present. You prioritize empathy, with a prospecting approach for spontaneity. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like performer, marketer, or social worker, where your energy and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice long-term planning. Balancing spontaneity with focus can enhance your effectiveness.",
+    "relationships": "You are a warm partner but may overthink others’ reactions. Practice clear communication and emotional depth to strengthen bonds."
+  },
+  "ISFP-A": {
+    "personalityType": "ISFP-A",
+    "name": "Adventurer",
+    "group": "Explorer",
+    "codeLong": "Introverted Sensing Feeling Prospecting - Assertive",
+    "personalityTraits": "As an ISFP-A, you are a gentle and creative soul who values authenticity. Your introverted nature prefers quiet settings, while your observant focus emphasizes the present. You prioritize empathy, with a prospecting approach for flexibility. Your assertive identity gives you confidence in your unique path.",
+    "careerPath": "You excel in roles like artist, designer, or therapist, where your creativity and empathy shine. Flexible, expressive roles suit you best.",
+    "personalGrowth": "Practice asserting your needs and long-term planning to balance your spontaneity. Collaboration can enhance your impact.",
+    "relationships": "You are a caring and authentic partner but may avoid conflict. Practice open communication to build deeper connections."
+  },
+  "ISFP-T": {
+    "personalityType": "ISFP-T",
+    "name": "Adventurer",
+    "group": "Explorer",
+    "codeLong": "Introverted Sensing Feeling Prospecting - Turbulent",
+    "personalityTraits": "As an ISFP-T, you are a sensitive and creative individual driven to express your authenticity. Your introverted nature values solitude, while your observant focus anchors you in the moment. You prioritize empathy, with a prospecting approach for adaptability. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like musician, counselor, or craftsman, where your creativity and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice long-term planning. Asserting your needs can enhance your confidence.",
+    "relationships": "You are a devoted partner but may overthink others’ feelings. Practice clear communication and self-assurance to strengthen bonds."
+  },
+  "ENTP-A": {
+    "personalityType": "ENTP-A",
+    "name": "Debater",
+    "group": "Analyst",
+    "codeLong": "Extraverted Intuitive Thinking Prospecting - Assertive",
+    "personalityTraits": "As an ENTP-A, you are a curious and innovative thinker who thrives on debate. Your extraverted nature loves social interaction, while your intuitive mind explores ideas. You prioritize logic, with a prospecting approach for flexibility. Your assertive identity gives you confidence in your creativity.",
+    "careerPath": "You excel in roles like entrepreneur, lawyer, or inventor, where your creativity and quick thinking shine. Dynamic environments suit you best.",
+    "personalGrowth": "Practice focus and follow-through to balance your spontaneity. Considering others’ emotions can enhance your interactions.",
+    "relationships": "You are a witty and engaging partner but may avoid emotional depth. Practice active listening to build stronger connections."
+  },
+  "ENTP-T": {
+    "personalityType": "ENTP-T",
+    "name": "Debater",
+    "group": "Analyst",
+    "codeLong": "Extraverted Intuitive Thinking Prospecting - Turbulent",
+    "personalityTraits": "As an ENTP-T, you are a dynamic and curious thinker driven to innovate. Your extraverted nature thrives in debate, while your intuitive mind seeks new ideas. You prioritize logic, with a prospecting approach for adaptability. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like consultant, designer, or startup founder, where your creativity and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice follow-through. Balancing logic with empathy can enhance your interactions.",
+    "relationships": "You are an engaging partner but may struggle with emotional depth. Practice vulnerability and patience to strengthen relationships."
+  },
+  "INTP-A": {
+    "personalityType": "INTP-A",
+    "name": "Logician",
+    "group": "Analyst",
+    "codeLong": "Introverted Intuitive Thinking Prospecting - Assertive",
+    "personalityTraits": "As an INTP-A, you are a curious and analytical thinker who loves exploring ideas. Your introverted nature prefers solitude, while your intuitive mind dives into theories. You prioritize logic, with a prospecting approach for flexibility. Your assertive identity gives you confidence in your intellect.",
+    "careerPath": "You excel in roles like researcher, philosopher, or programmer, where your analytical skills shine. Flexible, intellectual roles suit you best.",
+    "personalGrowth": "Practice follow-through and consider others’ emotions to balance your logical approach. Collaboration can enhance your impact.",
+    "relationships": "You are a thoughtful but reserved partner. Practice emotional openness to build deeper connections."
+  },
+  "INTP-T": {
+    "personalityType": "INTP-T",
+    "name": "Logician",
+    "group": "Analyst",
+    "codeLong": "Introverted Intuitive Thinking Prospecting - Turbulent",
+    "personalityTraits": "As an INTP-T, you are an introspective and analytical thinker driven to understand complex ideas. Your introverted nature values solitude, while your intuitive mind explores theories. You prioritize logic, with a prospecting approach for adaptability. Your turbulent identity fuels growth but may cause self-doubt.",
+    "careerPath": "You thrive in roles like scientist, writer, or analyst, where your intellect and drive excel. Seek roles with growth opportunities.",
+    "personalGrowth": "Manage self-doubt through self-compassion and practice follow-through. Balancing logic with empathy can enhance your interactions.",
+    "relationships": "You are a thoughtful partner but may struggle with emotional expression. Practice vulnerability to strengthen relationships."
+  }
+}

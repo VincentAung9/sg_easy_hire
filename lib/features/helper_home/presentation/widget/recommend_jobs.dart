@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/widgets/widgets.dart';
-import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/recommend_job_card.dart';
@@ -19,7 +18,6 @@ class RecommendedJobs extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (_, state) {
         if (state.action == HomeStateActions.recommendJob &&
@@ -80,7 +78,6 @@ class RecommendedJobs extends StatelessWidget {
             ...jobs.map(
               (j) => RecommendJobCard(
                 job: j,
-                currentUser: currentUser,
               ),
             ),
           ],

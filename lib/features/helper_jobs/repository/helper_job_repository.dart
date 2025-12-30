@@ -15,6 +15,17 @@ class HelperJobRepository {
   }
 
   Future<void> applyJob(AppliedJob job) async {
+    //we find first, if exist do nothing
+    final getRequest = ModelQueries.list(
+      AppliedJob.classType,
+      where: AppliedJob.JOB
+          .eq(job.job?.id)
+          .and(AppliedJob.HELPER.eq(job.helper?.id)),
+    );
+    final getResult = await Amplify.API.query(request: getRequest).response;
+    if (getResult.data?.items.isNotEmpty ?? false) {
+      throw Exception("You have already applied for this job.");
+    }
     final request = ModelMutations.create(job);
     await Amplify.API.mutate(request: request).response;
   }
@@ -84,10 +95,85 @@ class HelperJobRepository {
       limit: limit,
       where: filter,
     );
-    final firstResult = await Amplify.API.query(request: firstRequest).response;
-    if (firstResult.hasErrors) {
-      debugPrint("❗️Query Jobs Error: ${firstResult.errors}");
+    const String graphQLDocument = '''
+  query GetJobsWithApps(\$filter: ModelJobFilterInput, \$limit: Int, \$nextToken: String) {
+    listJobs(filter: \$filter, limit: \$limit, nextToken: \$nextToken) {
+        items {
+         createdAt
+    updatedAt
+  id
+  code
+  title
+  location
+  salary
+  currency
+  payPeriod
+  familyMembers
+  childCount
+  adultCount
+  childAges
+  elderlyCount
+  homeType
+  roomType
+  requiredSkills
+  note
+  accommodation
+  offdays
+  tags
+  requiredPersonalityType
+  status
+  creatorID
+  creator {
+  id
+  fullName
+  avatarURL
+  }
+          applications {
+            items {
+             id
+  code
+  status
+  adminActionStatus
+  updatedBy
+  completedProcesses
+  helper {
+  id
+  }
+            }
+          }
+          savedJobs {
+          items{
+            id
+            user {
+            id
+            }
+          }}
+           jobsOffer{
+          items{
+          id
+          helper {
+          id
+          }
+          }
+          }
+        }
+        nextToken
+      }
     }
-    return firstResult.data;
+  ''';
+
+    // final firstResult = await Amplify.API.query(request: firstRequest).response;
+    final firstResult = GraphQLRequest<PaginatedResult<Job>>(
+      document: graphQLDocument,
+      modelType: const PaginatedModelType(Job.classType),
+      variables: firstRequest.variables,
+      decodePath: 'listJobs',
+    );
+
+    final response = await Amplify.API.query(request: firstResult).response;
+    if (response.hasErrors) {
+      debugPrint("❗️Query Jobs Error: ${response.errors}");
+    }
+    return response.data;
   }
 }

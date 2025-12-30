@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
@@ -15,47 +16,59 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<StartGetProfileViews>(_onStartGetProfileViews);
     on<StartListenCreateProfileView>(_onStartListenCreateProfileViews);
     on<StartGetAppliedJobs>(_onStartGetAppliedJobs);
+    on<StartListenAppliedJobs>(_onStartListenAppliedJobs);
     on<StartGetInterviews>(_onGetInterviews);
+    on<StartGetNextInterview>(_onGetNextInterview);
     on<StartListenCreateInterviews>(_onStartListenCreateInterviews);
     on<StartListenUpdateInterviews>(_onStartListenUpdateInterviews);
     on<ApplyJobEvent>(_onApplyJob);
+    on<ApplyJobForUIEvent>(_onApplyJobForUI);
     on<GetRecommendJobsEvent>(_onGetRecommendJobs);
+    on<UpdateInterviewEvent>(_onUpdateInterviewEvent);
   }
 
   FutureOr<void> _onApplyJob(
     ApplyJobEvent event,
     Emitter<HomeState> emit,
   ) async {
-    if (event.currentUser.verifyStatus != VerifyStatus.VERIFIED) {
-      emit(
-        state.copyWith(
-          action: HomeStateActions.applyJob,
-          status: HomeStateStatus.failure,
-        ),
-      );
-      return;
-    }
-    final jobIndex = state.recommendJobs.indexWhere(
-      (rj) => rj.id == event.oldJob.id,
-    );
-    final oldJobs = List.of(state.recommendJobs);
-    final newJobs = List.of(state.recommendJobs);
-    newJobs[jobIndex] = event.oldJob.copyWith(
-      applications: [...event.oldJob.applications ?? [], event.appliedJob],
-    );
-    emit(state.copyWith(recommendJobs: newJobs));
     try {
-      // await repository.applyJob(event.appliedJob);
-      await Future.delayed(const Duration(seconds: 2), () => throw Exception());
-    } on Exception catch (_) {
+      if (event.currentUser.verifyStatus != VerifyStatus.VERIFIED) {
+        emit(
+          state.copyWith(
+            action: HomeStateActions.applyJob,
+            status: HomeStateStatus.failure,
+          ),
+        );
+        return;
+      }
+      final jobIndex = state.recommendJobs.indexWhere(
+        (rj) => rj.id == event.oldJob.id,
+      );
+      final oldJobs = List.of(state.recommendJobs);
+      final newJobs = List.of(state.recommendJobs);
+      newJobs[jobIndex] = event.oldJob.copyWith(
+        applications: [...event.oldJob.applications ?? [], event.appliedJob],
+      );
       emit(
         state.copyWith(
-          recommendJobs: oldJobs,
+          recommendJobs: newJobs,
           action: HomeStateActions.applyJob,
-          status: HomeStateStatus.failure,
+          status: HomeStateStatus.success,
         ),
       );
-    }
+      try {
+        await repository.applyJob(event.appliedJob, newJobs[jobIndex]);
+        // await Future.delayed(const Duration(seconds: 2), () => throw Exception());
+      } on Exception catch (_) {
+        emit(
+          state.copyWith(
+            recommendJobs: oldJobs,
+            action: HomeStateActions.applyJob,
+            status: HomeStateStatus.failure,
+          ),
+        );
+      }
+    } catch (e) {}
   }
 
   FutureOr<void> _onGetRecommendJobs(
@@ -89,7 +102,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     );
     return emit.onEach(
-      repository.createInterviews,
+      repository.createNextInterview,
       onData: (interview) {
         if (interview == null) return;
         if (state.nextInterview == null) {
@@ -101,8 +114,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           );
           return;
         }
-        if (interview.confirmedDateTime?.getDateTimeInUtc().isBefore(
-              state.nextInterview!.confirmedDateTime!.getDateTimeInUtc(),
+        if (interview.confirmedDateTime?.getDateTimeInUtc().toLocal().isBefore(
+              state.nextInterview!.confirmedDateTime!
+                  .getDateTimeInUtc()
+                  .toLocal(),
             ) ??
             false) {
           emit(
@@ -127,10 +142,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     );
     return emit.onEach(
-      repository.updateInterviews,
+      repository.updateNextInterview,
       onData: (interview) {
-        if (interview == null) return;
+        if (interview == null) {
+          debugPrint("🔥 interview is null");
+          emit(
+            state.copyWith(
+              nextInterview: null,
+              status: HomeStateStatus.none,
+            ),
+          );
+          return;
+        }
         if (state.nextInterview == null) {
+          debugPrint("🔥 next interview is null");
           emit(
             state.copyWith(
               nextInterview: interview,
@@ -139,10 +164,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           );
           return;
         }
-        if (interview.confirmedDateTime?.getDateTimeInUtc().isBefore(
-              state.nextInterview!.confirmedDateTime!.getDateTimeInUtc(),
+        if (interview.confirmedDateTime?.getDateTimeInUtc().toLocal().isBefore(
+              state.nextInterview!.confirmedDateTime!
+                  .getDateTimeInUtc()
+                  .toLocal(),
             ) ??
             false) {
+          debugPrint("🔥 new interview is before previous interview");
           emit(
             state.copyWith(
               nextInterview: interview,
@@ -231,11 +259,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           (i) => i.status == InterviewStatus.PENDING,
         )
         .toList();
-    final accept = interviews
-        .where(
-          (i) => i.status == InterviewStatus.ACCEPTED,
-        )
-        .toList();
+    final accept =
+        interviews
+            .where(
+              (i) => i.status == InterviewStatus.ACCEPTED,
+            )
+            .toList()
+          ..sort(
+            (a, b) => a.confirmedDateTime!.getDateTimeInUtc().compareTo(
+              b.confirmedDateTime!.getDateTimeInUtc(),
+            ),
+          );
+
     final complete = interviews
         .where(
           (i) => i.status == InterviewStatus.COMPLETED,
@@ -251,7 +286,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         interviews: interviews,
         pending: pending,
         accepted: accept,
-        completed: complete,
+        completed: [...complete, ...cancel],
         cancelled: cancel,
         action: HomeStateActions.interview,
         status: HomeStateStatus.success,
@@ -290,7 +325,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             interviews: allInterviews,
             pending: pending,
             accepted: accept,
-            completed: complete,
+            completed: [...complete, ...cancel],
             cancelled: cancel,
           ),
         );
@@ -314,9 +349,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 .where((i) => i.status == InterviewStatus.PENDING)
                 .toList();
 
-            final accept = allInterviews
-                .where((i) => i.status == InterviewStatus.ACCEPTED)
-                .toList();
+            final accept =
+                allInterviews
+                    .where((i) => i.status == InterviewStatus.ACCEPTED)
+                    .toList()
+                  ..sort(
+                    (a, b) => a.confirmedDateTime!.getDateTimeInUtc().compareTo(
+                      b.confirmedDateTime!.getDateTimeInUtc(),
+                    ),
+                  );
 
             final complete = allInterviews
                 .where((i) => i.status == InterviewStatus.COMPLETED)
@@ -331,11 +372,119 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 interviews: allInterviews,
                 pending: pending,
                 accepted: accept,
-                completed: complete,
+                completed: [...complete, ...cancel],
                 cancelled: cancel,
               ),
             );
           }
+        }
+      },
+    );
+  }
+
+  FutureOr<void> _onApplyJobForUI(
+    ApplyJobForUIEvent event,
+    Emitter<HomeState> emit,
+  ) {
+    try {
+      final jobIndex = state.recommendJobs.indexWhere(
+        (rj) => rj.id == event.oldJob.id,
+      );
+      final newJobs = List.of(state.recommendJobs);
+      newJobs[jobIndex] = event.oldJob.copyWith(
+        applications: [...event.oldJob.applications ?? [], event.appliedJob],
+      );
+      emit(
+        state.copyWith(
+          recommendJobs: newJobs,
+          action: HomeStateActions.applyJob,
+          status: HomeStateStatus.success,
+        ),
+      );
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onUpdateInterviewEvent(
+    UpdateInterviewEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      List<Interview> allInterviews = List.from(state.interviews);
+      final index = allInterviews.indexWhere((e) => e.id == event.interview.id);
+      if (index != -1) {
+        allInterviews[index] = event.interview;
+        final pending = allInterviews
+            .where((i) => i.status == InterviewStatus.PENDING)
+            .toList();
+
+        final accept =
+            allInterviews
+                .where((i) => i.status == InterviewStatus.ACCEPTED)
+                .toList()
+              ..sort(
+                (a, b) => a.confirmedDateTime!.getDateTimeInUtc().compareTo(
+                  b.confirmedDateTime!.getDateTimeInUtc(),
+                ),
+              );
+
+        final complete = allInterviews
+            .where((i) => i.status == InterviewStatus.COMPLETED)
+            .toList();
+
+        final cancel = allInterviews
+            .where((i) => i.status == InterviewStatus.CANCELLED)
+            .toList();
+
+        emit(
+          state.copyWith(
+            interviews: allInterviews,
+            pending: pending,
+            accepted: accept,
+            completed: [...complete, ...cancel],
+            cancelled: cancel,
+          ),
+        );
+        await repository.updateInterview(event.interview);
+      }
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onGetNextInterview(
+    StartGetNextInterview event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        action: HomeStateActions.nextInterview,
+        status: HomeStateStatus.pending,
+      ),
+    );
+    final interview = await repository.getNextInterview();
+    emit(
+      state.copyWith(
+        nextInterview: interview,
+        action: HomeStateActions.nextInterview,
+        status: HomeStateStatus.success,
+      ),
+    );
+  }
+
+  FutureOr<void> _onStartListenAppliedJobs(
+    StartListenAppliedJobs event,
+    Emitter<HomeState> emit,
+  ) {
+    return emit.onEach(
+      repository.createAppliedJob,
+      onData: (appliedJob) {
+        if (!(appliedJob == null)) {
+          emit(
+            state.copyWith(
+              appliedJobs: [
+                ...state.appliedJobs,
+                appliedJob,
+              ],
+            ),
+          );
         }
       },
     );

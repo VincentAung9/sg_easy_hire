@@ -18,9 +18,13 @@ import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/page/helper_home_page.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interviews_page.dart';
+import 'package:sg_easy_hire/features/helper_job_details/presentation/page/helper_job_details_page.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/page/helper_jobs_page.dart';
 import 'package:sg_easy_hire/features/helper_profile/presentation/page/helper_profile_page.dart';
 import 'package:sg_easy_hire/features/main/presentation/page/main_page.dart';
+import 'package:sg_easy_hire/features/personal_test/presentation/page/personality_test_page.dart';
+import 'package:sg_easy_hire/features/personal_test/presentation/page/quiz_page.dart';
+import 'package:sg_easy_hire/features/personal_test/presentation/page/test_result_page.dart';
 import 'package:sg_easy_hire/features/verify_code/pages/verify_code_page.dart';
 
 class AppRouter {
@@ -133,7 +137,21 @@ class AppRouter {
           name: RouteNames.uploadDocuments,
           builder: (context, state) => const UploadDocumentPage(),
         ),
-
+        GoRoute(
+          path: RoutePaths.personalityTest,
+          name: RouteNames.personalityTest,
+          builder: (context, state) => const PersonalityTestPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperQuiz,
+          name: RouteNames.helperQuiz,
+          builder: (context, state) => const QuizPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.personalityTestResult,
+          name: RouteNames.personalityTestResult,
+          builder: (context, state) => const TestResultPage(),
+        ),
         /* 
         GoRoute(
           path: RoutePaths.notifications,
@@ -185,6 +203,15 @@ class AppRouter {
                   path: RoutePaths.jobs,
                   name: RouteNames.jobs,
                   builder: (context, state) => const HelperJobsPage(),
+                  routes: [
+                    GoRoute(
+                      path: RoutePaths.jobDetail,
+                      name: RouteNames.jobDetail,
+                      builder: (context, state) {
+                        return const HelperJobDetailsPage();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -235,14 +262,7 @@ class AppRouter {
         ),
         /* 
         
-        GoRoute(
-          path: RoutePaths.jobDetail,
-          name: RouteNames.jobDetail,
-          builder: (context, state) {
-            final id = state.pathParameters['id']!;
-            return JobDetailPage(jobId: id);
-          },
-        ),
+       
         GoRoute(
           path: RoutePaths.helperInterviewDetail,
           name: RouteNames.helperInterviewDetail,

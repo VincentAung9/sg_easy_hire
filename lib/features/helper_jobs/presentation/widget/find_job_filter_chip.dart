@@ -15,7 +15,8 @@ class FindJobFilterChip extends StatelessWidget {
       height: 40, // Increased height for chips
       child: BlocBuilder<HelperJobsBloc, HelperJobsState>(
         builder: (context, state) {
-          if (state.status == HelperJobsStatus.initialPending) {
+          if (state.status == HelperJobsStatus.initialPending &&
+              state.action == HelperJobsActions.getJobTags) {
             return ListView.builder(
               itemCount: 10,
               scrollDirection: Axis.horizontal,

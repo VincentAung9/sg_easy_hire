@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
+import 'package:sg_easy_hire/features/helper_home/presentation/widget/join_call_btn.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class InterviewAcceptedCardFooter extends StatelessWidget {
   final Interview interview;
@@ -21,22 +26,30 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
     final interviewAction = getInterviewAction(
       interview.status,
     );
+    final isHideTime =
+        interview.status == InterviewStatus.COMPLETED ||
+        interview.status == InterviewStatus.CANCELLED ||
+        interview.status == InterviewStatus.NO_SHOW;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(color: Colors.grey[200]),
         const SizedBox(height: 10),
-        Text(
-          "Time",
-          style: textTheme.titleSmall,
-        ),
-        Text(
-          time,
-          style: textTheme.titleMedium?.copyWith(
-            color: AppColors.textPrimaryLight,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        isHideTime
+            ? const SizedBox()
+            : Text(
+                "Time",
+                style: textTheme.titleSmall,
+              ),
+        isHideTime
+            ? const SizedBox()
+            : Text(
+                time,
+                style: textTheme.titleMedium?.copyWith(
+                  color: AppColors.textPrimaryLight,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
         const SizedBox(height: 10),
         OutlinedButton(
           onPressed: () => context.go(RoutePaths.jobDetail),
@@ -80,7 +93,14 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                       onPressed: () async {
                         if (interview.status == InterviewStatus.ACCEPTED) {
                           //TODO:cancel
-
+                          context.read<HomeBloc>().add(
+                            UpdateInterviewEvent(
+                              interview: interview.copyWith(
+                                status: InterviewStatus.CANCELLED,
+                                updatedBy: UserRole.HELPER,
+                              ),
+                            ),
+                          );
                           return;
                         }
                         if (interview.status == InterviewStatus.PENDING) {
@@ -91,6 +111,15 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                           );
                           if (chooseDateTime != null) {
                             //TODO:accept
+                            context.read<HomeBloc>().add(
+                              UpdateInterviewEvent(
+                                interview: interview.copyWith(
+                                  confirmedDateTime: chooseDateTime,
+                                  status: InterviewStatus.ACCEPTED,
+                                  updatedBy: UserRole.HELPER,
+                                ),
+                              ),
+                            );
                           }
                         }
                       },
@@ -140,8 +169,9 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                             ),
                           ),
                         )
-                      : Expanded(
-                          child: ElevatedButton(
+                      : const Expanded(
+                          child: const SizedBox(), //const JoinCallBtn()
+                          /* ElevatedButton(
                             onPressed: () {
                               //TODO:JOIN CALL
                             },
@@ -161,7 +191,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
+                          ), */
                         ),
                 ],
               ),
