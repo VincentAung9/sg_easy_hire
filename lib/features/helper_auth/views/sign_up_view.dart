@@ -252,7 +252,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         safePrint("🔥 on tap...");
-                                        context.go(RouteNames.helperSignin);
+                                        context.go(RoutePaths.helperSignin);
                                       },
                                   ),
                                 ],

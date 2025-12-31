@@ -96,7 +96,11 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryLight),
           onPressed: () {
-            context.go(RoutePaths.home);
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(RoutePaths.home);
+            }
           },
         ),
         title: Row(

@@ -40,14 +40,15 @@ class QuickActions extends StatelessWidget {
                     icon: Icons.person_outline,
                     label: "Update Biodata",
                     color: AppColors.primary,
-                    onPressed: () => context.go(RoutePaths.personalInformation),
+                    onPressed: () =>
+                        context.push(RoutePaths.personalInformation),
                   ),
                   ActionItem(
                     icon: Icons.psychology_alt,
                     label: "Personality Test",
                     color: AppColors.primary,
                     onPressed: () =>
-                        context.goNamed(RouteNames.personalityTest),
+                        context.pushNamed(RouteNames.personalityTest),
                   ),
                   ActionItem(
                     icon: Icons.description,
@@ -60,7 +61,7 @@ class QuickActions extends StatelessWidget {
                     label: "Upload Documents",
                     color: AppColors.primary,
                     onPressed: () =>
-                        context.goNamed(RouteNames.uploadDocuments),
+                        context.pushNamed(RouteNames.uploadDocuments),
                   ),
                 ],
               ),
@@ -71,7 +72,9 @@ class QuickActions extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1.1 / 2, // Match height of 2 grid items
                 child: InkWell(
-                  onTap: () => context.goNamed(RouteNames.jobs),
+                  onTap: () {
+                    StatefulNavigationShell.of(context).goBranch(1);
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.primary,

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_bloc.dart';
+import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_event.dart';
 import 'package:sg_easy_hire/features/helper_profile/presentation/widget/widget.dart';
 import 'package:sg_easy_hire/features/job_offer/domain/joboffer_count_cubit.dart';
 
@@ -57,6 +61,7 @@ Future<bool?> _showAnimatedConfirmDialog({
                 onPressed: () async {
                   //logout request
                   //TODO:GO TO SIGN IN
+                  Navigator.of(ctx).pop(true);
                 },
                 icon: Icon(icon, color: Colors.white),
                 label: Text(
@@ -100,7 +105,7 @@ class HelperProfileView extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          HelperAccountSettingHeader(),
+          const HelperAccountSettingHeader(),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -110,9 +115,7 @@ class HelperProfileView extends StatelessWidget {
                 HelperAccountMenuCard(
                   items: [
                     HelperAccountMenuItem(
-                      onTap: () {
-                        //TODO: Biodata
-                      },
+                      onTap: () => context.push(RoutePaths.personalInformation),
                       icon: Icons.person_outline,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
@@ -120,9 +123,7 @@ class HelperProfileView extends StatelessWidget {
                       subtitle: "Name, contact, nationality",
                     ),
                     HelperAccountMenuItem(
-                      onTap: () {
-                        //TODO: UPLOAD DOCUMENT
-                      },
+                      onTap: () => context.push(RoutePaths.uploadDocuments),
                       icon: Icons.description_outlined,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
@@ -130,9 +131,7 @@ class HelperProfileView extends StatelessWidget {
                       subtitle: "Passport, certificates, medical",
                     ),
                     HelperAccountMenuItem(
-                      onTap: () {
-                        //TODO: JOB PREFERENCES
-                      },
+                      onTap: () => context.push(RoutePaths.preferences),
                       icon: Icons.tune_outlined,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
@@ -146,10 +145,7 @@ class HelperProfileView extends StatelessWidget {
                 HelperAccountMenuCard(
                   items: [
                     HelperAccountMenuItem(
-                      onTap: () {
-                        /*  context.read<JobofferCountCubit>().resetCount(); */
-                        //TODO: JOB-OFFERS
-                      },
+                      onTap: () => context.push(RoutePaths.jobOffers),
                       icon: Icons.work_outline,
                       iconBgColor: Colors.orange[100]!,
                       iconColor: Colors.orange[500]!,
@@ -179,14 +175,14 @@ class HelperProfileView extends StatelessWidget {
                         },
                       ),
                     ),
-                    HelperAccountMenuItem(
+                    /* HelperAccountMenuItem(
                       icon: Icons.bar_chart_outlined,
                       iconBgColor: Colors.green[100]!,
                       iconColor: Colors.green[500]!,
                       title: "Progress Tracking",
                       subtitle: "View hiring process status",
                       showDivider: false,
-                    ),
+                    ), */
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -200,9 +196,7 @@ class HelperProfileView extends StatelessWidget {
                       subtitle: "FAQs, contact agency",
                     ),
                     HelperAccountMenuItem(
-                      onTap: () {
-                        //TODO:PROFILE MANAGE
-                      },
+                      onTap: () => context.push(RoutePaths.helperProfileUpdate),
                       icon: Icons.settings_outlined,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,
@@ -226,9 +220,11 @@ class HelperProfileView extends StatelessWidget {
                           confirmColor: AppColors.kSecondaryColor,
                         );
                         if (confirmed == true) {
+                          context.read<SignOutBloc>().add(SignOutPressEvent());
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Logged out!')),
                           );
+                          context.go(RoutePaths.helperSignin);
                         }
                       },
                     ),

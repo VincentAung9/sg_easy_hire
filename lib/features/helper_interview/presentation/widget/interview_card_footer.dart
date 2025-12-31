@@ -52,7 +52,10 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
               ),
         const SizedBox(height: 10),
         OutlinedButton(
-          onPressed: () => context.go(RoutePaths.jobDetail),
+          onPressed: () => context.push(
+            RoutePaths.helperInterviewDetail,
+            extra: interview,
+          ),
           style: OutlinedButton.styleFrom(
             minimumSize: const Size(double.infinity, 44),
             foregroundColor: AppColors.textGrayLight,
@@ -147,6 +150,15 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () async {
                               //TODO:cancel
+                              context.read<HomeBloc>().add(
+                                UpdateInterviewEvent(
+                                  interview: interview.copyWith(
+                                    status: InterviewStatus.CANCELLED,
+                                    updatedBy: UserRole.HELPER,
+                                  ),
+                                ),
+                              );
+                              return;
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(
@@ -170,7 +182,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                           ),
                         )
                       : const Expanded(
-                          child: const SizedBox(), //const JoinCallBtn()
+                          child: const JoinCallBtn(),
                           /* ElevatedButton(
                             onPressed: () {
                               //TODO:JOIN CALL

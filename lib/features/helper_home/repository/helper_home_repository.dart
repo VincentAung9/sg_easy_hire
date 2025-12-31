@@ -113,7 +113,13 @@ class HelperHomeRepository {
 
       // 4. Local Sort (Since list queries don't support 'sortBy' directly)
       final sortedItems = List<AppliedJob?>.from(items)
-        ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+        ..sort(
+          (a, b) =>
+              b?.createdAt?.compareTo(
+                a?.createdAt ?? TemporalDateTime(DateTime.now()),
+              ) ??
+              1,
+        );
 
       return sortedItems.whereType<AppliedJob>().toList();
     } on ApiException catch (e) {
@@ -336,7 +342,7 @@ class HelperHomeRepository {
         )
         .map((i) {
           debugPrint(
-            "🌈 Snapshot: ${i.data} items.",
+            "🌈  Update Interview Snapshot: ${i.data} items.",
           );
           return i.data;
         });
@@ -432,7 +438,7 @@ class HelperHomeRepository {
         )
         .map((i) {
           debugPrint(
-            "🌈 Snapshot: ${i.data} items.",
+            "🌈 Update Next Interview Snapshot: ${i.data} items.",
           );
           return i.data;
         });

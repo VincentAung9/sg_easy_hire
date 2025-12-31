@@ -26,5 +26,290 @@
   "phoneNumberLabel": "ဖုန်းနံပါတ်",
 
   "passwordLabel": "စကားဝှက်",
-  "passwordHint": "စကားဝှက်ရိုက်ထည့်ပါ"
+  "passwordHint": "စကားဝှက်ရိုက်ထည့်ပါ",
+
+
+
+
+    "employerDashboard_headerTitle": "The Tan Family",
+    "employerDashboard_headerSubtitle": "အလုပ်ခန့်အပ်မှုလုပ်ငန်းစဉ်ကို စီမံခန့်ခွဲပါ",
+
+    "employerDashboard_weeklyInterviewQuota": "အပတ်စဉ် အင်တာဗျူး ကန့်သတ်ချက်",
+    "employerDashboard_interviewsRemainingThisWeek": "ဒီအပတ်အတွင်း အင်တာဗျူး {count} ခု ကျန်ရှိသေးသည်",
+    "@employerDashboard_interviewsRemainingThisWeek": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "employerDashboard_quickActions": "အမြန်လုပ်ဆောင်ချက်များ",
+    "employerDashboard_browseHelpers": "Helper များ\nရှာဖွေမည်",
+    "employerDashboard_viewApplicants": "လျှောက်ထားသူများ\nကြည့်မည်",
+    "employerDashboard_editJobPost": "Job Post\nပြင်မည်",
+    "employerDashboard_appGuide": "App လမ်းညွှန်\nကြည့်မည်",
+
+    "employerDashboard_upcomingInterview": "နောက်တစ်ကြိမ် အင်တာဗျူး",
+    "employerDashboard_confirmed": "အတည်ပြုပြီး",
+
+    "employerDashboard_age": "အသက်",
+    "employerDashboard_weight": "အလေးချိန်",
+    "employerDashboard_height": "အရပ်",
+    "employerDashboard_days": "နေ့",
+    "employerDashboard_hours": "နာရီ",
+    "employerDashboard_minutes": "မိနစ်",
+
+    "employerDashboard_documentStatus": "စာရွက်စာတမ်း အခြေအနေ",
+    "employerDashboard_passport": "ပတ်စပို့",
+    "employerDashboard_medical": "ဆေးစစ်ချက်",
+    "employerDashboard_training": "သင်တန်း",
+    "employerDashboard_verified": "စစ်ဆေးအတည်ပြုပြီး",
+    "employerDashboard_pending": "စစ်ဆေးဆဲ",
+
+    "employerDashboard_timeUntilInterview": "အင်တာဗျူးအတွက် ကျန်ချိန်",
+
+    "employerDashboard_viewBiodata": "Biodata ကြည့်မည်",
+    "employerDashboard_cancel": "ပယ်ဖျက်မည်",
+    "employerDashboard_joinCall": "Call ဝင်မည်",
+
+    "employerDashboard_cancelFailed": "အင်တာဗျူးကို ပယ်ဖျက်မရပါ။ ထပ်မံကြိုးစားပါ။",
+    "employerDashboard_cancelSuccess": "အင်တာဗျူးကို အောင်မြင်စွာ ပယ်ဖျက်ပြီးပါပြီ။",
+
+    "employerDashboard_singleHelperPolicyTitle": "Helper တစ်ယောက်တည်း ခန့်အပ်မှု စည်းမျဉ်း",
+    "employerDashboard_singleHelperPolicyDesc": "တစ်ချိန်တည်းမှာ Helper တစ်ယောက်တည်းကိုသာ ခန့်အပ်နိုင်ပါတယ်။ Order ကိုလက်ခံပြီးပါက အခြား Helper Profile များကို ဖျောက်ထားမည်ဖြစ်သည်။",
+
+    "employerDashboard_needAssistance": "အကူအညီလိုပါသလား?",
+    "employerDashboard_supportSubtitle": "အလုပ်ခန့်အပ်မှုလုပ်ငန်းစဉ်အတွက် အကူအညီလိုပါက Support ကို ဆက်သွယ်ပါ",
+    "employerDashboard_contactSupport": "Support ကို ဆက်သွယ်မည်",
+
+
+    "findHelpers_title": "Helper များကို ရှာဖွေမည်",
+    "findHelpers_searchHint": "အမည်၊ ကျွမ်းကျင်မှု၊ နိုင်ငံသားမှု စသည်ဖြင့် ရှာဖွေပါ...",
+
+    "findHelpers_filterSkillsAll": "ကျွမ်းကျင်မှု: အားလုံး",
+    "findHelpers_filterLanguageAll": "ဘာသာစကား: အားလုံး",
+    "findHelpers_filterCompatiblePersonality": "ကိုက်ညီသော ကိုယ်ရည်ကိုယ်သွေး",
+
+    "findHelpers_noResults": "ကိုက်ညီသော ရလဒ် မတွေ့ပါ။",
+
+
+
+    "employerInterview_title": "အင်တာဗျူးများ",
+    "employerInterview_subtitle": "အင်တာဗျူးတောင်းဆိုမှုများကို စီမံခန့်ခွဲပါ",
+
+    "employerInterview_tabConfirmed": "အတည်ပြုပြီး",
+    "employerInterview_tabPending": "စောင့်ဆိုင်းဆဲ",
+    "employerInterview_tabCompleted": "ပြီးဆုံးပြီး",
+
+    "employerInterview_noResults": "ကိုက်ညီသော ရလဒ် မတွေ့ပါ။",
+
+
+    "messages_title": "မက်ဆေ့ချ်များ",
+    "messages_subtitle": "အင်တာဗျူးပြီးနောက် Helper များနှင့် စကားပြောနိုင်သည်",
+
+    "messages_infoTitle": "အင်တာဗျူးပြီးနောက် စကားပြောခြင်း",
+    "messages_infoDesc": "အင်တာဗျူးပြီးဆုံးပြီးနောက် Helper များနှင့် စကားပြောနိုင်ပါတယ်။ Chat ကို Offer ပေးရန် သို့မဟုတ် အင်တာဗျူးထပ်မံ ချိန်းဆိုရန် အသုံးပြုနိုင်ပါတယ်။",
+
+    "messages_availableChats": "စကားပြောရန် ရနိုင်သော Chat များ",
+    "messages_interviewCompletedOn": "{date} တွင် အင်တာဗျူးပြီးဆုံးခဲ့သည်",
+    "@messages_interviewCompletedOn": {
+      "placeholders": {
+        "date": { "type": "String" }
+      }
+    },
+
+    "messages_statusAvailable": "ရရှိနိုင်သည်",
+
+    "messages_needHelp": "အကူအညီလိုပါသလား?",
+    "messages_supportSubtitle": "Support အဖွဲ့က သင့်ကို ကူညီပေးရန် အမြဲရှိပါတယ်",
+    "messages_contactSupport": "Support ကို ဆက်သွယ်မည်",
+
+
+    "employerAccount_title": "အလုပ်ရှင် အကောင့်",
+
+    "employerAccount_menu_personalInformation": "ကိုယ်ရေးအချက်အလက်",
+    "employerAccount_menu_personalityTest": "ကိုယ်ရည်ကိုယ်သွေး စစ်ဆေးမှု",
+    "employerAccount_menu_jobDescription": "အလုပ်ဖော်ပြချက်",
+    "employerAccount_menu_favoriteHelpers": "နှစ်သက်သော Helper များ",
+    "employerAccount_menu_paymentMethod": "ငွေပေးချေမှု နည်းလမ်း",
+    "employerAccount_menu_offeredJobs": "အော်ဖာပေးထားသော အလုပ်များ",
+
+    "employerAccount_hiringProgressTitle": "ခန့်အပ်မှု တိုးတက်မှု",
+
+    "employerAccount_progress_profileCreated": "ပရိုဖိုင် ဖန်တီးပြီး",
+    "employerAccount_progress_jobPosted": "အလုပ်တင်ပြီး",
+    "employerAccount_progress_interviewScheduled": "အင်တာဗျူး ချိန်းပြီး",
+    "employerAccount_progress_offerMade": "အော်ဖာ ပေးပြီး",
+    "employerAccount_progress_offerMadeSubtitle": "Helper ရဲ့ ပြန်လည်တုံ့ပြန်မှုကို စောင့်နေသည်",
+    "employerAccount_progress_inProgress": "လုပ်ဆောင်နေဆဲ",
+
+    "employerAccount_progress_contractSigned": "စာချုပ် လက်မှတ်ရေးထိုးပြီး",
+    "employerAccount_progress_contractSignedSubtitle": "နှစ်ဖက်စလုံး Service Agreement ကို လက်မှတ်ရေးထိုးသည်",
+    "employerAccount_progress_contractSignedStatus": "လက်ခံပြီးနောက် ~၂ ရက်ခန့်",
+
+    "employerAccount_progress_passportVerification": "Helper ပတ်စပို့ စစ်ဆေးခြင်း",
+    "employerAccount_progress_passportVerificationSubtitle": "မပြီးဆုံးသေးပါက",
+    "employerAccount_progress_passportVerificationStatus": "~၃-၅ ရက်",
+
+    "employerAccount_progress_medicalExam": "ဆေးစစ်မှု",
+    "employerAccount_progress_medicalExamSubtitle": "Helper သည် ဆေးစစ်ခြင်းကို ပြုလုပ်သည်",
+    "employerAccount_progress_medicalExamStatus": "~၁ ပတ်",
+
+    "employerAccount_progress_trainingArrival": "သင်တန်းစင်တာ ရောက်ရှိခြင်း",
+    "employerAccount_progress_trainingArrivalSubtitle": "Helper သည် သင်တန်းစင်တာသို့ ရောက်ရှိသည်",
+    "employerAccount_progress_trainingArrivalStatus": "~၂ ပတ်",
+
+    "employerAccount_progress_ipaApplication": "IPA လျှောက်ထားခြင်း",
+    "employerAccount_progress_ipaApplicationSubtitle": "In-Principle Approval စီမံဆောင်ရွက်ခြင်း",
+    "employerAccount_progress_ipaApplicationStatus": "~၃-၄ ပတ်",
+
+    "employerAccount_progress_insurancePurchase": "အာမခံ ဝယ်ယူခြင်း",
+    "employerAccount_progress_insurancePurchaseSubtitle": "Employer သည် အာမခံပေါ်လစီ ဝယ်ယူသည်",
+    "employerAccount_progress_insurancePurchaseStatus": "IPA အတည်ပြုပြီးနောက်",
+
+    "employerAccount_progress_airTicketPurchase": "လေယာဉ်လက်မှတ် ဝယ်ယူခြင်း",
+    "employerAccount_progress_airTicketPurchaseSubtitle": "Helper ရဲ့ လေယာဉ်ခရီးစဉ်ကို ဘိုကင်လုပ်သည်",
+    "employerAccount_progress_airTicketPurchaseStatus": "~၅-၆ ပတ်",
+
+    "employerAccount_progress_sipMedicalScheduled": "SIP နှင့် ဆေးချိန်း စီစဉ်ခြင်း",
+    "employerAccount_progress_sipMedicalScheduledSubtitle": "Settling-In Programme နှင့် ဆေးချိန်းများ စီစဉ်ခြင်း",
+    "employerAccount_progress_sipMedicalScheduledStatus": "ရောက်မလာမီ",
+
+    "employerAccount_progress_handoverDate": "လွှဲပြောင်းနေ့",
+    "employerAccount_progress_handoverDateSubtitle": "Helper ရောက်လာပြီး အလုပ်စတင်သည်",
+    "employerAccount_progress_handoverDateStatus": "စုစုပေါင်း ~၆-၈ ပတ်",
+
+    "employerAccount_logout": "ထွက်မည်",
+    "employerAccount_deleteAccount": "အကောင့် ဖျက်မည်",
+
+    "employerAccount_deleteDialogTitle": "အကောင့် ဖျက်မည်",
+    "employerAccount_deleteDialogDesc": "သင့်အကောင့်ကို ဖျက်ချင်တာ သေချာပါသလား? ဒီလုပ်ဆောင်ချက်ကို ပြန်လည်မလုပ်နိုင်ပါ။",
+    "employerAccount_cancel": "မလုပ်တော့ပါ",
+    "employerAccount_delete": "ဖျက်မည်",
+
+
+    "jobSearchDashboard_title": "အလုပ်ရှာဖွေရေး ဒက်ရှ်ဘုတ်",
+
+    "jobSearchDashboard_profileCompletionTitle": "ပရိုဖိုင် ပြည့်စုံအောင် ဖြည့်ပါ",
+    "jobSearchDashboard_profileCompletionSubtitle": "အလုပ်ရရှိနိုင်ခြေ ပိုမိုမြင့်မားစေရန် ပရိုဖိုင်ကို ပြည့်စုံအောင် ဖြည့်ပါ",
+
+    "jobSearchDashboard_quickActions": "အမြန်လုပ်ဆောင်ချက်များ",
+    "jobSearchDashboard_quickActionBrowseJobs": "အလုပ်များ ရှာဖွေမည်",
+    "jobSearchDashboard_quickActionSavedJobs": "သိမ်းထားသော အလုပ်များ",
+    "jobSearchDashboard_quickActionApplications": "လျှောက်ထားပြီးသားများ",
+
+    "jobSearchDashboard_nextInterview": "နောက်လာမည့် အင်တာဗျူး",
+    "jobSearchDashboard_noUpcomingInterview": "လာမည့် အင်တာဗျူး မရှိသေးပါ",
+
+    "jobSearchDashboard_recommendedJobs": "အကြံပြုထားသော အလုပ်များ",
+    "jobSearchDashboard_viewAllJobs": "အလုပ်အားလုံး ကြည့်မည်",
+
+
+    "findJobs_title": "အလုပ်များ ရှာဖွေမည်",
+
+    "findJobs_filterAll": "အားလုံး",
+    "findJobs_filterFullTime": "အချိန်ပြည့်",
+    "findJobs_filterPartTime": "အချိန်ပိုင်း",
+    "findJobs_filterLiveIn": "နေထိုင်ရမည့် အလုပ်",
+    "findJobs_filterLiveOut": "မနေထိုင်ရသော အလုပ်",
+
+    "findJobs_searchHint": "အလုပ်ခေါင်းစဉ်၊ တည်နေရာ၊ ကျွမ်းကျင်မှုဖြင့် ရှာဖွေပါ",
+
+    "findJobs_noResults": "ကိုက်ညီသော ရလဒ် မတွေ့ပါ။",
+
+
+
+    "helperInterviews_title": "ကျွန်ုပ်၏ အင်တာဗျူးများ",
+
+    "helperInterviews_tabPending": "စောင့်ဆိုင်းဆဲ",
+    "helperInterviews_tabAccepted": "လက်ခံပြီး",
+    "helperInterviews_tabCompletedCancelled": "ပြီးဆုံး / ပယ်ဖျက်ပြီး",
+
+    "helperInterviews_noPending": "စောင့်ဆိုင်းဆဲ အင်တာဗျူး မရှိပါ",
+    "helperInterviews_noAccepted": "လက်ခံပြီးသော အင်တာဗျူး မရှိပါ",
+    "helperInterviews_noCompletedCancelled": "ပြီးဆုံး သို့မဟုတ် ပယ်ဖျက်ပြီးသော အင်တာဗျူး မရှိပါ",
+
+
+
+    "helperMessages_title": "မက်ဆေ့ချ်များ",
+
+    "helperMessages_timeJustNow": "ယခုလေးတင်",
+    "helperMessages_timeMinutesAgo": "{count} မိနစ် အကြာ",
+    "@helperMessages_timeMinutesAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+    "helperMessages_timeHoursAgo": "{count} နာရီ အကြာ",
+    "@helperMessages_timeHoursAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+    "helperMessages_timeYesterday": "မနေ့က",
+    "helperMessages_timeDaysAgo": "{count} ရက် အကြာ",
+    "@helperMessages_timeDaysAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "helperMessages_jobOfferExtended": "🎉 အလုပ်အော်ဖာ ပေးထားသည် - တစ်လ {salary}",
+    "@helperMessages_jobOfferExtended": {
+      "placeholders": {
+        "salary": { "type": "String" }
+      }
+    },
+
+    "helperMessages_interviewFollowUp": "အင်တာဗျူးအတွက် ကျေးဇူးတင်ပါတယ်။ မကြာမီ ပြန်လည် ဆက်သွယ်ပါမည်။",
+    "helperMessages_workPassApproved": "သင့်အလုပ်ပါမစ် လျှောက်လွှာကို အတည်ပြုပြီးပါပြီ",
+    "helperMessages_welcomeSupport": "Helper App မှ ကြိုဆိုပါတယ်။ ဘာကူညီပေးရမလဲ?",
+
+    "helperMessages_emptyTitle": "မက်ဆေ့ချ် မရှိသေးပါ",
+    "helperMessages_emptySubtitle": "Employer များနှင့် စကားပြောသည့် မက်ဆေ့ချ်များကို ဒီမှာ ပြသပါမည်",
+
+
+    "helperAccount_biodata": "ကိုယ်ရေးအချက်အလက်",
+    "helperAccount_biodataSubtitle": "အမည်၊ ဆက်သွယ်ရန်၊ နိုင်ငံသားမှု",
+
+    "helperAccount_documents": "စာရွက်စာတမ်းများ",
+    "helperAccount_documentsSubtitle": "ပတ်စပို့၊ လက်မှတ်များ၊ ဆေးစစ်ချက်",
+
+    "helperAccount_preferences": "လိုအပ်ချက်များ",
+    "helperAccount_preferencesSubtitle": "လစာ၊ တည်နေရာ၊ တာဝန်များ",
+
+    "helperAccount_jobOffers": "အလုပ်အော်ဖာများ",
+    "helperAccount_jobOffersSubtitle": "Employer များမှ ပေးထားသော အော်ဖာများကို ကြည့်မည်",
+    "helperAccount_newCount": "အသစ် {count} ခု",
+    "@helperAccount_newCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "helperAccount_progressTracking": "တိုးတက်မှု ကြည့်ရှုခြင်း",
+    "helperAccount_progressTrackingSubtitle": "ခန့်အပ်မှု လုပ်ငန်းစဉ် အခြေအနေကို ကြည့်မည်",
+
+    "helperAccount_helpSupport": "အကူအညီ & ပံ့ပိုးမှု",
+    "helperAccount_helpSupportSubtitle": "မေးလေ့ရှိသည့်မေးခွန်းများ၊ အေဂျင်စီဆက်သွယ်ရန်",
+
+    "helperAccount_settings": "ဆက်တင်များ",
+    "helperAccount_settingsSubtitle": "ပရိုဖိုင် စီမံခန့်ခွဲခြင်း",
+
+    "helperAccount_logout": "ထွက်မည်",
+
+    "helperAccount_deleteAccount": "အကောင့် ဖျက်မည်",
+    "helperAccount_deleteAccountSubtitle": "အကောင့်ကို အပြီးတိုင် ဖယ်ရှားမည်",
+
+    "helperAccount_logoutDialogTitle": "ထွက်မည်",
+    "helperAccount_logoutDialogDesc": "ထွက်ချင်တာ သေချာပါသလား?",
+    "helperAccount_deleteDialogTitle": "အကောင့် ဖျက်မည်",
+    "helperAccount_deleteDialogDesc": "အကောင့်ကို ဖျက်ချင်တာ သေချာပါသလား? ဒီလုပ်ဆောင်ချက်ကို ပြန်လည်မလုပ်နိုင်ပါ။",
+
+    "helperAccount_cancel": "မလုပ်တော့ပါ",
+    "helperAccount_delete": "ဖျက်မည်",
+
+    "helperAccount_snackLoggedOut": "ထွက်ပြီးပါပြီ!",
+    "helperAccount_snackAccountDeleted": "အကောင့်ကို အောင်မြင်စွာ ဖျက်ပြီးပါပြီ။"
+
+
 }

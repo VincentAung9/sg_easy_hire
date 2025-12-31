@@ -17,10 +17,13 @@ import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/page/helper_home_page.dart';
+import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interview_detail_page.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interviews_page.dart';
 import 'package:sg_easy_hire/features/helper_job_details/presentation/page/helper_job_details_page.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/page/helper_jobs_page.dart';
 import 'package:sg_easy_hire/features/helper_profile/presentation/page/helper_profile_page.dart';
+import 'package:sg_easy_hire/features/helper_profile/presentation/view/helper_profile_update.dart';
+import 'package:sg_easy_hire/features/job_offer/presentation/page/job_offer_page.dart';
 import 'package:sg_easy_hire/features/main/presentation/page/main_page.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/page/personality_test_page.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/page/quiz_page.dart';
@@ -151,6 +154,21 @@ class AppRouter {
           path: RoutePaths.personalityTestResult,
           name: RouteNames.personalityTestResult,
           builder: (context, state) => const TestResultPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperInterviewDetail,
+          name: RouteNames.helperInterviewDetail,
+          builder: (context, state) => const HelperInterviewDetailPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.jobOffers,
+          name: RouteNames.jobOffers,
+          builder: (context, state) => const JobOfferPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperProfileUpdate,
+          name: RouteNames.helperProfileUpdate,
+          builder: (context, state) => const HelperProfileUpdate(),
         ),
         /* 
         GoRoute(

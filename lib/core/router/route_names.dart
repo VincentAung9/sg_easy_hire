@@ -38,6 +38,7 @@ class RouteNames {
   static const String settings = "settings";
   static const String foodHandling = "food_handling";
   static const String helperQuiz = "helper_quiz";
+  static const String helperProfileUpdate = "helper_profile_update";
   //-----EMPLOYER----------
   static const String employerSignin = "employer_signin";
   static const String employerRegister = "employer_register";

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sg_easy_hire/core/localization/presentation/language_switch_component.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
@@ -27,6 +28,10 @@ class HelperAccountSettingHeader extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                /*  const Align(
+                  alignment: Alignment.topRight,
+                  child: LanguageSwitchComponent(),
+                ), */
                 CachedNetworkImage(
                   imageUrl: state.currentUser?.avatarURL ?? "",
                   imageBuilder: (context, imageProvider) => CircleAvatar(

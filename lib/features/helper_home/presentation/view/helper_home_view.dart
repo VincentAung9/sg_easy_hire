@@ -10,7 +10,7 @@ class HelperHomeView extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 220,
             pinned: true,
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(

@@ -20,6 +20,10 @@ type User @model @auth(
   role: UserRole! @default(value: "HELPER")
   completeProgress: Float! @default(value: "0")
   isOnline: Boolean
+  #for employer
+  location: String
+  hiredCount: Int
+  #----
   accountstatus: AccountStatus @default(value: "ACTIVATED")
   personalityType: String
   skills: [String]
@@ -299,7 +303,11 @@ type Job @model @auth(
   tags: [String]
   requiredPersonalityType: String
   status: JobStatus!
-
+  jobType: String
+  startDate: String
+  contract: String
+  responsibilities: [String!]
+  isActive: Boolean
   # Relationships
   creatorID: ID! @index(name: "byCreator", queryField: "jobsByCreator")
   creator: User @belongsTo(fields: ["creatorID"])

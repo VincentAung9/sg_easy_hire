@@ -72,29 +72,32 @@ class FormFooter extends StatelessWidget {
             const SizedBox(width: 16),
             Expanded(
               flex: 2,
-              child: ElevatedButton(
-                onPressed: isNextLoading || isSaveLoading ? null : onNext,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: isNextLoading || isSaveLoading ? null : onNext,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 0,
                   ),
-                  elevation: 0,
-                ),
-                child: isNextLoading
-                    ? const ButtonLoading(
-                        height: 20,
-                        width: 20,
-                      )
-                    : Text(
-                        nextBtnString ?? "Next",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                  child: isNextLoading
+                      ? const ButtonLoading(
+                          height: 10,
+                          width: 20,
+                        )
+                      : Text(
+                          nextBtnString ?? "Next",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
+                ),
               ),
             ),
           ],

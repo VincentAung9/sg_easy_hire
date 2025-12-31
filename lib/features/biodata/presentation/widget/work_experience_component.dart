@@ -50,7 +50,7 @@ class WorkExperienceComponent extends StatelessWidget {
               ...List.generate(workHistories.length, (index) {
                 final workHistory = workHistories[index];
                 return Container(
-                  key: Key(workHistory.id),
+                  key: ValueKey(workHistory.id),
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(

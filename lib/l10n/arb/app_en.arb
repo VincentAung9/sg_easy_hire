@@ -14,7 +14,7 @@
 
   "noAccount": "Don't have an account?",
   "signUp": "Sign Up",
-  
+
 
   "signUpSubtitle": "Create your account to get started",
 
@@ -27,5 +27,294 @@
   "phoneNumberLabel": "Phone Number",
 
   "passwordLabel": "Password",
-  "passwordHint": "Enter password"
+  "passwordHint": "Enter password",
+
+
+
+    "employerDashboard_headerTitle": "The Tan Family",
+    "employerDashboard_headerSubtitle": "Manage your hiring process",
+
+    "employerDashboard_weeklyInterviewQuota": "Weekly Interview Quota",
+    "employerDashboard_interviewsRemainingThisWeek": "{count} interviews remaining this week",
+    "@employerDashboard_interviewsRemainingThisWeek": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "employerDashboard_quickActions": "Quick Actions",
+    "employerDashboard_browseHelpers": "Browse\nHelpers",
+    "employerDashboard_viewApplicants": "View\nApplicants",
+    "employerDashboard_editJobPost": "Edit Job\nPost",
+    "employerDashboard_appGuide": "App\nGuide",
+
+    "employerDashboard_upcomingInterview": "Upcoming Interview",
+    "employerDashboard_confirmed": "Confirmed",
+
+    "employerDashboard_age": "Age",
+    "employerDashboard_weight": "Weight",
+    "employerDashboard_height": "Height",
+    "employerDashboard_days": "days",
+    "employerDashboard_hours": "hours",
+    "employerDashboard_minutes": "minutes",
+
+    "employerDashboard_documentStatus": "Document Status",
+    "employerDashboard_passport": "Passport",
+    "employerDashboard_medical": "Medical",
+    "employerDashboard_training": "Training",
+    "employerDashboard_verified": "Verified",
+    "employerDashboard_pending": "Pending",
+
+    "employerDashboard_timeUntilInterview": "Time until interview",
+
+    "employerDashboard_viewBiodata": "View Biodata",
+    "employerDashboard_cancel": "Cancel",
+    "employerDashboard_joinCall": "Join Call",
+
+    "employerDashboard_cancelFailed": "Failed to cancel the interview. Please try again.",
+    "employerDashboard_cancelSuccess": "Interview cancelled successfully.",
+
+    "employerDashboard_singleHelperPolicyTitle": "Single Helper Policy",
+    "employerDashboard_singleHelperPolicyDesc": "You can only hire one helper at a time. Once you accept an order, other helper profiles will be hidden.",
+
+    "employerDashboard_needAssistance": "Need Assistance?",
+    "employerDashboard_supportSubtitle": "Contact support for help with your hiring process",
+    "employerDashboard_contactSupport": "Contact Support",
+
+
+    "findHelpers_title": "Find Helpers",
+    "findHelpers_searchHint": "Search by name, skills, nationality...",
+
+    "findHelpers_filterSkillsAll": "Skills: All",
+    "findHelpers_filterLanguageAll": "Language: All",
+    "findHelpers_filterCompatiblePersonality": "Compatible Personality",
+
+    "findHelpers_noResults": "No matching results found.",
+
+
+    "employerInterview_title": "Interviews",
+    "employerInterview_subtitle": "Manage your interview requests",
+
+    "employerInterview_tabConfirmed": "Confirmed",
+    "employerInterview_tabPending": "Pending",
+    "employerInterview_tabCompleted": "Completed",
+
+    "employerInterview_noResults": "No matching results found.",
+
+
+
+    "messages_title": "Messages",
+    "messages_subtitle": "Chat with helpers after interviews",
+
+    "messages_infoTitle": "Chat After Interview",
+    "messages_infoDesc": "You can chat with helpers after completing an interview. Use chat to make offers or arrange additional interviews.",
+
+    "messages_availableChats": "Available Chats",
+    "messages_interviewCompletedOn": "Interview completed on {date}",
+    "@messages_interviewCompletedOn": {
+      "placeholders": {
+        "date": { "type": "String" }
+      }
+    },
+
+    "messages_statusAvailable": "Available",
+
+    "messages_needHelp": "Need Help?",
+    "messages_supportSubtitle": "Our support team is here to assist you",
+    "messages_contactSupport": "Contact Support",
+
+
+
+    "employerAccount_title": "Employer Account",
+
+    "employerAccount_menu_personalInformation": "Personal Information",
+    "employerAccount_menu_personalityTest": "Personality Test",
+    "employerAccount_menu_jobDescription": "Job Description",
+    "employerAccount_menu_favoriteHelpers": "Favorite Helpers",
+    "employerAccount_menu_paymentMethod": "Payment Method",
+    "employerAccount_menu_offeredJobs": "Offered Jobs",
+
+    "employerAccount_hiringProgressTitle": "Hiring Progress",
+
+    "employerAccount_progress_profileCreated": "Profile Created",
+    "employerAccount_progress_jobPosted": "Job Posted",
+    "employerAccount_progress_interviewScheduled": "Interview Scheduled",
+    "employerAccount_progress_offerMade": "Offer Made",
+    "employerAccount_progress_offerMadeSubtitle": "Awaiting helper's response",
+    "employerAccount_progress_inProgress": "In Progress",
+
+    "employerAccount_progress_contractSigned": "Contract Signed",
+    "employerAccount_progress_contractSignedSubtitle": "Both parties sign service agreement",
+    "employerAccount_progress_contractSignedStatus": "~2 days after acceptance",
+
+    "employerAccount_progress_passportVerification": "Helper Passport Verification",
+    "employerAccount_progress_passportVerificationSubtitle": "If not previously completed",
+    "employerAccount_progress_passportVerificationStatus": "~3-5 days",
+
+    "employerAccount_progress_medicalExam": "Medical Examination",
+    "employerAccount_progress_medicalExamSubtitle": "Helper completes medical check",
+    "employerAccount_progress_medicalExamStatus": "~1 week",
+
+    "employerAccount_progress_trainingArrival": "Training Centre Arrival",
+    "employerAccount_progress_trainingArrivalSubtitle": "Helper arrives at training facility",
+    "employerAccount_progress_trainingArrivalStatus": "~2 weeks",
+
+    "employerAccount_progress_ipaApplication": "IPA Application",
+    "employerAccount_progress_ipaApplicationSubtitle": "In-Principle Approval processing",
+    "employerAccount_progress_ipaApplicationStatus": "~3-4 weeks",
+
+    "employerAccount_progress_insurancePurchase": "Insurance Purchase",
+    "employerAccount_progress_insurancePurchaseSubtitle": "Employer purchases insurance policy",
+    "employerAccount_progress_insurancePurchaseStatus": "After IPA approval",
+
+    "employerAccount_progress_airTicketPurchase": "Air Ticket Purchase",
+    "employerAccount_progress_airTicketPurchaseSubtitle": "Book helper's flight",
+    "employerAccount_progress_airTicketPurchaseStatus": "~5-6 weeks",
+
+    "employerAccount_progress_sipMedicalScheduled": "SIP & Medical Scheduled",
+    "employerAccount_progress_sipMedicalScheduledSubtitle": "Settling-In Programme and medical appointments",
+    "employerAccount_progress_sipMedicalScheduledStatus": "Before arrival",
+
+    "employerAccount_progress_handoverDate": "Handover Date",
+    "employerAccount_progress_handoverDateSubtitle": "Helper arrives and starts work",
+    "employerAccount_progress_handoverDateStatus": "~6-8 weeks total",
+
+    "employerAccount_logout": "Logout",
+    "employerAccount_deleteAccount": "Delete Account",
+
+    "employerAccount_deleteDialogTitle": "Delete Account",
+    "employerAccount_deleteDialogDesc": "Are you sure you want to delete your account? This action cannot be undone.",
+    "employerAccount_cancel": "Cancel",
+    "employerAccount_delete": "Delete",
+
+
+
+    "jobSearchDashboard_title": "Job Search Dashboard",
+
+    "jobSearchDashboard_profileCompletionTitle": "Complete Your Profile",
+    "jobSearchDashboard_profileCompletionSubtitle": "Finish your profile to increase your chances of getting hired",
+
+    "jobSearchDashboard_quickActions": "Quick Actions",
+    "jobSearchDashboard_quickActionBrowseJobs": "Browse Jobs",
+    "jobSearchDashboard_quickActionSavedJobs": "Saved Jobs",
+    "jobSearchDashboard_quickActionApplications": "My Applications",
+
+    "jobSearchDashboard_nextInterview": "Next Interview",
+    "jobSearchDashboard_noUpcomingInterview": "No upcoming interviews",
+
+    "jobSearchDashboard_recommendedJobs": "Recommended Jobs",
+    "jobSearchDashboard_viewAllJobs": "View All Jobs",
+
+
+    "findJobs_title": "Find Jobs",
+
+    "findJobs_filterAll": "All",
+    "findJobs_filterFullTime": "Full Time",
+    "findJobs_filterPartTime": "Part Time",
+    "findJobs_filterLiveIn": "Live-in",
+    "findJobs_filterLiveOut": "Live-out",
+
+    "findJobs_searchHint": "Search jobs by title, location, or skills",
+
+    "findJobs_noResults": "No matching results found.",
+
+
+
+    "helperInterviews_title": "My Interviews",
+
+    "helperInterviews_tabPending": "Pending",
+    "helperInterviews_tabAccepted": "Accepted",
+    "helperInterviews_tabCompletedCancelled": "Completed / Cancelled",
+
+    "helperInterviews_noPending": "No pending interviews",
+    "helperInterviews_noAccepted": "No accepted interviews",
+    "helperInterviews_noCompletedCancelled": "No completed or cancelled interviews",
+
+
+
+    "helperMessages_title": "Messages",
+
+    "helperMessages_timeJustNow": "Just now",
+    "helperMessages_timeMinutesAgo": "{count} min ago",
+    "@helperMessages_timeMinutesAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+    "helperMessages_timeHoursAgo": "{count} hour ago",
+    "@helperMessages_timeHoursAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+    "helperMessages_timeYesterday": "Yesterday",
+    "helperMessages_timeDaysAgo": "{count} days ago",
+    "@helperMessages_timeDaysAgo": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "helperMessages_jobOfferExtended": "🎉 Job Offer Extended - {salary}/month",
+    "@helperMessages_jobOfferExtended": {
+      "placeholders": {
+        "salary": { "type": "String" }
+      }
+    },
+
+    "helperMessages_interviewFollowUp": "Thank you for the interview. We will get back to you soon.",
+    "helperMessages_workPassApproved": "Your work pass application has been approved",
+    "helperMessages_welcomeSupport": "Welcome to Helper App! How can we help you?",
+
+    "helperMessages_emptyTitle": "No messages yet",
+    "helperMessages_emptySubtitle": "Your messages with employers will appear here",
+
+
+
+    "helperAccount_biodata": "Biodata",
+    "helperAccount_biodataSubtitle": "Name, contact, nationality",
+
+    "helperAccount_documents": "Documents",
+    "helperAccount_documentsSubtitle": "Passport, certificates, medical",
+
+    "helperAccount_preferences": "Preferences",
+    "helperAccount_preferencesSubtitle": "Salary, location, duties",
+
+    "helperAccount_jobOffers": "Job Offers",
+    "helperAccount_jobOffersSubtitle": "View offers received from employers",
+    "helperAccount_newCount": "{count} New",
+    "@helperAccount_newCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "helperAccount_progressTracking": "Progress Tracking",
+    "helperAccount_progressTrackingSubtitle": "View hiring process status",
+
+    "helperAccount_helpSupport": "Help & Support",
+    "helperAccount_helpSupportSubtitle": "FAQs, contact agency",
+
+    "helperAccount_settings": "Settings",
+    "helperAccount_settingsSubtitle": "Profile Manage",
+
+    "helperAccount_logout": "Log Out",
+
+    "helperAccount_deleteAccount": "Delete Account",
+    "helperAccount_deleteAccountSubtitle": "Permanently remove your account",
+
+    "helperAccount_logoutDialogTitle": "Logout",
+    "helperAccount_logoutDialogDesc": "Are you sure you want to logout?",
+    "helperAccount_deleteDialogTitle": "Delete Account",
+    "helperAccount_deleteDialogDesc": "Are you sure you want to delete your account? This action cannot be undone.",
+
+    "helperAccount_cancel": "Cancel",
+    "helperAccount_delete": "Delete",
+
+    "helperAccount_snackLoggedOut": "Logged out!",
+    "helperAccount_snackAccountDeleted": "Account deleted successfully."
+
+
+
+
 }

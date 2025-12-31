@@ -256,6 +256,9 @@ class JobCard extends StatelessWidget {
                                               AdminActionStatus.PENDING,
                                           helper: currentUser,
                                           job: job,
+                                          createdAt: TemporalDateTime(
+                                            DateTime.now(),
+                                          ),
                                         ),
                                         currentUser: currentUser,
                                       ),

@@ -11,9 +11,11 @@ import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/core/domain/document_upload/document_upload_state.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_state.dart';
+import 'package:sg_easy_hire/models/ApplicationStatus.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/JobOfferStatus.dart';
+import 'package:sg_easy_hire/models/Review.dart';
 import 'package:sg_easy_hire/models/UploadedDocuments.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:sg_easy_hire/models/VerifyStatus.dart';
@@ -159,7 +161,7 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
 
     case InterviewStatus.NO_SHOW:
       return InterviewStatusUI(
-        text: "Completed",
+        text: "No Show",
         icon: Icons.check,
         color: const Color(0xFF3B82F6),
         bgColor: const Color(0xFFDBEAFE),
@@ -205,9 +207,9 @@ ProfileStatusUI getProfileStatus(VerifyStatus status) {
   }
 }
 
-InterviewStatusUI getOfferedJobStatusUI(JobOfferStatus status) {
+InterviewStatusUI getOfferedJobStatusUI(ApplicationStatus status) {
   switch (status) {
-    case JobOfferStatus.PENDING:
+    case ApplicationStatus.PENDING:
       return InterviewStatusUI(
         text: "Pending",
         icon: Icons.schedule,
@@ -215,7 +217,7 @@ InterviewStatusUI getOfferedJobStatusUI(JobOfferStatus status) {
         bgColor: const Color(0xFFFEF3C7),
       );
 
-    case JobOfferStatus.ACCEPTED:
+    case ApplicationStatus.ACCEPTED:
       return InterviewStatusUI(
         text: "Accepted",
         icon: Icons.check_circle,
@@ -223,7 +225,7 @@ InterviewStatusUI getOfferedJobStatusUI(JobOfferStatus status) {
         bgColor: const Color(0xFFD1FAE5),
       );
 
-    case JobOfferStatus.CANCELLED:
+    case ApplicationStatus.REJECTED:
       return InterviewStatusUI(
         text: "Cancelled",
         icon: Icons.cancel,
@@ -674,4 +676,17 @@ bool canJoinCall(CountdownState state) {
       (state.days * 24 * 60) + (state.hours * 60) + state.minutes;
 
   return totalMinutes <= 5;
+}
+
+double averageRating(List<Review> reviews) {
+  if (reviews.isEmpty) return 0.0;
+
+  final validRatings = reviews
+      .where((r) => r.rating != null)
+      .map((r) => r.rating!);
+
+  if (validRatings.isEmpty) return 0.0;
+
+  final total = validRatings.reduce((a, b) => a + b);
+  return total / validRatings.length;
 }

@@ -11,6 +11,7 @@ import 'package:sg_easy_hire/features/auth/data/providers/auth_provider.dart';
 import 'package:sg_easy_hire/features/auth/data/repositories/repositories.dart';
 import 'package:sg_easy_hire/features/auth/domain/auth_change/auth_change_bloc.dart';
 import 'package:sg_easy_hire/features/auth/domain/auth_change/auth_change_event.dart';
+import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_bloc.dart';
 import 'package:sg_easy_hire/features/biodata/data/repository/biodata_repository.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_bloc.dart';
 import 'package:sg_easy_hire/features/biodata/domain/work_history_cubic.dart';
@@ -65,6 +66,11 @@ class AppPage extends StatelessWidget {
           create: (context) => AuthChangeBloc(
             authRepository: context.read<AuthRepository>(),
           )..add(StartSubscribeAuthChangeEvent()),
+        ),
+        BlocProvider(
+          create: (_) => SignOutBloc(
+            authRepository: context.read<AuthRepository>(),
+          ),
         ),
         BlocProvider(
           create: (_) => HomeBloc(repository: HelperHomeRepository()),

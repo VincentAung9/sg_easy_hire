@@ -8,6 +8,7 @@ enum HomeStateActions {
   nextInterview,
   applyJob,
   interview,
+  interviewStatusAction,
   profileViews,
   none,
 }

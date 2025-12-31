@@ -1,46 +1,64 @@
 import 'dart:async';
 
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_flutter/amplify_flutter.dart' hide Emitter;
+import 'package:cached_query/cached_query.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
-import 'package:sg_easy_hire/core/constants/constants.dart';
 import 'package:sg_easy_hire/features/chat/domain/chat_event.dart';
 import 'package:sg_easy_hire/features/chat/domain/chat_state.dart';
 import 'package:sg_easy_hire/features/chat/repository/chat_repository.dart';
-import 'package:sg_easy_hire/models/ChatRoom.dart';
-import 'package:sg_easy_hire/models/User.dart';
+import 'package:sg_easy_hire/models/ChatMessage.dart';
+import 'package:sg_easy_hire/models/ChatStatus.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  final ChatRepository repository;
-  ChatBloc({required this.repository}) : super(ChatState()) {
+  final String currentUserID;
+  ChatBloc({required this.currentUserID}) : super(ChatState()) {
     on<StartSubscribeMessageStream>(_onStartSubscribeMessage);
+    on<StartSubscribeUpdateMessageStream>(_onStartSubscribeUpdateMessage);
     on<AddNewChatMessage>(_onAddChatMessage);
-    on<StartSubscribeChatRoomsStream>(_onChatRoomStream);
+    on<UpdateUnseenMessages>(_onUpdateUnseenMessages);
+    on<UpdateUnseenMessage>(_onUpdateUnseenMessage);
   }
 
   FutureOr<void> _onStartSubscribeMessage(
     StartSubscribeMessageStream event,
     Emitter<ChatState> emit,
   ) async {
+    //get previous messages
+    emit(state.copyWith(status: ChatMessageStatus.loading));
+    final previousMessageResponse = await ChatRepository.getChatMessages(
+      event.chatRoomID,
+    );
     emit(
       state.copyWith(
-        status: ChatStateStatus.loading,
-        action: ChatStateActions.chatMessage,
+        status: ChatMessageStatus.success,
+        chatMessages: previousMessageResponse,
       ),
     );
-    await emit.onEach(
-      repository.chatMessages(event.chatRoomID),
-      onData: (cm) => state.copyWith(
-        chatMessages: cm,
-        status: ChatStateStatus.success,
-        action: ChatStateActions.chatMessage,
-      ),
-      onError: (_, __) {
-        emit(
-          state.copyWith(
-            status: ChatStateStatus.failure,
-            action: ChatStateActions.chatMessage,
-          ),
+
+    final subscriptionRequest = ModelSubscriptions.onCreate(
+      ChatMessage.classType,
+      where: ChatMessage.CHATROOM.eq(event.chatRoomID),
+    );
+    final Stream<GraphQLResponse<ChatMessage>> operation = Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () =>
+              safePrint('✉️ Chat Message subscription established'),
         );
+    await emit.forEach(
+      operation,
+      onData: (event) {
+        final data = [...state.chatMessages, event.data];
+        if (!(event.data == null) &&
+            event.data?.receiver?.id == currentUserID) {
+          //need to update message status
+          add(UpdateUnseenMessage(chatMessage: event.data!));
+        }
+        return state.copyWith(chatMessages: data);
+      },
+      onError: (_, __) {
+        return state;
       },
     );
   }
@@ -49,75 +67,87 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     AddNewChatMessage event,
     Emitter<ChatState> emit,
   ) async {
-    List<ChatRoom> oldChatRooms = List.from(state.chatRooms);
-    List<ChatRoom> newChatRooms = List.from(state.chatRooms);
-    final roomIndex = newChatRooms.indexWhere(
-      (cr) => cr.id == event.chatMessage.chatRoom?.id,
-    );
-    final targetRoom = newChatRooms[roomIndex];
-    newChatRooms[roomIndex] = targetRoom.copyWith(
-      chatMessages: [...(targetRoom.chatMessages ?? []), event.chatMessage],
-    );
-    emit(state.copyWith(chatRooms: newChatRooms));
-    try {
-      await repository.sendMessage(event.chatMessage);
-      emit(
-        state.copyWith(
-          status: ChatStateStatus.success,
-          action: ChatStateActions.sendMessage,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          chatRooms: oldChatRooms,
-          status: ChatStateStatus.failure,
-          action: ChatStateActions.sendMessage,
-        ),
-      );
+    final create = await ChatRepository.sendMessage(event.chatMessage);
+
+    if (create == null) {
+      //that means error,so we need to add message locally
+      final data = [...state.chatMessages, event.chatMessage];
+      emit(state.copyWith(chatMessages: data));
     }
   }
 
-  FutureOr<void> _onChatRoomStream(
-    StartSubscribeChatRoomsStream event,
+  FutureOr<void> _onUpdateUnseenMessages(
+    UpdateUnseenMessages event,
     Emitter<ChatState> emit,
   ) async {
-    final box = Hive.box<User>(name: userBox);
-    final hiveUser = box.get(userBoxKey);
-    emit(
-      state.copyWith(
-        status: ChatStateStatus.loading,
-        action: ChatStateActions.chatRoom,
-      ),
+    //if there have message that not read, update them
+    final unseenMessages = await ChatRepository.getUnseenMessages(
+      event.chatRoomID,
+      event.receiverID,
     );
-    if (hiveUser == null) {
-      emit(
-        state.copyWith(
-          status: ChatStateStatus.failure,
-          action: ChatStateActions.chatRoom,
-        ),
-      );
-      return;
-    }
-    await emit.onEach(
-      repository.chatRooms(hiveUser.id),
-      onData: (cr) {
-        emit(
-          state.copyWith(
-            chatRooms: cr,
-            status: ChatStateStatus.success,
-            action: ChatStateActions.chatRoom,
-          ),
+    if (unseenMessages.isNotEmpty) {
+      //loop and. update
+      for (var message in unseenMessages) {
+        if (message == null) continue;
+        await ChatRepository.updateMessage(
+          message.copyWith(status: ChatStatus.SEEN),
         );
+      }
+      //update cache invalidate
+      CachedQuery.instance.invalidateCache();
+    }
+  }
+
+  FutureOr<void> _onStartSubscribeUpdateMessage(
+    StartSubscribeUpdateMessageStream event,
+    Emitter<ChatState> emit,
+  ) async {
+    final subscriptionRequest = ModelSubscriptions.onUpdate(
+      ChatMessage.classType,
+      where: ChatMessage.CHATROOM.eq(event.chatRoomID),
+    );
+    final Stream<GraphQLResponse<ChatMessage>> operation = Amplify.API
+        .subscribe(
+          subscriptionRequest,
+          onEstablished: () =>
+              safePrint('✉️ Update Chat Message subscription established'),
+        );
+    await emit.forEach(
+      operation,
+      onData: (event) {
+        if (!(event.data == null)) {
+          //find message
+          //update it
+          safePrint('✉️ Update Chat Message logic start......');
+          final index = state.chatMessages.indexWhere(
+            (cm) => cm?.id == event.data?.id,
+          );
+          if (index != -1) {
+            //update
+            List<ChatMessage?> preList = List.from(state.chatMessages);
+            preList[index] = event.data;
+            safePrint(
+              '✉️ Update Chat Message event data: ${event.data.toString()}......',
+            );
+            return state.copyWith(chatMessages: preList);
+          }
+          return state;
+        } else {
+          return state;
+        }
       },
       onError: (_, __) {
-        emit(
-          state.copyWith(
-            status: ChatStateStatus.failure,
-            action: ChatStateActions.chatRoom,
-          ),
-        );
+        return state;
       },
+    );
+  }
+
+  FutureOr<void> _onUpdateUnseenMessage(
+    UpdateUnseenMessage event,
+    Emitter<ChatState> emit,
+  ) async {
+    await ChatRepository.updateMessage(
+      event.chatMessage.copyWith(status: ChatStatus.SEEN),
     );
   }
 }

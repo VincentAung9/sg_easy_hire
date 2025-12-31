@@ -98,39 +98,37 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
             ),
             const SizedBox(height: 6),
             Align(
-              child: Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isFirstTimePressed = true;
+                  });
+                  if (formKey.currentState?.validate() ?? false) {
+                    context.read<WorkHistoryCubit>().addWorkHistory(
+                      WorkHistory(
+                        code: nanoid(10),
+                        createdAt: TemporalDateTime(DateTime.now()),
+                        location: location,
+                        description: descriptionController.text,
+                        duration: durationController.text,
+                        duties: dutiesController.text,
+                        helper: currentUser,
+                      ),
+                    );
                     setState(() {
-                      isFirstTimePressed = true;
+                      isFirstTimePressed = false;
+                      location = null;
+                      descriptionController.clear();
+                      durationController.clear();
+                      dutiesController.clear();
                     });
-                    if (formKey.currentState?.validate() ?? false) {
-                      context.read<WorkHistoryCubit>().addWorkHistory(
-                        WorkHistory(
-                          code: nanoid(10),
-                          createdAt: TemporalDateTime(DateTime.now()),
-                          location: location,
-                          description: descriptionController.text,
-                          duration: durationController.text,
-                          duties: dutiesController.text,
-                          helper: currentUser,
-                        ),
-                      );
-                      setState(() {
-                        isFirstTimePressed = false;
-                        location = null;
-                        descriptionController.clear();
-                        durationController.clear();
-                        dutiesController.clear();
-                      });
-                    }
-                  },
-                  child: const Text(
-                    "+ Add Work History",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  }
+                },
+                child: const Text(
+                  "+ Add Work History",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),

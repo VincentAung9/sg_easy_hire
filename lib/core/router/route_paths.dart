@@ -47,6 +47,7 @@ class RoutePaths {
   static const String helperInterviewCompleted = "completed";
   static const String hellperInterviewCancelled = "cancelled";
   static const String foodHandling = "/food_handling";
+  static const String helperProfileUpdate = "/helper_profile_update";
   //-----EMPLOYER----------
   static const String employerSignin = "/employer_signin";
   static const String employerRegister = "/employer_register";

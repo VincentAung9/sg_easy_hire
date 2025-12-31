@@ -11,6 +11,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sg_easy_hire/amplifyconfiguration.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
+import 'package:cached_query/cached_query.dart';
+import 'package:cached_storage/cached_storage.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -37,6 +39,13 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
+  CachedQuery.instance.config(
+    storage: await CachedStorage.ensureInitialized(),
+    config: const GlobalQueryConfig(
+      staleDuration: Duration(minutes: 5),
+      cacheDuration: Duration(minutes: 5),
+    ),
+  );
   await _initHiveBox();
 
   await _configureAmplify(); /* 

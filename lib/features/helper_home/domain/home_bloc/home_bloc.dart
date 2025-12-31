@@ -366,7 +366,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             final cancel = allInterviews
                 .where((i) => i.status == InterviewStatus.CANCELLED)
                 .toList();
-
+            var nextInterview = state.nextInterview;
+            if (!(interview.confirmedDateTime == null) &&
+                (interview.status == InterviewStatus.CANCELLED) &&
+                (interview.id == state.nextInterview?.id)) {
+              nextInterview = null;
+            }
+            if (accept.isNotEmpty) {
+              nextInterview = accept.first;
+            }
             emit(
               state.copyWith(
                 interviews: allInterviews,
@@ -374,6 +382,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 accepted: accept,
                 completed: [...complete, ...cancel],
                 cancelled: cancel,
+                nextInterview: nextInterview,
               ),
             );
           }
@@ -409,43 +418,59 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
-      List<Interview> allInterviews = List.from(state.interviews);
-      final index = allInterviews.indexWhere((e) => e.id == event.interview.id);
-      if (index != -1) {
-        allInterviews[index] = event.interview;
-        final pending = allInterviews
-            .where((i) => i.status == InterviewStatus.PENDING)
-            .toList();
-
-        final accept =
-            allInterviews
-                .where((i) => i.status == InterviewStatus.ACCEPTED)
-                .toList()
-              ..sort(
-                (a, b) => a.confirmedDateTime!.getDateTimeInUtc().compareTo(
-                  b.confirmedDateTime!.getDateTimeInUtc(),
-                ),
-              );
-
-        final complete = allInterviews
-            .where((i) => i.status == InterviewStatus.COMPLETED)
-            .toList();
-
-        final cancel = allInterviews
-            .where((i) => i.status == InterviewStatus.CANCELLED)
-            .toList();
-
-        emit(
-          state.copyWith(
-            interviews: allInterviews,
-            pending: pending,
-            accepted: accept,
-            completed: [...complete, ...cancel],
-            cancelled: cancel,
-          ),
+      try {
+        List<Interview> allInterviews = List.from(state.interviews);
+        final index = allInterviews.indexWhere(
+          (e) => e.id == event.interview.id,
         );
-        await repository.updateInterview(event.interview);
-      }
+        if (index != -1) {
+          allInterviews[index] = event.interview;
+          final pending = allInterviews
+              .where((i) => i.status == InterviewStatus.PENDING)
+              .toList();
+
+          final accept =
+              allInterviews
+                  .where((i) => i.status == InterviewStatus.ACCEPTED)
+                  .toList()
+                ..sort(
+                  (a, b) => a.confirmedDateTime!.getDateTimeInUtc().compareTo(
+                    b.confirmedDateTime!.getDateTimeInUtc(),
+                  ),
+                );
+
+          final complete = allInterviews
+              .where((i) => i.status == InterviewStatus.COMPLETED)
+              .toList();
+
+          final cancel = allInterviews
+              .where((i) => i.status == InterviewStatus.CANCELLED)
+              .toList();
+
+          emit(
+            state.copyWith(
+              interviews: allInterviews,
+              pending: pending,
+              accepted: accept,
+              completed: [...complete, ...cancel],
+              cancelled: cancel,
+            ),
+          );
+        }
+      } catch (e) {}
+      emit(
+        state.copyWith(
+          status: HomeStateStatus.pending,
+          action: HomeStateActions.interviewStatusAction,
+        ),
+      );
+      await repository.updateInterview(event.interview);
+      emit(
+        state.copyWith(
+          status: HomeStateStatus.success,
+          action: HomeStateActions.interviewStatusAction,
+        ),
+      );
     } catch (e) {}
   }
 

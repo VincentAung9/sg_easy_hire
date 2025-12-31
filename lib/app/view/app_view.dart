@@ -135,7 +135,7 @@ class _AppViewState extends State<AppView> {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                locale: Locale(lan),
+                locale: const Locale("en" /* lan */),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

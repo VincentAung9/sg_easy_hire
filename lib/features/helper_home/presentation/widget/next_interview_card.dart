@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
+import 'package:sg_easy_hire/core/widgets/widgets.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
+import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_cubit.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
+import 'package:sg_easy_hire/models/InterviewStatus.dart';
+import 'package:sg_easy_hire/models/UserRole.dart';
 
 class NextInterviewCard extends StatelessWidget {
   const NextInterviewCard({super.key});
@@ -36,6 +40,7 @@ class NextInterviewCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 24),
               Text(
                 "Next Interview",
                 style: textTheme.titleLarge?.copyWith(
@@ -135,27 +140,53 @@ class NextInterviewCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //TODO: UPDATE
+                          child: BlocBuilder<HomeBloc, HomeState>(
+                            builder: (context, state) {
+                              return ElevatedButton(
+                                onPressed:
+                                    state.status == HomeStateStatus.pending &&
+                                        state.action ==
+                                            HomeStateActions
+                                                .interviewStatusAction
+                                    ? null
+                                    : () async {
+                                        //TODO: UPDATE
+                                        context.read<HomeBloc>().add(
+                                          UpdateInterviewEvent(
+                                            interview: nextInterview.copyWith(
+                                              status: InterviewStatus.CANCELLED,
+                                              updatedBy: UserRole.HELPER,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[200],
+                                  foregroundColor: AppColors.textSecondaryLight,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                child:
+                                    state.status == HomeStateStatus.pending &&
+                                        state.action ==
+                                            HomeStateActions
+                                                .interviewStatusAction
+                                    ? const ButtonLoading(
+                                        height: 30,
+                                      )
+                                    : const Text(
+                                        "Cancel",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                              );
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[200],
-                              foregroundColor: AppColors.textSecondaryLight,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 14,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: const Text(
-                              "Cancel",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
                           ),
                         ),
                         const SizedBox(width: 12),

@@ -1,313 +1,634 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/models/Job.dart';
 
 class HelperJobDetailsView extends StatelessWidget {
-  const HelperJobDetailsView({
-    super.key,
-  });
+  const HelperJobDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final job = GoRouterState.of(context).extra! as Job;
-
+    final avgRating = averageRating(
+      job.creator?.reviewedByUser ?? [],
+    ).toStringAsFixed(1);
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 120,
-            backgroundColor: AppColors.primary,
-            pinned: true,
-            automaticallyImplyLeading: false,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF8B5CF6), Color(0xFF4F46E5)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Column(
+          spacing: 5,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            (job.isActive ?? true)
+                ? const HiringStatus(
+                    title: 'Actively Hiring',
+                    bgColor: Color(0xFFD1FAE5),
+                    textColor: Color(0xFF10B981),
+                  )
+                : const HiringStatus(
+                    title: "Position Closed",
+                    bgColor: Color(0xFFFEE2E2),
+                    textColor: Color(0xFFEF4444),
+                  ),
+            Text(
+              'Posted ${timeAgo(job.createdAt!)}',
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                // Job Title Card
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            job.location,
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(width: 24),
+                          const Icon(
+                            Icons.work_outline,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            job.jobType ?? 'Full-time',
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Divider(
+                        color: Colors.grey.shade300,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildInfoChip(
+                            Icons.attach_money,
+                            'Salary',
+                            '${job.currency ?? 'SGD'} ${job.salary}/${job.payPeriod}',
+                          ),
+                          _buildInfoChip(
+                            Icons.calendar_today,
+                            'Start Date',
+                            job.startDate == null
+                                ? 'Immediate'
+                                : DateTime.tryParse(job.startDate!) == null
+                                ? job.startDate ?? ""
+                                : formatDateMMMdy(
+                                    DateTime.parse(job.startDate!),
+                                  ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildInfoChip(
+                            Icons.description_outlined,
+                            'Contract',
+                            job.contract ?? '2 years',
+                          ),
+                          _buildInfoChip(
+                            Icons.people_outline,
+                            'Applicants',
+                            '${(job.applications ?? []).length} applied',
+                            iconColor: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Back Button
-                        InkWell(
-                          onTap: () => context.pop(),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.arrow_back_ios_new,
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                "Back",
-                                style: TextStyle(
+                const SizedBox(height: 24),
+
+                // Employer Information
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle('Employer Information'),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: job.creator?.avatarURL ?? "",
+                            imageBuilder: (_, provider) => CircleAvatar(
+                              radius: 28,
+                              backgroundImage: provider,
+                            ),
+                            errorWidget: (_, __, ___) => CircleAvatar(
+                              radius: 28,
+                              backgroundColor: AppColors.primary,
+                              child: Text(
+                                job.creator?.fullName.toUpperCase()[0] ?? "",
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  job.creator?.fullName ?? "",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_outlined,
+                                      size: 18,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      job.creator?.location ?? "-",
+                                      style: const TextStyle(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 20,
+                                  ),
+                                  Text(
+                                    avgRating,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '${job.creator?.hiredCount ?? 0} hires',
+                                style: const TextStyle(
+                                  color: AppColors.textSecondary,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        const Spacer(),
-                        // Title
-                        Text(
-                          job.title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Row(
-                          spacing: 10,
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: CachedNetworkImageProvider(
-                                job.creator?.avatarURL ?? "",
-                              ),
-                            ),
-                            Text(
-                              job.creator?.fullName ?? "",
-                              style: const TextStyle(
-                                color: Color(0xFFD8B4FE), // purple-200
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
+                const SizedBox(height: 24),
+
+                // Job Description
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle('Job Description'),
+                      const SizedBox(height: 12),
+                      Text(
+                        job.note ?? "",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textSecondary,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Responsibilities
+                (job.responsibilities ?? []).isNotEmpty
+                    ? _buildCheckListCard(
+                        label: 'Responsibilities',
+                        job.responsibilities!,
+                        iconColor: AppColors.primary,
+                      )
+                    : const SizedBox(),
+
+                SizedBox(
+                  height: (job.responsibilities ?? []).isNotEmpty ? 24 : 0,
+                ),
+
+                // Requirements
+                _buildCheckListCard(
+                  label: 'Requirements',
+                  job.requiredSkills ?? [],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Benefits (from Image ID: 2)
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle('Other Info'),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 5,
+                        children: [
+                          job.offdays == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text("Off Day: ${job.offdays}"),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.childCount == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Children: ${job.childCount}",
+                                  ),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.childAges == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Children are ${job.childAges}",
+                                  ),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.adultCount == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Adult: ${job.adultCount}",
+                                  ),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.elderlyCount == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Elderly: ${job.elderlyCount}",
+                                  ),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.homeType == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Home Type: ${job.homeType}",
+                                  ),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                          job.roomType == null
+                              ? const SizedBox()
+                              : Chip(
+                                  label: Text(
+                                    "Room Type: ${job.roomType}",
+                                  ),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    225,
+                                    228,
+                                    234,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: AppColors.textPrimary,
+      ),
+    );
+  }
+
+  Widget _buildInfoChip(
+    IconData icon,
+    String label,
+    String value, {
+    Color? iconColor,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: iconColor ?? AppColors.primary, size: 20),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
               ),
             ),
-          ),
-
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              left: 15,
-              right: 15,
-              top: 4,
-              bottom: 15,
-            ), // Padding for footer
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    job.createdAt == null
-                        ? const SizedBox()
-                        : Text(
-                            timeAgo(job.createdAt!),
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                    Row(
-                      spacing: 4,
-                      children: [
-                        const Text(
-                          "Salary:",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Chip(
-                          label: Text("\$${job.salary}/${job.payPeriod}"),
-                          backgroundColor: Colors.green[100],
-                          side: BorderSide.none,
-                          labelStyle: TextStyle(
-                            color: Colors.green[600],
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Text(
-                  job.note ?? "",
-                ),
-                Wrap(
-                  spacing: 5,
-                  children: [
-                    ...List.generate(
-                      (job.requiredSkills ?? []).length,
-                      (index) {
-                        final skill = (job.requiredSkills ?? [])[index];
-                        return Chip(
-                          label: Text(skill),
-                          backgroundColor: Color(0xFFDBEAFE),
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF2563EB),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          padding: const EdgeInsets.all(5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(color: Colors.transparent),
-                          ),
-                        );
-                      },
-                    ),
-                    job.offdays == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Off Day: ${job.offdays}"),
-                            backgroundColor: const Color.fromARGB(
-                              255,
-                              225,
-                              228,
-                              234,
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.childCount == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Children: ${job.childCount}"),
-                            backgroundColor: const Color.fromARGB(
-                              255,
-                              225,
-                              228,
-                              234,
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.childAges == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Children are ${job.childAges}"),
-                            backgroundColor: Color.fromARGB(255, 225, 228, 234),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.adultCount == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Adult: ${job.adultCount}"),
-                            backgroundColor: Color.fromARGB(255, 225, 228, 234),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.elderlyCount == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Elderly: ${job.elderlyCount}"),
-                            backgroundColor: Color.fromARGB(255, 225, 228, 234),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.homeType == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Home Type: ${job.homeType}"),
-                            backgroundColor: Color.fromARGB(255, 225, 228, 234),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                    job.roomType == null
-                        ? const SizedBox()
-                        : Chip(
-                            label: Text("Room Type: ${job.roomType}"),
-                            backgroundColor: Color.fromARGB(255, 225, 228, 234),
-                            labelStyle: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: const BorderSide(color: Colors.transparent),
-                            ),
-                          ),
-                  ],
-                ),
-              ]),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
             ),
-          ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCheckListCard(
+    List<String> items, {
+    Color iconColor = AppColors.primary,
+    required String label,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.borderColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(label),
+
+          const SizedBox(height: 12),
+          ...items.map((item) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.check_circle, color: iconColor, size: 24),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
         ],
       ),
     );
   }
 }
+
+class HiringStatus extends StatelessWidget {
+  final Color bgColor;
+  final Color textColor;
+  final String title;
+  const HiringStatus({
+    required this.title,
+    required this.bgColor,
+    required this.textColor,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+// To preview:
+// void main() => runApp(const MaterialApp(home: HelperJobDetailsView()));

@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  //---job details
+    static const Color accentOrange = Color(
+    0xFFF97316,
+  ); // Orange for "Actively Hiring" and Apply button
+  static const Color cardBackground = Colors.white;
+  static const Color activelyHiringBg = Color(0xFFFFF4E5);
+  //------
+  static const Color lightGray = Color(0xFFF1F5F9);
+  static const Color textPrimary = Color(0xFF1E293B);
+  static const Color textSecondary = Color(0xFF64748B);
+  static const Color accent = Color(0xFFFF6B6B); // Coral for the sparkle icon
+  static const Color tipBackground = Color(0xFFE0F7F5);
+  static const Color background = Color(0xFFF8FAFC);
+  static const Color senderBubbleColor = Color(0xFF4F46E5); // indigo-600
+  static const Color receiverBubbleColor = Color(0xFFF3F4F6);
   // Brand Primary
   static const primary = Color(0xFF6D28D9);
   static const primaryLight = Color(0xFFA020F0);

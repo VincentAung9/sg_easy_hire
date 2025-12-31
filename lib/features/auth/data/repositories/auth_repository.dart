@@ -47,7 +47,8 @@ class AuthRepository {
           break; // Use breaks!
 
         case AuthHubEventType.signedOut:
-          signBox.put(isSignIn, false);
+          safePrint('🌈 Hub: Signed Out Event (${event.type})');
+          signBox.delete(isSignIn);
           box.delete(userBoxKey);
           break;
         case AuthHubEventType.sessionExpired:

@@ -142,7 +142,13 @@ Ex-taiwan- 600-670 */
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryLight),
-          onPressed: () => context.go(RoutePaths.home),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(RoutePaths.home);
+            }
+          },
         ),
         title: Row(
           children: [

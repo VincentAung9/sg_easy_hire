@@ -9,7 +9,7 @@ import 'package:sg_easy_hire/core/domain/document_upload/document_upload_event.d
 import 'package:sg_easy_hire/core/domain/document_upload/document_upload_state.dart';
 import 'package:sg_easy_hire/core/models/app_document.dart';
 import 'package:sg_easy_hire/core/repository/storage_repository.dart';
-import 'package:sg_easy_hire/core/router/router.dart';
+import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/biodata/domain/biodata_bloc.dart';
@@ -87,7 +87,13 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryLight),
-          onPressed: () => context.go(RoutePaths.home),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(RoutePaths.home);
+            }
+          },
         ),
         title: Row(
           children: [
