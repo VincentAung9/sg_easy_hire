@@ -3,6 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nanoid/nanoid.dart';
+import 'package:sg_easy_hire/core/faker/db_seeder.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
@@ -30,7 +31,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Container(
       height: 240,
-      padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
+      padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
       decoration: const BoxDecoration(
         color: AppColors.primary,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
@@ -45,99 +46,51 @@ class JobSearchDashboardHeader extends StatelessWidget {
                 builder: (context, user) {
                   return Row(
                     children: [
-                      InkWell(
-                        onTap: () async {
-                          final jobs = context
-                              .read<HelperJobsBloc>()
-                              .state
-                              .jobs;
-                          if (jobs.isEmpty) {
-                            debugPrint("🌈 No jobs found");
-                            return;
-                          }
-                          for (var i = 0; i < 5; i++) {
-                            final job = jobs[i];
-                            final interview = Interview(
-                              code: nanoid(10),
-                              status: InterviewStatus.PENDING,
-                              interviewDateOptions: [
-                                TemporalDateTime(
-                                  DateTime.now().add(Duration(days: i + 1)),
-                                ),
-                                TemporalDateTime(
-                                  DateTime.now().add(Duration(days: i + 2)),
-                                ),
-                                TemporalDateTime(
-                                  DateTime.now().add(Duration(days: i + 3)),
-                                ),
-                              ],
-                              job: job,
-                              helper: user,
-                              employer: job.creator,
-                              createdAt: TemporalDateTime(DateTime.now()),
-                            );
-                            debugPrint(
-                              "🌈 Creating interview: ${interview.id}......",
-                            );
-                            final request = ModelMutations.create(interview);
-                            await Amplify.API.mutate(request: request).response;
-                            debugPrint("🌈 Interview creating done......");
-                          }
-                          /* final request = ModelMutations.update(
-                            user!.copyWith(
-                              verifyStatus:
-                                  user.verifyStatus == VerifyStatus.UNVERIFIED
-                                  ? VerifyStatus.VERIFIED
-                                  : VerifyStatus.UNVERIFIED,
-                            ),
-                          );
-                          await Amplify.API.mutate(request: request).response; */
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: user?.avatarURL ?? "",
-                          imageBuilder: (context, imageProvider) => Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          placeholder: (context, url) => Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(
-                                (0.2 * 255).toInt(),
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(
-                                (0.2 * 255).toInt(),
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.person,
-                              size: 30,
-                              color: Colors.grey,
+                      CachedNetworkImage(
+                        imageUrl: user?.avatarURL ?? "",
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
+                        placeholder: (context, url) => Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withAlpha(
+                              (0.2 * 255).toInt(),
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withAlpha(
+                              (0.2 * 255).toInt(),
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.person,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
+
                       const SizedBox(width: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

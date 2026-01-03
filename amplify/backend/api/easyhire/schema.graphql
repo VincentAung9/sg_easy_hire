@@ -72,6 +72,7 @@ type User @model @auth(
   viewHelpers: [ViewHelper] @hasMany(indexName: "byHelper", fields: ["id"])
   viewedBy: [ViewHelper] @hasMany(indexName: "byEmployer", fields: ["id"])
   notificationReceiver: [NotificationModel] @hasMany(indexName: "byReceiver", fields: ["id"])
+  supportTickets: [SupportTicket] @hasMany(indexName: "byUserTickets", fields: ["id"])
   chatRoomsA: [ChatRoom] @hasMany(indexName: "byUserA", fields: ["id"]) 
   chatRoomsB: [ChatRoom] @hasMany(indexName: "byUserB", fields: ["id"])
   sentMessages: [ChatMessage] @hasMany(indexName: "bySender", fields: ["id"])
@@ -274,6 +275,10 @@ type JobTag @model
       name:String!
     }
     
+
+
+
+
 type Job @model @auth(
     rules: [
       { allow: private, operations: [read, create, update, delete] }
@@ -487,6 +492,24 @@ type NotificationModel @model @auth(
   receiver: User @belongsTo(fields: ["receiverID"])
 }
 
+type SupportTicket @model @auth(
+rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]) {
+  id: ID!
+  subject: String!
+  description: String
+  status: TicketStatus! @default(value: "OPEN")
+  relatedModelID: ID  
+  relatedModelType: RelatedModelType
+  userID: ID! @index(name: "byUserTickets") # The Helper or Employer
+  user: User @belongsTo(fields: ["userID"])
+  chatRoom: ChatRoom @hasOne
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
 type ChatRoom @model @auth(
     rules: [
       { allow: private, operations: [read, create, update, delete] }
@@ -503,6 +526,9 @@ type ChatRoom @model @auth(
 
   userBID: ID! @index(name: "byUserB", queryField: "chatRoomsByUserB")
   userB: User @belongsTo(fields: ["userBID"])
+
+  supportTicketID: ID @index(name: "byTicket")
+  supportTicket: SupportTicket @belongsTo(fields: ["supportTicketID"])
 
   chatMessages: [ChatMessage] @hasMany(indexName: "byChatRoom", fields: ["id"])
 }
@@ -540,7 +566,7 @@ type UrgentAction @model @auth(
   id: ID!
   issue: String!
   deadline: String
-  status: UrgetnActionStatus!
+  status: UrgentActionStatus!
   custonFields: AWSJSON
 
   helperID: ID! @index(name: "byUrgentHelper", queryField: "urgentActionsByHelper")
@@ -599,10 +625,10 @@ type Wallet @model @auth(
   id: ID!
   outstanding_balance: Float
   
-  helperID: ID! @index(name: "byHelperWallet", queryField: "walletsByHelper")
+  helperID: ID @index(name: "byHelperWallet", queryField: "walletsByHelper")
   helper: User @belongsTo(fields: ["helperID"])
   
-  employerID: ID! @index(name: "byEmployerWallet", queryField: "walletsByEmployer")
+  employerID: ID @index(name: "byEmployerWallet", queryField: "walletsByEmployer")
   employer: User @belongsTo(fields: ["employerID"])
   
   transactions: [Transaction] @hasMany(indexName: "byWallet", fields: ["id"])
@@ -634,6 +660,7 @@ type Transaction @model @auth(
   transferTo: User @belongsTo(fields: ["transferToID"]) # Helper
 
   financialAlert: FinancialAlert @hasOne
+  invoice: Invoice @hasOne
 }
 
 type Invoice @model @auth(
@@ -649,6 +676,8 @@ type Invoice @model @auth(
   amount: Float!
   status: TransactionStatus!
   actionBy: UserRole
+  transactionID: ID! @index(name: "byTransaction", queryField: "invoiceByTransaction")
+  transaction: Transaction @belongsTo(fields: ["transactionID"])
 }
 
 type FinancialAlert @model @auth(
@@ -718,10 +747,23 @@ enum InterviewStatus { PENDING ACCEPTED PROCESSING COMPLETED CANCELLED NO_SHOW }
 enum NotificationType { CHAT LIKEPROFILE INTERVIEW APPLIEDJOB JOBOFFER OTHER }
 enum ChatStatus { PENDING TYPING SENT RECEIVED SEEN }
 enum HiredJobStatus { PENDING TRANSFERRED ACTIVE TERMINATED REFUNDREQUEST }
-enum UrgetnActionStatus { PENDING RESOLVE }
+enum UrgentActionStatus { PENDING RESOLVE }
 enum HelperStatus { PENDING INTRANNING }
-enum TransactionStatus { PENDING PAID REFUND_PROCESSING OVERDUE }
+enum TransactionStatus { PENDING PAID FAILED REFUND_PROCESSING OVERDUE }
 enum JobStatus { PENDING APPROVE REJECT URGENT_FILL }
+enum TicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum RelatedModelType {
+  HIRED_JOB
+  TRANSACTION
+  WALLET
+  GENERAL
+}
 
 
 

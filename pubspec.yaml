@@ -46,6 +46,7 @@ dependencies:
   cached_query: ^3.3.2
   cached_storage: ^3.2.2
   cached_query_flutter: ^3.3.2
+  faker: ^2.2.0
 
 dev_dependencies:
   bloc_test: ^10.0.0
