@@ -15,6 +15,7 @@ import 'package:sg_easy_hire/models/ApplicationStatus.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/JobOfferStatus.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/Review.dart';
 import 'package:sg_easy_hire/models/UploadedDocuments.dart';
 import 'package:sg_easy_hire/models/User.dart';
@@ -690,3 +691,38 @@ double averageRating(List<Review> reviews) {
   final total = validRatings.reduce((a, b) => a + b);
   return total / validRatings.length;
 }
+
+IconData relatedModelTypeToIcon(RelatedModelType modelType) {
+  switch (modelType) {
+    case RelatedModelType.HIRED_JOB:
+      return Icons.work_outline;
+    case RelatedModelType.TRANSACTION:
+      return Icons.payment;
+    case RelatedModelType.DOCUMENT:
+      return Icons.description_outlined;
+    case RelatedModelType.ACCOUNT:
+      return Icons.person_outline;
+    case RelatedModelType.GENERAL:
+      return Icons.help_outline;
+    default:
+      return Icons.help_outline;
+  }
+}
+
+String relatedModelTypeToString(RelatedModelType modelType) {
+  switch (modelType) {
+    case RelatedModelType.HIRED_JOB:
+      return "Hired Jobs";
+    case RelatedModelType.TRANSACTION:
+      return "Transactons";
+    case RelatedModelType.DOCUMENT:
+      return "Documents";
+    case RelatedModelType.ACCOUNT:
+      return "Account";
+    case RelatedModelType.GENERAL:
+      return "General";
+    default:
+      return "";
+  }
+}
+

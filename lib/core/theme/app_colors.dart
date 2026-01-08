@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   //---job details
-    static const Color accentOrange = Color(
+  static const Color accentOrange = Color(
     0xFFF97316,
   ); // Orange for "Actively Hiring" and Apply button
   static const Color cardBackground = Colors.white;
@@ -17,6 +17,7 @@ class AppColors {
   static const Color senderBubbleColor = Color(0xFF4F46E5); // indigo-600
   static const Color receiverBubbleColor = Color(0xFFF3F4F6);
   // Brand Primary
+  static const Color primaryPurple50 = Color(0xFFEDE9FE);
   static const primary = Color(0xFF6D28D9);
   static const primaryLight = Color(0xFFA020F0);
   static const primaryDark = Color(0xFF4B0082);

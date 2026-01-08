@@ -54,7 +54,8 @@ class QuickActions extends StatelessWidget {
                     icon: Icons.description,
                     label: "Guidelines",
                     color: AppColors.primary,
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.pushNamed(RouteNames.helperGuideline),
                   ),
                   ActionItem(
                     icon: Icons.upload_file,

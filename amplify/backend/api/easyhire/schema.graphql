@@ -54,6 +54,7 @@ type User @model @auth(
   employerContact: EmployerContact @hasOne
 
   # One-to-Many Relationships (Amplify uses @hasMany)
+  generalDocuments: [GeneralDocument] @hasMany(indexName: "byUser", fields: ["id"])
   workHistories: [WorkHistory] @hasMany(indexName: "byHelper", fields: ["id"])
   testAnswers: [TestAnswers] @hasMany(indexName: "byUser", fields: ["id"])
   createdJobs: [Job] @hasMany(indexName: "byCreator", fields: ["id"])
@@ -211,6 +212,19 @@ type UploadedDocuments @model @auth(
    isPublished: Boolean @default(value: "False")
 }
 
+type GeneralDocument @model @auth(
+    rules: [
+      { allow: private, operations: [read, create, update, delete] }
+      { allow: public, operations: [read, create, update, delete] }
+    ]
+  ){
+    createdAt:AWSDateTime
+    updatedAt:AWSDateTime
+  id: ID!
+  document: AWSJSON
+  userID: ID! @index(name: "byUser", queryField: "generalDocumentByUser")
+  user: User @belongsTo(fields: ["userID"])
+}
 type EmployerContact @model @auth(
     rules: [
       { allow: private, operations: [read, create, update, delete] }
@@ -763,6 +777,9 @@ enum RelatedModelType {
   TRANSACTION
   WALLET
   GENERAL
+  DOCUMENT
+  ACCOUNT
+  NONE
 }
 
 

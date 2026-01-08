@@ -3,16 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/widget/support_card_contact.dart';
 
-/* class AppColors {
-  static const Color primary = Color(0xFF00A699); // Teal primary color
-  static const Color background = Color(0xFFF8FAFC); // Light background
-  static const Color textPrimary = Color(0xFF1E293B);
-  static const Color textSecondary = Color(0xFF64748B);
-  static const Color accent = Color(0xFFFF6B6B); // Coral for the sparkle icon
-  static const Color tipBackground = Color(0xFFE0F7F5);
-}
- */
 class HelperEmptyChat extends StatelessWidget {
   const HelperEmptyChat({super.key});
 
@@ -158,53 +150,16 @@ class HelperEmptyChat extends StatelessWidget {
             ),
           ),
         ),
-        /*      const SizedBox(height: 60),
-
-        // Quick Tip card
-        Container(
-          width: double.infinity,
+        Padding(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: AppColors.tipBackground,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.lightbulb_outline,
-                color: AppColors.primary,
-                size: 28,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Quick Tip',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "When an employer is interested in your profile, they'll reach out through messages. Keep your biodata updated!",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          child: SupportCardContact(
+            icon: Icons.chat_bubble_outline,
+            title: 'Live Chat',
+            subtitle: 'Chat with admin',
+            buttonText: 'Start Chat',
+            onTap: () => context.push(RoutePaths.helperSupportChat),
           ),
         ),
-    */
       ],
     );
   }

@@ -7,6 +7,7 @@ class RoutePaths {
   static const String notificationDetail = "/notifications/:id";
   static const String forgetPassword = "/forget_password";
   //--------HELPER------
+  static const String helperGuideline = "/guide_line";
   static const String helperSignin = "/helper_signin";
   static const String helperRegister = "/helper_register";
   static const String home = "/home";
@@ -41,6 +42,8 @@ class RoutePaths {
   static const String favouriteJobDetail = "/favourite_jobs/:id";
   static const String progressTracking = "/progress_tracking";
   static const String helpSupport = "/help_support";
+  static const String helperSupportChat = "/helper_support_chat";
+  static const String supportChatType = "/support_chat_type";
   static const String settings = "/settings";
   static const String helperInterviewPending = "pending";
   static const String helperInterviewAccepted = "accepted";

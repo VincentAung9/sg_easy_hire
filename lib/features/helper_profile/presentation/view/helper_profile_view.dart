@@ -189,6 +189,7 @@ class HelperProfileView extends StatelessWidget {
                 HelperAccountMenuCard(
                   items: [
                     HelperAccountMenuItem(
+                      onTap: () => context.push(RoutePaths.helpSupport),
                       icon: Icons.help_outline,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,

@@ -5,6 +5,7 @@ class RouteNames {
   static const String notifications = "notifications";
   static const String notificationDetail = "notifications_detail";
   //--------HELPER------
+  static const String helperGuideline = "/guide_line";
   static const String helperSignin = "helper_signin";
   static const String helperRegister = "helper_register";
   static const String home = "home";
@@ -35,6 +36,8 @@ class RouteNames {
   static const String favouriteJobDetail = "favourite_jobs_detail";
   static const String progressTracking = "progress_tracking";
   static const String helpSupport = "help_support";
+  static const String helperSupportChat = "helper_support_chat";
+  static const String supportChatType = "support_chat_type";
   static const String settings = "settings";
   static const String foodHandling = "food_handling";
   static const String helperQuiz = "helper_quiz";

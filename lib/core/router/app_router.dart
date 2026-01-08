@@ -13,9 +13,13 @@ import 'package:sg_easy_hire/features/biodata/presentation/page/medical_history_
 import 'package:sg_easy_hire/features/biodata/presentation/page/onboarding_biodata_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/personal_info_page.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/page/upload_document_page.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/page/help_and_support_page.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/page/helper_support_chat_page.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/page/support_chat_typ_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
+import 'package:sg_easy_hire/features/helper_guideline/presentation/page/helper_guideline_page.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/page/helper_home_page.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interview_detail_page.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/page/helper_interviews_page.dart';
@@ -169,6 +173,26 @@ class AppRouter {
           path: RoutePaths.helperProfileUpdate,
           name: RouteNames.helperProfileUpdate,
           builder: (context, state) => const HelperProfileUpdate(),
+        ),
+        GoRoute(
+          path: RoutePaths.helpSupport,
+          name: RouteNames.helpSupport,
+          builder: (context, state) => const HelpAndSupportPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperSupportChat,
+          name: RouteNames.helperSupportChat,
+          builder: (context, state) => const HelperSupportChatPage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperGuideline,
+          name: RouteNames.helperGuideline,
+          builder: (context, state) => const HelperGuidelinePage(),
+        ),
+        GoRoute(
+          path: RoutePaths.supportChatType,
+          name: RouteNames.supportChatType,
+          builder: (context, state) => const SupportChatTypPage(),
         ),
         /* 
         GoRoute(
