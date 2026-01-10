@@ -122,3 +122,4 @@ app.*.map.json
 
 # Generated l10n files
 lib/l10n/gen/easy-hire-service-account.json
+easy-hire-service-account.json
