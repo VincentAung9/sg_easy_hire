@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/chat/repository/chat_repository.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/widget/widget.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/widget/chat_room_item.dart';
+import 'package:sg_easy_hire/features/helper_chat/presentation/widget/chat_room_item_loading.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/widget/helper_empty_chat.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
@@ -42,10 +47,35 @@ class HelperChatsView extends StatelessWidget {
                   query: ChatRepository.getChatRooms(currentUser?.id ?? ""),
                   builder: (context, state) {
                     return state.isLoading
-                        ? screenLoading(context: context)
+                        ? ListView.builder(
+                            padding: EdgeInsets.all(16),
+                            itemCount: 4,
+                            itemBuilder: (_, index) =>
+                                const ChatRoomItemLoading(),
+                          )
                         : (state.data?.isEmpty ?? false)
                         ? const HelperEmptyChat()
-                        : ListView.builder(
+                        : ListView(
+                            padding: EdgeInsets.all(16),
+                            children: [
+                              SupportCardContact(
+                                icon: FontAwesomeIcons.message,
+                                title: 'Admin Support',
+                                description: "24/7 Customer Service",
+                                subtitle:
+                                    'Need help? Chat with our support team',
+                                badgeText: 'Support',
+                                onTap: () =>
+                                    context.push(RoutePaths.helperSupportChat),
+                              ),
+                              ...(state.data ?? []).map(
+                                (chatRoom) => ChatRoomItem(
+                                  chatRoom: chatRoom!,
+                                  currentUser: currentUser!,
+                                ),
+                              ),
+                            ],
+                          ) /* ListView.builder(
                             padding: EdgeInsets.all(16),
                             itemCount: (state.data ?? []).length,
                             itemBuilder: (context, index) {
@@ -55,7 +85,7 @@ class HelperChatsView extends StatelessWidget {
                                 currentUser: currentUser!,
                               );
                             },
-                          );
+                          ) */;
                   },
                 );
         },

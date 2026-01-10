@@ -8,9 +8,11 @@ import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/fun.dart';
 import 'package:sg_easy_hire/features/chat/repository/chat_repository.dart';
+import 'package:sg_easy_hire/features/helper_chat/presentation/widget/chat_room_item_loading.dart';
 import 'package:sg_easy_hire/models/ChatMessage.dart';
 import 'package:sg_easy_hire/models/ChatRoom.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
+import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
 
@@ -25,6 +27,9 @@ class ChatRoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ticketStatus = getTicketStatusUI(
+      chatRoom.supportTicket?.status ?? TicketStatus.OPEN,
+    );
     final unreadCount = (chatRoom.chatMessages ?? [])
         .where(
           (cm) =>
@@ -60,7 +65,7 @@ class ChatRoomItem extends StatelessWidget {
       query: ChatRepository.getFinalEmployerUser(receiverUser),
       builder: (context, queryState) {
         if (queryState.isLoading) {
-          return widgetLoading();
+          return const ChatRoomItemLoading();
         }
         if (queryState.data == null) {
           return const SizedBox();
@@ -68,7 +73,7 @@ class ChatRoomItem extends StatelessWidget {
         final finalReceiverUser = queryState.data;
         return InkWell(
           onTap: () {
-            context.go(
+            context.push(
               RoutePaths.helperChatDetail,
               extra: ChatScreenParam(
                 userRole: UserRole.HELPER,
@@ -79,9 +84,11 @@ class ChatRoomItem extends StatelessWidget {
             );
           },
           child: Container(
-            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             decoration: BoxDecoration(
               color: AppColors.cardLight,
+              border: Border.all(color: Colors.grey.shade300),
               borderRadius: BorderRadius.circular(16), // rounded-lg
             ),
             child: Row(
@@ -115,7 +122,9 @@ class ChatRoomItem extends StatelessWidget {
                           Expanded(
                             flex: 2,
                             child: Text(
-                              receiverUser.fullName,
+                              chatRoom.supportTicket == null
+                                  ? receiverUser.fullName
+                                  : chatRoom.supportTicket?.subject ?? "",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -141,48 +150,106 @@ class ChatRoomItem extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              maxLines: 2,
-                              lastMessage.isNotEmpty
-                                  ? lastMessage
-                                  : " Interview completed on ${formatDateMMMdyyyy(chatRoom.createdAt!.getDateTimeInUtc().toLocal())}",
-                              style: TextStyle(
-                                color: messageColor ?? AppColors.textGrayLight,
-                                fontSize: 14,
-                                fontWeight: messageColor != null
-                                    ? FontWeight.w500
-                                    : FontWeight.normal,
-                                fontFamily: 'Roboto',
-                              ),
-                              // overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          if (unreadCount > 0)
-                            Container(
-                              width: 20,
-                              height: 20,
-                              margin: const EdgeInsets.only(left: 8),
-                              decoration: BoxDecoration(
-                                color: Colors.green[500],
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  unreadCount.toString(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              !(chatRoom.supportTicket == null)
+                                  ? SizedBox(
+                                      width: constraints.maxWidth,
+                                      child: Wrap(
+                                        runSpacing: 10,
+                                        spacing: 10,
+                                        children: [
+                                          Badge(
+                                            backgroundColor:
+                                                Colors.grey.shade300,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 4,
+                                            ),
+
+                                            label: Text(
+                                              chatRoom
+                                                      .supportTicket
+                                                      ?.description ??
+                                                  "",
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                          ),
+                                          Badge(
+                                            backgroundColor:
+                                                ticketStatus.bgColor,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 4,
+                                            ),
+                                            textStyle: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: 'Roboto',
+                                            ),
+                                            label: Text(
+                                              ticketStatus.name,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Text(
+                                        maxLines: 2,
+                                        lastMessage.isNotEmpty
+                                            ? lastMessage
+                                            : chatRoom.supportTicket == null
+                                            ? " Interview completed on ${formatDateMMMdyyyy(chatRoom.createdAt!.getDateTimeInUtc().toLocal())}"
+                                            : chatRoom
+                                                      .supportTicket
+                                                      ?.description ??
+                                                  "",
+                                        style: TextStyle(
+                                          color:
+                                              messageColor ??
+                                              AppColors.textGrayLight,
+                                          fontSize: 14,
+                                          fontWeight: messageColor != null
+                                              ? FontWeight.w500
+                                              : FontWeight.normal,
+                                          fontFamily: 'Roboto',
+                                        ),
+                                        // overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                              if (unreadCount > 0)
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  margin: const EdgeInsets.only(left: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green[500],
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      unreadCount.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),

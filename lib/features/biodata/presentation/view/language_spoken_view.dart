@@ -251,16 +251,16 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
               }
             },
             onSave: () {
-              if (checkEmpty()) {
+              /* if (checkEmpty()) {
                 context.go(RoutePaths.preferences);
                 return;
-              } else {
-                final data = getData();
-                context.read<BiodataBloc>().add(
-                  SaveDraftOtherPersonalInfo(data: data),
-                );
-              }
+              } else { */
+              final data = getData();
+              context.read<BiodataBloc>().add(
+                SaveDraftOtherPersonalInfo(data: data),
+              );
             },
+            /*   }, */
           );
         },
       ),

@@ -297,16 +297,16 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
               }
             },
             onSave: () {
-              if (checkEmpty()) {
+              /* if (checkEmpty()) {
                 context.go(RoutePaths.foodHandling);
                 return;
-              } else {
-                //save
-                final data = getData();
-                context.read<BiodataBloc>().add(
-                  SaveDraftMedicalHistory(data: data),
-                );
-              }
+              } else { */
+              //save
+              final data = getData();
+              context.read<BiodataBloc>().add(
+                SaveDraftMedicalHistory(data: data),
+              );
+              /* } */
             },
           );
         },

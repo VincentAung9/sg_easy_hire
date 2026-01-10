@@ -78,10 +78,12 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
         personalInformation?.user?.weight ?? currentUser?.weight ?? "";
     nationality =
         personalInformation?.user?.nationality ?? currentUser?.nationality;
-    dateOfBirth = personalInformation?.dateOfBirth!.getDateTime().toLocal();
+    dateOfBirth = personalInformation?.dateOfBirth == null
+        ? null
+        : personalInformation?.dateOfBirth!.getDateTime().toLocal();
     placeController.text = personalInformation?.placeOfBirth ?? "";
 
-    gender = personalInformation?.gender ?? "";
+    gender = personalInformation?.gender ?? null;
 
     setState(() {});
   }
@@ -314,7 +316,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               if (formKey.currentState?.validate() ?? false) {
                 //TODO: Save and Next
                 final data = getData(true);
-                oldData == null
+                if (data == null) return;
+                oldData == null || oldData?.isPublished == false
                     ? context.read<BiodataBloc>().add(
                         AddPersonalInformation(data: data),
                       )
@@ -324,15 +327,20 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               }
             },
             onSave: () {
-              setState(() {
+              debugPrint("🌈 Draf Saving Personal Info ......");
+              /* setState(() {
                 isFirstTimePressed = true;
               });
-              if (formKey.currentState?.validate() ?? false) {
-                final data = getData(false);
-                context.read<BiodataBloc>().add(
-                  SaveDraftPersonalInformation(data: data),
-                );
-              }
+              if (formKey.currentState?.validate() ?? false) { */
+              final data = getData(false);
+              debugPrint(
+                "🌈 Draf Saving Personal Info data: ${data?.toJson()} ......",
+              );
+              if (data == null) return;
+              context.read<BiodataBloc>().add(
+                SaveDraftPersonalInformation(data: data),
+              );
+              /*   } */
             },
           );
         },
@@ -340,35 +348,45 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
     );
   }
 
-  PersonalInformation getData(bool isPublished) {
+  PersonalInformation? getData(bool isPublished) {
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
-    return oldData == null
-        ? PersonalInformation(
-            code: nanoid(10),
-            createdAt: TemporalDateTime(DateTime.now()),
-            dateOfBirth: TemporalDate(dateOfBirth!),
-            placeOfBirth: placeController.text,
-            gender: gender,
-            user: currentUser?.copyWith(
-              fullName: fullNameController.text,
-              nationality: nationality,
-              height: heightController.text,
-              weight: weightController.text,
-            ),
-            isPublished: isPublished,
-          )
-        : oldData!.copyWith(
-            updatedAt: TemporalDateTime(DateTime.now()),
-            dateOfBirth: TemporalDate(dateOfBirth!),
-            placeOfBirth: placeController.text,
-            gender: gender,
-            user: currentUser?.copyWith(
-              fullName: fullNameController.text,
-              nationality: nationality,
-              height: heightController.text,
-              weight: weightController.text,
-            ),
-            isPublished: isPublished,
-          );
+    try {
+      return oldData == null
+          ? PersonalInformation(
+              code: nanoid(10),
+              createdAt: TemporalDateTime(DateTime.now()),
+              dateOfBirth: dateOfBirth == null
+                  ? null
+                  : TemporalDate(dateOfBirth!),
+              placeOfBirth: placeController.text,
+              gender: gender,
+              user: currentUser?.copyWith(
+                fullName: fullNameController.text,
+                nationality: nationality,
+                height: heightController.text,
+                weight: weightController.text,
+              ),
+              isPublished: isPublished,
+            )
+          : oldData!.copyWith(
+              updatedAt: TemporalDateTime(DateTime.now()),
+              dateOfBirth: dateOfBirth == null
+                  ? null
+                  : TemporalDate(dateOfBirth!),
+              placeOfBirth: placeController.text,
+              gender: gender,
+              user: currentUser?.copyWith(
+                fullName: fullNameController.text,
+                nationality: nationality,
+                height: heightController.text,
+                weight: weightController.text,
+              ),
+              isPublished: isPublished,
+            );
+    } catch (e) {
+      debugPrint(
+        "🌈 Get Personal Info data: ${e} ......",
+      );
+    }
   }
 }

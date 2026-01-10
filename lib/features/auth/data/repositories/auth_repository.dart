@@ -75,6 +75,10 @@ class AuthRepository {
     return authProvider.signOut();
   }
 
+  Future<bool> deleteAccount() async {
+    return authProvider.deleteAccountAndLogout();
+  }
+
   Future<User?> updateUser({required User? user}) async {
     return authProvider.updateUser(user: user);
   }

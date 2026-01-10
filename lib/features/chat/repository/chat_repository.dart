@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cached_query/cached_query.dart';
+import 'package:flutter/material.dart';
 import 'package:sg_easy_hire/core/utils/queries.dart';
 import 'package:sg_easy_hire/models/ChatMessage.dart';
 import 'package:sg_easy_hire/models/ChatRoom.dart';
@@ -108,6 +109,7 @@ class ChatRepository {
         if (response.hasErrors ||
             response.errors.isNotEmpty ||
             response.data == null) {
+          debugPrint("Get Chat Room Error: ${response.errors}");
           return [];
         }
         final chatRooms =

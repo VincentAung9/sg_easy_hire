@@ -1,5 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 
@@ -21,6 +22,7 @@ class CustomDatePicker extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       fullscreenDialog: true,
+      barrierColor: Colors.black54,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       transitionDuration: const Duration(milliseconds: 300),
 
@@ -32,10 +34,14 @@ class CustomDatePicker extends StatelessWidget {
           ),
           contentPadding: const EdgeInsets.all(0),
 
-          content: CalendarDatePicker2(
-            config: CalendarDatePicker2Config(),
-            value: [initialDate],
-            onValueChanged: (dates) => Navigator.pop(context, dates.first),
+          content: SizedBox(
+            width: 320.w,
+            height: 400.h,
+            child: CalendarDatePicker2(
+              config: CalendarDatePicker2Config(),
+              value: [initialDate],
+              onValueChanged: (dates) => Navigator.pop(context, dates.first),
+            ),
           ),
         );
       },

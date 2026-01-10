@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
@@ -54,6 +55,14 @@ class HelpAndSupportView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             SupportCardContact(
+              icon: FontAwesomeIcons.message,
+              title: 'Admin Support',
+              description: "24/7 Customer Service",
+              subtitle: 'Need help? Chat with our support team',
+              badgeText: 'Support',
+              onTap: () => context.push(RoutePaths.helperSupportChat),
+            ),
+            /*  SupportCardContact(
               icon: Icons.chat_bubble_outline,
               title: 'Live Chat',
               subtitle: 'Chat with admin',
@@ -73,7 +82,7 @@ class HelpAndSupportView extends StatelessWidget {
               subtitle: 'support@helperapp.com',
               buttonText: 'Send Email',
               onTap: () {},
-            ),
+            ), */
             const SizedBox(height: 32),
 
             // Quick Links

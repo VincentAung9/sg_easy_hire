@@ -11,7 +11,6 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
   TicketBloc(this.repository) : super(TicketState()) {
     on<SelectTicketType>(_selectTicketType);
     on<GetModels>(_onGetModels);
-    //on<SelectModel>(_onSelectModel);
   }
 
   FutureOr<void> _selectTicketType(
@@ -27,7 +26,10 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
     Emitter<TicketState> emit,
   ) async {
     emit(state.copyWith(status: TicketStateStatus.pending));
+
     try {
+      final admin = await repository.getAdminUser();
+      emit(state.copyWith(admin: admin));
       switch (state.modelType) {
         case RelatedModelType.HIRED_JOB:
           final response = await repository.getHiredJobs(event.helperID);
@@ -68,23 +70,4 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
       emit(state.copyWith(status: TicketStateStatus.none));
     }
   }
-
-  /*  FutureOr<void> _onSelectModel(
-    SelectModel<Model> event,
-    Emitter<TicketState> emit,
-  ) async {
-    //create ticket
-    //create chatroom with ticket
-    final ticket = SupportTicket(subject: subject, status: status);
-  }
- */
 }
-
-/* String relatedModelTypeToSubject(RelatedModelType type,Model model){
-  switch (type) {
-    case RelatedModelType.HIRED_JOB:
-      return "Hired Job: ${model.}"
-      break;
-    default:
-  }
-} */

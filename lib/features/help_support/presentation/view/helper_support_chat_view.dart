@@ -1,15 +1,44 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:cached_query_flutter/cached_query_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/models/chat_screen_param.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
+import 'package:sg_easy_hire/features/help_support/data/ticket_repository.dart';
+import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
-class HelperSupportChatView extends StatelessWidget {
+class HelperSupportChatView extends StatefulWidget {
   const HelperSupportChatView({super.key});
 
   @override
+  State<HelperSupportChatView> createState() => _HelperSupportChatViewState();
+}
+
+class _HelperSupportChatViewState extends State<HelperSupportChatView> {
+  User? admin;
+  @override
+  void initState() {
+    getAdmin();
+    super.initState();
+  }
+
+  Future<void> getAdmin() async {
+    final adminResponse = await TicketRepository().getAdminUser();
+    if (mounted) {
+      setState(() {
+        admin = adminResponse;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -40,7 +69,7 @@ class HelperSupportChatView extends StatelessWidget {
             ),
             child: Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 20,
                   backgroundColor: AppColors.primaryPurple50,
                   child: Icon(
@@ -136,21 +165,72 @@ class HelperSupportChatView extends StatelessWidget {
                   title: 'Documents',
                   subtitle: 'Document verification or upload issues',
                 ),
-                SupportCategoryTile(
-                  onTap: () {
-                    context.push(
-                      RoutePaths.supportChatType,
-                      extra: RelatedModelType.ACCOUNT,
+                MutationBuilder(
+                  mutation: TicketRepository.createChatRoom,
+                  builder: (context, mutationState, mutation) {
+                    return SupportCategoryTile(
+                      onTap: mutationState.isLoading
+                          ? null
+                          : () async {
+                              if (admin == null) {
+                                showError(context, "Something was wrong!");
+                                return;
+                              }
+                              //TODO: Create SupportTicket & ChatRoom
+                              //and Go chat details
+                              final ticket = SupportTicket(
+                                subject: "Account #${currentUser?.code}",
+                                description: "Account Ticket",
+                                status: TicketStatus.OPEN,
+                                relatedModelID: currentUser?.id,
+                                relatedModelType: RelatedModelType.ACCOUNT,
+                                user: currentUser,
+                                createdAt: TemporalDateTime(
+                                  DateTime.now(),
+                                ),
+                              );
+                              final chatRoom = ChatRoom(
+                                createdAt: TemporalDateTime(
+                                  DateTime.now(),
+                                ),
+                                name: "Support: Account ${currentUser?.id}",
+                                userA: currentUser,
+                                userB: admin,
+                                supportTicket: ticket,
+                              );
+                              final mutate = await mutation(
+                                CreateTicketParam(
+                                  ticket: ticket,
+                                  chatRoom: chatRoom,
+                                ),
+                              );
+                              if (mutate.data == false) {
+                                showError(context, "Something was wrong!");
+                                return;
+                              }
+                              if (mutate.isSuccess) {
+                                CachedQuery.instance.invalidateCache();
+                                context.go(
+                                  RoutePaths.helperChatDetail,
+                                  extra: ChatScreenParam(
+                                    userRole: UserRole.HELPER,
+                                    chatRoom: chatRoom,
+                                    finalReceiverUser: admin!,
+                                    sender: currentUser!,
+                                  ),
+                                );
+                              }
+                            },
+                      icon: Icons.person_outline,
+                      title: 'Account',
+                      subtitle: 'Profile, settings, or account access',
                     );
                   },
-                  icon: Icons.person_outline,
-                  title: 'Account',
-                  subtitle: 'Profile, settings, or account access',
                 ),
                 SupportCategoryTile(
                   onTap: () {
                     context.push(
-                      RoutePaths.supportChatType,
+                      RoutePaths.supportChatTypeOther,
                       extra: RelatedModelType.GENERAL,
                     );
                   },

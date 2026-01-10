@@ -854,6 +854,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     SaveDraftPersonalInformation event,
     Emitter<BiodataState> emit,
   ) {
+    debugPrint("🌈 Draf Saving Personal Info ......");
     emit(
       state.copyWith(
         action: BiodataStateAction.personalInfo,

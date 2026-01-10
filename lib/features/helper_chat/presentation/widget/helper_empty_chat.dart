@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
@@ -151,12 +152,13 @@ class HelperEmptyChat extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: SupportCardContact(
-            icon: Icons.chat_bubble_outline,
-            title: 'Live Chat',
-            subtitle: 'Chat with admin',
-            buttonText: 'Start Chat',
+            icon: FontAwesomeIcons.message,
+            title: 'Admin Support',
+            description: "24/7 Customer Service",
+            subtitle: 'Need help? Chat with our support team',
+            badgeText: 'Support',
             onTap: () => context.push(RoutePaths.helperSupportChat),
           ),
         ),

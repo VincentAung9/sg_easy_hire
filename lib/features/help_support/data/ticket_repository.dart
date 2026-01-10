@@ -1,10 +1,85 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:cached_query/cached_query.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sg_easy_hire/core/utils/queries.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
+class CreateTicketParam {
+  final SupportTicket ticket;
+  final ChatRoom chatRoom;
+  CreateTicketParam({
+    required this.ticket,
+    required this.chatRoom,
+  });
+}
+
 class TicketRepository {
+  static Mutation<bool, CreateTicketParam> createChatRoom =
+      Mutation<bool, CreateTicketParam>(
+        mutationFn: (param) async {
+          try {
+            final response = await createTicketAndChatRoom(
+              param.ticket,
+              param.chatRoom,
+            );
+            return response;
+          } catch (e) {
+            safePrint('🔥 Create chat room failed: $e');
+            return false;
+          }
+        },
+      );
+  Future<User?> getAdminUser() async {
+    try {
+      final request = ModelQueries.list(
+        User.classType,
+        where: User.ROLE.eq(UserRole.ADMIN),
+      );
+      final response = await Amplify.API.query(request: request).response;
+      if (response.hasErrors) {
+        return null;
+      }
+      if (!(response.data == null)) {
+        final admin = response.data!.items.first;
+        return admin;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<bool> createTicketAndChatRoom(
+    SupportTicket ticket,
+    ChatRoom chatRoom,
+  ) async {
+    try {
+      final ticketRequest = ModelMutations.create(ticket);
+      final ticketResponse = await Amplify.API
+          .mutate(request: ticketRequest)
+          .response;
+      if (ticketResponse.hasErrors) {
+        debugPrint("🔥 Ticket Response Error: ${ticketResponse.errors}");
+        return false;
+      }
+      final chatRoomRequest = ModelMutations.create(chatRoom);
+      final chatRoomResponse = await Amplify.API
+          .mutate(request: chatRoomRequest)
+          .response;
+      if (ticketResponse.hasErrors || chatRoomResponse.hasErrors) {
+        return false;
+      }
+      if (!(ticketResponse.data == null) && !(chatRoomResponse.data == null)) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint("🔥 SupportTicket & ChatRoom Error: $e");
+      return false;
+    }
+  }
+
   Future<List<HiredJob>> getHiredJobs(String helperID) async {
     final request = ModelQueries.list(
       HiredJob.classType,

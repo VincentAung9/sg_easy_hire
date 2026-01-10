@@ -253,11 +253,13 @@ class HelperProfileView extends StatelessWidget {
                           confirmColor: Colors.red,
                         );
                         if (confirmed == true) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Account deleted successfully.'),
-                            ),
+                          context.read<SignOutBloc>().add(
+                            DeleteAccountPressEvent(),
                           );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Deleted account!')),
+                          );
+                          context.go(RoutePaths.helperSignin);
                         }
                       },
                     ),

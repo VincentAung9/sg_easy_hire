@@ -1,12 +1,16 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_query_flutter/cached_query_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/models/chat_screen_param.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/fun.dart';
+import 'package:sg_easy_hire/core/widgets/button_loading.dart';
+import 'package:sg_easy_hire/features/help_support/data/ticket_repository.dart';
 import 'package:sg_easy_hire/features/help_support/domain/ticket_bloc/ticket_bloc.dart';
 import 'package:sg_easy_hire/features/help_support/domain/ticket_bloc/ticket_event.dart';
 import 'package:sg_easy_hire/features/help_support/domain/ticket_bloc/ticket_state.dart';
@@ -19,7 +23,8 @@ class SupportChatTypeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final helperID = context.read<HelperCoreBloc>().state.currentUser?.id ?? "";
+    final currentUser = context.read<HelperCoreBloc>().state.currentUser;
+    final helperID = currentUser?.id ?? "";
     final type = GoRouterState.of(context).extra! as RelatedModelType;
     context.read<TicketBloc>().add(
       SelectTicketType(modelType: type, helperID: helperID),
@@ -132,72 +137,154 @@ class SupportChatTypeView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemBuilder: (context, index) {
                           final item = (items[index]).toJson();
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              spacing: 10,
-                              children: [
-                                state.modelType == RelatedModelType.HIRED_JOB
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              "${(item["employer"] as Map<String, dynamic>)["avatarURL"]}",
-                                          width: 60.w,
-                                          height: 60.h,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 6,
-                                  children: [
-                                    Text(
+                          return MutationBuilder(
+                            mutation: TicketRepository.createChatRoom,
+                            builder: (context, mutationState, mutation) {
+                              return InkWell(
+                                onTap: mutationState.isLoading
+                                    ? null
+                                    : () async {
+                                        //TODO: Create SupportTicket & ChatRoom
+                                        //and Go chat details
+                                        final ticket = SupportTicket(
+                                          subject:
+                                              "${ticketType} #${item["code"]}",
+                                          description:
+                                              state.modelType ==
+                                                  RelatedModelType.HIRED_JOB
+                                              ? (item["job"]
+                                                        as Map<
+                                                          String,
+                                                          dynamic
+                                                        >)["title"]
+                                                    as String
+                                              : "The helper is asking for $ticketType",
+                                          status: TicketStatus.OPEN,
+                                          relatedModelID: item["id"] as String,
+                                          relatedModelType:
+                                              state.modelType
+                                                  as RelatedModelType,
+                                          user: currentUser,
+                                          createdAt: TemporalDateTime(
+                                            DateTime.now(),
+                                          ),
+                                        );
+                                        final chatRoom = ChatRoom(
+                                          createdAt: TemporalDateTime(
+                                            DateTime.now(),
+                                          ),
+                                          name:
+                                              "Support: $ticketType $helperID",
+                                          userA: currentUser,
+                                          userB: state.admin,
+                                          supportTicket: ticket,
+                                        );
+                                        final mutate = await mutation(
+                                          CreateTicketParam(
+                                            ticket: ticket,
+                                            chatRoom: chatRoom,
+                                          ),
+                                        );
+                                        if (mutate.isSuccess) {
+                                          CachedQuery.instance
+                                              .invalidateCache();
+                                          context.go(
+                                            RoutePaths.helperChatDetail,
+                                            extra: ChatScreenParam(
+                                              userRole: UserRole.HELPER,
+                                              chatRoom: chatRoom,
+                                              finalReceiverUser: state.admin!,
+                                              sender: currentUser!,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                child: Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: mutationState.isLoading
+                                        ? Colors.grey.shade300
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Row(
+                                    spacing: 10,
+                                    children: [
+                                      /* mutationState.isLoading
+                                          ? const ButtonLoading(
+                                              color: AppColors.primary,
+                                            )
+                                          : const SizedBox(), */
                                       state.modelType ==
                                               RelatedModelType.HIRED_JOB
-                                          ? ((item["job"]
-                                                    as Map<
-                                                      String,
-                                                      dynamic
-                                                    >)["title"]
-                                                as String)
-                                          : state.modelType ==
-                                                RelatedModelType.TRANSACTION
-                                          ? "${item["currency"]} ${item["amount"]}"
-                                          : "${item["url"]}",
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    12,
+                                                  ),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "${(item["employer"] as Map<String, dynamic>)["avatarURL"]}",
+                                                width: 60.w,
+                                                height: 60.h,
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        spacing: 6,
+                                        children: [
+                                          Text(
+                                            state.modelType ==
+                                                    RelatedModelType.HIRED_JOB
+                                                ? ((item["job"]
+                                                          as Map<
+                                                            String,
+                                                            dynamic
+                                                          >)["title"]
+                                                      as String)
+                                                : state.modelType ==
+                                                      RelatedModelType
+                                                          .TRANSACTION
+                                                ? "${item["currency"]} ${item["amount"]}"
+                                                : "${item["url"]}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            "created at: ${formatDateMMMdyyyy((TemporalDateTime.fromString(item["createdAt"] as String)).getDateTimeInUtc().toLocal())}",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Text(
-                                      "created at: ${formatDateMMMdyyyy((TemporalDateTime.fromString(item["createdAt"] as String)).getDateTimeInUtc().toLocal())}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey.shade600,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           );
                         },
                       ),

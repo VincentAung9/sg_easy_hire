@@ -15,6 +15,17 @@ query ListChatRoomsWithMessages($userID: ID!) {
       userAID
       userBID
       createdAt
+      
+      supportTicket{
+        id
+        subject
+        description
+        status
+        relatedModelID  
+        relatedModelType
+        createdAt
+        updatedAt
+      }
 
       userA {
         id

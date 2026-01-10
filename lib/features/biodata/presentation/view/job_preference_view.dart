@@ -505,18 +505,18 @@ Ex-taiwan- 600-670 */
               }
             },
             onSave: () {
-              setState(() {
+              /* setState(() {
                 isFirstTimePressed = true;
               });
-              if (formKey.currentState?.validate() ?? false) {
-                final data = getData();
-                context.read<BiodataBloc>().add(
-                  SaveDraftJobPreference(
-                    data: data,
-                    workHistories: context.read<WorkHistoryCubit>().state,
-                  ),
-                );
-              }
+              if (formKey.currentState?.validate() ?? false) { */
+              final data = getData();
+              context.read<BiodataBloc>().add(
+                SaveDraftJobPreference(
+                  data: data,
+                  workHistories: context.read<WorkHistoryCubit>().state,
+                ),
+              );
+              /* } */
             },
           );
         },

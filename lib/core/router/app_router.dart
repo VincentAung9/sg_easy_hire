@@ -16,8 +16,10 @@ import 'package:sg_easy_hire/features/biodata/presentation/page/upload_document_
 import 'package:sg_easy_hire/features/help_support/presentation/page/help_and_support_page.dart';
 import 'package:sg_easy_hire/features/help_support/presentation/page/helper_support_chat_page.dart';
 import 'package:sg_easy_hire/features/help_support/presentation/page/support_chat_typ_page.dart';
+import 'package:sg_easy_hire/features/help_support/presentation/page/support_other_type_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_in_page.dart';
 import 'package:sg_easy_hire/features/helper_auth/pages/sign_up_page.dart';
+import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chat_detail_page.dart';
 import 'package:sg_easy_hire/features/helper_chat/presentation/page/helper_chats_page.dart';
 import 'package:sg_easy_hire/features/helper_guideline/presentation/page/helper_guideline_page.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/page/helper_home_page.dart';
@@ -194,6 +196,16 @@ class AppRouter {
           name: RouteNames.supportChatType,
           builder: (context, state) => const SupportChatTypPage(),
         ),
+        GoRoute(
+          path: RoutePaths.supportChatTypeOther,
+          name: RouteNames.supportChatTypeOther,
+          builder: (context, state) => const SupportOtherTypePage(),
+        ),
+        GoRoute(
+          path: RoutePaths.helperChatDetail,
+          name: RouteNames.helperChatDetail,
+          builder: (context, state) => const HelperChatDetailPage(),
+        ),
         /* 
         GoRoute(
           path: RoutePaths.notifications,
@@ -215,6 +227,7 @@ class AppRouter {
           name: RouteNames.helperRegister,
           builder: (context, state) => const HelperSignUpPage(),
         ),
+
         // ---------------------
         // MAIN TAB ROUTES
         // ---------------------
@@ -291,6 +304,7 @@ class AppRouter {
                 ),
               ],
             ),
+
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(

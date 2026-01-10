@@ -258,7 +258,7 @@ String timeAgo(TemporalDateTime temporalDateTime) {
   if (diff.inSeconds < 60) {
     return "just now";
   } else if (diff.inMinutes < 60) {
-    return "${diff.inMinutes} minute${diff.inMinutes == 1 ? '' : 's'} ago";
+    return "${diff.inMinutes} min${diff.inMinutes == 1 ? '' : 's'} ago";
   } else if (diff.inHours < 24) {
     return "${diff.inHours} hour${diff.inHours == 1 ? '' : 's'} ago";
   } else if (diff.inDays < 7) {
@@ -435,8 +435,8 @@ Widget buildShimmerContainer({
 
 Widget buildProfileAvatar({String? imageUrl, double radius = 30}) {
   return Container(
-    width: radius,
-    height: radius,
+    width: radius * 2,
+    height: radius * 2,
     // Slight translucent white border behind avatar to match original look
     decoration: BoxDecoration(
       color: Color.fromRGBO(255, 255, 255, 0.2),
@@ -445,7 +445,7 @@ Widget buildProfileAvatar({String? imageUrl, double radius = 30}) {
     alignment: Alignment.center,
     child: ClipOval(
       child: CircleAvatar(
-        radius: radius / 2,
+        radius: radius,
         backgroundColor: Colors.grey.shade300,
         child: imageUrl != null
             ? CachedNetworkImage(
@@ -726,3 +726,40 @@ String relatedModelTypeToString(RelatedModelType modelType) {
   }
 }
 
+class TicketStatusUI {
+  final String name;
+  final Color bgColor;
+
+  const TicketStatusUI({
+    required this.name,
+    required this.bgColor,
+  });
+}
+
+TicketStatusUI getTicketStatusUI(TicketStatus status) {
+  switch (status) {
+    case TicketStatus.OPEN:
+      return const TicketStatusUI(
+        name: 'Open',
+        bgColor: Color(0xFF2563EB), // blue (100% opacity)
+      );
+
+    case TicketStatus.PENDING:
+      return const TicketStatusUI(
+        name: 'Pending',
+        bgColor: Color(0xFFF59E0B), // amber (100% opacity)
+      );
+
+    case TicketStatus.RESOLVED:
+      return const TicketStatusUI(
+        name: 'Resolved',
+        bgColor: Color(0xFF10B981), // green (100% opacity)
+      );
+
+    case TicketStatus.CLOSED:
+      return const TicketStatusUI(
+        name: 'Closed',
+        bgColor: Color(0xFFEF4444), // red (100% opacity)
+      );
+  }
+}

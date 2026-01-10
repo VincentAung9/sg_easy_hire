@@ -11,6 +11,21 @@ import 'package:sg_easy_hire/models/User.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
 
 class AuthProvider {
+  Future<bool> deleteAccountAndLogout() async {
+    try {
+      await Amplify.Auth.deleteUser();
+
+      // Optional: sign out locally (safe even after delete)
+      await Amplify.Auth.signOut();
+
+      safePrint('Account deleted and signed out');
+      return true;
+    } on AuthException catch (e) {
+      safePrint('Delete account failed: ${e.message}');
+      return false;
+    }
+  }
+
   Future<SignUpReturnType> signUpUserWithEmail(SignUpParam param) async {
     try {
       final userAttributes = {

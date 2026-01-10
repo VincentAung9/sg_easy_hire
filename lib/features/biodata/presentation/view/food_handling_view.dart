@@ -334,16 +334,16 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
               }
             },
             onSave: () {
-              if (checkEmpty()) {
+              /* if (checkEmpty()) {
                 context.go(RoutePaths.languagesSpoken);
                 return;
-              } else {
-                final data = getData();
-                //save
-                context.read<BiodataBloc>().add(
-                  SaveDraftOtherPersonalInfo(data: data),
-                );
-              }
+              } else { */
+              final data = getData();
+              //save
+              context.read<BiodataBloc>().add(
+                SaveDraftOtherPersonalInfo(data: data),
+              );
+              /* } */
             },
           );
         },

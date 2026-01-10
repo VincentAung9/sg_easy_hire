@@ -323,16 +323,16 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
               }
             },
             onSave: () {
-              setState(() {
+              /* setState(() {
                 isFirstTimePressed = true;
               });
-              if (checkValid() && (formKey.currentState?.validate() ?? false)) {
-                final data = getData();
-                context.read<BiodataBloc>().add(
-                  SaveDraftContactFamilyInfo(data: data),
-                );
-              }
+              if (checkValid() && (formKey.currentState?.validate() ?? false)) { */
+              final data = getData();
+              context.read<BiodataBloc>().add(
+                SaveDraftContactFamilyInfo(data: data),
+              );
             },
+            /*  }, */
           );
         },
       ),

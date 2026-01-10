@@ -38,6 +38,7 @@ class RouteNames {
   static const String helpSupport = "help_support";
   static const String helperSupportChat = "helper_support_chat";
   static const String supportChatType = "support_chat_type";
+    static const String supportChatTypeOther = "support_chat_type_other";
   static const String settings = "settings";
   static const String foodHandling = "food_handling";
   static const String helperQuiz = "helper_quiz";

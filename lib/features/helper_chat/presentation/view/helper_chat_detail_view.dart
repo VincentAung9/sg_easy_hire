@@ -95,7 +95,11 @@ class _ChatViewState extends State<ChatView> {
             controller: _scrollController,
             slivers: [
               _buildSliverAppBar(),
-              _buildSliverActionButtons(),
+              widget.chatRoom.supportTicket == null
+                  ? _buildSliverActionButtons()
+                  : const SliverToBoxAdapter(
+                      child: SizedBox(),
+                    ),
               _buildChatList(state, context, widget.sender),
             ],
           );
@@ -111,7 +115,7 @@ class _ChatViewState extends State<ChatView> {
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
-      expandedHeight: 120,
+      expandedHeight: 140,
       backgroundColor: AppColors.primary,
       pinned: false,
       floating: true,
@@ -138,7 +142,11 @@ class _ChatViewState extends State<ChatView> {
                     // Back Button
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.go(RoutePaths.helperChats);
+                        }
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -198,22 +206,49 @@ class _ChatViewState extends State<ChatView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.finalReceiverUser.fullName,
+                              widget.chatRoom.supportTicket == null
+                                  ? widget.finalReceiverUser.fullName
+                                  : widget.chatRoom.supportTicket?.subject ??
+                                        "",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              widget.userRole == UserRole.EMPLOYER
-                                  ? "${widget.finalReceiverUser.nationality ?? ""} • ${widget.finalReceiverUser.totalExperiences ?? "0"} exp"
-                                  : "${widget.finalReceiverUser.phone}",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 14,
-                              ),
-                            ),
+                            !(widget.chatRoom.supportTicket == null)
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: AppColors.primary,
+                                    ),
+                                    child: Text(
+                                      widget
+                                              .chatRoom
+                                              .supportTicket
+                                              ?.description ??
+                                          "",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Roboto',
+                                      ),
+                                    ),
+                                  )
+                                : Text(
+                                    widget.userRole == UserRole.EMPLOYER
+                                        ? "${widget.finalReceiverUser.nationality ?? ""} • ${widget.finalReceiverUser.totalExperiences ?? "0"} exp"
+                                        : "${widget.finalReceiverUser.phone}",
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 14,
+                                    ),
+                                  ),
                           ],
                         ),
                       ],
@@ -330,6 +365,7 @@ class _ChatViewState extends State<ChatView> {
                   },
                 ),
               ),
+
               const SizedBox(width: 8),
               const SizedBox(width: 8),
               /* widget.userRole == UserRole.EMPLOYER
@@ -400,7 +436,9 @@ class _ChatViewState extends State<ChatView> {
                 ),
                 const SizedBox(height: 16),
                 _buildInfoBubble(
-                  "Interview completed. You can now chat with ${widget.finalReceiverUser.fullName}",
+                  widget.chatRoom.supportTicket == null
+                      ? "Interview completed. You can now chat with ${widget.finalReceiverUser.fullName}"
+                      : '''Hello! You've opened a support ticket for "${widget.chatRoom.supportTicket?.description}". How can I assist you today?''',
                 ),
                 const SizedBox(height: 16),
                 ...state.chatMessages.map(

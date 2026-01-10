@@ -23,7 +23,7 @@ class RoutePaths {
       "/helper_interviews/cancelled";
   static const String helperInterviewDetail = "/helper_interviews/:id";
   static const String helperChats = "/helper_chats";
-  static const String helperChatDetail = "/helper_chats/:id";
+  static const String helperChatDetail = "/helper_chat_details";
   static const String profile = "/profile";
   static const String onboardingBiodata = "/onboarding_biodata";
   static const String personalInformation = "/personal_information";
@@ -44,6 +44,7 @@ class RoutePaths {
   static const String helpSupport = "/help_support";
   static const String helperSupportChat = "/helper_support_chat";
   static const String supportChatType = "/support_chat_type";
+  static const String supportChatTypeOther = "/support_chat_type_other";
   static const String settings = "/settings";
   static const String helperInterviewPending = "pending";
   static const String helperInterviewAccepted = "accepted";

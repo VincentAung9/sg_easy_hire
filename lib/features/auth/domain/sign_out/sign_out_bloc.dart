@@ -7,6 +7,7 @@ import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_state.dart';
 class SignOutBloc extends Bloc<SignOutEvent, SignOutState> {
   SignOutBloc({required this.authRepository}) : super(SignOutState()) {
     on<SignOutPressEvent>(_onSignOut);
+    on<DeleteAccountPressEvent>(_onDeleteAccountPress);
   }
   final AuthRepository authRepository;
 
@@ -16,6 +17,19 @@ class SignOutBloc extends Bloc<SignOutEvent, SignOutState> {
   ) async {
     emit(state.copyWith(isPending: true));
     final result = await authRepository.signOut();
+    if (result) {
+      emit(state.copyWith(isPending: false, isSuccess: true));
+    } else {
+      emit(state.copyWith(isPending: false, isError: true));
+    }
+  }
+
+  FutureOr<void> _onDeleteAccountPress(
+    DeleteAccountPressEvent event,
+    Emitter<SignOutState> emit,
+  ) async {
+    emit(state.copyWith(isPending: true));
+    final result = await authRepository.deleteAccount();
     if (result) {
       emit(state.copyWith(isPending: false, isSuccess: true));
     } else {
