@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/models/chat_screen_param.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
@@ -94,7 +95,7 @@ class _ChatViewState extends State<ChatView> {
           return CustomScrollView(
             controller: _scrollController,
             slivers: [
-              _buildSliverAppBar(),
+              _buildSliverAppBar(context),
               widget.chatRoom.supportTicket == null
                   ? _buildSliverActionButtons()
                   : const SliverToBoxAdapter(
@@ -113,7 +114,8 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-  Widget _buildSliverAppBar() {
+  Widget _buildSliverAppBar(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SliverAppBar(
       expandedHeight: 140,
       backgroundColor: AppColors.primary,
@@ -218,6 +220,9 @@ class _ChatViewState extends State<ChatView> {
                             ),
                             !(widget.chatRoom.supportTicket == null)
                                 ? Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: (size.width * 0.6).w,
+                                    ),
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 10,
                                       vertical: 2,
@@ -238,6 +243,7 @@ class _ChatViewState extends State<ChatView> {
                                         fontWeight: FontWeight.normal,
                                         fontFamily: 'Roboto',
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   )
                                 : Text(

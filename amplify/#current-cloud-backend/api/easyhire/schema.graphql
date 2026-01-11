@@ -256,6 +256,7 @@ type WorkHistory @model @auth(
   duties: String
   helperID: ID! @index(name: "byHelper", queryField: "workHistoryByHelper")
   helper: User @belongsTo(fields: ["helperID"])
+  isPublished: Boolean @default(value: "False")
 }
 
 type TestAnswers @model @auth(

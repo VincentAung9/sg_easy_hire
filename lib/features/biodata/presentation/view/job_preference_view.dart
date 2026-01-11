@@ -125,8 +125,8 @@ Ex-taiwan- 600-670 */
       expectedSalary.text = salaryMap["expectedSalary"] as String;
     }
 
-    _selectedOffDays = jobPreference.preferredOffDaysPerMonth ?? "";
-    _selectedLocation = jobPreference.preferredLocationInSingapore ?? "";
+    _selectedOffDays = jobPreference.preferredOffDaysPerMonth;
+    _selectedLocation = jobPreference.preferredLocationInSingapore;
     _willingToWork = (jobPreference.willingWorkOnRestDays ?? false)
         ? "yes"
         : "no";
@@ -488,8 +488,8 @@ Ex-taiwan- 600-670 */
                 isFirstTimePressed = true;
               });
               if (formKey.currentState?.validate() ?? false) {
-                final data = getData();
-                oldData == null
+                final data = getData(true);
+                oldData == null || oldData?.isPublished == false
                     ? context.read<BiodataBloc>().add(
                         AddJobPreference(
                           data: data,
@@ -509,7 +509,7 @@ Ex-taiwan- 600-670 */
                 isFirstTimePressed = true;
               });
               if (formKey.currentState?.validate() ?? false) { */
-              final data = getData();
+              final data = getData(false);
               context.read<BiodataBloc>().add(
                 SaveDraftJobPreference(
                   data: data,
@@ -524,40 +524,64 @@ Ex-taiwan- 600-670 */
     );
   }
 
-  JobPreferences getData() {
+  JobPreferences getData(bool isPublished) {
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
-    return oldData == null
-        ? JobPreferences(
-            createdAt: TemporalDateTime(DateTime.now()),
-            code: nanoid(10),
-            preferredOffDaysPerMonth: _selectedOffDays,
-            preferredLocationInSingapore: _selectedLocation,
-            willingWorkOnRestDays: _willingToWork == "yes",
-            user: currentUser?.copyWith(
-              totalExperiences: experience.text,
-              skills: skills.text.split(","),
-              expectedSalary: jsonEncode({
-                ..._selectedExperience!,
-                "expectedSalary": expectedSalary.text,
-              }),
-            ),
-            isPublished: true,
-          )
-        : oldData!.copyWith(
-            updatedAt: TemporalDateTime(DateTime.now()),
-            preferredOffDaysPerMonth: _selectedOffDays,
-            preferredLocationInSingapore: _selectedLocation,
-            willingWorkOnRestDays: _willingToWork == "yes",
-            user: currentUser?.copyWith(
-              totalExperiences: experience.text,
-              skills: skills.text.split(","),
-              expectedSalary: jsonEncode({
-                ..._selectedExperience!,
-                "expectedSalary": expectedSalary.text,
-              }),
-            ),
-            isPublished: true,
-          );
+    try {
+      return oldData == null
+          ? JobPreferences(
+              createdAt: TemporalDateTime(DateTime.now()),
+              code: nanoid(10),
+              preferredOffDaysPerMonth: _selectedOffDays,
+              preferredLocationInSingapore: _selectedLocation,
+              willingWorkOnRestDays: _willingToWork == "yes",
+              user: currentUser?.copyWith(
+                totalExperiences: experience.text,
+                skills: skills.text.split(","),
+                expectedSalary: _selectedExperience == null
+                    ? null
+                    : jsonEncode({
+                        ..._selectedExperience!,
+                        "expectedSalary": expectedSalary.text,
+                      }),
+              ),
+              isPublished: isPublished,
+            )
+          : oldData!.copyWith(
+              updatedAt: TemporalDateTime(DateTime.now()),
+              preferredOffDaysPerMonth: _selectedOffDays,
+              preferredLocationInSingapore: _selectedLocation,
+              willingWorkOnRestDays: _willingToWork == "yes",
+              user: currentUser?.copyWith(
+                totalExperiences: experience.text,
+                skills: skills.text.split(","),
+                expectedSalary: _selectedExperience == null
+                    ? null
+                    : jsonEncode({
+                        ..._selectedExperience!,
+                        "expectedSalary": expectedSalary.text,
+                      }),
+              ),
+              isPublished: isPublished,
+            );
+    } catch (e) {
+      debugPrint("🔥 Error get job preference: $e");
+      return JobPreferences(
+        createdAt: TemporalDateTime(DateTime.now()),
+        code: nanoid(10),
+        preferredOffDaysPerMonth: _selectedOffDays,
+        preferredLocationInSingapore: _selectedLocation,
+        willingWorkOnRestDays: _willingToWork == "yes",
+        user: currentUser?.copyWith(
+          totalExperiences: experience.text,
+          skills: skills.text.split(","),
+          expectedSalary: jsonEncode({
+            ..._selectedExperience!,
+            "expectedSalary": expectedSalary.text,
+          }),
+        ),
+        isPublished: isPublished,
+      );
+    }
   }
 
   String? customValidSalary(String v) {

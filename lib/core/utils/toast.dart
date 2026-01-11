@@ -38,6 +38,7 @@ void showSuccess(BuildContext context, String message) {
             Text(
               message,
               style: const TextStyle(color: Colors.white, fontSize: 14),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
@@ -81,6 +82,7 @@ void showWarnning(BuildContext context, String message) {
             Text(
               message,
               style: const TextStyle(color: Colors.white, fontSize: 14),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

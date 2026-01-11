@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cached_query_flutter/cached_query_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/models/chat_screen_param.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
@@ -152,8 +153,7 @@ class ChatRoomItem extends StatelessWidget {
                       const SizedBox(height: 4),
                       LayoutBuilder(
                         builder: (context, constraints) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          return Stack(
                             children: [
                               !(chatRoom.supportTicket == null)
                                   ? SizedBox(
@@ -162,24 +162,32 @@ class ChatRoomItem extends StatelessWidget {
                                         runSpacing: 10,
                                         spacing: 10,
                                         children: [
-                                          Badge(
-                                            backgroundColor:
-                                                Colors.grey.shade300,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                              vertical: 4,
+                                          Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: 120.w,
+                                              maxHeight: 40.h,
                                             ),
+                                            child: Badge(
+                                              backgroundColor:
+                                                  Colors.grey.shade300,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 4,
+                                                  ),
 
-                                            label: Text(
-                                              chatRoom
-                                                      .supportTicket
-                                                      ?.description ??
-                                                  "",
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                                fontFamily: 'Roboto',
+                                              label: Text(
+                                                chatRoom
+                                                        .supportTicket
+                                                        ?.description ??
+                                                    "",
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontFamily: 'Roboto',
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
                                           ),
@@ -228,21 +236,24 @@ class ChatRoomItem extends StatelessWidget {
                                       ),
                                     ),
                               if (unreadCount > 0)
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  margin: const EdgeInsets.only(left: 8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green[500],
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      unreadCount.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    margin: const EdgeInsets.only(left: 8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green[500],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        unreadCount.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),

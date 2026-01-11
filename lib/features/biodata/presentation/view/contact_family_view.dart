@@ -67,9 +67,9 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
     siblingController.text = contactFamilyDetails.numOfSiblings ?? "";
     childrenController.text = contactFamilyDetails.numOfChild ?? "";
     ageOfChildrenController.text = contactFamilyDetails.ageOfChild ?? "";
-    religion = contactFamilyDetails.religion ?? "";
-    education = contactFamilyDetails.educationLevel ?? "";
-    maritalStatus = contactFamilyDetails.martialStatus ?? "";
+    religion = contactFamilyDetails.religion;
+    education = contactFamilyDetails.educationLevel;
+    maritalStatus = contactFamilyDetails.martialStatus;
     setState(() {});
   }
 

@@ -32,7 +32,7 @@ class JobOfferView extends StatelessWidget {
 
   Widget _buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 104.0,
+      expandedHeight: 114.0,
       backgroundColor: AppColors.primary,
       pinned: true,
       automaticallyImplyLeading: false,

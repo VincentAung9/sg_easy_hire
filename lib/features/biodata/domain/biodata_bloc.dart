@@ -356,28 +356,49 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
     JobPreferences? result;
     final mbox = Hive.box<JobPreferences>(name: jobPreferenceBox);
     final haveValue = mbox.get(jobPreferenceKey);
+
     if (haveValue == null) {
       result = await repository.getJobPreferences(hiveUser?.id ?? "");
     } else {
       result = haveValue;
     }
 
-    var workHistories = <WorkHistory>[];
-    final whbox = Hive.box<List<WorkHistory>>(name: workHistoriesBox);
-    final haveValueWH = whbox.get(workHistoriesKey);
-    if (haveValueWH == null) {
-      workHistories = await repository.getWorkHistories(hiveUser?.id ?? "");
-    } else {
-      workHistories = haveValueWH;
+    try {
+      var workHistories = <WorkHistory>[];
+      final whBox = Hive.box(name: workHistoriesBox);
+
+      if (whBox.isEmpty) {
+        workHistories = await repository.getWorkHistories(hiveUser?.id ?? "");
+      } else {
+        workHistories = List.generate(
+          whBox.length,
+          (i) => WorkHistory.fromJson(whBox.getAt(i) as Map<String, dynamic>),
+        );
+      }
+      debugPrint(
+        "🔥 Job Preference: ${result.toString()}\nWork History: ${workHistories.toString()}",
+      );
+      emit(
+        state.copyWith(
+          jobPreference: result,
+          workHistories: workHistories,
+          action: BiodataStateAction.jobPrefer,
+          status: BiodataStateStatus.none,
+        ),
+      );
+    } catch (e, s) {
+      Hive.box(name: workHistoriesBox)..clear();
+      debugPrint("🔥 Job Preference: $e");
+      debugPrint("$s");
+      emit(
+        state.copyWith(
+          jobPreference: result,
+          workHistories: [],
+          action: BiodataStateAction.jobPrefer,
+          status: BiodataStateStatus.none,
+        ),
+      );
     }
-    emit(
-      state.copyWith(
-        jobPreference: result,
-        workHistories: workHistories,
-        action: BiodataStateAction.jobPrefer,
-        status: BiodataStateStatus.none,
-      ),
-    );
   }
 
   FutureOr<void> _onAddJobPreference(
@@ -426,9 +447,9 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       Hive.box<JobPreferences>(
         name: jobPreferenceBox,
       ).delete(jobPreferenceKey);
-      Hive.box<List<WorkHistory>>(
+      Hive.box(
         name: workHistoriesBox,
-      ).delete(workHistoriesKey);
+      ).clear();
       emit(
         state.copyWith(
           jobPreference: event.data,
@@ -784,9 +805,9 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       Hive.box<JobPreferences>(
         name: jobPreferenceBox,
       ).delete(jobPreferenceKey);
-      Hive.box<List<WorkHistory>>(
+      Hive.box(
         name: workHistoriesBox,
-      ).delete(workHistoriesKey);
+      ).clear();
       emit(
         state.copyWith(
           jobPreference: event.data,
@@ -989,7 +1010,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
   FutureOr<void> _onSaveDraftJobPreference(
     SaveDraftJobPreference event,
     Emitter<BiodataState> emit,
-  ) {
+  ) async {
     emit(
       state.copyWith(
         action: BiodataStateAction.jobPrefer,
@@ -1000,9 +1021,12 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       Hive.box<JobPreferences>(
         name: jobPreferenceBox,
       ).put(jobPreferenceKey, event.data);
-      Hive.box<List<WorkHistory>>(
-        name: workHistoriesBox,
-      ).put(workHistoriesKey, event.workHistories);
+      Hive.box(name: workHistoriesBox)
+        ..clear()
+        ..addAll(
+          event.workHistories.map((wh) => wh.copyWith(isPublished: false)),
+        );
+
       emit(
         state.copyWith(
           jobPreference: event.data,
