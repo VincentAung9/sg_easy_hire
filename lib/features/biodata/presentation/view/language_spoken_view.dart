@@ -11,6 +11,7 @@ import 'package:sg_easy_hire/features/biodata/domain/biodata_state.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_checkbox_item.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/OtherPersonalInfo.dart';
 
 class LanguageSpokenView extends StatefulWidget {
@@ -54,6 +55,7 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -76,9 +78,9 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 5 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(5, 7),
+              style: const TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -93,18 +95,18 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
         listener: (_, state) {
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been saved");
+            showSuccess(context, t.submitSuccess);
             context.go(RoutePaths.preferences);
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.saveDraftSuccess) {
-            showSuccess(context, "Draft saved successfully");
+            showSuccess(context, t.draftSaveSuccess);
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.failure) {
             showError(
               context,
-              "Failed to save your information. Please try again.",
+              t.submitFailed,
             );
           }
           if (!isInitialized && !(state.otherInfo == null)) {
@@ -130,18 +132,18 @@ class _LanguageSpokenViewState extends State<LanguageSpokenView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Languages Spoken",
-                      style: TextStyle(
+                    Text(
+                      t.languagesSpokenTitle,
+                      style: const TextStyle(
                         color: AppColors.textPrimaryLight,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      "Select all languages you can speak",
-                      style: TextStyle(
+                    Text(
+                      t.selectLanguagesSpoken,
+                      style: const TextStyle(
                         color: AppColors.textSecondaryLight,
                         fontSize: 16,
                       ),

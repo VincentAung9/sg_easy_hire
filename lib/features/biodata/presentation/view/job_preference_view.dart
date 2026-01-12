@@ -19,6 +19,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.da
 import 'package:sg_easy_hire/features/biodata/presentation/widget/radio_option.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/work_experience_component.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/JobPreferences.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
@@ -135,6 +136,7 @@ Ex-taiwan- 600-670 */
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -164,9 +166,9 @@ Ex-taiwan- 600-670 */
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 6 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(6, 7),
+              style: const TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -188,18 +190,18 @@ Ex-taiwan- 600-670 */
               listener: (context, state) {
                 if (state.action == BiodataStateAction.jobPrefer &&
                     state.status == BiodataStateStatus.success) {
-                  showSuccess(context, "Your information has been saved");
+                  showSuccess(context, t.submitSuccess);
                   context.go(RoutePaths.uploadDocuments);
                 }
                 if (state.action == BiodataStateAction.jobPrefer &&
                     state.status == BiodataStateStatus.saveDraftSuccess) {
-                  showSuccess(context, "Draft saved successfully");
+                  showSuccess(context, t.draftSaveSuccess);
                 }
                 if (state.action == BiodataStateAction.jobPrefer &&
                     state.status == BiodataStateStatus.failure) {
                   showError(
                     context,
-                    "Failed to save your information. Please try again.",
+                    t.submitFailed,
                   );
                 }
                 if (!isInitialized && !(state.jobPreference == null)) {
@@ -227,9 +229,9 @@ Ex-taiwan- 600-670 */
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Experience & Skills",
-                          style: TextStyle(
+                        Text(
+                          t.experienceAndSkills,
+                          style: const TextStyle(
                             color: AppColors.textPrimaryLight,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -240,16 +242,16 @@ Ex-taiwan- 600-670 */
                         CustomTextField(
                           isFirstTimePressed: isFirstTimePressed,
                           controller: experience,
-                          label: "Total Experience",
-                          placeholder: "e.g. 5year",
+                          label: t.totalExperience,
+                          placeholder: t.totalExperiencePlaceholder,
                           isRequired: true,
                         ),
                         const SizedBox(height: 24),
                         CustomTextField(
                           isFirstTimePressed: isFirstTimePressed,
                           controller: skills,
-                          label: "Skills",
-                          placeholder: "e.g. Cooking, Childcare, Cleaning",
+                          label: t.skills,
+                          placeholder: t.skillsPlaceholder,
                           isRequired: true,
                         ),
                       ],
@@ -277,9 +279,9 @@ Ex-taiwan- 600-670 */
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Header text
-                        const Text(
-                          'Job Preferences',
-                          style: TextStyle(
+                        Text(
+                          t.jobPreferences,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -287,7 +289,7 @@ Ex-taiwan- 600-670 */
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Tell us about your job expectations',
+                          t.jobPreferencesDesc,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -296,15 +298,15 @@ Ex-taiwan- 600-670 */
                         const SizedBox(height: 24), // space-y-6
                         // --- Expected Monthly Salary ---
                         RichText(
-                          text: const TextSpan(
-                            text: "Expected Monthly Salary",
-                            style: TextStyle(
+                          text: TextSpan(
+                            text: t.expectedMonthlySalary,
+                            style: const TextStyle(
                               color: AppColors.textSecondaryLight,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',
                             ),
-                            children: [
+                            children: const [
                               TextSpan(
                                 text: " *",
                                 style: TextStyle(
@@ -325,7 +327,7 @@ Ex-taiwan- 600-670 */
                               value: _selectedExperience,
 
                               decoration: dropdownDecoration.copyWith(
-                                hintText: "Select your experience",
+                                hintText: t.selectYourExperience,
                                 errorStyle: const TextStyle(
                                   height: 0,
                                   fontSize: 0,
@@ -380,14 +382,14 @@ Ex-taiwan- 600-670 */
                           padding: EdgeInsets.zero,
                           isError:
                               isFirstTimePressed && _selectedExperience == null,
-                          error: "Experience is required",
+                          error: t.experienceRequired,
                         ),
 
                         const SizedBox(height: 16),
                         CustomTextField(
                           isFirstTimePressed: isFirstTimePressed,
                           controller: expectedSalary,
-                          label: "Salary",
+                          label: t.salary,
                           customValidator: (v) => customValidSalary(v ?? ""),
                           customIsError:
                               !(validSalary() == null) && isFirstTimePressed,
@@ -400,9 +402,9 @@ Ex-taiwan- 600-670 */
 
                         CustomFormDropDown(
                           isRequired: true,
-                          label: 'Preferred Off Days per Month',
+                          label: t.preferredOffDays,
                           initialValue: _selectedOffDays,
-                          placeholder: "Select your prefered off days",
+                          placeholder: t.selectPreferredOffDays,
                           isFirstTimePressed: isFirstTimePressed,
                           //  decoration: dropdownDecoration,
                           //icon: const Icon(Icons.expand_more),
@@ -417,8 +419,8 @@ Ex-taiwan- 600-670 */
 
                         CustomFormDropDown(
                           isFirstTimePressed: isFirstTimePressed,
-                          label: 'Preferred Location in Singapore',
-                          placeholder: "Select your preferred location",
+                          label: t.preferredLocation,
+                          placeholder: t.selectPreferredLocation,
                           initialValue: _selectedLocation,
                           items: _locationOptions,
                           onChanged: (newValue) {
@@ -430,7 +432,7 @@ Ex-taiwan- 600-670 */
                         const SizedBox(height: 24), // space-y-6
                         // --- Willing to work on rest days ---
                         Text(
-                          'Willing to work on rest days for compensation?',
+                        t.willingRestDay,
                           style: _labelStyle,
                         ),
                         const SizedBox(height: 12),

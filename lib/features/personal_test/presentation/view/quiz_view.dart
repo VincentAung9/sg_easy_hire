@@ -11,6 +11,7 @@ import 'package:sg_easy_hire/features/personal_test/domain/personality_test_even
 import 'package:sg_easy_hire/features/personal_test/domain/personality_test_state.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/widget/quiz_card.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/widget/quiz_card_loading.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class QuizView extends StatelessWidget {
@@ -18,6 +19,7 @@ class QuizView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
 
     return BlocConsumer<PersonalityTestBloc, PersonalityTestState>(
@@ -27,7 +29,7 @@ class QuizView extends StatelessWidget {
           context.read<PersonalityTestBloc>().add(GetUserAnswers());
         }
         if (state.status == Status.error) {
-          showError(context, "Please answer all questions.");
+          showError(context, t.pleaseAnswerAllQuestions);
         }
         if (state.action == Action.submitAnswer &&
             state.status == Status.success) {
@@ -43,7 +45,13 @@ class QuizView extends StatelessWidget {
               onPressed: () => context.go(RoutePaths.home),
             ),
             title: Text(
-              'Questions ${state.start} - ${state.currentPageQuestions.length < state.end ? (state.currentPageQuestions.length + (state.start - 1)) : state.end} / ${state.allQuestions.length}',
+              t.questionsRangeTitle(
+                state.start,
+                state.currentPageQuestions.length < state.end
+                    ? (state.currentPageQuestions.length + (state.start - 1))
+                    : state.end,
+                state.allQuestions.length,
+              ),
               style: const TextStyle(fontFamily: 'Arial'),
             ),
           ),
@@ -79,9 +87,7 @@ class QuizView extends StatelessWidget {
                             return QuizCard(
                               onChanged: (v) {
                                 final a = q.answers[v];
-                                safePrint(
-                                  "🌈 Linker row selected answer: ${a.toJson()}",
-                                );
+
                                 context.read<PersonalityTestBloc>().add(
                                   SelectAnswer(
                                     answer: q.userAnswer == null
@@ -119,9 +125,9 @@ class QuizView extends StatelessWidget {
                     if (state.currentPage > 0)
                       OutlinedButton.icon(
                         icon: const Icon(Icons.chevron_left),
-                        label: const Text(
-                          'Previous',
-                          style: TextStyle(fontFamily: 'Arial'),
+                        label: Text(
+                          t.previous,
+                          style: const TextStyle(fontFamily: 'Arial'),
                         ),
                         onPressed: () =>
                             context.read<PersonalityTestBloc>().add(BackPage()),
@@ -139,8 +145,8 @@ class QuizView extends StatelessWidget {
                           ? const ButtonLoading(color: Colors.white)
                           : Text(
                               state.currentPage == totalPages - 1
-                                  ? 'Finish'
-                                  : 'Next',
+                                  ? t.finish
+                                  : t.next,
                               style: const TextStyle(fontFamily: 'Arial'),
                             ),
                       onPressed: () => context.read<PersonalityTestBloc>().add(

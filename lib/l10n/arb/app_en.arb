@@ -206,7 +206,454 @@
   "cancel": "Cancel",
   "date": "Date",
   "time": "Time",
+   "profilePendingTitle": "Profile Pending",
+  "profilePendingDesc": "Admin is checking your biodata",
 
+  "profileApprovedTitle": "Profile Approved",
+  "profileApprovedDesc": "Your profile has been approved",
+
+  "profileRejectedTitle": "Profile Rejected",
+  "profileRejectedDesc": "Your profile was rejected. Please update your biodata",
+
+   "stepProgress": "Step {current} of {total}",
+
+  "personalInfoTitle": "Personal Information",
+  "personalInfoSubtitle": "Let's start with your basic details",
+
+  "fullNameLabel": "Full Name",
+  "fullNamePlaceholder": "Enter your full name",
+
+  "dateOfBirthLabel": "Date of Birth",
+  "dateOfBirthPlaceholder": "dd/mm/yyyy",
+
+  "placeOfBirthLabel": "Place of Birth",
+  "placeOfBirthPlaceholder": "City/Town",
+
+  "nationalityLabel": "Nationality",
+  "nationalityPlaceholder": "Select nationality",
+
+  "genderLabel": "Gender",
+  "genderPlaceholder": "Select gender",
+
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "genderOther": "Other",
+
+  "heightLabel": "Height (cm)",
+  "heightPlaceholder": "e.g., 161",
+
+  "weightLabel": "Weight (kg)",
+  "weightPlaceholder": "e.g., 41",
+
+  "submitSuccess": "Your information has been submitted",
+  "draftSaveSuccess": "Draft saved successfully.",
+  "submitFailed": "Failed to save your information. Please try again.",
+
+  "calendarDialogTitle": "Select date",
+  "fieldRequiredError": "{field} is required",
+   "contactFamilyTitle": "Contact & Family Details",
+  "contactFamilySubtitle": "How can we reach you and your family information",
+
+  "residentialAddressLabel": "Residential Address in Home Country",
+  "residentialAddressPlaceholder": "Enter your full address",
+
+  "contactNumberLabel": "Contact Number in Home Country",
+  "contactNumberPlaceholder": "e.g., +95 123456789",
+
+  "airportLabel": "Port/Airport for Repatriation",
+  "airportPlaceholder": "e.g., Yangon International Airport",
+
+  "emailLabel": "Email Address (Optional)",
+  "emailPlaceholder": "your.email@example.com",
+
+  "religionLabel": "Religion",
+  "religionPlaceholder": "Select religion",
+
+  "educationLabel": "Education Level",
+  "educationPlaceholder": "Select education level",
+
+  "siblingsLabel": "Number of Siblings",
+  "childrenLabel": "Number of Children",
+
+  "maritalStatusLabel": "Marital Status",
+  "maritalStatusPlaceholder": "Select marital status",
+
+  "childrenAgeLabel": "Age(s) of Children (if any)",
+  "childrenAgePlaceholder": "e.g., 5, 8, 12",
+   "saveDraft": "Save Draft",
+  "next": "Next",
+    "medicalHistoryTitle": "Medical History",
+  "medicalHistorySubtitle": "Please provide your medical information",
+
+  "allergiesLabel": "Do you have any allergies?",
+  "allergiesPlaceholder": "List any allergies (or write 'NIL' if none)",
+
+  "pastExistingIllnessesTitle": "Past and Existing Illnesses",
+  "pastExistingIllnessesSubtitle": "Select any conditions you have or had:",
+
+  "illnessMental": "Mental illness",
+  "illnessTuberculosis": "Tuberculosis",
+  "illnessEpilepsy": "Epilepsy",
+  "illnessHeartDisease": "Heart disease",
+  "illnessAsthma": "Asthma",
+  "illnessMalaria": "Malaria",
+  "illnessDiabetes": "Diabetes",
+  "illnessOperations": "Had Operations",
+  "illnessHypertension": "Hypertension",
+
+  "otherIllnessesLabel": "Other Illnesses (if any)",
+  "otherIllnessesPlaceholder": "Please specify",
+
+  "physicalDisabilitiesLabel": "Physical Disabilities",
+  "physicalDisabilitiesPlaceholder": "List any physical disabilities (or write 'NIL' if none)",
+
+  "dietaryRestrictionsLabel": "Dietary Restrictions",
+  "dietaryRestrictionsPlaceholder": "Any dietary restrictions? (or write 'NIL' if none)",
+   "foodHandlingPreferencesTitle": "Food Handling Preferences",
+  "accommodationPreferencesTitle": "Accommodation Preferences",
+  "selectAllThatApply": "Select all that apply to you",
+    "languagesSpokenTitle": "Languages Spoken",
+  "selectLanguagesSpoken": "Select all languages you can speak",
+  "experienceAndSkills": "Experience & Skills",
+  "totalExperience": "Total Experience",
+  "totalExperiencePlaceholder": "e.g. 5 year",
+  "skills": "Skills",
+  "skillsPlaceholder": "e.g. Cooking, Childcare, Cleaning",
+
+  "jobPreferences": "Job Preferences",
+  "jobPreferencesDesc": "Tell us about your job expectations",
+
+  "expectedMonthlySalary": "Expected Monthly Salary",
+  "selectYourExperience": "Select your experience",
+  "experienceRequired": "Experience is required",
+
+  "salary": "Salary",
+  "preferredOffDays": "Preferred Off Days per Month",
+  "selectPreferredOffDays": "Select your preferred off days",
+
+  "preferredLocation": "Preferred Location in Singapore",
+  "selectPreferredLocation": "Select your preferred location",
+
+  "willingRestDay": "Willing to work on rest days for compensation?",
+  "willingYes": "Yes, willing",
+  "willingNo": "Prefer not to",
+
+  "submitSuccess": "Submitted successfully",
+  "draftSaveSuccess": "Draft saved successfully",
+  "submitFailed": "Submission failed",
+
+  "stepProgress": "Step {current} of {total}",
+
+  "salaryInputRequired": "Please input your expected salary",
+  "selectExperienceAndSalary": "Please select your experience and input expected salary.",
+
+  "salaryLimit500": "Your expected salary shouldn't be greater than $500",
+  "salaryLimit520": "Your expected salary shouldn't be greater than $520",
+  "salaryLimit580": "Your expected salary shouldn't be greater than $580",
+  "salaryLimit700": "Your expected salary shouldn't be greater than $700",
+  "salaryLimit670": "Your expected salary shouldn't be greater than $670",
+
+  "expNo": "No experiences",
+  "expNoCert": "No experiences but nursing aid certificates",
+  "expMiddleEast": "Middle east experiences",
+  "expSingapore": "Singapore experiences",
+  "expTaiwan": "Taiwan experiences",
+
+  "offDay1": "1 day",
+  "offDay2": "2 days",
+  "offDay3": "3 days",
+  "offDay4": "4 days",
+  "offDay5": "5 days",
+  "offDay6": "6 days",
+  "offDay7": "7 days",
+  "offDay8": "8 days",
+
+  "locationAny": "Any location in Singapore",
+  "locationNorth": "North",
+  "locationSouth": "South",
+  "locationEast": "East",
+  "locationWest": "West",
+  "locationCentral": "Central",
+  "workHistory": "Work History",
+  "remove": "Remove",
+
+  "location": "Location",
+  "selectCountry": "Select Country",
+
+  "duration": "Duration",
+  "durationPlaceholder": "2 years",
+
+  "description": "Description",
+  "descriptionPlaceholder": "Family with 2 children",
+
+  "duties": "Duties",
+  "dutiesPlaceholder": "Childcare, Cooking",
+
+  "addWorkHistory": "+ Add Work History",
+  "uploadDocumentsTitle": "Upload Your Documents",
+
+  "documentsSavedSuccess": "Your documents have been saved",
+  "documentsSaveFailed": "Failed to save your documents. Please try again.",
+  "documentsEmptyError": "Documents are empty.",
+  "draftSavedSuccess": "Draft saved successfully.",
+
+  "introductionVideo": "Introduction Video",
+  "introVideoFormats": "mp4, mov, avi, mkv, wmv, flv, webm",
+
+  "profilePhoto": "Profile Photo",
+  "photoFormats": "JPG, PNG (Max 5MB)",
+
+  "passport": "Passport",
+  "passportFormats": "PDF, JPG, PNG (Max 5MB)",
+
+  "medicalCertificate": "Medical Certificate",
+  "policeClearance": "Police Clearance",
+
+  "documentFormats": "PDF, JPG, PNG (Max 5MB)",
+  "documentFormatsMultiple": "PDF, JPG, PNG (Max 5MB each)",
+
+  "educationalCertificates": "Educational Certificates",
+  "workReferences": "Work References",
+
+  "submit": "Submit",
+   "personalityTestTitle": "Personality Test",
+
+  "personalityTestDescription": "Answer a few statements to get a quick MBTI-style type (E/I, S/N, T/F, J/P). This is an unofficial educational tool.",
+
+  "personalityTestInfo": "There are 16 questions. Tap a dot to show how much you agree. Try to answer based on your typical behavior.",
+
+  "start": "Start",
+  "back": "Back",
+ "questionsRangeTitle": "Questions {start} - {end} / {total}",
+  "@questionsRangeTitle": {
+    "description": "App bar title showing current question range and total",
+    "placeholders": {
+      "start": { "type": "int" },
+      "end": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "pleaseAnswerAllQuestions": "Please answer all questions.",
+  "previous": "Previous",
+  "next": "Next",
+  "finish": "Finish",
+  "language": "Language",
+  "appLanguage": "App language",
+  "guidelines": "Guidelines",
+  "important": "Important",
+
+  "platformGuidelines": "Platform Guidelines",
+  "platformGuidelinesDesc": "Follow these guidelines to ensure a positive experience and increase your chances of finding the perfect job.",
+
+  "profileCompletion": "Profile Completion",
+  "profileCompletionDesc": "Complete your profile accurately",
+  "profileItem1": "Provide accurate personal information",
+  "profileItem2": "Upload a clear, professional photo",
+  "profileItem3": "List all relevant work experience",
+  "profileItem4": "Include certifications and skills",
+  "profileItem5": "Keep your contact information updated",
+
+  "safetySecurity": "Safety & Security",
+  "safetySecurityDesc": "Stay safe while using the platform",
+  "safetyItem1": "Never share your password with anyone",
+  "safetyItem2": "Verify employer information before interviews",
+  "safetyItem3": "Report suspicious activities immediately",
+  "safetyItem4": "Use only official communication channels",
+  "safetyItem5": "Protect your personal documents",
+
+  "professionalConduct": "Professional Conduct",
+  "professionalConductDesc": "Maintain professionalism at all times",
+  "professionalItem1": "Respond to messages promptly",
+  "professionalItem2": "Be honest about your skills and experience",
+  "professionalItem3": "Dress appropriately for interviews",
+  "professionalItem4": "Communicate respectfully with employers",
+  "professionalItem5": "Honor your commitments and schedules",
+
+  "interviewGuidelines": "Interview Guidelines",
+  "interviewGuidelinesDesc": "Prepare for successful interviews",
+  "interviewItem1": "Arrive on time for scheduled interviews",
+  "interviewItem2": "Prepare questions about the job",
+  "interviewItem3": "Bring necessary documents",
+  "interviewItem4": "Follow up after interviews",
+  "interviewItem5": "Notify if you need to reschedule",
+
+  "dosAndDonts": "Do's and Don'ts",
+  "dos": "Do's",
+  "doItem1": "Keep your profile updated regularly",
+  "doItem2": "Respond to job offers within 24 hours",
+  "doItem3": "Provide honest feedback after placements",
+  "doItem4": "Report any issues through proper channels",
+  "doItem5": "Maintain confidentiality of employer information",
+
+  "donts": "Don'ts",
+  "dontItem1": "Share login credentials with others",
+  "dontItem2": "Accept payment outside the platform",
+  "dontItem3": "Misrepresent your qualifications",
+  "dontItem4": "Ghost employers or miss interviews",
+  "dontItem5": "Share inappropriate content",
+
+  "needHelp": "Need Help?",
+  "contactSupport": "Contact our support team",
+  "getHelp": "Get Help",
+   "activelyHiring": "Actively Hiring",
+  "positionClosed": "Position Closed",
+  "postedTimeAgo": "Posted {time}",
+  "@postedTimeAgo": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+
+  "salary": "Salary",
+  "startDate": "Start Date",
+  "immediate": "Immediate",
+  "contract": "Contract",
+  "applicants": "Applicants",
+  "applied": "applied",
+
+  "employerInformation": "Employer Information",
+  "hires": "hires",
+
+  "jobDescription": "Job Description",
+  "responsibilities": "Responsibilities",
+  "requirements": "Requirements",
+  "otherInfo": "Other Info",
+
+  "offDay": "Off Day",
+  "children": "Children",
+  "childrenAre": "Children are",
+  "adult": "Adult",
+  "elderly": "Elderly",
+  "homeType": "Home Type",
+  "roomType": "Room Type",
+
+  "fullTime": "Full-time",
+   "interviewDetails": "Interview Details",
+  "videoInterview": "Video Interview",
+
+  "date": "Date",
+  "dateOptions": "Date Options",
+  "time": "Time",
+  "timeOptions": "Time Options",
+  "duration": "Duration",
+  "minutes30": "30 minutes",
+
+  "interviewNotes": "Interview Notes",
+
+  "employerInformation": "Employer Information",
+  "reviewsCount": "{rating} • {count} reviews",
+  "@reviewsCount": {
+    "placeholders": {
+      "rating": {},
+      "count": {}
+    }
+  },
+
+  "contact": "Contact:",
+  "email": "Email:",
+  "address": "Address:",
+
+  "jobDetails": "Job Details",
+  "requirements": "Requirements:",
+  "personalityType": "Personality type: {type}",
+  "@personalityType": {
+    "placeholders": {
+      "type": {}
+    }
+  },
+  "yourJobOffers": "Your Job Offers",
+  "viewJobsOfferedToYou": "View the jobs offered to you",
+
+  "noOfferJobsYet": "No offer jobs yet",
+   "helpAndSupport": "Help & Support",
+
+  "contactUs": "Contact Us",
+  "adminSupport": "Admin Support",
+  "customerService247": "24/7 Customer Service",
+  "needHelpChat": "Need help? Chat with our support team",
+  "support": "Support",
+
+  "quickLinks": "Quick Links",
+  "viewGuidelines": "View Guidelines",
+  "updateDocuments": "Update Documents",
+  "editProfile": "Edit Profile",
+
+  "frequentlyAskedQuestions": "Frequently Asked Questions",
+
+  "faqUpdateBiodataQ": "How do I update my biodata?",
+  "faqUpdateBiodataA": "Go to your profile section and click on 'Edit Biodata'. You can update your personal information, work experience, and skills from there.",
+
+  "faqApplyJobQ": "How do I apply for a job?",
+  "faqApplyJobA": "Browse available jobs in the Jobs section. Click on any job listing to view details, then tap 'Apply Now' to submit your application.",
+
+  "faqInterviewQ": "How do interviews work?",
+  "faqInterviewA": "Once an employer is interested, they'll schedule an interview. You'll receive a notification and can view all interview details in the Interviews section.",
+
+  "faqMessageEmployerQ": "How do I message an employer?",
+  "faqMessageEmployerA": "After being matched with an employer, you can access the Messages section to communicate directly with them.",
+
+  "faqDocumentsQ": "What documents do I need to upload?",
+  "faqDocumentsA": "Required documents typically include ID, passport, work permit, and any relevant certifications. Check the Documents section for specific requirements.",
+
+  "stillNeedHelp": "Still need help?",
+  "adminAvailable247": "Admin is available 24/7 to assist you",
+  "startLiveChat": "Start Live Chat",
+  "supportChatTitleSelectItem": "Select an item",
+  "supportChooseSpecific": "Choose the specific {type} you need help with",
+  "supportCreatedAt": "Created at: {date}",
+  "supportSubjectPrefix": "Support",
+  "supportEmptyTitle": "No items found",
+  "supportEmptyDescription": "There are no {type} available at the moment",
+  "supportChatTitle": "Support Chat",
+
+  "supportOnlineTitle": "Support Online",
+  "supportOnlineSubtitle": "Ready to help you",
+
+  "supportHelpQuestion": "What do you need help with?",
+  "supportHelpDescription":
+      "Select a category to start chatting with our support team",
+
+  "supportCategoryHiredJobs": "Hired Jobs",
+  "supportCategoryHiredJobsDesc":
+      "Issues related to your current or past employment",
+
+  "supportCategoryTransaction": "Transaction",
+  "supportCategoryTransactionDesc":
+      "Payment, salary, or financial concerns",
+
+  "supportCategoryDocuments": "Documents",
+  "supportCategoryDocumentsDesc":
+      "Document verification or upload issues",
+
+  "supportCategoryAccount": "Account",
+  "supportCategoryAccountDesc":
+      "Profile, settings, or account access",
+
+  "supportCategoryOther": "Other",
+  "supportCategoryOtherDesc":
+      "General inquiries or other issues",
+
+  "supportErrorGeneric": "Something was wrong!",
+  "relatedTypeHiredJobs": "Hired Jobs",
+  "relatedTypeTransaction": "Transactions",
+  "relatedTypeDocument": "Documents",
+  "relatedTypeAccount": "Account",
+  "relatedTypeGeneral": "General",
+  "noModelTypeYet": "No {modelType} yet",
+  "@noModelTypeYet": {
+    "description": "Shown when there is no data for a specific model type",
+    "placeholders": {
+      "modelType": {}
+    }
+  },
+   "settingsTitle": "Settings",
+
+  "noNameSet": "No Name Set",
+  "noPhoneSet": "No Phone Set",
+
+  "avatarLabel": "Avatar",
+  "updateButton": "Update",
 
 
     "employerDashboard_headerTitle": "The Tan Family",
@@ -403,6 +850,8 @@
     "helperInterviews_tabPending": "Pending",
     "helperInterviews_tabAccepted": "Accepted",
     "helperInterviews_tabCompletedCancelled": "Completed / Cancelled",
+    "helperInterviews_tabCompleted": "Completed",
+    "helperInterviews_tabCancelled": "Cancelled",
 
     "helperInterviews_noPending": "No pending interviews",
     "helperInterviews_noAccepted": "No accepted interviews",

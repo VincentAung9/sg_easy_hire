@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_bloc.dart';
 import 'package:sg_easy_hire/features/auth/domain/sign_out/sign_out_event.dart';
 import 'package:sg_easy_hire/features/helper_profile/presentation/widget/widget.dart';
 import 'package:sg_easy_hire/features/job_offer/domain/joboffer_count_cubit.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 // 🔹 Reusable Animated Confirm Dialog
 Future<bool?> _showAnimatedConfirmDialog({
@@ -99,6 +101,7 @@ class HelperProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -119,24 +122,24 @@ class HelperProfileView extends StatelessWidget {
                       icon: Icons.person_outline,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
-                      title: "Biodata",
-                      subtitle: "Name, contact, nationality",
+                      title: t.helperAccount_biodata,
+                      subtitle: t.helperAccount_biodataSubtitle,
                     ),
                     HelperAccountMenuItem(
                       onTap: () => context.push(RoutePaths.uploadDocuments),
                       icon: Icons.description_outlined,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
-                      title: "Documents",
-                      subtitle: "Passport, certificates, medical",
+                      title: t.helperAccount_documents,
+                      subtitle: t.helperAccount_documentsSubtitle,
                     ),
                     HelperAccountMenuItem(
                       onTap: () => context.push(RoutePaths.preferences),
                       icon: Icons.tune_outlined,
                       iconBgColor: Colors.blue[100]!,
                       iconColor: AppColors.primary,
-                      title: "Preferences",
-                      subtitle: "Salary, location, duties",
+                      title: t.helperAccount_preferences,
+                      subtitle: t.helperAccount_preferencesSubtitle,
                       showDivider: false,
                     ),
                   ],
@@ -149,8 +152,8 @@ class HelperProfileView extends StatelessWidget {
                       icon: Icons.work_outline,
                       iconBgColor: Colors.orange[100]!,
                       iconColor: Colors.orange[500]!,
-                      title: "Job Offers",
-                      subtitle: "View offers received from employers",
+                      title: t.helperAccount_jobOffers,
+                      subtitle: t.helperAccount_jobOffersSubtitle,
                       trailing: BlocBuilder<JobofferCountCubit, int>(
                         builder: (context, offerCount) {
                           return offerCount == 0
@@ -165,7 +168,7 @@ class HelperProfileView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
-                                    "$offerCount New",
+                                    t.helperAccount_newCount(offerCount),
                                     style: textTheme.bodySmall?.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -175,14 +178,6 @@ class HelperProfileView extends StatelessWidget {
                         },
                       ),
                     ),
-                    /* HelperAccountMenuItem(
-                      icon: Icons.bar_chart_outlined,
-                      iconBgColor: Colors.green[100]!,
-                      iconColor: Colors.green[500]!,
-                      title: "Progress Tracking",
-                      subtitle: "View hiring process status",
-                      showDivider: false,
-                    ), */
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -193,8 +188,8 @@ class HelperProfileView extends StatelessWidget {
                       icon: Icons.help_outline,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,
-                      title: "Help & Support",
-                      subtitle: "FAQs, contact agency",
+                      title: t.helperAccount_helpSupport,
+                      subtitle: t.helperAccount_helpSupportSubtitle,
                     ),
                     HelperAccountMenuItem(
                       onTap: () => context.push(
@@ -204,38 +199,36 @@ class HelperProfileView extends StatelessWidget {
                       icon: Icons.language,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,
-                      title: "Language",
-                      subtitle: "App language",
+                      title: t.language,
+                      subtitle: t.appLanguage,
                     ),
                     HelperAccountMenuItem(
                       onTap: () => context.push(RoutePaths.helperProfileUpdate),
                       icon: Icons.settings_outlined,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,
-                      title: "Settings",
-                      subtitle: "Profile Manage",
+                      title: t.helperAccount_settings,
+                      subtitle: t.helperAccount_settingsSubtitle,
                     ),
                     HelperAccountMenuItem(
                       icon: Icons.logout_outlined,
                       iconBgColor: Colors.grey[200]!,
                       iconColor: AppColors.textGrayLight,
-                      title: "Log Out",
+                      title: t.helperAccount_logout,
                       showDivider: false,
                       onTap: () async {
                         final confirmed = await _showAnimatedConfirmDialog(
                           context: context,
-                          title: 'Logout',
+                          title: t.helperAccount_logoutDialogTitle,
                           titleColor: AppColors.kSecondaryColor,
-                          content: 'Are you sure you want to logout?',
+                          content: t.helperAccount_logoutDialogDesc,
                           icon: Icons.logout,
-                          confirmText: 'Logout',
+                          confirmText: t.helperAccount_logoutDialogTitle,
                           confirmColor: AppColors.kSecondaryColor,
                         );
                         if (confirmed == true) {
                           context.read<SignOutBloc>().add(SignOutPressEvent());
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Logged out!')),
-                          );
+                          showSuccess(context, t.helperAccount_snackLoggedOut);
                           context.go(RoutePaths.helperSignin);
                         }
                       },
@@ -249,26 +242,26 @@ class HelperProfileView extends StatelessWidget {
                       icon: Icons.delete_outline,
                       iconBgColor: Colors.red[100]!,
                       iconColor: Colors.red[500]!,
-                      title: "Delete Account",
-                      subtitle: "Permanently remove your account",
+                      title: t.helperAccount_deleteAccount,
+                      subtitle: t.helperAccount_deleteAccountSubtitle,
                       showDivider: false,
                       onTap: () async {
                         final confirmed = await _showAnimatedConfirmDialog(
                           context: context,
-                          title: 'Delete Account',
+                          title: t.helperAccount_deleteAccount,
                           titleColor: Colors.red,
-                          content:
-                              'Are you sure you want to delete your account? This action cannot be undone.',
+                          content: t.helperAccount_deleteDialogDesc,
                           icon: Icons.delete,
-                          confirmText: 'Delete',
+                          confirmText: t.helperAccount_delete,
                           confirmColor: Colors.red,
                         );
                         if (confirmed == true) {
                           context.read<SignOutBloc>().add(
                             DeleteAccountPressEvent(),
                           );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Deleted account!')),
+                          showSuccess(
+                            context,
+                            t.helperAccount_snackAccountDeleted,
                           );
                           context.go(RoutePaths.helperSignin);
                         }

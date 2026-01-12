@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class EmptySupportType extends StatelessWidget {
   final String modelType;
@@ -12,6 +13,7 @@ class EmptySupportType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +72,7 @@ class EmptySupportType extends StatelessWidget {
 
           // Title
           Text(
-            'No $modelType yet',
+            t.noModelTypeYet(modelType),
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

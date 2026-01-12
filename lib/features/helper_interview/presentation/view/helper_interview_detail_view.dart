@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
@@ -22,11 +23,12 @@ class HelperInterviewDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final interview = GoRouterState.of(context).extra as Interview;
-    final originalInterviewStatus = getInterviewStatusUI(interview.status);
+    final originalInterviewStatus = getInterviewStatusUI(interview.status, t);
     final dateLabel = interview.confirmedDateTime == null
-        ? 'Date Options'
-        : 'Date';
+        ? t.dateOptions
+        : t.date;
     final interviewDate = interview.confirmedDateTime == null
         ? interview.interviewDateOptions!
               .map(
@@ -40,8 +42,8 @@ class HelperInterviewDetailView extends StatelessWidget {
           );
 
     final timeLabel = interview.confirmedDateTime == null
-        ? 'Time Options'
-        : 'Time';
+        ? t.timeOptions
+        : t.time;
     final interviewTime = interview.confirmedDateTime == null
         ? interview.interviewDateOptions!
               .map(
@@ -71,9 +73,9 @@ class HelperInterviewDetailView extends StatelessWidget {
           spacing: 4,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Interview Details',
-              style: TextStyle(
+            Text(
+              t.interviewDetails,
+              style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
@@ -132,16 +134,16 @@ class HelperInterviewDetailView extends StatelessWidget {
                       ),
                     ),
                     child: Row(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.videocam_rounded,
                           color: Colors.white,
                           size: 28,
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Text(
-                          'Video Interview',
-                          style: TextStyle(
+                          t.videoInterview,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -181,8 +183,8 @@ class HelperInterviewDetailView extends StatelessWidget {
 
                     child: _buildInfoRow(
                       Icons.timer_outlined,
-                      'Duration',
-                      '30 minutes',
+                      t.duration,
+                      t.minutes30,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -198,9 +200,9 @@ class HelperInterviewDetailView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Interview Notes',
-                          style: TextStyle(
+                        Text(
+                          t.interviewNotes,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimary,
@@ -223,7 +225,7 @@ class HelperInterviewDetailView extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Employer Information
-            _buildSectionTitle('Employer Information'),
+            _buildSectionTitle(t.employerInformation),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
@@ -291,7 +293,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  '$avgRating • $reviewCount reviews',
+                                  t.reviewsCount(avgRating, reviewCount),
                                   style: const TextStyle(
                                     color: AppColors.textSecondary,
                                   ),
@@ -323,19 +325,19 @@ class HelperInterviewDetailView extends StatelessWidget {
                   const Divider(height: 32),
                   _buildContactRow(
                     Icons.person_outline,
-                    'Contact:',
+                    t.contact,
                     interview.employer?.employerContact?.mobile ?? "-",
                   ),
                   const SizedBox(height: 12),
                   _buildContactRow(
                     Icons.email_outlined,
-                    'Email:',
+                    t.email,
                     interview.employer?.email ?? "-",
                   ),
                   const SizedBox(height: 12),
                   _buildContactRow(
                     Icons.email_outlined,
-                    'Address:',
+                    t.address,
                     interview.employer?.employerContact?.adress ?? "-",
                   ),
                 ],
@@ -344,7 +346,7 @@ class HelperInterviewDetailView extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Job Details
-            _buildSectionTitle('Job Details'),
+            _buildSectionTitle(t.jobDetails),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
@@ -382,9 +384,9 @@ class HelperInterviewDetailView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Requirements:',
-                    style: TextStyle(
+                  Text(
+                    t.requirements,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
@@ -397,7 +399,9 @@ class HelperInterviewDetailView extends StatelessWidget {
                   interview.job?.requiredPersonalityType == null
                       ? const SizedBox()
                       : _buildRequirement(
-                          "Personality type: ${interview.job?.requiredPersonalityType}",
+                          t.personalityType(
+                            interview.job?.requiredPersonalityType ?? "",
+                          ),
                         ),
                   const SizedBox(
                     height: 10,
@@ -408,7 +412,9 @@ class HelperInterviewDetailView extends StatelessWidget {
                       interview.job?.offdays == null
                           ? const SizedBox()
                           : Chip(
-                              label: Text("Off Day: ${interview.job?.offdays}"),
+                              label: Text(
+                                "${t.offDay}: ${interview.job?.offdays}",
+                              ),
                               backgroundColor: const Color.fromARGB(
                                 255,
                                 225,
@@ -432,7 +438,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Children: ${interview.job?.childCount}",
+                                "${t.children}: ${interview.job?.childCount}",
                               ),
                               backgroundColor: const Color.fromARGB(
                                 255,
@@ -457,7 +463,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Children are ${interview.job?.childAges}",
+                                "${t.childrenAre} ${interview.job?.childAges}",
                               ),
                               backgroundColor: Color.fromARGB(
                                 255,
@@ -482,7 +488,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Adult: ${interview.job?.adultCount}",
+                                "${t.adult}: ${interview.job?.adultCount}",
                               ),
                               backgroundColor: Color.fromARGB(
                                 255,
@@ -507,7 +513,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Elderly: ${interview.job?.elderlyCount}",
+                                "${t.elderly}: ${interview.job?.elderlyCount}",
                               ),
                               backgroundColor: Color.fromARGB(
                                 255,
@@ -532,7 +538,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Home Type: ${interview.job?.homeType}",
+                                "${t.homeType}: ${interview.job?.homeType}",
                               ),
                               backgroundColor: Color.fromARGB(
                                 255,
@@ -557,7 +563,7 @@ class HelperInterviewDetailView extends StatelessWidget {
                           ? const SizedBox()
                           : Chip(
                               label: Text(
-                                "Room Type: ${interview.job?.roomType}",
+                                "${t.roomType}: ${interview.job?.roomType}",
                               ),
                               backgroundColor: Color.fromARGB(
                                 255,

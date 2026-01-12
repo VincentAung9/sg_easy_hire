@@ -101,7 +101,7 @@ class HelperInterviewTabBar extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
               child: Text(
-                t.employerInterview_tabCompleted,
+                t.helperInterviews_tabCompletedCancelled,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 14,

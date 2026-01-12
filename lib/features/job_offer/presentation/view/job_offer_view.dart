@@ -10,6 +10,7 @@ import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/job_offer/data/repository/job_repository.dart';
 import 'package:sg_easy_hire/features/job_offer/presentation/widget/job_offer_simple_card.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/User.dart';
 
 class JobOfferView extends StatelessWidget {
@@ -31,6 +32,7 @@ class JobOfferView extends StatelessWidget {
   }
 
   Widget _buildSliverAppBar(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return SliverAppBar(
       expandedHeight: 114.0,
       backgroundColor: AppColors.primary,
@@ -67,21 +69,24 @@ class JobOfferView extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 50),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Your Job Offers",
-                  style: TextStyle(
+                  t.yourJobOffers,
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "View the jobs offered to you",
-                  style: TextStyle(color: Color(0xFFD6BCFA), fontSize: 14),
+                  t.viewJobsOfferedToYou,
+                  style: const TextStyle(
+                    color: Color(0xFFD6BCFA),
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
@@ -93,6 +98,7 @@ class JobOfferView extends StatelessWidget {
   }
 
   Widget _buildInterviewList(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     return BlocSelector<HelperCoreBloc, HelperCoreState, User?>(
       selector: (state) => state.currentUser,
@@ -185,8 +191,8 @@ class JobOfferView extends StatelessWidget {
 
                                 // Title
                                 Text(
-                                  'No offer jobs yet',
-                                  style: TextStyle(
+                                  t.noOfferJobsYet,
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textPrimary,

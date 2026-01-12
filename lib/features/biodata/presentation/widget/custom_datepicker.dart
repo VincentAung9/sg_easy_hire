@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class CustomDatePicker extends StatelessWidget {
   final DateTime? initialDate;
@@ -50,6 +51,7 @@ class CustomDatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return CustomTextField(
       isFirstTimePressed: isFirstTimePressed,
       onTap: () async {
@@ -67,8 +69,8 @@ class CustomDatePicker extends StatelessWidget {
             ? ""
             : DateFormat('dd/MM/yyyy').format(initialDate!),
       ),
-      label: "Date of Birth",
-      placeholder: "dd/mm/yyyy",
+      label: t.dateOfBirthLabel,
+      placeholder: t.dateOfBirthPlaceholder,
       isRequired: true,
       isReadOnly: true,
       suffixIcon: Icons.calendar_today_outlined,

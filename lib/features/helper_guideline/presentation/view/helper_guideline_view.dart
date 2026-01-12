@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
@@ -352,6 +352,320 @@ class HelperGuidelineView extends StatelessWidget {
                     size: 14,
                   ),
                   SizedBox(width: 12),
+                  Expanded(child: Text(item)),
+                ],
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+ */
+
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/router/router.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
+
+class HelperGuidelineView extends StatelessWidget {
+  const HelperGuidelineView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(t.guidelines),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(RoutePaths.home);
+            }
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Chip(
+              label: Text(
+                t.important,
+                style: const TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.orange,
+              side: BorderSide.none,
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSection(
+              icon: Icons.description,
+              color: Colors.teal,
+              title: t.platformGuidelines,
+              subtitle: t.platformGuidelinesDesc,
+            ),
+
+            const SizedBox(height: 16),
+
+            _buildExpandableSection(
+              icon: Icons.person,
+              color: Colors.blue,
+              title: t.profileCompletion,
+              subtitle: t.profileCompletionDesc,
+              items: [
+                t.profileItem1,
+                t.profileItem2,
+                t.profileItem3,
+                t.profileItem4,
+                t.profileItem5,
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            _buildExpandableSection(
+              icon: Icons.security,
+              color: Colors.green,
+              title: t.safetySecurity,
+              subtitle: t.safetySecurityDesc,
+              items: [
+                t.safetyItem1,
+                t.safetyItem2,
+                t.safetyItem3,
+                t.safetyItem4,
+                t.safetyItem5,
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            _buildExpandableSection(
+              icon: Icons.work,
+              color: Colors.purple,
+              title: t.professionalConduct,
+              subtitle: t.professionalConductDesc,
+              items: [
+                t.professionalItem1,
+                t.professionalItem2,
+                t.professionalItem3,
+                t.professionalItem4,
+                t.professionalItem5,
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            _buildExpandableSection(
+              icon: Icons.video_call,
+              color: Colors.orange,
+              title: t.interviewGuidelines,
+              subtitle: t.interviewGuidelinesDesc,
+              items: [
+                t.interviewItem1,
+                t.interviewItem2,
+                t.interviewItem3,
+                t.interviewItem4,
+                t.interviewItem5,
+              ],
+            ),
+
+            const SizedBox(height: 24),
+            Text(
+              t.dosAndDonts,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            _buildDosContainer(context, t),
+            const SizedBox(height: 24),
+            _buildDontsContainer(context, t),
+
+            const SizedBox(height: 32),
+
+            Center(
+              child: Column(
+                children: [
+                  const Icon(Icons.help_outline, size: 40, color: Colors.teal),
+                  const SizedBox(height: 8),
+                  Text(
+                    t.needHelp,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(t.contactSupport),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () => context.go(RoutePaths.helpSupport),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.teal,
+                      side: const BorderSide(color: Colors.teal),
+                    ),
+                    child: Text(t.getHelp),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDosContainer(BuildContext context, AppLocalizations t) {
+    return _buildListContainer(
+      title: t.dos,
+      titleColor: Colors.green,
+      bgColor: Colors.green[50]!,
+      borderColor: Colors.green,
+      icon: FontAwesomeIcons.solidCircleCheck,
+      items: [
+        t.doItem1,
+        t.doItem2,
+        t.doItem3,
+        t.doItem4,
+        t.doItem5,
+      ],
+    );
+  }
+
+  Widget _buildDontsContainer(BuildContext context, AppLocalizations t) {
+    return _buildListContainer(
+      title: t.donts,
+      titleColor: Colors.red,
+      bgColor: Colors.pink[50]!,
+      borderColor: Colors.red[200]!,
+      icon: Icons.warning,
+      items: [
+        t.dontItem1,
+        t.dontItem2,
+        t.dontItem3,
+        t.dontItem4,
+        t.dontItem5,
+      ],
+    );
+  }
+
+  Widget _buildListContainer({
+    required String title,
+    required Color titleColor,
+    required Color bgColor,
+    required Color borderColor,
+    required IconData icon,
+    required List<String> items,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: borderColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: titleColor),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: titleColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ...items.map(
+            (e) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(e),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSection({
+    required IconData icon,
+    required Color color,
+    required String title,
+    String? subtitle,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 32, color: color),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (subtitle != null)
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpandableSection({
+    required IconData icon,
+    required Color color,
+    required String title,
+    required String subtitle,
+    required List<String> items,
+  }) {
+    return ExpansionTile(
+      initiallyExpanded: true,
+      leading: Icon(icon, color: color),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: Text(subtitle),
+      children: items
+          .map(
+            (item) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.circleCheck,
+                    color: Colors.green,
+                    size: 14,
+                  ),
+                  const SizedBox(width: 12),
                   Expanded(child: Text(item)),
                 ],
               ),

@@ -9,6 +9,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:sg_easy_hire/core/repository/storage_repository.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -190,12 +191,13 @@ class _HelperProfileUpdateState extends State<HelperProfileUpdate>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final profileImageUrl = _selectedImageFile != null
         ? null
         : (user?.avatarURL ?? '');
 
     return Scaffold(
-      appBar: AppBar(title: Text("Settings")),
+      appBar: AppBar(title: Text(t.settingsTitle)),
       body: _isLoading
           ? const ProfileShimmer()
           : SingleChildScrollView(
@@ -281,7 +283,7 @@ class _HelperProfileUpdateState extends State<HelperProfileUpdate>
                             Text(
                               _nameController.text.isNotEmpty
                                   ? _nameController.text
-                                  : 'No Name Set',
+                                  : t.noNameSet,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -292,7 +294,7 @@ class _HelperProfileUpdateState extends State<HelperProfileUpdate>
                             Text(
                               _phoneController.text.isNotEmpty
                                   ? _phoneController.text
-                                  : 'No Phone Set',
+                                  : t.noPhoneSet,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
@@ -304,15 +306,15 @@ class _HelperProfileUpdateState extends State<HelperProfileUpdate>
                     ],
                   ),
                   const SizedBox(height: 30),
-                  _buildEditableField("Full Name", _nameController),
+                  _buildEditableField(t.fullNameLabel, _nameController),
 
                   _buildEditableField(
-                    "Phone Number",
+                    t.phoneNumber,
                     _phoneController,
                     keyboardType: TextInputType.phone,
                   ),
 
-                  _buildEditableField("Avatar", _profileController),
+                  _buildEditableField(t.avatarLabel, _profileController),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
@@ -330,7 +332,7 @@ class _HelperProfileUpdateState extends State<HelperProfileUpdate>
                           ? null
                           : _updateUserProfile,
                       child: Text(
-                        "Update",
+                        t.updateButton,
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,

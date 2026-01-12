@@ -14,6 +14,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_form_dr
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ContactFamilyDetails.dart';
 
 class ContactFamilyView extends StatefulWidget {
@@ -75,6 +76,7 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -99,9 +101,9 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 2 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(2, 7),
+              style: const TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -117,18 +119,18 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
         listener: (context, state) {
           if (state.action == BiodataStateAction.contactFam &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been saved");
+            showSuccess(context, t.submitSuccess);
             context.go(RoutePaths.medicalHistor);
           }
           if (state.action == BiodataStateAction.contactFam &&
               state.status == BiodataStateStatus.saveDraftSuccess) {
-            showSuccess(context, "Draft saved successfully");
+            showSuccess(context, t.draftSaveSuccess);
           }
           if (state.action == BiodataStateAction.contactFam &&
               state.status == BiodataStateStatus.failure) {
             showError(
               context,
-              "Failed to save your information. Please try again.",
+              t.submitFailed,
             );
           }
           if (!isInitialized && !(state.contactFamilyDetails == null)) {
@@ -159,18 +161,18 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Contact & Family Details",
-                        style: TextStyle(
+                       Text(
+                        t.contactFamilyTitle,
+                        style: const TextStyle(
                           color: AppColors.textPrimaryLight,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        "How can we reach you and your family information",
-                        style: TextStyle(
+                       Text(
+                        t.contactFamilySubtitle,
+                        style: const TextStyle(
                           color: AppColors.textSecondaryLight,
                           fontSize: 16,
                         ),
@@ -178,8 +180,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       const SizedBox(height: 24),
                       CustomTextField(
                         controller: addressController,
-                        label: "Residential Address in Home Country",
-                        placeholder: "Enter your full address",
+                        label: t.residentialAddressLabel,
+                        placeholder: t.residentialAddressPlaceholder,
                         isRequired: true,
                         isFirstTimePressed: isFirstTimePressed,
                         maxLines: 3,
@@ -187,8 +189,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       const SizedBox(height: 24),
                       CustomTextField(
                         controller: contactNumberController,
-                        label: "Contact Number in Home Country",
-                        placeholder: "e.g., +95 123456789",
+                        label: t.contactNumberLabel,
+                        placeholder: t.contactNumberPlaceholder,
                         isRequired: true,
                         keyboardType: TextInputType.phone,
                         isFirstTimePressed: isFirstTimePressed,
@@ -196,16 +198,16 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       const SizedBox(height: 24),
                       CustomTextField(
                         controller: portController,
-                        label: "Port/Airport for Repatriation",
-                        placeholder: "e.g., Yangon International Airport",
+                        label: t.airportLabel,
+                        placeholder:t.airportPlaceholder,
                         isRequired: true,
                         isFirstTimePressed: isFirstTimePressed,
                       ),
                       const SizedBox(height: 24),
                       CustomTextField(
                         controller: emailController,
-                        label: "Email Address (Optional)",
-                        placeholder: "your.email@example.com",
+                        label: t.emailLabel,
+                        placeholder: t.emailPlaceholder,
                         keyboardType: TextInputType.emailAddress,
                         isFirstTimePressed: isFirstTimePressed,
                       ),
@@ -218,8 +220,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                             religion = v ?? "";
                           });
                         },
-                        label: "Religion",
-                        placeholder: "Select religion",
+                        label: t.religionLabel,
+                        placeholder: t.religionPlaceholder,
                         items: const [
                           "Christianity",
                           "Islam",
@@ -240,8 +242,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                             education = v ?? "";
                           });
                         },
-                        label: "Education Level",
-                        placeholder: "Select education level",
+                        label: t.educationLabel,
+                        placeholder: t.educationPlaceholder,
                         items: const [
                           "High School",
                           "Diploma",
@@ -255,7 +257,7 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       CustomTextField(
                         isFirstTimePressed: isFirstTimePressed,
                         controller: siblingController,
-                        label: "Number of Siblings",
+                        label: t.siblingsLabel,
                         placeholder: "0",
                         isRequired: true,
                         keyboardType: TextInputType.number,
@@ -269,8 +271,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                             maritalStatus = v ?? "";
                           });
                         },
-                        label: "Marital Status",
-                        placeholder: "Select marital status",
+                        label:t.maritalStatusLabel,
+                        placeholder: t.maritalStatusPlaceholder,
                         items: const [
                           "Single",
                           "Married",
@@ -283,7 +285,7 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       CustomTextField(
                         isFirstTimePressed: isFirstTimePressed,
                         controller: childrenController,
-                        label: "Number of Children",
+                        label: t.childrenLabel,
                         placeholder: "0",
                         keyboardType: TextInputType.number,
                       ),
@@ -291,8 +293,8 @@ class _ContactFamilyViewState extends State<ContactFamilyView> {
                       CustomTextField(
                         isFirstTimePressed: isFirstTimePressed,
                         controller: ageOfChildrenController,
-                        label: "Age(s) of Children (if any)",
-                        placeholder: "e.g., 5, 8, 12",
+                        label:t.childrenAgeLabel,
+                        placeholder:t.childrenAgePlaceholder,
                       ),
                     ],
                   ),

@@ -128,11 +128,14 @@ DateTime birthDayToDate(String bd) {
   return dateOfBirth;
 }
 
-InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
+InterviewStatusUI getInterviewStatusUI(
+  InterviewStatus status,
+  AppLocalizations t,
+) {
   switch (status) {
     case InterviewStatus.PENDING:
       return InterviewStatusUI(
-        text: "Pending",
+        text: t.helperInterviews_tabPending,
         icon: Icons.schedule,
         color: const Color(0xFFF59E0B),
         bgColor: const Color(0xFFFEF3C7),
@@ -140,7 +143,7 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
 
     case InterviewStatus.ACCEPTED:
       return InterviewStatusUI(
-        text: "Confirmed",
+        text: t.helperInterviews_tabAccepted,
         icon: Icons.check_circle,
         color: const Color(0xFF10B981),
         bgColor: const Color(0xFFD1FAE5),
@@ -148,7 +151,7 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
 
     case InterviewStatus.COMPLETED:
       return InterviewStatusUI(
-        text: "Completed",
+        text: t.helperInterviews_tabCompleted,
         icon: Icons.check,
         color: const Color(0xFF3B82F6),
         bgColor: const Color(0xFFDBEAFE),
@@ -156,7 +159,7 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
 
     case InterviewStatus.CANCELLED:
       return InterviewStatusUI(
-        text: "Cancelled",
+        text: t.helperInterviews_tabCancelled,
         icon: Icons.cancel,
         color: const Color(0xFFEF4444),
         bgColor: const Color(0xFFFEE2E2),
@@ -164,14 +167,14 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
 
     case InterviewStatus.NO_SHOW:
       return InterviewStatusUI(
-        text: "No Show",
+        text: t.interviewStatusNoShow,
         icon: Icons.check,
         color: const Color(0xFF3B82F6),
         bgColor: const Color(0xFFDBEAFE),
       );
     case InterviewStatus.PROCESSING:
       return InterviewStatusUI(
-        text: 'Interviewing',
+        text: t.interviewStatusProcessing,
         icon: Icons.hourglass_top,
         color: const Color(0xFFF59E0B), // amber
         bgColor: const Color(0xFFFEF3C7),
@@ -179,12 +182,12 @@ InterviewStatusUI getInterviewStatusUI(InterviewStatus status) {
   }
 }
 
-ProfileStatusUI getProfileStatus(VerifyStatus status) {
+ProfileStatusUI getProfileStatus(VerifyStatus status, AppLocalizations t) {
   switch (status) {
     case VerifyStatus.PENDING:
       return ProfileStatusUI(
-        text: "Profile Pending",
-        description: "Admin is checking your biodata",
+        text: t.profilePendingTitle,
+        description: t.profilePendingDesc,
         icon: Icons.schedule,
         color: const Color(0xFFF59E0B), // amber
         bgColor: const Color(0xFFFEF3C7).withOpacity(0.12),
@@ -192,8 +195,8 @@ ProfileStatusUI getProfileStatus(VerifyStatus status) {
 
     case VerifyStatus.VERIFIED:
       return ProfileStatusUI(
-        text: "Profile Approved",
-        description: "Your profile has been approved",
+        text: t.profileApprovedTitle,
+        description: t.profileApprovedDesc,
         icon: Icons.check_circle,
         color: const Color(0xFF16A34A), // green
         bgColor: const Color(0xFFDCFCE7).withOpacity(0.12),
@@ -201,8 +204,8 @@ ProfileStatusUI getProfileStatus(VerifyStatus status) {
 
     case VerifyStatus.UNVERIFIED:
       return ProfileStatusUI(
-        text: "Profile Rejected",
-        description: "Your profile was rejected. Please update your biodata",
+        text: t.profileRejectedTitle,
+        description: t.profileRejectedDesc,
         icon: Icons.cancel,
         color: const Color(0xFFDC2626), // red
         bgColor: const Color(0xFFFEE2E2).withOpacity(0.12),
@@ -943,18 +946,23 @@ IconData relatedModelTypeToIcon(RelatedModelType modelType) {
   }
 }
 
-String relatedModelTypeToString(RelatedModelType modelType) {
+String relatedModelTypeToString(
+  BuildContext context,
+  RelatedModelType modelType,
+) {
+  final l10n = AppLocalizations.of(context)!;
+
   switch (modelType) {
     case RelatedModelType.HIRED_JOB:
-      return "Hired Jobs";
+      return l10n.relatedTypeHiredJobs;
     case RelatedModelType.TRANSACTION:
-      return "Transactons";
+      return l10n.relatedTypeTransaction;
     case RelatedModelType.DOCUMENT:
-      return "Documents";
+      return l10n.relatedTypeDocument;
     case RelatedModelType.ACCOUNT:
-      return "Account";
+      return l10n.relatedTypeAccount;
     case RelatedModelType.GENERAL:
-      return "General";
+      return l10n.relatedTypeGeneral;
     default:
       return "";
   }

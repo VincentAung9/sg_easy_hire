@@ -44,6 +44,7 @@ class _SupportOtherTypeViewState extends State<SupportOtherTypeView> {
           state.modelType as RelatedModelType,
         );
         final ticketType = relatedModelTypeToString(
+          context,
           state.modelType as RelatedModelType,
         );
         final items = state.modelType == RelatedModelType.HIRED_JOB

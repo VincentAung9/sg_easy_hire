@@ -13,6 +13,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_checkbo
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/MedicalHistory.dart';
 
 class MedicalHistoryView extends StatefulWidget {
@@ -94,6 +95,7 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.lightBgColor,
@@ -116,9 +118,9 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 3 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(3, 7),
+              style: const TextStyle(
                 color: AppColors.secondaryTextColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -133,18 +135,18 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
         listener: (context, state) {
           if (state.action == BiodataStateAction.medicalHis &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been saved");
+            showSuccess(context, t.submitSuccess);
             context.go(RoutePaths.foodHandling);
           }
           if (state.action == BiodataStateAction.medicalHis &&
               state.status == BiodataStateStatus.saveDraftSuccess) {
-            showSuccess(context, "Draft saved successfully");
+            showSuccess(context, t.draftSaveSuccess);
           }
           if (state.action == BiodataStateAction.medicalHis &&
               state.status == BiodataStateStatus.failure) {
             showError(
               context,
-              "Failed to save your information. Please try again.",
+              t.submitFailed,
             );
           }
           if (!isInitialized && !(state.medicalHistory == null)) {
@@ -159,18 +161,18 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header
-                const Text(
-                  'Medical History',
-                  style: TextStyle(
+                Text(
+                  t.medicalHistoryTitle,
+                  style: const TextStyle(
                     fontSize: 18, // text-2xl
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF1e293b), // slate-800
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Text(
-                  'Please provide your medical information',
-                  style: TextStyle(
+                Text(
+                  t.medicalHistorySubtitle,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.secondaryTextColor, // slate-500
                   ),
@@ -179,8 +181,8 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
                 // Form Content
                 CustomTextField(
                   isFirstTimePressed: isFirstTimePressed,
-                  label: 'Do you have any allergies?',
-                  placeholder: "List any allergies (or write 'NIL' if none)",
+                  label: t.allergiesLabel,
+                  placeholder: t.allergiesPlaceholder,
                   controller: _allergiesController,
                 ),
                 const SizedBox(height: 32), // space-y-8
@@ -188,18 +190,18 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Past and Existing Illnesses',
-                      style: TextStyle(
+                    Text(
+                      t.pastExistingIllnessesTitle,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF334155), // slate-700
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'Select any conditions you have or had:',
-                      style: TextStyle(
+                    Text(
+                      t.pastExistingIllnessesSubtitle,
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.secondaryTextColor, // slate-500
                       ),
@@ -246,26 +248,24 @@ class _MedicalHistoryViewState extends State<MedicalHistoryView> {
 
                 CustomTextField(
                   isFirstTimePressed: isFirstTimePressed,
-                  label: 'Other Illnesses (if any)',
-                  placeholder: 'Please specify',
+                  label: t.otherIllnessesLabel,
+                  placeholder: t.otherIllnessesPlaceholder,
                   controller: _otherIllnessesController,
                 ),
                 const SizedBox(height: 32), // space-y-8
 
                 CustomTextField(
                   isFirstTimePressed: isFirstTimePressed,
-                  label: 'Physical Disabilities',
-                  placeholder:
-                      "List any physical disabilities (or write 'NIL' if none)",
+                  label: t.physicalDisabilitiesLabel,
+                  placeholder: t.physicalDisabilitiesPlaceholder,
                   controller: _disabilitiesController,
                 ),
                 const SizedBox(height: 32), // space-y-8
 
                 CustomTextField(
                   isFirstTimePressed: isFirstTimePressed,
-                  label: 'Dietary Restrictions',
-                  placeholder:
-                      "Any dietary restrictions? (or write 'NIL' if none)",
+                  label: t.dietaryRestrictionsLabel,
+                  placeholder: t.dietaryRestrictionsPlaceholder,
                   controller: _dietaryController,
                 ),
                 const SizedBox(height: 32),

@@ -46,7 +46,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
     final isOnBoarding = GoRouterState.of(context).extra as bool? ?? false;
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 120,
+        leadingWidth: isOnBoarding ? 120 : null,
         leading: isOnBoarding
             ? TextButton(
                 onPressed: () => context.go(RoutePaths.onboardingBiodata),
@@ -65,18 +65,6 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
               ),
         title: Text(t.languageSettingsTitle),
         centerTitle: isOnBoarding,
-        actions: isOnBoarding
-            ? null
-            : const [
-                Padding(
-                  padding: EdgeInsets.only(right: 16),
-                  child: Icon(Icons.notifications_outlined),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 16),
-                  child: Icon(Icons.settings_outlined),
-                ),
-              ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

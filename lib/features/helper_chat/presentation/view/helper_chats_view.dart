@@ -62,11 +62,10 @@ class HelperChatsView extends StatelessWidget {
                             children: [
                               SupportCardContact(
                                 icon: FontAwesomeIcons.message,
-                                title: 'Admin Support',
-                                description: "24/7 Customer Service",
-                                subtitle:
-                                    'Need help? Chat with our support team',
-                                badgeText: 'Support',
+                                title: t.adminSupport,
+                                description: t.customerService247,
+                                subtitle: t.needHelpChat,
+                                badgeText: t.support,
                                 onTap: () =>
                                     context.push(RoutePaths.helperSupportChat),
                               ),

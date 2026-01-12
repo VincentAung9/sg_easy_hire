@@ -205,6 +205,455 @@
   "cancel": "မလုပ်တော့ပါ",
   "date": "ရက်စွဲ",
   "time": "အချိန်",
+    "profilePendingTitle": "ပရိုဖိုင် စစ်ဆေးနေဆဲ",
+  "profilePendingDesc": "အက်မင်က သင့်ကိုယ်ရေးအချက်အလက်များကို စစ်ဆေးနေပါသည်",
+
+  "profileApprovedTitle": "ပရိုဖိုင် အတည်ပြုပြီးပါပြီ",
+  "profileApprovedDesc": "သင့်ပရိုဖိုင်ကို အတည်ပြုပြီးပါပြီ",
+
+  "profileRejectedTitle": "ပရိုဖိုင် ပယ်ချခံရပါသည်",
+  "profileRejectedDesc": "သင့်ပရိုဖိုင်ကို ပယ်ချခဲ့ပါသည်။ ကိုယ်ရေးအချက်အလက်များကို ပြန်လည် ပြင်ဆင်ပါ",
+  "stepProgress": "အဆင့် {current} / {total}",
+
+  "personalInfoTitle": "ကိုယ်ရေးအချက်အလက်",
+  "personalInfoSubtitle": "အခြေခံအချက်အလက်များကို စတင်ဖြည့်ပါ",
+
+  "fullNameLabel": "အမည်အပြည့်အစုံ",
+  "fullNamePlaceholder": "သင့်အမည်အပြည့်အစုံ ထည့်ပါ",
+
+  "dateOfBirthLabel": "မွေးနေ့",
+  "dateOfBirthPlaceholder": "နေ့/လ/နှစ်",
+
+  "placeOfBirthLabel": "မွေးဖွားရာနေရာ",
+  "placeOfBirthPlaceholder": "မြို့ / ရွာ",
+
+  "nationalityLabel": "နိုင်ငံသားမှု",
+  "nationalityPlaceholder": "နိုင်ငံသားမှု ရွေးပါ",
+
+  "genderLabel": "လိင်",
+  "genderPlaceholder": "လိင် ရွေးပါ",
+
+  "genderMale": "အမျိုးသား",
+  "genderFemale": "အမျိုးသမီး",
+  "genderOther": "အခြား",
+
+  "heightLabel": "အမြင့် (စင်တီမီတာ)",
+  "heightPlaceholder": "ဥပမာ - 161",
+
+  "weightLabel": "အလေးချိန် (ကီလိုဂရမ်)",
+  "weightPlaceholder": "ဥပမာ - 41",
+
+  "submitSuccess": "သင့်အချက်အလက်များကို တင်သွင်းပြီးပါပြီ",
+  "draftSaveSuccess": "အကြမ်းသဘောဖြင့် သိမ်းဆည်းပြီးပါပြီ",
+  "submitFailed": "သင့်အချက်အလက်များကို သိမ်းဆည်းမရပါ။ ထပ်မံကြိုးစားပါ",
+
+  "calendarDialogTitle": "နေ့စွဲ ရွေးချယ်ပါ",
+    "fieldRequiredError": "{field} ကို မဖြစ်မနေ ဖြည့်ရပါမည်",
+     "contactFamilyTitle": "ဆက်သွယ်ရန်နှင့် မိသားစုအချက်အလက်များ",
+  "contactFamilySubtitle": "သင့်ကို ဆက်သွယ်နိုင်ရန်နှင့် မိသားစုအချက်အလက်များကို ဖြည့်သွင်းပါ",
+
+  "residentialAddressLabel": "မွေးရပ်နိုင်ငံရှိ နေရပ်လိပ်စာ",
+  "residentialAddressPlaceholder": "နေရပ်လိပ်စာ အပြည့်အစုံ ဖြည့်ပါ",
+
+  "contactNumberLabel": "မွေးရပ်နိုင်ငံရှိ ဆက်သွယ်ရန်ဖုန်းနံပါတ်",
+  "contactNumberPlaceholder": "ဥပမာ - +95 123456789",
+
+  "airportLabel": "ပြန်လည်ပို့ဆောင်ရန် ဆိပ်ကမ်း / လေဆိပ်",
+  "airportPlaceholder": "ဥပမာ - Yangon International Airport",
+
+  "emailLabel": "အီးမေးလ်လိပ်စာ (မဖြစ်မနေ မလိုပါ)",
+  "emailPlaceholder": "your.email@example.com",
+
+  "religionLabel": "ဘာသာရေး",
+  "religionPlaceholder": "ဘာသာရေးကို ရွေးချယ်ပါ",
+
+  "educationLabel": "ပညာရေးအဆင့်",
+  "educationPlaceholder": "ပညာရေးအဆင့်ကို ရွေးချယ်ပါ",
+
+  "siblingsLabel": "မောင်နှမ အရေအတွက်",
+  "childrenLabel": "ကလေး အရေအတွက်",
+
+  "maritalStatusLabel": "အိမ်ထောင်ရေးအခြေအနေ",
+  "maritalStatusPlaceholder": "အိမ်ထောင်ရေးအခြေအနေကို ရွေးချယ်ပါ",
+
+  "childrenAgeLabel": "ကလေးများ၏ အသက် (ရှိပါက)",
+  "childrenAgePlaceholder": "ဥပမာ - 5, 8, 12",
+  "saveDraft": "အကြမ်းသိမ်းဆည်းမည်",
+  "next": "နောက်တစ်ဆင့်သို့",
+    "medicalHistoryTitle": "ကျန်းမာရေးမှတ်တမ်း",
+  "medicalHistorySubtitle": "သင့်ကျန်းမာရေးအချက်အလက်များကို ဖြည့်သွင်းပါ",
+
+  "allergiesLabel": "ဓာတ်မတည့်မှုများ ရှိပါသလား။",
+  "allergiesPlaceholder": "ဓာတ်မတည့်မှုများကို ရေးပါ (မရှိပါက 'NIL' ဟုရေးပါ)",
+
+  "pastExistingIllnessesTitle": "ယခင်နှင့် လက်ရှိ ရောဂါများ",
+  "pastExistingIllnessesSubtitle": "ရှိခဲ့ဖူးသော သို့မဟုတ် လက်ရှိရှိသော ရောဂါများကို ရွေးချယ်ပါ။",
+
+  "illnessMental": "စိတ်ပိုင်းဆိုင်ရာရောဂါ",
+  "illnessTuberculosis": "တီဘီရောဂါ",
+  "illnessEpilepsy": "အတက်ရောဂါ",
+  "illnessHeartDisease": "နှလုံးရောဂါ",
+  "illnessAsthma": "အသက်ရှူကြပ်ရောဂါ",
+  "illnessMalaria": "မလေးရီးယားရောဂါ",
+  "illnessDiabetes": "ဆီးချိုရောဂါ",
+  "illnessOperations": "ခွဲစိတ်ကုသမှု ရှိခဲ့ဖူးသည်",
+  "illnessHypertension": "သွေးပေါင်မြင့်ရောဂါ",
+
+  "otherIllnessesLabel": "အခြားရောဂါများ (ရှိပါက)",
+  "otherIllnessesPlaceholder": "အသေးစိတ်ဖော်ပြပါ",
+
+  "physicalDisabilitiesLabel": "ကိုယ်ခန္ဓာမသန်စွမ်းမှုများ",
+  "physicalDisabilitiesPlaceholder": "မသန်စွမ်းမှုများကို ရေးပါ (မရှိပါက 'NIL' ဟုရေးပါ)",
+
+  "dietaryRestrictionsLabel": "အစားအသောက်ကန့်သတ်ချက်များ",
+  "dietaryRestrictionsPlaceholder": "အစားအသောက်ကန့်သတ်ချက်ရှိပါသလား (မရှိပါက 'NIL' ဟုရေးပါ)",
+  "foodHandlingPreferencesTitle": "အစားအစာကို ကိုင်တွယ်လုပ်ဆောင်နိုင်မှုများ",
+  "accommodationPreferencesTitle": "နေထိုင်မှုဆိုင်ရာ အကြိုက်များ",
+  "selectAllThatApply": "သင့်အတွက် သင့်လျော်သော အရာအားလုံးကို ရွေးချယ်ပါ",
+  "languagesSpokenTitle": "ပြောနိုင်သော ဘာသာစကားများ",
+  "selectLanguagesSpoken": "သင် ပြောနိုင်သော ဘာသာစကားအားလုံးကို ရွေးချယ်ပါ",
+  "experienceAndSkills": "အတွေ့အကြုံနှင့် ကျွမ်းကျင်မှုများ",
+  "totalExperience": "စုစုပေါင်း အတွေ့အကြုံ",
+  "totalExperiencePlaceholder": "ဥပမာ ၅ နှစ်",
+  "skills": "ကျွမ်းကျင်မှုများ",
+  "skillsPlaceholder": "ဥပမာ အစားအသောက်ချက်ခြင်း၊ ကလေးစောင့်ရှောက်မှု၊ သန့်ရှင်းရေး",
+
+  "jobPreferences": "အလုပ်အကိုင် ဆန္ဒများ",
+  "jobPreferencesDesc": "သင့်အလုပ်အကိုင် ဆန္ဒများကို ပြောပြပါ",
+
+  "expectedMonthlySalary": "မျှော်မှန်းထားသော လစဉ်လစာ",
+  "selectYourExperience": "သင့်အတွေ့အကြုံကို ရွေးချယ်ပါ",
+  "experienceRequired": "အတွေ့အကြုံ လိုအပ်ပါသည်",
+
+  "salary": "လစာ",
+  "preferredOffDays": "လစဉ် အနားယူရက် အရေအတွက်",
+  "selectPreferredOffDays": "အနားယူရက်ကို ရွေးချယ်ပါ",
+
+  "preferredLocation": "စင်ကာပူရှိ နှစ်သက်ရာနေရာ",
+  "selectPreferredLocation": "နှစ်သက်ရာနေရာကို ရွေးချယ်ပါ",
+
+  "willingRestDay": "အနားယူရက်တွင် အလုပ်လုပ်ရန် ဆန္ဒရှိပါသလား?",
+  "willingYes": "ဟုတ်ကဲ့၊ လုပ်နိုင်ပါသည်",
+  "willingNo": "မလိုလားပါ",
+
+  "submitSuccess": "အောင်မြင်စွာ တင်ပြီးပါပြီ",
+  "draftSaveSuccess": "မူကြမ်းအဖြစ် သိမ်းဆည်းပြီးပါပြီ",
+  "submitFailed": "တင်သွင်းမှု မအောင်မြင်ပါ",
+
+  "stepProgress": "အဆင့် {current} / {total}",
+
+  "salaryInputRequired": "သင့်မျှော်မှန်းလစာကို ထည့်သွင်းပါ",
+  "selectExperienceAndSalary": "အတွေ့အကြုံရွေးပြီး လစာထည့်ပါ",
+
+  "salaryLimit500": "သင့်လစာသည် $500 ထက် မကျော်လွန်ရပါ",
+  "salaryLimit520": "သင့်လစာသည် $520 ထက် မကျော်လွန်ရပါ",
+  "salaryLimit580": "သင့်လစာသည် $580 ထက် မကျော်လွန်ရပါ",
+  "salaryLimit700": "သင့်လစာသည် $700 ထက် မကျော်လွန်ရပါ",
+  "salaryLimit670": "သင့်လစာသည် $670 ထက် မကျော်လွန်ရပါ",
+
+  "expNo": "အတွေ့အကြုံမရှိ",
+  "expNoCert": "အတွေ့အကြုံမရှိသော်လည်း Nursing Aid လက်မှတ်ရှိ",
+  "expMiddleEast": "အရှေ့အလယ်ပိုင်း အတွေ့အကြုံရှိ",
+  "expSingapore": "စင်ကာပူ အတွေ့အကြုံရှိ",
+  "expTaiwan": "တိုင်ဝမ် အတွေ့အကြုံရှိ",
+
+  "offDay1": "၁ ရက်",
+  "offDay2": "၂ ရက်",
+  "offDay3": "၃ ရက်",
+  "offDay4": "၄ ရက်",
+  "offDay5": "၅ ရက်",
+  "offDay6": "၆ ရက်",
+  "offDay7": "၇ ရက်",
+  "offDay8": "၈ ရက်",
+
+  "locationAny": "စင်ကာပူ အနှံ့",
+  "locationNorth": "မြောက်ပိုင်း",
+  "locationSouth": "တောင်ပိုင်း",
+  "locationEast": "အရှေ့ပိုင်း",
+  "locationWest": "အနောက်ပိုင်း",
+  "locationCentral": "ဗဟိုပိုင်း",
+   "workHistory": "အလုပ်အတွေ့အကြုံ",
+
+  "location": "နေရာ",
+  "selectCountry": "နိုင်ငံကို ရွေးချယ်ပါ",
+
+  "duration": "အလုပ်လုပ်ခဲ့သော ကာလ",
+  "durationPlaceholder": "၂ နှစ်",
+
+  "description": "ဖော်ပြချက်",
+  "descriptionPlaceholder": "ကလေး ၂ ယောက်ပါဝင်သော မိသားစု",
+
+  "duties": "တာဝန်များ",
+  "dutiesPlaceholder": "ကလေးစောင့်ရှောက်မှု၊ အစားအသောက်ချက်ခြင်း",
+
+  "addWorkHistory": "+ အလုပ်အတွေ့အကြုံ ထည့်ရန်",
+    "remove": "ဖယ်ရှားရန်",
+    "uploadDocumentsTitle": "စာရွက်စာတမ်းများ တင်ရန်",
+
+  "documentsSavedSuccess": "စာရွက်စာတမ်းများကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ",
+  "documentsSaveFailed": "စာရွက်စာတမ်းများ သိမ်းဆည်းမှု မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။",
+  "documentsEmptyError": "စာရွက်စာတမ်း မရှိပါ။",
+  "draftSavedSuccess": "မူကြမ်းကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ",
+
+  "introductionVideo": "မိတ်ဆက်ဗီဒီယို",
+  "introVideoFormats": "mp4, mov, avi, mkv, wmv, flv, webm",
+
+  "profilePhoto": "ကိုယ်ရေးဓာတ်ပုံ",
+  "photoFormats": "JPG, PNG (၅MB အများဆုံး)",
+
+  "passport": "နိုင်ငံကူးလက်မှတ်",
+  "passportFormats": "PDF, JPG, PNG (၅MB အများဆုံး)",
+
+  "medicalCertificate": "ဆေးဘက်ဆိုင်ရာ ထောက်ခံစာ",
+  "policeClearance": "ရဲထောက်ခံစာ",
+
+  "documentFormats": "PDF, JPG, PNG (၅MB အများဆုံး)",
+  "documentFormatsMultiple": "PDF, JPG, PNG (ဖိုင်တစ်ခုစီ ၅MB အများဆုံး)",
+
+  "educationalCertificates": "ပညာရေး လက်မှတ်များ",
+  "workReferences": "အလုပ်ကိုးကားစာများ",
+
+  "submit": "တင်သွင်းရန်",
+   "personalityTestTitle": "ကိုယ်ရည်ကိုယ်သွေး စမ်းသပ်မှု",
+
+  "personalityTestDescription": "မေးခွန်းအချို့ကို ဖြေဆိုခြင်းဖြင့် MBTI ပုံစံ (E/I, S/N, T/F, J/P) ကို အကျဉ်းချုပ် သိရှိနိုင်ပါသည်။ ဤစမ်းသပ်မှုသည် ပညာရေးရည်ရွယ်ချက်အတွက်သာ ဖြစ်ပါသည်။",
+
+  "personalityTestInfo": "မေးခွန်း ၁၆ ခု ပါရှိပါသည်။ သင် သဘောတူသည့်အတိုင်း အမှတ်ကို နှိပ်ပါ။ ပုံမှန် အပြုအမူအပေါ် အခြေခံ၍ ဖြေဆိုပါ။",
+
+  "start": "စတင်ရန်",
+  "back": "နောက်သို့",
+  "questionsRangeTitle": "မေးခွန်း {start} - {end} / {total}",
+  "@questionsRangeTitle": {
+    "description": "App bar title showing current question range and total",
+    "placeholders": {
+      "start": { "type": "int" },
+      "end": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "pleaseAnswerAllQuestions": "မေးခွန်းအားလုံးကို ဖြေပါ။",
+  "previous": "နောက်သို့",
+  "next": "ရှေ့သို့",
+  "finish": "ပြီးဆုံး",
+   "language": "ဘာသာစကား",
+  "appLanguage": "အပ်ပ် ဘာသာစကား",
+  "guidelines": "လမ်းညွှန်ချက်များ",
+  "important": "အရေးကြီး",
+
+  "platformGuidelines": "ပလက်ဖောင်း လမ်းညွှန်ချက်များ",
+  "platformGuidelinesDesc": "ကောင်းမွန်သော အတွေ့အကြုံရရှိစေရန်နှင့် သင့်အတွက် သင့်လျော်သော အလုပ်ရရှိနိုင်ရန် အောက်ပါ လမ်းညွှန်ချက်များကို လိုက်နာပါ။",
+
+  "profileCompletion": "ပရိုဖိုင် ပြည့်စုံမှု",
+  "profileCompletionDesc": "သင့်ပရိုဖိုင်ကို မှန်ကန်စွာ ဖြည့်ပါ",
+  "profileItem1": "ကိုယ်ရေးအချက်အလက်များကို မှန်ကန်စွာ ဖြည့်ပါ",
+  "profileItem2": "ရှင်းလင်းသော ပရိုဖက်ရှင်နယ် ဓာတ်ပုံတင်ပါ",
+  "profileItem3": "သက်ဆိုင်ရာ အလုပ်အတွေ့အကြုံအားလုံးကို ထည့်ပါ",
+  "profileItem4": "လက်မှတ်များနှင့် ကျွမ်းကျင်မှုများကို ထည့်ပါ",
+  "profileItem5": "ဆက်သွယ်ရန် အချက်အလက်များကို အမြဲ အပ်ဒိတ်လုပ်ပါ",
+
+  "safetySecurity": "လုံခြုံရေး",
+  "safetySecurityDesc": "ပလက်ဖောင်းအသုံးပြုစဉ် လုံခြုံရေးကို သတိထားပါ",
+  "safetyItem1": "စကားဝှက်ကို မည်သူ့ကိုမျှ မမျှဝေပါနှင့်",
+  "safetyItem2": "အင်တာဗျူးမတိုင်မီ အလုပ်ရှင် အချက်အလက်များကို စစ်ဆေးပါ",
+  "safetyItem3": "သံသယရှိသော လုပ်ဆောင်မှုများကို ချက်ချင်း အကြောင်းကြားပါ",
+  "safetyItem4": "တရားဝင် ဆက်သွယ်ရေးလမ်းကြောင်းများကိုသာ အသုံးပြုပါ",
+  "safetyItem5": "ကိုယ်ရေးကိုယ်တာ စာရွက်စာတမ်းများကို ကာကွယ်ပါ",
+
+  "professionalConduct": "ပရိုဖက်ရှင်နယ် အပြုအမူ",
+  "professionalConductDesc": "အချိန်တိုင်း ပရိုဖက်ရှင်နယ် ဖြစ်အောင် ပြုလုပ်ပါ",
+  "professionalItem1": "မက်ဆေ့ခ်ျများကို အချိန်မီ ပြန်ကြားပါ",
+  "professionalItem2": "သင့်ကျွမ်းကျင်မှုနှင့် အတွေ့အကြုံကို ရိုးသားစွာ ဖော်ပြပါ",
+  "professionalItem3": "အင်တာဗျူးအတွက် သင့်တော်စွာ ဝတ်ဆင်ပါ",
+  "professionalItem4": "အလုပ်ရှင်များနှင့် ယဉ်ကျေးစွာ ဆက်ဆံပါ",
+  "professionalItem5": "ကတိကဝတ်များနှင့် အချိန်ဇယားကို လေးစားပါ",
+
+  "interviewGuidelines": "အင်တာဗျူး လမ်းညွှန်ချက်များ",
+  "interviewGuidelinesDesc": "အောင်မြင်သော အင်တာဗျူးအတွက် ပြင်ဆင်ပါ",
+  "interviewItem1": "သတ်မှတ်ထားသော အချိန်အတိုင်း ရောက်ရှိပါ",
+  "interviewItem2": "အလုပ်နှင့်ပတ်သက်သော မေးခွန်းများ ပြင်ဆင်ပါ",
+  "interviewItem3": "လိုအပ်သော စာရွက်စာတမ်းများ ယူဆောင်ပါ",
+  "interviewItem4": "အင်တာဗျူးပြီးနောက် ဆက်သွယ်ပါ",
+  "interviewItem5": "အချိန်ပြောင်းရန် လိုအပ်ပါက ကြိုတင် အကြောင်းကြားပါ",
+
+  "dosAndDonts": "လုပ်သင့်သောအရာများ / မလုပ်သင့်သောအရာများ",
+  "dos": "လုပ်သင့်သောအရာများ",
+  "doItem1": "သင့်ပရိုဖိုင်ကို ပုံမှန် အပ်ဒိတ်လုပ်ပါ",
+  "doItem2": "အလုပ်ကမ်းလှမ်းမှုများကို ၂၄ နာရီအတွင်း တုံ့ပြန်ပါ",
+  "doItem3": "အလုပ်ပြီးနောက် ရိုးသားသော အကြံပြုချက် ပေးပါ",
+  "doItem4": "ပြဿနာများကို သင့်လျော်သော လမ်းကြောင်းဖြင့် အကြောင်းကြားပါ",
+  "doItem5": "အလုပ်ရှင် အချက်အလက်များကို လျှို့ဝှက်ထားပါ",
+
+  "donts": "မလုပ်သင့်သောအရာများ",
+  "dontItem1": "လော့ဂ်အင် အချက်အလက်များကို မျှဝေခြင်း",
+  "dontItem2": "ပလက်ဖောင်းပြင်ပ ငွေပေးချေမှု လက်ခံခြင်း",
+  "dontItem3": "ကိုယ်ရေးအရည်အချင်းကို မမှန်ကန်စွာ ဖော်ပြခြင်း",
+  "dontItem4": "အလုပ်ရှင်ကို မတုံ့ပြန်ခြင်း သို့မဟုတ် အင်တာဗျူး ပျက်ကွက်ခြင်း",
+  "dontItem5": "မသင့်လျော်သော အကြောင်းအရာများ မျှဝေခြင်း",
+
+  "needHelp": "အကူအညီလိုပါသလား?",
+  "contactSupport": "ကျွန်ုပ်တို့၏ အထောက်အပံ့အဖွဲ့ကို ဆက်သွယ်ပါ",
+  "getHelp": "အကူအညီ ရယူပါ",
+   "activelyHiring": "အလုပ်ခန့်ထားနေသည်",
+  "positionClosed": "အလုပ်ပိတ်ထားသည်",
+  "postedTimeAgo": "{time} အကြာကတင်ခဲ့သည်",
+  "@postedTimeAgo": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+
+  "salary": "လစာ",
+  "startDate": "စတင်ရက်",
+  "immediate": "ချက်ချင်း",
+  "contract": "စာချုပ်",
+  "applicants": "လျှောက်ထားသူများ",
+  "applied": "ဦး လျှောက်ထားပြီး",
+
+  "employerInformation": "အလုပ်ရှင်အချက်အလက်",
+  "hires": "ဦး ခန့်ထားပြီး",
+
+  "jobDescription": "အလုပ်ဖော်ပြချက်",
+  "responsibilities": "တာဝန်များ",
+  "requirements": "လိုအပ်ချက်များ",
+  "otherInfo": "အခြားအချက်အလက်များ",
+
+  "offDay": "နားရက်",
+  "children": "ကလေးများ",
+  "childrenAre": "ကလေးအသက်",
+  "adult": "လူကြီး",
+  "elderly": "အိုမင်းသူ",
+  "homeType": "အိမ်အမျိုးအစား",
+  "roomType": "အခန်းအမျိုးအစား",
+
+  "fullTime": "အချိန်ပြည့်",
+   "interviewDetails": "အင်တာဗျူး အသေးစိတ်",
+  "videoInterview": "ဗီဒီယို အင်တာဗျူး",
+
+  "date": "ရက်စွဲ",
+  "dateOptions": "ရက်စွဲရွေးချယ်မှုများ",
+  "time": "အချိန်",
+  "timeOptions": "အချိန်ရွေးချယ်မှုများ",
+  "duration": "ကြာချိန်",
+  "minutes30": "၃၀ မိနစ်",
+
+  "interviewNotes": "အင်တာဗျူး မှတ်ချက်များ",
+
+  "employerInformation": "အလုပ်ရှင် အချက်အလက်",
+  "reviewsCount": "{rating} • သုံးသပ်ချက် {count} ခု",
+  "@reviewsCount": {
+    "placeholders": {
+      "rating": {},
+      "count": {}
+    }
+  },
+
+  "contact": "ဆက်သွယ်ရန်:",
+  "email": "အီးမေးလ်:",
+  "address": "လိပ်စာ:",
+
+  "jobDetails": "အလုပ် အသေးစိတ်",
+  "requirements": "လိုအပ်ချက်များ:",
+  "personalityType": "ကိုယ်ရည်ကိုယ်သွေး အမျိုးအစား: {type}",
+  "@personalityType": {
+    "placeholders": {
+      "type": {}
+    }
+  },
+  "yourJobOffers": "သင့်အလုပ်အကိုင် ကမ်းလှမ်းချက်များ",
+  "viewJobsOfferedToYou": "သင့်ထံ ကမ်းလှမ်းထားသော အလုပ်များကို ကြည့်ရှုပါ",
+
+  "noOfferJobsYet": "အလုပ်ကမ်းလှမ်းချက် မရှိသေးပါ",
+   "helpAndSupport": "အကူအညီနှင့် ပံ့ပိုးမှု",
+
+  "contactUs": "ဆက်သွယ်ရန်",
+  "adminSupport": "အက်ဒမင် အကူအညီ",
+  "customerService247": "၂၄/၇ ဖောက်သည်ဝန်ဆောင်မှု",
+  "needHelpChat": "အကူအညီလိုပါသလား။ အထောက်အပံ့အဖွဲ့နှင့် စကားပြောပါ",
+  "support": "အကူအညီ",
+
+  "quickLinks": "လျင်မြန်သော လင့်များ",
+  "viewGuidelines": "လမ်းညွှန်ချက်များ ကြည့်ရန်",
+  "updateDocuments": "စာရွက်စာတမ်းများ ပြင်ဆင်ရန်",
+  "editProfile": "ပရိုဖိုင် ပြင်ရန်",
+
+  "frequentlyAskedQuestions": "မေးလေ့ရှိသော မေးခွန်းများ",
+
+  "faqUpdateBiodataQ": "ကိုယ်ရေးအချက်အလက်ကို ဘယ်လို ပြင်ဆင်ရမလဲ?",
+  "faqUpdateBiodataA": "သင့်ပရိုဖိုင်အပိုင်းသို့ သွားပြီး 'Edit Biodata' ကို နှိပ်ပါ။ ကိုယ်ရေးအချက်အလက်၊ အလုပ်အတွေ့အကြုံနှင့် ကျွမ်းကျင်မှုများကို ပြင်ဆင်နိုင်ပါသည်။",
+
+  "faqApplyJobQ": "အလုပ်ကို ဘယ်လို လျှောက်ရမလဲ?",
+  "faqApplyJobA": "Jobs အပိုင်းတွင် ရရှိနိုင်သော အလုပ်များကို ကြည့်ပါ။ အလုပ်တစ်ခုကို ရွေးပြီး အသေးစိတ်ကြည့်ကာ 'Apply Now' ကို နှိပ်ပါ။",
+
+  "faqInterviewQ": "အင်တာဗျူးများ ဘယ်လို လုပ်ဆောင်ပါသလဲ?",
+  "faqInterviewA": "အလုပ်ရှင် စိတ်ဝင်စားလာပါက အင်တာဗျူး အချိန်ဇယားချထားပါမည်။ သင့်ထံ အသိပေးချက် ရရှိပြီး Interviews အပိုင်းတွင် အသေးစိတ် ကြည့်ရှုနိုင်ပါသည်။",
+
+  "faqMessageEmployerQ": "အလုပ်ရှင်ကို ဘယ်လို စာပို့ရမလဲ?",
+  "faqMessageEmployerA": "အလုပ်ရှင်နှင့် ကိုက်ညီပြီးနောက် Messages အပိုင်းတွင် တိုက်ရိုက် ဆက်သွယ်နိုင်ပါသည်။",
+
+  "faqDocumentsQ": "ဘယ်လို စာရွက်စာတမ်းတွေ တင်ရမလဲ?",
+  "faqDocumentsA": "လိုအပ်သော စာရွက်စာတမ်းများတွင် မှတ်ပုံတင်၊ ပတ်စပို့၊ အလုပ်လုပ်ခွင့်နှင့် သက်ဆိုင်သော လက်မှတ်များ ပါဝင်နိုင်ပါသည်။ Documents အပိုင်းတွင် အသေးစိတ် စစ်ဆေးပါ။",
+
+  "stillNeedHelp": "အကူအညီ မလိုသေးပါသလား?",
+  "adminAvailable247": "အက်ဒမင်သည် ၂၄/၇ အချိန်တိုင်း ကူညီပေးနိုင်ပါသည်",
+  "startLiveChat": "တိုက်ရိုက် စကားပြောရန် စတင်ပါ",
+   "supportChatTitleSelectItem": "အရာတစ်ခုကို ရွေးချယ်ပါ",
+  "supportChooseSpecific": "အကူအညီလိုအပ်သော {type} ကို ရွေးချယ်ပါ",
+  "supportCreatedAt": "ဖန်တီးခဲ့သောနေ့: {date}",
+  "supportSubjectPrefix": "အကူအညီ",
+  "supportEmptyTitle": "အရာမရှိပါ",
+  "supportEmptyDescription": "လက်ရှိတွင် {type} မရှိသေးပါ",
+  "supportChatTitle": "အကူအညီ ချတ်",
+
+  "supportOnlineTitle": "အကူအညီ အွန်လိုင်း",
+  "supportOnlineSubtitle": "ကူညီရန် အသင့်ရှိပါသည်",
+
+  "supportHelpQuestion": "ဘာအတွက် အကူအညီလိုပါသလဲ?",
+  "supportHelpDescription":
+      "အကူအညီအဖွဲ့နှင့် ချတ်စတင်ရန် အမျိုးအစားကို ရွေးချယ်ပါ",
+
+  "supportCategoryHiredJobs": "အလုပ်ခန့်ထားမှုများ",
+  "supportCategoryHiredJobsDesc":
+      "လက်ရှိ သို့မဟုတ် ယခင် အလုပ်နှင့် ဆိုင်သော ပြဿနာများ",
+
+  "supportCategoryTransaction": "ငွေပေးချေမှု",
+  "supportCategoryTransactionDesc":
+      "လစာ၊ ငွေပေးချေမှု သို့မဟုတ် ငွေကြေးဆိုင်ရာ ပြဿနာများ",
+
+  "supportCategoryDocuments": "စာရွက်စာတမ်းများ",
+  "supportCategoryDocumentsDesc":
+      "စာရွက်စာတမ်း အတည်ပြုခြင်း သို့မဟုတ် တင်သွင်းမှု ပြဿနာများ",
+
+  "supportCategoryAccount": "အကောင့်",
+  "supportCategoryAccountDesc":
+      "ပရိုဖိုင်၊ ဆက်တင်များ သို့မဟုတ် အကောင့် ဝင်ရောက်မှု",
+
+  "supportCategoryOther": "အခြား",
+  "supportCategoryOtherDesc":
+      "အထွေထွေ မေးခွန်းများ သို့မဟုတ် အခြား ပြဿနာများ",
+
+  "supportErrorGeneric": "အမှားအယွင်း တစ်ခု ဖြစ်ပေါ်နေပါသည်",
+  "relatedTypeHiredJobs": "အလုပ်ခန့်ထားမှုများ",
+  "relatedTypeTransaction": "ငွေပေးချေမှုများ",
+  "relatedTypeDocument": "စာရွက်စာတမ်းများ",
+  "relatedTypeAccount": "အကောင့်",
+  "relatedTypeGeneral": "အထွေထွေ",
+  "noModelTypeYet": "{modelType} မရှိသေးပါ",
+  "@noModelTypeYet": {
+    "description": "မော်ဒယ်အမျိုးအစားအလိုက် ဒေတာမရှိသေးသောအခါ ပြသသည်",
+    "placeholders": {
+      "modelType": {}
+    }
+  },
+  "settingsTitle": "ဆက်တင်များ",
+
+  "noNameSet": "နာမည် မသတ်မှတ်ထားပါ",
+  "noPhoneSet": "ဖုန်းနံပါတ် မသတ်မှတ်ထားပါ",
+
+  "avatarLabel": "ပုံ",
+  "updateButton": "ပြောင်းလဲမည်",
+
+
 
 
     "employerDashboard_headerTitle": "The Tan Family",
@@ -399,6 +848,8 @@
     "helperInterviews_tabPending": "စောင့်ဆိုင်းဆဲ",
     "helperInterviews_tabAccepted": "လက်ခံပြီး",
     "helperInterviews_tabCompletedCancelled": "ပြီးဆုံး / ပယ်ဖျက်ပြီး",
+    "helperInterviews_tabCompleted": "ပြီးဆုံး",
+    "helperInterviews_tabCancelled": "ပယ်ဖျက်ပြီး",
 
     "helperInterviews_noPending": "စောင့်ဆိုင်းဆဲ အင်တာဗျူး မရှိပါ",
     "helperInterviews_noAccepted": "လက်ခံပြီးသော အင်တာဗျူး မရှိပါ",

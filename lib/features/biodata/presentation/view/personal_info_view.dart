@@ -15,6 +15,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_form_dr
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/PersonalInformation.dart';
 import 'package:sg_easy_hire/models/User.dart';
 
@@ -90,6 +91,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -119,8 +121,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 1 of 7",
+            Text(
+              t.stepProgress(1, 7),
               style: TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
@@ -136,13 +138,13 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
         listener: (context, state) {
           if (state.action == BiodataStateAction.personalInfo &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been submitted");
+            showSuccess(context, t.submitSuccess);
             //TODO:GO NEXT
             context.go(RoutePaths.contactFamilyDetails);
           }
           if (state.action == BiodataStateAction.personalInfo &&
               state.status == BiodataStateStatus.saveDraftSuccess) {
-            showSuccess(context, "Draft saved successfully.");
+            showSuccess(context, t.draftSaveSuccess);
             //TODO:GO NEXT
             //context.go(RoutePaths.contactFamilyDetails);
           }
@@ -150,7 +152,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               state.status == BiodataStateStatus.failure) {
             showError(
               context,
-              "Failed to save your information. Please try again.",
+              t.submitFailed,
             );
           }
           if (!isInitialized && !(state.personalInformation == null)) {
@@ -181,9 +183,9 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Personal Information",
-                      style: TextStyle(
+                    Text(
+                      t.personalInfoTitle,
+                      style: const TextStyle(
                         color: AppColors.textPrimaryLight,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -191,9 +193,9 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      "Let's start with your basic details",
-                      style: TextStyle(
+                    Text(
+                      t.personalInfoSubtitle,
+                      style: const TextStyle(
                         color: AppColors.textSecondaryLight,
                         fontSize: 16,
                         fontFamily: 'Inter',
@@ -202,8 +204,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                     const SizedBox(height: 32),
                     CustomTextField(
                       controller: fullNameController,
-                      label: "Full Name",
-                      placeholder: "Enter your full name",
+                      label: t.fullNameLabel,
+                      placeholder: t.fullNamePlaceholder,
                       isRequired: true,
                       isFirstTimePressed: isFirstTimePressed,
                     ),
@@ -225,8 +227,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                     const SizedBox(height: 24),
                     CustomTextField(
                       controller: placeController,
-                      label: "Place of Birth",
-                      placeholder: "City/Town",
+                      label: t.placeOfBirthLabel,
+                      placeholder: t.placeOfBirthPlaceholder,
                       isRequired: true,
                       isFirstTimePressed: isFirstTimePressed,
                     ),
@@ -239,8 +241,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                           nationality = v ?? "";
                         });
                       },
-                      label: "Nationality",
-                      placeholder: "Select nationality",
+                      label: t.nationalityLabel,
+                      placeholder: t.nationalityPlaceholder,
                       items: const [
                         "Bruneian",
                         "Cambodian",
@@ -265,8 +267,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                           gender = v ?? "";
                         });
                       },
-                      label: "Gender",
-                      placeholder: "Select gender",
+                      label: t.genderLabel,
+                      placeholder: t.genderPlaceholder,
                       items: const ["Male", "Female", "Other"],
                       isRequired: true,
                     ),
@@ -277,8 +279,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                         Expanded(
                           child: CustomTextField(
                             controller: heightController,
-                            label: "Height (cm)",
-                            placeholder: "e.g., 161",
+                            label: t.heightLabel,
+                            placeholder: t.heightPlaceholder,
                             isRequired: true,
                             keyboardType: TextInputType.number,
                             isFirstTimePressed: isFirstTimePressed,
@@ -288,8 +290,8 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                         Expanded(
                           child: CustomTextField(
                             controller: weightController,
-                            label: "Weight (kg)",
-                            placeholder: "e.g., 41",
+                            label: t.weightLabel,
+                            placeholder: t.weightPlaceholder,
                             isRequired: true,
                             keyboardType: TextInputType.number,
                             isFirstTimePressed: isFirstTimePressed,

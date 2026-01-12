@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/widgets/input_error.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class CustomFormDropDown extends StatelessWidget {
   final String label;
@@ -24,6 +25,7 @@ class CustomFormDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -110,7 +112,7 @@ class CustomFormDropDown extends StatelessWidget {
         InputError(
           padding: EdgeInsets.zero,
           isError: isRequired && isFirstTimePressed && initialValue == null,
-          error: "$label is required",
+          error: t.fieldRequiredError(label),
         ),
       ],
     );

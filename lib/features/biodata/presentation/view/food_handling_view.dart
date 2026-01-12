@@ -12,6 +12,7 @@ import 'package:sg_easy_hire/features/biodata/domain/biodata_state.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_checkbox_item.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/OtherPersonalInfo.dart';
 
 class FoodHandlingView extends StatefulWidget {
@@ -92,6 +93,7 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
@@ -114,9 +116,9 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 4 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(4, 7),
+              style: const TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -132,19 +134,16 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
         listener: (_, state) {
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.success) {
-            showSuccess(context, "Your information has been saved");
+            showSuccess(context, t.submitSuccess);
             context.go(RoutePaths.languagesSpoken);
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.saveDraftSuccess) {
-            showSuccess(context, "Draft saved successfully");
+            showSuccess(context, t.draftSaveSuccess);
           }
           if (state.action == BiodataStateAction.otherPersonalInfo &&
               state.status == BiodataStateStatus.failure) {
-            showError(
-              context,
-              "Failed to save your information. Please try again.",
-            );
+            showError(context, t.submitFailed);
           }
           if (!isInitialized && !(state.otherInfo == null)) {
             setInitialData(state.otherInfo!);
@@ -178,18 +177,18 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Food Handling Preferences",
-                              style: TextStyle(
+                            Text(
+                              t.foodHandlingPreferencesTitle,
+                              style: const TextStyle(
                                 color: AppColors.textPrimaryLight,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 4),
-                            const Text(
-                              "Select all that apply to you",
-                              style: TextStyle(
+                            Text(
+                              t.selectAllThatApply,
+                              style: const TextStyle(
                                 color: AppColors.textSecondaryLight,
                                 fontSize: 15,
                               ),
@@ -259,18 +258,18 @@ class _FoodHandlingViewState extends State<FoodHandlingView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Accommodation Preferences",
-                              style: TextStyle(
+                            Text(
+                              t.accommodationPreferencesTitle,
+                              style: const TextStyle(
                                 color: AppColors.textPrimaryLight,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 4),
-                            const Text(
-                              "Select all that apply to you",
-                              style: TextStyle(
+                            Text(
+                              t.selectAllThatApply,
+                              style: const TextStyle(
                                 color: AppColors.textSecondaryLight,
                                 fontSize: 15,
                               ),

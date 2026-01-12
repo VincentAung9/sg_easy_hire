@@ -20,6 +20,7 @@ import 'package:sg_easy_hire/features/biodata/presentation/widget/build_select_f
 import 'package:sg_easy_hire/features/biodata/presentation/widget/build_upload_box.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/form_footer.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/UploadedDocuments.dart';
 
 class UploadDocumentView extends StatefulWidget {
@@ -80,6 +81,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -109,9 +111,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              "Step 7 of 7",
-              style: TextStyle(
+            Text(
+              t.stepProgress(7, 7),
+              style: const TextStyle(
                 color: AppColors.textSecondaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -129,7 +131,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
           if (state.action == BiodataStateAction.uploadDoc &&
               state.status == BiodataStateStatus.success &&
               !state.hasFileUploadError) {
-            showSuccess(context, "Your documents has been saved");
+            showSuccess(context, t.submitSuccess);
             //context.go(RoutePaths.home);
           }
 
@@ -137,7 +139,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
               state.status == BiodataStateStatus.failure) {
             showError(
               context,
-              "Failed to save your documents. Please try again.",
+              t.submitFailed,
             );
           }
           if (!isInitialized && state.documents != null) {
@@ -148,9 +150,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
           child: ListView(
             padding: const EdgeInsets.all(24.0), // p-6
             children: [
-              const Text(
-                "Upload Your Documents",
-                style: TextStyle(
+              Text(
+                t.uploadDocumentsTitle,
+                style: const TextStyle(
                   color: AppColors.textPrimaryLight,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -163,9 +165,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                 children: [
                   BuildUploadBox(
                     isError: isFirstTimePressed && introductionVideo == null,
-                    label: "Introduction Video",
+                    label: t.introductionVideo,
                     icon: Icons.video_call,
-                    subtitle: "mp4, mov, avi, mkv, wmv, flv, webm",
+                    subtitle: t.introVideoFormats,
                     isRequired: true,
                     onTap: () async {
                       final result = await StorageRepository.pickFile(
@@ -198,9 +200,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                   const SizedBox(height: 32), // space-y-8
                   BuildUploadBox(
                     isError: isFirstTimePressed && profilePhoto == null,
-                    label: "Profile Photo",
+                    label: t.profilePhoto,
                     icon: Icons.photo_camera,
-                    subtitle: "JPG, PNG (Max 5MB)",
+                    subtitle: t.photoFormats,
                     isRequired: true,
                     onTap: () async {
                       final result = await StorageRepository.pickFile(
@@ -225,9 +227,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                   const SizedBox(height: 32), // space-y-8
                   BuildUploadBox(
                     isError: isFirstTimePressed && passport == null,
-                    label: "Passport",
+                    label: t.passport,
                     icon: Icons.badge,
-                    subtitle: "PDF, JPG, PNG (Max 5MB)",
+                    subtitle: t.passportFormats,
                     isRequired: true,
                     onTap: () async {
                       final result = await StorageRepository.pickFile();
@@ -250,9 +252,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
 
                   const SizedBox(height: 32),
                   BuildUploadBox(
-                    label: "Medical Certificate",
+                    label: t.medicalCertificate,
                     icon: Icons.medical_services,
-                    subtitle: "PDF, JPG, PNG (Max 5MB)",
+                    subtitle: t.documentFormats,
                     isRequired: false,
                     onTap: () async {
                       final result = await StorageRepository.pickFile();
@@ -274,9 +276,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                   ),
                   const SizedBox(height: 32),
                   BuildUploadBox(
-                    label: "Police Clearance",
+                    label: t.policeClearance,
                     icon: Icons.local_police,
-                    subtitle: "PDF, JPG, PNG (Max 5MB)",
+                    subtitle: t.documentFormats,
                     isRequired: false,
                     onTap: () async {
                       final result = await StorageRepository.pickFile();
@@ -298,9 +300,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                   ),
                   const SizedBox(height: 32),
                   BuildUploadBox(
-                    label: "Educational Certificates",
+                    label: t.educationalCertificates,
                     icon: Icons.school,
-                    subtitle: "PDF, JPG, PNG (Max 5MB each)",
+                    subtitle: t.documentFormatsMultiple,
                     isOptional: true,
                     onTap: () async {
                       final result = await StorageRepository.pickFile(
@@ -330,9 +332,9 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                   ),
                   const SizedBox(height: 32),
                   BuildUploadBox(
-                    label: "Work References",
+                    label: t.workReferences,
                     icon: Icons.work,
-                    subtitle: "PDF, JPG, PNG (Max 5MB each)",
+                    subtitle: t.documentFormatsMultiple,
                     isOptional: true,
                     onTap: () async {
                       final result = await StorageRepository.pickFile(
@@ -388,7 +390,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
             },
             builder: (context, state) {
               return FormFooter(
-                nextBtnString: "Submit",
+                nextBtnString: t.submit,
                 isNextLoading: state.isUploading,
                 isSaveLoading: false,
                 onNext: () {
@@ -478,7 +480,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                         if (checkIsEmpty()) {
                           showError(
                             context,
-                            "Documents are empty.",
+                            t.documentsEmptyError,
                           );
                           return;
                         }
@@ -565,7 +567,7 @@ class _UploadDocumentViewState extends State<UploadDocumentView> {
                           SaveDraftDocuments(data: data),
                         );
 
-                        showSuccess(context, "Draft saved successfully.");
+                        showSuccess(context, t.draftSavedSuccess);
                       },
               );
             },

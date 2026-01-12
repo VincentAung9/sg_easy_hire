@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/biodata/domain/work_history_cubic.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/work_experience_form.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/WorkHistory.dart';
 
 class WorkExperienceComponent extends StatelessWidget {
@@ -10,6 +11,7 @@ class WorkExperienceComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(10),
@@ -25,7 +27,7 @@ class WorkExperienceComponent extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
@@ -33,8 +35,8 @@ class WorkExperienceComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Work History",
-                        style: TextStyle(
+                        t.workHistory,
+                        style: const TextStyle(
                           color: AppColors.textPrimaryLight,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -85,7 +87,7 @@ class WorkExperienceComponent extends StatelessWidget {
                                   .removeWorkHistory(workHistory);
                             },
                             child: Text(
-                              "Remove",
+                              t.remove,
                               style: textTheme.bodySmall?.copyWith(
                                 color: Colors.red,
                                 fontWeight: FontWeight.w500,

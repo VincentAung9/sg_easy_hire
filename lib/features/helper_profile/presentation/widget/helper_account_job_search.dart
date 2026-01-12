@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class HelperAccountJobSearch extends StatefulWidget {
@@ -16,10 +17,12 @@ class _HelperAccountJobSearchState extends State<HelperAccountJobSearch> {
   bool isVisible = true;
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return BlocBuilder<HelperCoreBloc, HelperCoreState>(
       builder: (context, state) {
         final ui = getProfileStatus(
           state.currentUser?.verifyStatus ?? VerifyStatus.PENDING,
+          t,
         );
         return Container(
           padding: const EdgeInsets.all(16),

@@ -4,12 +4,15 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/features/help_support/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class HelpAndSupportView extends StatelessWidget {
   const HelpAndSupportView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -22,148 +25,118 @@ class HelpAndSupportView extends StatelessWidget {
             }
           },
         ),
-        title: const Text('Help & Support'),
+        title: Text(l10n.helpAndSupport),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search Bar
-            /* TextField(
-              decoration: InputDecoration(
-                hintText: 'Search for help...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[200],
-              ),
-            ), */
             const SizedBox(height: 24),
 
-            // Support Available Badge
             const SupportAvailable(),
             const SizedBox(height: 32),
 
-            // Contact Us Section
-            const Text(
-              'Contact Us',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              l10n.contactUs,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             SupportCardContact(
               icon: FontAwesomeIcons.message,
-              title: 'Admin Support',
-              description: "24/7 Customer Service",
-              subtitle: 'Need help? Chat with our support team',
-              badgeText: 'Support',
+              title: l10n.adminSupport,
+              description: l10n.customerService247,
+              subtitle: l10n.needHelpChat,
+              badgeText: l10n.support,
               onTap: () => context.push(RoutePaths.helperSupportChat),
             ),
-            /*  SupportCardContact(
-              icon: Icons.chat_bubble_outline,
-              title: 'Live Chat',
-              subtitle: 'Chat with admin',
-              buttonText: 'Start Chat',
-              onTap: () => context.push(RoutePaths.helperSupportChat),
-            ),
-            SupportCardContact(
-              icon: Icons.phone,
-              title: 'Phone Support',
-              subtitle: '+1 (800) 123-4567',
-              buttonText: 'Call Now',
-              onTap: () {},
-            ),
-            SupportCardContact(
-              icon: Icons.email_outlined,
-              title: 'Email Support',
-              subtitle: 'support@helperapp.com',
-              buttonText: 'Send Email',
-              onTap: () {},
-            ), */
+
             const SizedBox(height: 32),
 
-            // Quick Links
-            const Text(
-              'Quick Links',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              l10n.quickLinks,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SupportQuickLink(
-                  onTap: () => context.go(RoutePaths.helperGuideline),
-                  icon: Icons.description,
-                  label: 'View Guidelines',
+                SizedBox(
+                  width: size.width * 0.3,
+                  child: SupportQuickLink(
+                    onTap: () => context.go(RoutePaths.helperGuideline),
+                    icon: Icons.description,
+                    label: l10n.viewGuidelines,
+                  ),
                 ),
-                SupportQuickLink(
-                  onTap: () => context.go(RoutePaths.uploadDocuments),
-                  icon: Icons.upload_file,
-                  label: 'Update Documents',
+                SizedBox(
+                  width: size.width * 0.3,
+                  child: SupportQuickLink(
+                    onTap: () => context.go(RoutePaths.uploadDocuments),
+                    icon: Icons.upload_file,
+                    label: l10n.updateDocuments,
+                  ),
                 ),
-                SupportQuickLink(
-                  onTap: () => context.push(RoutePaths.helperProfileUpdate),
-                  icon: Icons.edit,
-                  label: 'Edit Profile',
+                SizedBox(
+                  width: size.width * 0.3,
+                  child: SupportQuickLink(
+                    onTap: () => context.push(RoutePaths.helperProfileUpdate),
+                    icon: Icons.edit,
+                    label: l10n.editProfile,
+                  ),
                 ),
               ],
             ),
+
             const SizedBox(height: 32),
 
-            // Frequently Asked Questions
-            const Text(
-              'Frequently Asked Questions',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              l10n.frequentlyAskedQuestions,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            const FAQItem(
-              question: 'How do I update my biodata?',
-              answer:
-                  "Go to your profile section and click on 'Edit Biodata'. You can update your personal information, work experience, and skills from there.",
+
+            FAQItem(
+              question: l10n.faqUpdateBiodataQ,
+              answer: l10n.faqUpdateBiodataA,
             ),
-            const FAQItem(
-              question: 'How do I apply for a job?',
-              answer:
-                  "Browse available jobs in the Jobs section. Click on any job listing to view details, then tap 'Apply Now' to submit your application.",
+            FAQItem(
+              question: l10n.faqApplyJobQ,
+              answer: l10n.faqApplyJobA,
             ),
-            const FAQItem(
-              question: 'How do interviews work?',
-              answer:
-                  "Once an employer is interested, they'll schedule an interview. You'll receive a notification and can view all interview details in the Interviews section.",
+            FAQItem(
+              question: l10n.faqInterviewQ,
+              answer: l10n.faqInterviewA,
             ),
-            const FAQItem(
-              question: 'How do I message an employer?',
-              answer:
-                  "After being matched with an employer, you can access the Messages section to communicate directly with them.",
+            FAQItem(
+              question: l10n.faqMessageEmployerQ,
+              answer: l10n.faqMessageEmployerA,
             ),
-            const FAQItem(
-              question: 'What documents do I need to upload?',
-              answer:
-                  "Required documents typically include ID, passport, work permit, and any relevant certifications. Check the Documents section for specific requirements.",
+            FAQItem(
+              question: l10n.faqDocumentsQ,
+              answer: l10n.faqDocumentsA,
             ),
+
             const SizedBox(height: 40),
 
-            // Still Need Help?
             Center(
               child: Column(
                 children: [
                   const Icon(Icons.help_outline, size: 60, color: Colors.grey),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Still need help?',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    l10n.stillNeedHelp,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const Text(
-                    'Admin is available 24/7 to assist you',
-                  ),
+                  Text(l10n.adminAvailable247),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: () => context.push(RoutePaths.helperSupportChat),
                     icon: const Icon(Icons.chat),
-                    label: const Text('Start Live Chat'),
+                    label: Text(l10n.startLiveChat),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class PersonalityTestView extends StatelessWidget {
   const PersonalityTestView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
@@ -19,15 +21,14 @@ class PersonalityTestView extends StatelessWidget {
                 children: [
                   const Spacer(),
                   Text(
-                    'Personality Test',
+                    t.personalityTestTitle,
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Answer a few statements to get a quick MBTI-style type (E/I, S/N, T/F, J/P). '
-                    'This is an unofficial educational tool.',
+                    t.personalityTestDescription,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 20),
@@ -43,8 +44,7 @@ class PersonalityTestView extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            'There are 16 questions. Tap a dot to show how much you agree. '
-                            'Try to answer based on your typical behavior.',
+                            t.personalityTestInfo,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -54,7 +54,7 @@ class PersonalityTestView extends StatelessWidget {
                   const Spacer(),
                   FilledButton.icon(
                     icon: const Icon(Icons.play_arrow_rounded),
-                    label: const Text('Start'),
+                    label: Text(t.start),
                     onPressed: () => context.go(RoutePaths.helperQuiz),
                   ),
                 ],
@@ -68,7 +68,7 @@ class PersonalityTestView extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () => context.go(RoutePaths.home),
-                  tooltip: 'Back',
+                  tooltip: t.back,
                 ),
               ),
             ),

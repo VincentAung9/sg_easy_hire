@@ -7,6 +7,7 @@ import 'package:sg_easy_hire/features/biodata/domain/work_history_cubic.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_form_dropdown.dart';
 import 'package:sg_easy_hire/features/biodata/presentation/widget/custom_text_field.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class WorkExperienceForm extends StatefulWidget {
@@ -33,6 +34,7 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final currentUser = context.read<HelperCoreBloc>().state.currentUser;
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -49,8 +51,8 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
             LayoutBuilder(
               builder: (context, constraints) {
                 return CustomFormDropDown(
-                  label: "Location",
-                  placeholder: "Select Country",
+                  label: t.location,
+                  placeholder: t.selectCountry,
                   isRequired: true,
                   isFirstTimePressed: isFirstTimePressed,
                   initialValue: location,
@@ -75,24 +77,24 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
             const SizedBox(height: 16),
             CustomTextField(
               controller: durationController,
-              label: "Duration",
-              placeholder: "2 years",
+              label: t.duration,
+              placeholder: t.durationPlaceholder,
               isFirstTimePressed: isFirstTimePressed,
               isRequired: true,
             ),
             const SizedBox(height: 16),
             CustomTextField(
               controller: descriptionController,
-              label: "Description",
-              placeholder: "Family with 2 children",
+              label: t.description,
+              placeholder: t.descriptionPlaceholder,
               isFirstTimePressed: isFirstTimePressed,
               isRequired: true,
             ),
             const SizedBox(height: 16),
             CustomTextField(
               controller: dutiesController,
-              label: "Duties",
-              placeholder: "Childcare, Cooking",
+              label: t.duties,
+              placeholder: t.dutiesPlaceholder,
               isFirstTimePressed: isFirstTimePressed,
               isRequired: true,
             ),
@@ -124,9 +126,9 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                     });
                   }
                 },
-                child: const Text(
-                  "+ Add Work History",
-                  style: TextStyle(
+                child: Text(
+                  t.addWorkHistory,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/widgets/widgets.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,7 +125,7 @@ class CustomTextField extends StatelessWidget {
           isError:
               customIsError ??
               isRequired && isFirstTimePressed && controller.text.isEmpty,
-          error: customError ?? "$label is required",
+          error: t.fieldRequiredError(customError ?? label),
         ),
       ],
     );

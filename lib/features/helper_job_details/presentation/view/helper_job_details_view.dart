@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/Job.dart';
 
 class HelperJobDetailsView extends StatelessWidget {
@@ -10,6 +11,7 @@ class HelperJobDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final job = GoRouterState.of(context).extra! as Job;
     final avgRating = averageRating(
       job.creator?.reviewedByUser ?? [],
@@ -24,18 +26,18 @@ class HelperJobDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             (job.isActive ?? true)
-                ? const HiringStatus(
-                    title: 'Actively Hiring',
+                ? HiringStatus(
+                    title: t.activelyHiring,
                     bgColor: Color(0xFFD1FAE5),
                     textColor: Color(0xFF10B981),
                   )
-                : const HiringStatus(
-                    title: "Position Closed",
+                : HiringStatus(
+                    title: t.positionClosed,
                     bgColor: Color(0xFFFEE2E2),
                     textColor: Color(0xFFEF4444),
                   ),
             Text(
-              'Posted ${timeAgo(job.createdAt!)}',
+              t.postedTimeAgo(timeAgo(job.createdAt!)),
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 14,
@@ -102,7 +104,7 @@ class HelperJobDetailsView extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            job.jobType ?? 'Full-time',
+                            job.jobType ?? t.fullTime,
                             style: const TextStyle(
                               color: AppColors.textSecondary,
                             ),
@@ -121,14 +123,14 @@ class HelperJobDetailsView extends StatelessWidget {
                         children: [
                           _buildInfoChip(
                             Icons.attach_money,
-                            'Salary',
+                            t.salary,
                             '${job.currency ?? 'SGD'} ${job.salary}/${job.payPeriod}',
                           ),
                           _buildInfoChip(
                             Icons.calendar_today,
-                            'Start Date',
+                            t.startDate,
                             job.startDate == null
-                                ? 'Immediate'
+                                ? t.immediate
                                 : DateTime.tryParse(job.startDate!) == null
                                 ? job.startDate ?? ""
                                 : formatDateMMMdy(
@@ -143,13 +145,13 @@ class HelperJobDetailsView extends StatelessWidget {
                         children: [
                           _buildInfoChip(
                             Icons.description_outlined,
-                            'Contract',
+                            t.contract,
                             job.contract ?? '2 years',
                           ),
                           _buildInfoChip(
                             Icons.people_outline,
-                            'Applicants',
-                            '${(job.applications ?? []).length} applied',
+                            t.applicants,
+                            '${(job.applications ?? []).length} ${t.applied}',
                             iconColor: AppColors.primary,
                           ),
                         ],
@@ -170,7 +172,7 @@ class HelperJobDetailsView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildSectionTitle('Employer Information'),
+                      _buildSectionTitle(t.employerInformation),
                       const SizedBox(height: 12),
                       Row(
                         children: [
@@ -270,7 +272,7 @@ class HelperJobDetailsView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildSectionTitle('Job Description'),
+                      _buildSectionTitle(t.jobDescription),
                       const SizedBox(height: 12),
                       Text(
                         job.note ?? "",
@@ -288,7 +290,7 @@ class HelperJobDetailsView extends StatelessWidget {
                 // Responsibilities
                 (job.responsibilities ?? []).isNotEmpty
                     ? _buildCheckListCard(
-                        label: 'Responsibilities',
+                        label: t.responsibilities,
                         job.responsibilities!,
                         iconColor: AppColors.primary,
                       )
@@ -300,7 +302,7 @@ class HelperJobDetailsView extends StatelessWidget {
 
                 // Requirements
                 _buildCheckListCard(
-                  label: 'Requirements',
+                  label: t.requirements,
                   job.requiredSkills ?? [],
                 ),
 
@@ -317,7 +319,7 @@ class HelperJobDetailsView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildSectionTitle('Other Info'),
+                      _buildSectionTitle(t.otherInfo),
                       const SizedBox(height: 12),
                       Wrap(
                         spacing: 5,
@@ -325,7 +327,7 @@ class HelperJobDetailsView extends StatelessWidget {
                           job.offdays == null
                               ? const SizedBox()
                               : Chip(
-                                  label: Text("Off Day: ${job.offdays}"),
+                                  label: Text("${t.offDay}: ${job.offdays}"),
                                   backgroundColor: const Color.fromARGB(
                                     255,
                                     225,
@@ -349,7 +351,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Children: ${job.childCount}",
+                                    "${t.children}: ${job.childCount}",
                                   ),
                                   backgroundColor: const Color.fromARGB(
                                     255,
@@ -374,7 +376,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Children are ${job.childAges}",
+                                    "${t.childrenAre} ${job.childAges}",
                                   ),
                                   backgroundColor: Color.fromARGB(
                                     255,
@@ -399,7 +401,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Adult: ${job.adultCount}",
+                                    "${t.adult}: ${job.adultCount}",
                                   ),
                                   backgroundColor: Color.fromARGB(
                                     255,
@@ -424,7 +426,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Elderly: ${job.elderlyCount}",
+                                    "${t.elderly}: ${job.elderlyCount}",
                                   ),
                                   backgroundColor: Color.fromARGB(
                                     255,
@@ -449,7 +451,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Home Type: ${job.homeType}",
+                                    "${t.homeType}: ${job.homeType}",
                                   ),
                                   backgroundColor: Color.fromARGB(
                                     255,
@@ -474,7 +476,7 @@ class HelperJobDetailsView extends StatelessWidget {
                               ? const SizedBox()
                               : Chip(
                                   label: Text(
-                                    "Room Type: ${job.roomType}",
+                                    "${t.roomType}: ${job.roomType}",
                                   ),
                                   backgroundColor: Color.fromARGB(
                                     255,
