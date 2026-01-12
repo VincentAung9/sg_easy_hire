@@ -3,18 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Quick Actions",
+          t.quickActionsTitle,
           style: textTheme.titleLarge?.copyWith(
             color: AppColors.textPrimaryLight,
             fontWeight: FontWeight.bold,
@@ -38,28 +40,28 @@ class QuickActions extends StatelessWidget {
                 children: [
                   ActionItem(
                     icon: Icons.person_outline,
-                    label: "Update Biodata",
+                    label: t.quickActionUpdateBiodata,
                     color: AppColors.primary,
                     onPressed: () =>
                         context.push(RoutePaths.personalInformation),
                   ),
                   ActionItem(
                     icon: Icons.psychology_alt,
-                    label: "Personality Test",
+                    label: t.quickActionPersonalityTest,
                     color: AppColors.primary,
                     onPressed: () =>
                         context.pushNamed(RouteNames.personalityTest),
                   ),
                   ActionItem(
                     icon: Icons.description,
-                    label: "Guidelines",
+                    label: t.quickActionGuidelines,
                     color: AppColors.primary,
                     onPressed: () =>
                         context.pushNamed(RouteNames.helperGuideline),
                   ),
                   ActionItem(
                     icon: Icons.upload_file,
-                    label: "Upload Documents",
+                    label: t.quickActionUploadDocuments,
                     color: AppColors.primary,
                     onPressed: () =>
                         context.pushNamed(RouteNames.uploadDocuments),
@@ -110,9 +112,9 @@ class QuickActions extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          "Search Jobs",
-                          style: TextStyle(
+                        Text(
+                          t.quickActionSearchJobs,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.w500,

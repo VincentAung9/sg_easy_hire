@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/hive_storage/hive_storage.dart';
+import 'package:sg_easy_hire/core/localization/presentation/language_setting_page.dart';
 import 'package:sg_easy_hire/core/router/go_refresh_stream.dart';
 import 'package:sg_easy_hire/core/router/route_names.dart' show RouteNames;
 import 'package:sg_easy_hire/core/router/route_paths.dart';
@@ -227,7 +228,14 @@ class AppRouter {
           name: RouteNames.helperRegister,
           builder: (context, state) => const HelperSignUpPage(),
         ),
-
+        GoRoute(
+          path: RoutePaths.languageSetting,
+          name: RouteNames.languageSetting,
+          builder: (context, state) {
+            final isOnBoarding = state.extra as bool?;
+            return const LanguageSettingsScreen();
+          },
+        ),
         // ---------------------
         // MAIN TAB ROUTES
         // ---------------------

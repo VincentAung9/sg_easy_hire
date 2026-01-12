@@ -7,6 +7,7 @@ import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/join_call_btn.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
@@ -22,10 +23,9 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final interviewAction = getInterviewAction(
-      interview.status,
-    );
+    final interviewAction = getInterviewAction(interview.status, t);
     final isHideTime =
         interview.status == InterviewStatus.COMPLETED ||
         interview.status == InterviewStatus.CANCELLED ||
@@ -38,7 +38,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
         isHideTime
             ? const SizedBox()
             : Text(
-                "Time",
+                t.time,
                 style: textTheme.titleSmall,
               ),
         isHideTime
@@ -64,9 +64,9 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Text(
-            "View Details",
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          child: Text(
+            t.viewDetails,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ),
         const SizedBox(height: 12),
@@ -108,10 +108,11 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                         }
                         if (interview.status == InterviewStatus.PENDING) {
                           //show interview date time
-                          final chooseDateTime = await showInterviewDateDialog(
-                            context,
-                            interview.interviewDateOptions!,
-                          );
+                          final chooseDateTime =
+                              await showInterviewTimeSelectionDialog(
+                                context,
+                                interview.interviewDateOptions!,
+                              );
                           if (chooseDateTime != null) {
                             //TODO:accept
                             context.read<HomeBloc>().add(
@@ -173,7 +174,7 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                               elevation: 0,
                             ),
                             child: Text(
-                              "Cancel",
+                              t.employerDashboard_cancel,
                               style: textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.red[500],
@@ -183,27 +184,6 @@ class InterviewAcceptedCardFooter extends StatelessWidget {
                         )
                       : const Expanded(
                           child: const JoinCallBtn(),
-                          /* ElevatedButton(
-                            onPressed: () {
-                              //TODO:JOIN CALL
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(double.infinity, 44),
-                              backgroundColor: Colors.grey[200],
-                              foregroundColor: AppColors.textGrayLight,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: const Text(
-                              "Join Call",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ), */
                         ),
                 ],
               ),

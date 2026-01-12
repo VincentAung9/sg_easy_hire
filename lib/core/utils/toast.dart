@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 void showSuccess(BuildContext context, String message) {
+  final size = MediaQuery.of(context).size;
   showToastWidget(
     context: context,
     animation: StyledToastAnimation.slideFromRight,
@@ -13,8 +14,11 @@ void showSuccess(BuildContext context, String message) {
     curve: Curves.elasticOut,
     reverseCurve: Curves.linear,
     Container(
-      height: 60,
+      // height: 60,
       width: 80.sw,
+      constraints: BoxConstraints(
+        maxHeight: 60.h,
+      ),
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -35,10 +39,15 @@ void showSuccess(BuildContext context, String message) {
           spacing: 6,
           children: [
             const Icon(Icons.check_circle, color: Colors.white, size: 20),
-            Text(
-              message,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: (size.width * 0.68).w,
+              child: Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  //overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ],
         ),
@@ -48,6 +57,7 @@ void showSuccess(BuildContext context, String message) {
 }
 
 void showWarnning(BuildContext context, String message) {
+  final size = MediaQuery.of(context).size;
   showToastWidget(
     context: context,
     animation: StyledToastAnimation.slideFromRight,
@@ -58,8 +68,10 @@ void showWarnning(BuildContext context, String message) {
     curve: Curves.elasticOut,
     reverseCurve: Curves.linear,
     Container(
-      height: 60,
       width: 80.sw,
+      constraints: BoxConstraints(
+        maxHeight: 60.h,
+      ),
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -79,10 +91,15 @@ void showWarnning(BuildContext context, String message) {
           spacing: 6,
           children: [
             const Icon(Icons.warning, color: Colors.white, size: 20),
-            Text(
-              message,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: (size.width * 0.68).w,
+              child: Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ],
         ),
@@ -92,6 +109,7 @@ void showWarnning(BuildContext context, String message) {
 }
 
 void showError(BuildContext context, String message) {
+  final size = MediaQuery.of(context).size;
   showToastWidget(
     context: context,
     animation: StyledToastAnimation.slideFromRight,
@@ -102,8 +120,10 @@ void showError(BuildContext context, String message) {
     curve: Curves.elasticOut,
     reverseCurve: Curves.linear,
     Container(
-      height: 60,
       width: 80.sw,
+      constraints: BoxConstraints(
+        maxHeight: 60.h,
+      ),
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -123,9 +143,14 @@ void showError(BuildContext context, String message) {
           spacing: 6,
           children: [
             const Icon(Icons.error, color: Colors.white, size: 20),
-            Text(
-              message,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
+            SizedBox(
+              width: (size.width * 0.68).w,
+              child: Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 
 class InterviewList extends StatelessWidget {
@@ -9,6 +10,7 @@ class InterviewList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     // Note: The 'Roboto' font family should be set in your app's main theme.
@@ -20,7 +22,7 @@ class InterviewList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "No matching results found.",
+                  t.findHelpers_noResults,
                   style: textTheme.titleMedium,
                 ),
               ],
@@ -39,18 +41,18 @@ class InterviewList extends StatelessWidget {
                       "${interview.employer?.fullName} • \$${interview.job?.salary}/${interview.job?.payPeriod}",
                   tags: [
                     interview.job?.familyMembers != null
-                        ? "Family of ${interview.job?.familyMembers}"
+                        ? t.jobInFamily(interview.job?.familyMembers ?? 0)
                         : "",
                     interview.job?.childCount != null
-                        ? "${interview.job?.childCount} Children"
+                        ? t.jobChildren(interview.job?.childCount ?? 0)
                         : "",
                     interview.job?.adultCount != null
-                        ? "${interview.job?.adultCount} Adult"
+                        ? t.adultCountLabel(interview.job?.adultCount ?? 0)
                         : "",
                     interview.job?.elderlyCount != null
-                        ? "${interview.job?.elderlyCount} Elderly"
+                        ? t.elderlyCountLabel(interview.job?.elderlyCount ?? 0)
                         : "",
-                    "Off Days ${interview.job?.offdays}",
+                    t.jobOffDays(interview.job?.offdays ?? 0),
                   ],
                   description: interview.job?.note ?? "",
                   time: interview.confirmedDateTime == null

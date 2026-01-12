@@ -10,3 +10,8 @@ class GetInitialUserData extends HelperCoreEvent {
 class StartSubscribeToUser extends HelperCoreEvent {}
 
 class StartSubscribeToHiveUser extends HelperCoreEvent {}
+
+class UpdateDeviceToken extends HelperCoreEvent {
+  final String token;
+  UpdateDeviceToken({required this.token});
+}

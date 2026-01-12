@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/constants/country_codes.dart';
-import 'package:sg_easy_hire/core/localization/presentation/language_switch_component.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
-import 'package:sg_easy_hire/core/widgets/input_error.dart';
 import 'package:sg_easy_hire/core/widgets/widgets.dart';
 import 'package:sg_easy_hire/features/auth/domain/sign_in/sign_in.dart';
 import 'package:sg_easy_hire/features/auth/models/sign_in_param.dart';
@@ -46,14 +44,15 @@ class _SignInViewState extends State<SignInView> {
     setState(() {});
   }
 
-  bool _isValid() {
+  bool _isValid(BuildContext context) {
+    final t = AppLocalizations.of(context);
     if (_phoneController.text.isEmpty) {
-      phoneError = "Phone number is required";
+      phoneError = t.phoneNumberRequire;
       setState(() {});
       return false;
     }
     if (_passwordController.text.isEmpty) {
-      passwordError = "Password is required";
+      passwordError = t.passwordRequire;
       setState(() {});
       return false;
     }
@@ -74,7 +73,7 @@ class _SignInViewState extends State<SignInView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /* const Align(
+                /*  const Align(
                   alignment: Alignment.topRight,
                   child: LanguageSwitchComponent(),
                 ), */
@@ -112,7 +111,7 @@ class _SignInViewState extends State<SignInView> {
                       if (state.status == SignInStatus.success &&
                           state.action == SignInActions.signin) {
                         //subscribe to user
-                        context.go(RoutePaths.onboardingBiodata);
+                        context.go(RoutePaths.languageSetting, extra: true);
                         /* context.read<HelperCoreBloc>().add(
                           StartSubscribeToUser(),
                         );
@@ -150,9 +149,9 @@ class _SignInViewState extends State<SignInView> {
                                           state.action ==
                                               SignInActions.resendCode
                                       ? const ButtonLoading()
-                                      : const Text(
-                                          "Resend code",
-                                          style: TextStyle(
+                                      : Text(
+                                          t.resendOtp,
+                                          style:const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                           ),
@@ -243,7 +242,7 @@ class _SignInViewState extends State<SignInView> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     resetState();
-                                    if (_isValid()) {
+                                    if (_isValid(context)) {
                                       context.read<SignInBloc>().add(
                                         SignInPressEvent(
                                           signInParam: SignInParam(
@@ -260,7 +259,7 @@ class _SignInViewState extends State<SignInView> {
                                           state.status == SignInStatus.loading
                                       ? const ButtonLoading()
                                       : Text(
-                                          "Continue",
+                                          t.signInContinue,
                                           style: theme.textTheme.titleLarge
                                               ?.copyWith(
                                                 color: Colors.white,

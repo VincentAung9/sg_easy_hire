@@ -50,19 +50,20 @@ class _SignUpViewState extends State<SignUpView> {
     setState(() {});
   }
 
-  bool _isValid() {
+  bool _isValid(BuildContext context) {
+    final t = AppLocalizations.of(context);
     if (_fullNameController.text.isEmpty) {
-      fullNameError = "Full name is required";
+      fullNameError = t.fullNameRequire;
       setState(() {});
       return false;
     }
     if (_phoneController.text.isEmpty) {
-      phoneError = "Phone number is required";
+      phoneError = t.phoneNumberRequire;
       setState(() {});
       return false;
     }
     if (_passwordController.text.isEmpty) {
-      passwordError = "Password is required";
+      passwordError = t.passwordRequire;
       setState(() {});
       return false;
     }
@@ -210,7 +211,7 @@ class _SignUpViewState extends State<SignUpView> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   resetState();
-                                  if (_isValid()) {
+                                  if (_isValid(context)) {
                                     signUpBloc.add(
                                       SignUpPressEvent(
                                         param: SignUpParam(
@@ -225,7 +226,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 child: state.isPending
                                     ? const ButtonLoading()
                                     : Text(
-                                        "Continue",
+                                        t.signUpContinue,
                                         style: theme.textTheme.titleLarge
                                             ?.copyWith(
                                               color: Colors.white,
@@ -241,11 +242,11 @@ class _SignUpViewState extends State<SignUpView> {
                           child: Center(
                             child: Text.rich(
                               TextSpan(
-                                text: "Already have an account?",
+                                text: t.alreadyHaveAccount,
                                 style: theme.textTheme.titleSmall,
                                 children: [
                                   TextSpan(
-                                    text: ' Sign In',
+                                    text: t.signInContinue,
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       color: AppColors.primary,
                                     ),

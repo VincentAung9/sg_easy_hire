@@ -139,6 +139,18 @@ abstract class AppLocalizations {
   /// **'Enter password'**
   String get enterPassword;
 
+  /// No description provided for @signInContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get signInContinue;
+
+  /// No description provided for @signUpContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get signUpContinue;
+
   /// No description provided for @noAccount.
   ///
   /// In en, this message translates to:
@@ -198,6 +210,624 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter password'**
   String get passwordHint;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @phoneNumberRequire.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneNumberRequire;
+
+  /// No description provided for @passwordRequire.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequire;
+
+  /// No description provided for @fullNameRequire.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name is required'**
+  String get fullNameRequire;
+
+  /// No description provided for @employerApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Employer App'**
+  String get employerApp;
+
+  /// No description provided for @helperApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Helper App'**
+  String get helperApp;
+
+  /// No description provided for @employerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Helper for your needs'**
+  String get employerSubtitle;
+
+  /// No description provided for @helperSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your dream job in Singapore'**
+  String get helperSubtitle;
+
+  /// No description provided for @enterVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Verification Code'**
+  String get enterVerificationCode;
+
+  /// No description provided for @verifyCodeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your number with the 6-digit code we just sent via SMS.'**
+  String get verifyCodeSubtitle;
+
+  /// No description provided for @pinIncorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN is incorrect.'**
+  String get pinIncorrect;
+
+  /// No description provided for @dontReceiveOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t receive the OTP?'**
+  String get dontReceiveOtp;
+
+  /// No description provided for @resendOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'RESEND OTP'**
+  String get resendOtp;
+
+  /// No description provided for @resendOtpFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t resend the code. Please try again.'**
+  String get resendOtpFailed;
+
+  /// No description provided for @resendOtpSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'A new code has been sent to your phone.'**
+  String get resendOtpSuccess;
+
+  /// No description provided for @verifyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification failed. Please try again.'**
+  String get verifyFailed;
+
+  /// No description provided for @verifySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification successful! Your account is now ready.'**
+  String get verifySuccess;
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Us Know You Better'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile to increase your chances of finding the perfect job'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @estimatedTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Time: 10–15 minutes'**
+  String get estimatedTimeTitle;
+
+  /// No description provided for @estimatedTimeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This questionnaire helps employers understand your skills, experience, and preferences to match you with suitable job opportunities.'**
+  String get estimatedTimeDesc;
+
+  /// No description provided for @whatWeAskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What We\'ll Ask About:'**
+  String get whatWeAskTitle;
+
+  /// No description provided for @askPersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information (name, age, nationality)'**
+  String get askPersonalInfo;
+
+  /// No description provided for @askContactFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact details and family background'**
+  String get askContactFamily;
+
+  /// No description provided for @askMedicalFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical history and food preferences'**
+  String get askMedicalFood;
+
+  /// No description provided for @askLanguageSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages spoken and skills'**
+  String get askLanguageSkills;
+
+  /// No description provided for @askWorkPreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Work experience and job preferences'**
+  String get askWorkPreference;
+
+  /// No description provided for @askDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Document uploads (passport, certificates, photo)'**
+  String get askDocuments;
+
+  /// No description provided for @importantInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Important Information'**
+  String get importantInfoTitle;
+
+  /// No description provided for @infoSkip_part1.
+  ///
+  /// In en, this message translates to:
+  /// **'You can '**
+  String get infoSkip_part1;
+
+  /// No description provided for @infoSkip_bold.
+  ///
+  /// In en, this message translates to:
+  /// **'skip any questions'**
+  String get infoSkip_bold;
+
+  /// No description provided for @infoSkip_part2.
+  ///
+  /// In en, this message translates to:
+  /// **' you\'re not ready to answer'**
+  String get infoSkip_part2;
+
+  /// No description provided for @infoMandatory_part1.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get infoMandatory_part1;
+
+  /// No description provided for @infoMandatory_bold.
+  ///
+  /// In en, this message translates to:
+  /// **'Mandatory fields (*)'**
+  String get infoMandatory_bold;
+
+  /// No description provided for @infoMandatory_part2.
+  ///
+  /// In en, this message translates to:
+  /// **' are required for your biodata to be visible to employers'**
+  String get infoMandatory_part2;
+
+  /// No description provided for @infoApplyLater.
+  ///
+  /// In en, this message translates to:
+  /// **'If you skip now, you\'ll be asked to complete this when applying for jobs'**
+  String get infoApplyLater;
+
+  /// No description provided for @infoViews_part1.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete profiles get '**
+  String get infoViews_part1;
+
+  /// No description provided for @infoViews_bold.
+  ///
+  /// In en, this message translates to:
+  /// **'3x more views'**
+  String get infoViews_bold;
+
+  /// No description provided for @infoViews_part2.
+  ///
+  /// In en, this message translates to:
+  /// **' from employers'**
+  String get infoViews_part2;
+
+  /// No description provided for @skipForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for Now'**
+  String get skipForNow;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started'**
+  String get getStarted;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @languageSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Settings'**
+  String get languageSettingsTitle;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip For Now'**
+  String get skip;
+
+  /// No description provided for @appLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'App Language'**
+  String get appLanguage;
+
+  /// No description provided for @appLanguageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred language for the app interface'**
+  String get appLanguageDesc;
+
+  /// No description provided for @availableLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Languages'**
+  String get availableLanguages;
+
+  /// No description provided for @availableLanguagesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a language to change the app interface'**
+  String get availableLanguagesDesc;
+
+  /// No description provided for @saveLanguagePreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Language Preference'**
+  String get saveLanguagePreference;
+
+  /// No description provided for @languageRefreshHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The app will refresh to apply the new language'**
+  String get languageRefreshHint;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @myanmar.
+  ///
+  /// In en, this message translates to:
+  /// **'Myanmar'**
+  String get myanmar;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @dashboardGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {name}!'**
+  String dashboardGreeting(Object name);
+
+  /// No description provided for @dashboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to find your next opportunity?'**
+  String get dashboardSubtitle;
+
+  /// No description provided for @profileViews.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Views'**
+  String get profileViews;
+
+  /// No description provided for @appliedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied Jobs'**
+  String get appliedJobs;
+
+  /// No description provided for @interviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Interviews'**
+  String get interviews;
+
+  /// No description provided for @profileCompletionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile: {percent}% Complete'**
+  String profileCompletionTitle(Object percent);
+
+  /// No description provided for @profileCompletionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add documents to boost visibility'**
+  String get profileCompletionSubtitle;
+
+  /// No description provided for @quickActionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActionsTitle;
+
+  /// No description provided for @quickActionUpdateBiodata.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Biodata'**
+  String get quickActionUpdateBiodata;
+
+  /// No description provided for @quickActionPersonalityTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Personality Test'**
+  String get quickActionPersonalityTest;
+
+  /// No description provided for @quickActionGuidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Guidelines'**
+  String get quickActionGuidelines;
+
+  /// No description provided for @quickActionUploadDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Documents'**
+  String get quickActionUploadDocuments;
+
+  /// No description provided for @quickActionSearchJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Jobs'**
+  String get quickActionSearchJobs;
+
+  /// No description provided for @nextInterviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Interview'**
+  String get nextInterviewTitle;
+
+  /// No description provided for @interviewDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Interview Date'**
+  String get interviewDateLabel;
+
+  /// No description provided for @interviewTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get interviewTomorrow;
+
+  /// No description provided for @interviewSalaryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get interviewSalaryLabel;
+
+  /// No description provided for @interviewFamilyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get interviewFamilyLabel;
+
+  /// No description provided for @interviewFamilyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} members'**
+  String interviewFamilyMembers(Object count);
+
+  /// No description provided for @interviewDutiesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duties'**
+  String get interviewDutiesLabel;
+
+  /// No description provided for @interviewOffDaysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Off Days'**
+  String get interviewOffDaysLabel;
+
+  /// No description provided for @interviewCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get interviewCancel;
+
+  /// No description provided for @jobInFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} in family'**
+  String jobInFamily(Object count);
+
+  /// No description provided for @jobChildren.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} children'**
+  String jobChildren(Object count);
+
+  /// No description provided for @jobOffDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Off days: {days}'**
+  String jobOffDays(Object days);
+
+  /// No description provided for @jobApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get jobApplied;
+
+  /// No description provided for @jobApplyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Now'**
+  String get jobApplyNow;
+
+  /// No description provided for @jobSalaryFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{salary}/{period}'**
+  String jobSalaryFormat(Object period, Object salary);
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @viewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get viewDetails;
+
+  /// Number of adults in the household
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Adult'**
+  String adultCountLabel(int count);
+
+  /// Number of elderly people in the household
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Elderly'**
+  String elderlyCountLabel(int count);
+
+  /// No description provided for @countdownDays.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get countdownDays;
+
+  /// No description provided for @countdownHours.
+  ///
+  /// In en, this message translates to:
+  /// **'hrs'**
+  String get countdownHours;
+
+  /// No description provided for @countdownMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'mins'**
+  String get countdownMinutes;
+
+  /// No description provided for @interviewStatusAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get interviewStatusAccept;
+
+  /// No description provided for @interviewStatusCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get interviewStatusCancel;
+
+  /// No description provided for @interviewStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get interviewStatusCompleted;
+
+  /// No description provided for @interviewStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get interviewStatusCancelled;
+
+  /// No description provided for @interviewStatusNoShow.
+  ///
+  /// In en, this message translates to:
+  /// **'No Show'**
+  String get interviewStatusNoShow;
+
+  /// No description provided for @interviewStatusProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Interviewing'**
+  String get interviewStatusProcessing;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time;
+
+  /// No description provided for @selectInterviewTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Interview Time'**
+  String get selectInterviewTime;
+
+  /// No description provided for @selectInterviewTimeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred time slot for the interview'**
+  String get selectInterviewTimeSubtitle;
+
+  /// No description provided for @interviewScheduledSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Interview scheduled for selected time!'**
+  String get interviewScheduledSuccess;
+
+  /// No description provided for @confirmSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Selection'**
+  String get confirmSelection;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
 
   /// No description provided for @employerDashboard_headerTitle.
   ///

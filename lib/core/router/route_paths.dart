@@ -10,6 +10,7 @@ class RoutePaths {
   static const String helperGuideline = "/guide_line";
   static const String helperSignin = "/helper_signin";
   static const String helperRegister = "/helper_register";
+  static const String languageSetting = "/language_settings";
   static const String home = "/home";
   static const String jobs = "/jobs";
   static const String jobDetail = "/job_detail";

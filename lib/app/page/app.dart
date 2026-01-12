@@ -19,6 +19,7 @@ import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/provider/helper_core_provider.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/repository/helper_home_repository.dart';
+import 'package:sg_easy_hire/features/notification/notification_count_cubit.dart';
 import 'package:sg_easy_hire/features/personal_test/data/repository/personality_test_repository.dart';
 import 'package:sg_easy_hire/features/personal_test/domain/personality_test_bloc.dart';
 
@@ -62,6 +63,7 @@ class AppPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => NotificationCountCubit()),
         BlocProvider(
           create: (context) => AuthChangeBloc(
             authRepository: context.read<AuthRepository>(),

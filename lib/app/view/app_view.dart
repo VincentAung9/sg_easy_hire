@@ -1,14 +1,20 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
+import 'package:sg_easy_hire/core/constants/box_keys.dart';
 import 'package:sg_easy_hire/core/localization/domain/language_switch_cubit.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/core/utils/fun.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.dart';
+import 'package:sg_easy_hire/features/notification/notification_count_cubit.dart';
+import 'package:sg_easy_hire/features/notification/notification_service.dart';
 import 'package:sg_easy_hire/features/personal_test/domain/personality_test_bloc.dart';
 import 'package:sg_easy_hire/features/personal_test/domain/personality_test_event.dart';
 import 'package:sg_easy_hire/l10n/l10n.dart';
@@ -26,10 +32,10 @@ class AppView extends StatefulWidget {
 
 class _AppViewState extends State<AppView> {
   bool isInitialized = false;
-
-  /*   @override
+  @override
   void initState() {
     super.initState();
+    NotificationService.handlePermissions();
     subscribeNotification();
     subscribeAuthToken();
   }
@@ -40,26 +46,13 @@ class _AppViewState extends State<AppView> {
         message,
       ) {
         safePrint(
-          "🔥 subscriptionNotificationOpened: ${message.data.containsKey("pinpoint.jsonBody")}",
+          "🔥 subscriptionNotificationOnData: ${message.data.containsKey("pinpoint.jsonBody")}",
         );
         if (!message.data.containsKey("pinpoint.jsonBody")) {
           //mean not chat noti
           showNoti(context, message.title ?? "", message.body ?? "");
         }
         context.read<NotificationCountCubit>().increaseCount();
-        cachedClearAll();
-        if (message.title?.startsWith("You’ve Got a Job Offer") == true) {
-          //if offered job status === PENDING
-          //increase new count for helper job offers
-          context.read<JobofferCountCubit>().increaseCount();
-        }
-        /*    final userId = context.read<HelperAuthCubic>().state.user?.id;
-        safePrint("🪪 UserID: $userId");
-        if (message.data.isNotEmpty &&
-            message.data.containsKey("receiverID") &&
-            message.data["receiverID"] == userId) {
-          //make chat logic
-        } */
       });
       NotificationService.subscriptionNotificationOpened.onData((message) {
         safePrint("🔥 subscriptionNotificationOpened: ${message.data}");
@@ -72,17 +65,15 @@ class _AppViewState extends State<AppView> {
   Future<void> subscribeAuthToken() async {
     try {
       Amplify.Notifications.Push.onTokenReceived.listen((token) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', token);
+        Hive.box<String>(name: tokenBox).put(tokenKey, token);
         safePrint("🌈TOKEN: $token");
-        final user = context.read<HelperAuthCubic>().state.user;
-        await AuthService.updateUser(user: user?.copyWith(token: token));
+        context.read<HelperCoreBloc>().add(UpdateDeviceToken(token: token));
       });
     } catch (e) {
       safePrint("🌈Subscribe Auth Token Error: $e");
     }
   }
- */
+
   @override
   Widget build(BuildContext context) {
     debugPrint("🌈App View Build..........");
@@ -135,7 +126,7 @@ class _AppViewState extends State<AppView> {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                locale: const Locale("en" /* lan */),
+                locale: Locale(lan),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

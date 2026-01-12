@@ -1,5 +1,7 @@
 const String userBox = "userBox";
 const String userBoxKey = "user_box_key";
+const String tokenBox = "device_token_box";
+const String tokenKey = "device_token_key";
 const String isSignIn = "user_is_sign_in_key";
 const String isFirstTimeLoggedIn = "is_first_time_logged_in";
 const String signInBox = "signInBox";

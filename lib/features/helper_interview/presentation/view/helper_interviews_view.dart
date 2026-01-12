@@ -5,6 +5,7 @@ import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_interview/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 
 class HelperInterviewsView extends StatelessWidget {
@@ -13,6 +14,7 @@ class HelperInterviewsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     final activeIndex = getInterviewStatusIndex(status);
     return Scaffold(
@@ -32,7 +34,7 @@ class HelperInterviewsView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 25, left: 16),
                   child: Text(
-                    "My Interviews",
+                    t.helperInterviews_title,
                     style: textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

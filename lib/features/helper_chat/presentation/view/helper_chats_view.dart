@@ -12,6 +12,7 @@ import 'package:sg_easy_hire/features/helper_chat/presentation/widget/chat_room_
 import 'package:sg_easy_hire/features/helper_chat/presentation/widget/helper_empty_chat.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:cached_query_flutter/cached_query_flutter.dart';
 
@@ -20,6 +21,7 @@ class HelperChatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     /*  final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final currentUser = context.read<HelperCoreBloc>().state.currentUser; */
@@ -28,9 +30,9 @@ class HelperChatsView extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primary,
         elevation: 0,
-        title: const Text(
-          "Messages",
-          style: TextStyle(
+        title: Text(
+          t.helperMessages_title,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 22, // 3xl
             fontWeight: FontWeight.bold,

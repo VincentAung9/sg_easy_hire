@@ -1,16 +1,14 @@
-import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nanoid/nanoid.dart';
-import 'package:sg_easy_hire/core/faker/db_seeder.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
-import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/User.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,9 +26,11 @@ class JobSearchDashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Container(
-      height: 240,
+      //height: 240,
       padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
       decoration: const BoxDecoration(
         color: AppColors.primary,
@@ -45,6 +45,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                 selector: (state) => state.currentUser,
                 builder: (context, user) {
                   return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CachedNetworkImage(
                         imageUrl: user?.avatarURL ?? "",
@@ -95,23 +96,22 @@ class JobSearchDashboardHeader extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          InkWell(
-                            onTap: () => updateUser(
-                              user!.copyWith(fullName: "Su Mon Thaw"),
-                            ),
-                            child: Text(
-                              "Hello, ${user?.fullName ?? ""}!",
-                              style: textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          Text(
+                            t.dashboardGreeting(user?.fullName ?? ""),
+                            style: textTheme.titleLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "Ready to find your next opportunity?",
-                            style: textTheme.bodySmall?.copyWith(
-                              color: AppColors.textWhite80,
-                              fontWeight: FontWeight.w600,
+
+                          SizedBox(
+                            width: (size.width * 0.5).w,
+                            child: Text(
+                              t.dashboardSubtitle,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: AppColors.textWhite80,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ],
@@ -180,7 +180,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                       return Expanded(
                         child: JobSearchDashboardStateItem(
                           value: "${profileViews.length}",
-                          label: "Profile Views",
+                          label: t.profileViews,
                         ),
                       );
                     },
@@ -192,7 +192,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                       builder: (context, appliedJobs) {
                         return JobSearchDashboardStateItem(
                           value: "${appliedJobs.length}",
-                          label: "Applied Jobs",
+                          label: t.appliedJobs,
                         );
                       },
                     ),
@@ -204,7 +204,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                       builder: (context, interviews) {
                         return JobSearchDashboardStateItem(
                           value: "${interviews.length}",
-                          label: "Interviews",
+                          label: t.interviews,
                         );
                       },
                     ),

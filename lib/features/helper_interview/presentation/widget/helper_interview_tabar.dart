@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class HelperInterviewTabBar extends StatelessWidget {
   const HelperInterviewTabBar({
@@ -13,6 +14,7 @@ class HelperInterviewTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
@@ -39,10 +41,13 @@ class HelperInterviewTabBar extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-              child: const Text(
-                "Pending",
+              child: Text(
+                t.helperInterviews_tabPending,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -65,9 +70,12 @@ class HelperInterviewTabBar extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-              child: const Text(
-                "Accepted",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              child: Text(
+                t.helperInterviews_tabAccepted,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -92,10 +100,13 @@ class HelperInterviewTabBar extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-              child: const Text(
-                "Completed",
+              child: Text(
+                t.employerInterview_tabCompleted,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),

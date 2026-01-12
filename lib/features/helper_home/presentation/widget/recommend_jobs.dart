@@ -9,6 +9,7 @@ import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dar
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/recommend_job_card.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Job.dart';
 
 class RecommendedJobs extends StatelessWidget {
@@ -16,6 +17,7 @@ class RecommendedJobs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return BlocBuilder<HomeBloc, HomeState>(
@@ -55,20 +57,23 @@ class RecommendedJobs extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recommended Jobs",
+                  t.jobSearchDashboard_recommendedJobs,
                   style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.go(RoutePaths.jobs);
-                  },
-                  child: Text(
-                    "See All",
-                    style: textTheme.titleSmall?.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w500,
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      context.go(RoutePaths.jobs);
+                    },
+                    child: Text(
+                      t.jobSearchDashboard_viewAllJobs,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.right,
                     ),
                   ),
                 ),

@@ -177,13 +177,14 @@ class AuthProvider {
       }
       // 3. If Cloud also says no, THEN create new
       safePrint("🆕 No record in Cloud or Local. Creating new...");
+      final token = Hive.box<String>(name: tokenBox).get(tokenKey);
       final newUser = User(
         code: nanoid(10),
         cognitoId: attributes.cognitoId,
         role: role ?? UserRole.HELPER,
         fullName: attributes.fullName,
         phone: attributes.phone,
-        deviceToken: hiveUser?.deviceToken,
+        deviceToken: token ?? hiveUser?.deviceToken,
         completeProgress: 0,
       );
       final saveRequest = ModelMutations.create(newUser);

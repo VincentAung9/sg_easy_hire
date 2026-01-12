@@ -8,6 +8,7 @@ import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_state.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class HelperJobsView extends StatefulWidget {
   const HelperJobsView({super.key});
@@ -38,6 +39,7 @@ class _HelperJobsViewState extends State<HelperJobsView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: LayoutBuilder(
@@ -79,7 +81,7 @@ class _HelperJobsViewState extends State<HelperJobsView> {
                                   spacing: 16,
                                   children: [
                                     Text(
-                                      "No matching results found.",
+                                      t.findHelpers_noResults,
                                       style: textTheme.titleMedium,
                                     ),
                                   ],

@@ -5,6 +5,7 @@ import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class FindJobHeader extends StatefulWidget {
   const FindJobHeader({super.key});
@@ -26,6 +27,7 @@ class _FindJobHeaderState extends State<FindJobHeader> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final t = AppLocalizations.of(context);
     return Container(
       height: 180, // Header height
       padding: const EdgeInsets.all(24),
@@ -38,7 +40,7 @@ class _FindJobHeaderState extends State<FindJobHeader> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Find Jobs",
+              t.findJobs_title,
               style: textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -62,7 +64,7 @@ class _FindJobHeaderState extends State<FindJobHeader> {
                     },
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Search by title location, family size...",
+                      hintText: t.findJobs_searchHint,
                       hintStyle: TextStyle(color: Colors.grey[300]),
                       prefixIcon: Icon(Icons.search, color: Colors.grey[300]),
                       filled: true,

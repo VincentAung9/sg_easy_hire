@@ -12,6 +12,10 @@
 
   "enterPassword": "စကားဝှက် ရိုက်ထည့်ပါ",
 
+  "signInContinue": "ဝင်ရောက်ရန်",
+  "signUpContinue": "စာရင်းသွင်းရန်",
+  
+
   "noAccount": "အကောင့်မရှိဘူးလား?",
   "signUp": "စာရင်းသွင်းမည်",
 
@@ -28,7 +32,179 @@
   "passwordLabel": "စကားဝှက်",
   "passwordHint": "စကားဝှက်ရိုက်ထည့်ပါ",
 
+  "alreadyHaveAccount": "အကောင့်ရှိပြီးသားလား?။",
+  "phoneNumberRequire": "ဖုန်းနံပါတ် ထည့်ရန်လိုအပ်ပါသည်။",
+  "passwordRequire": "စကားဝှက်ဖြည့်ပါ",
+  "fullNameRequire": "အမည်အပြည့်အစုံ ထည့်ရန်လိုအပ်ပါသည်။",
 
+   "employerApp": "အလုပ်ရှင် အက်ပ်",
+  "helperApp": "အလုပ်ရှာသူ အက်ပ်",
+
+  "employerSubtitle": "သင့်လိုအပ်ချက်အတွက် အကူအညီပေးသူကို ရှာဖွေပါ",
+  "helperSubtitle": "စင်္ကာပူတွင် သင့်အိမ်မက်အလုပ်ကို ရှာဖွေပါ",
+
+  "enterVerificationCode": "အတည်ပြုကုဒ် ထည့်ပါ",
+  "verifyCodeSubtitle": "SMS ဖြင့် ပို့ထားသော ဂဏန်း ၆ လုံးပါ ကုဒ်ကို ထည့်၍ သင့်ဖုန်းနံပါတ်ကို အတည်ပြုပါ။",
+
+  "pinIncorrect": "PIN ကုဒ် မမှန်ပါ။",
+
+  "dontReceiveOtp": "OTP မရရှိသေးဘူးလား?",
+  "resendOtp": "OTP ပြန်ပို့ပါ",
+
+  "resendOtpFailed": "ကုဒ်ကို ပြန်ပို့၍ မရပါ။ ထပ်မံကြိုးစားပါ။",
+  "resendOtpSuccess": "ကုဒ်အသစ်ကို သင့်ဖုန်းသို့ ပို့ပြီးပါပြီ။",
+
+  "verifyFailed": "အတည်ပြုခြင်း မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။",
+  "verifySuccess": "အတည်ပြုမှု အောင်မြင်ပါသည်။ သင့်အကောင့် အသုံးပြုနိုင်ပါပြီ။",
+
+  "verify": "အတည်ပြုပါ",
+
+   "onboardingTitle": "သင့်အကြောင်းကို ပိုမိုသိရှိရန် ကူညီပါ",
+  "onboardingSubtitle": "သင့်ပရိုဖိုင်ကို ပြီးစီးစေရန် အလုပ်ရရှိနိုင်ချေ ပိုမိုမြင့်မားစေပါသည်",
+
+  "estimatedTimeTitle": "ခန့်မှန်းချိန် – ၁၀ မှ ၁၅ မိနစ်",
+  "estimatedTimeDesc": "ဤမေးခွန်းများသည် အလုပ်ရှင်များအား သင့်ကျွမ်းကျင်မှု၊ အတွေ့အကြုံနှင့် လိုလားချက်များကို နားလည်စေရန် ကူညီပေးပါသည်",
+
+  "whatWeAskTitle": "မေးမြန်းမည့် အချက်များ:",
+
+  "askPersonalInfo": "ကိုယ်ရေးကိုယ်တာအချက်အလက်များ (အမည်၊ အသက်၊ နိုင်ငံသား)",
+  "askContactFamily": "ဆက်သွယ်ရန်အချက်အလက်နှင့် မိသားစုအခြေအနေ",
+  "askMedicalFood": "ကျန်းမာရေးမှတ်တမ်းနှင့် အစားအစာနှစ်သက်မှု",
+  "askLanguageSkills": "ပြောဆိုနိုင်သောဘာသာစကားများနှင့် ကျွမ်းကျင်မှုများ",
+  "askWorkPreference": "အလုပ်အတွေ့အကြုံနှင့် အလုပ်လိုလားချက်များ",
+  "askDocuments": "စာရွက်စာတမ်းများ (ပတ်စပို့၊ လက်မှတ်များ၊ ဓာတ်ပုံ)",
+
+  "importantInfoTitle": "အရေးကြီးသော အချက်အလက်များ",
+
+  "infoSkip_part1": "သင်သည် ",
+  "infoSkip_bold": "မဖြေလိုသေးသော မေးခွန်းများကို",
+  "infoSkip_part2": " ကျော်လွှားနိုင်ပါသည်",
+
+  "infoMandatory_part1": "",
+  "infoMandatory_bold": "မဖြစ်မနေဖြေဆိုရမည့် အချက်များ (*)",
+  "infoMandatory_part2": " သည် အလုပ်ရှင်များမြင်နိုင်ရန် လိုအပ်ပါသည်",
+
+  "infoApplyLater": "ယခုကျော်လွှားပါက အလုပ်လျှောက်ရာတွင် နောက်တစ်ကြိမ် ဖြေဆိုရပါမည်",
+
+  "infoViews_part1": "ပရိုဖိုင်ပြည့်စုံပါက ",
+  "infoViews_bold": "၃ ဆ ပိုမိုမြင်တွေ့ရနိုင်",
+  "infoViews_part2": " ပါသည်",
+
+  "skipForNow": "ယခုအချိန် ကျော်လွှားမည်",
+  "getStarted": "စတင်လိုက်ကြစို့",
+  "back": "နောက်သို့",
+
+
+  "languageSettingsTitle": "ဘာသာစကား ပြင်ဆင်မှု",
+
+  "skip": "ကျော်လွှားမည်",
+
+  "appLanguage": "အက်ပ်ဘာသာစကား",
+  "appLanguageDesc": "အက်ပ်အတွက် သင်နှစ်သက်သော ဘာသာစကားကို ရွေးချယ်ပါ",
+
+  "availableLanguages": "ရရှိနိုင်သော ဘာသာစကားများ",
+  "availableLanguagesDesc": "အက်ပ်၏ ဘာသာစကားကို ပြောင်းရန် ရွေးချယ်ပါ",
+
+  "saveLanguagePreference": "ဘာသာစကား ပြောင်းလဲမှု သိမ်းဆည်းမည်",
+  "languageRefreshHint": "ဘာသာစကားအသစ် အသုံးပြုရန် အက်ပ်ကို ပြန်လည်စတင်ပါမည်",
+
+  "english": "အင်္ဂလိပ်",
+  "myanmar": "မြန်မာ",
+
+  "notifications": "အကြောင်းကြားချက်များ",
+  "settings": "ဆက်တင်များ",
+
+  "dashboardGreeting": "မင်္ဂလာပါ {name}!",
+  "@dashboardGreeting": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+
+  "dashboardSubtitle": "သင့်အလုပ်အကိုင်အသစ်ကို ရှာဖွေရန် အဆင်သင့်ဖြစ်ပြီလား?",
+
+  "profileViews": "ပရိုဖိုင် ကြည့်ရှုမှုများ",
+  "appliedJobs": "လျှောက်ထားပြီးသော အလုပ်များ",
+  "interviews": "အင်တာဗျူးများ",
+
+  "notifications": "အကြောင်းကြားချက်များ",
+
+  "profileCompletionTitle": "ပရိုဖိုင် ပြည့်စုံမှု {percent}%",
+  "@profileCompletionTitle": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+
+  "profileCompletionSubtitle": "မြင်သာမှုတိုးစေရန် စာရွက်စာတမ်းများ ထည့်ပါ",
+
+"quickActionsTitle": "လျင်မြန်စွာ လုပ်ဆောင်ရန်",
+
+  "quickActionUpdateBiodata": "ကိုယ်ရေးအချက်အလက် ပြင်ဆင်ရန်",
+  "quickActionPersonalityTest": "ကိုယ်ရည်ကိုယ်သွေး စစ်ဆေးမှု",
+  "quickActionGuidelines": "လမ်းညွှန်ချက်များ",
+  "quickActionUploadDocuments": "စာရွက်စာတမ်း တင်ရန်",
+  "quickActionSearchJobs": "အလုပ်ရှာရန်",
+
+  "nextInterviewTitle": "နောက်လာမည့် အင်တာဗျူး",
+
+  "interviewDateLabel": "အင်တာဗျူး ရက်စွဲ",
+  "interviewTomorrow": "မနက်ဖြန်",
+
+  "interviewSalaryLabel": "လစာ",
+  "interviewFamilyLabel": "မိသားစု",
+  "interviewFamilyMembers": "အဖွဲ့ဝင် {count} ယောက်",
+  "interviewDutiesLabel": "တာဝန်များ",
+  "interviewOffDaysLabel": "နားရက်များ",
+
+  "interviewCancel": "ပယ်ဖျက်ရန်",
+
+  "jobInFamily": "မိသားစုဝင် {count} ယောက်",
+  "jobChildren": "ကလေး {count} ယောက်",
+  "jobOffDays": "နားရက်များ - {days}",
+
+  "jobApplied": "လျှောက်ထားပြီး",
+  "jobApplyNow": "အလုပ်လျှောက်ရန်",
+
+  "jobSalaryFormat": "{salary}/{period}",
+   "all": "အားလုံး",
+     "viewDetails": "အသေးစိတ်ကြည့်ရန်",
+      "adultCountLabel": "အရွယ်ရောက်သူ {count} ဦး",
+  "@adultCountLabel": {
+    "description": "အိမ်ထောင်စုအတွင်းရှိ အရွယ်ရောက်သူ အရေအတွက်",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "elderlyCountLabel": "အသက်ကြီးသူ {count} ဦး",
+  "@elderlyCountLabel": {
+    "description": "အိမ်ထောင်စုအတွင်းရှိ အသက်ကြီးသူ အရေအတွက်",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+   "countdownDays": "ရက်",
+  "countdownHours": "နာရီ",
+  "countdownMinutes": "မိနစ်",
+  "interviewStatusAccept": "လက်ခံမည်",
+  "interviewStatusCancel": "ပယ်ဖျက်မည်",
+  "interviewStatusCompleted": "ပြီးဆုံးပြီး",
+  "interviewStatusCancelled": "ပယ်ဖျက်ပြီး",
+  "interviewStatusNoShow": "မလာရောက်ပါ",
+  "interviewStatusProcessing": "အင်တာဗျူးလုပ်ဆောင်နေသည်",
+   "time": "အချိန်",
+   "selectInterviewTime": "အင်တာဗျူး အချိန်ရွေးချယ်ပါ",
+  "selectInterviewTimeSubtitle": "အင်တာဗျူးအတွက် သင်နှစ်သက်သော အချိန်ကို ရွေးချယ်ပါ",
+  "interviewScheduledSuccess": "ရွေးချယ်ထားသော အချိန်အတိုင်း အင်တာဗျူး အချိန်သတ်မှတ်ပြီးပါပြီ",
+  "confirmSelection": "အတည်ပြုမည်",
+  "cancel": "မလုပ်တော့ပါ",
+  "date": "ရက်စွဲ",
+  "time": "အချိန်",
 
 
     "employerDashboard_headerTitle": "The Tan Family",

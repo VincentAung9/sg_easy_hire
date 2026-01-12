@@ -8,6 +8,7 @@ import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.da
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_cubit.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/Interview.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
@@ -17,14 +18,12 @@ class NextInterviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return BlocSelector<HomeBloc, HomeState, Interview?>(
       selector: (state) => state.nextInterview,
       builder: (context, nextInterview) {
-        debugPrint(
-          "🔥 Next Interview Changed: ${nextInterview?.confirmedDateTime?.getDateTimeInUtc().toLocal().toString()}",
-        );
         if (nextInterview == null) {
           return const SizedBox();
         }
@@ -42,7 +41,7 @@ class NextInterviewCard extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               Text(
-                "Next Interview",
+                t.nextInterviewTitle,
                 style: textTheme.titleLarge?.copyWith(
                   color: AppColors.textPrimaryLight,
                   fontWeight: FontWeight.bold,
@@ -65,7 +64,7 @@ class NextInterviewCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Interview Date",
+                      t.interviewDateLabel,
                       style: textTheme.titleSmall?.copyWith(
                         color: AppColors.textSecondaryLight,
                       ),
@@ -74,7 +73,7 @@ class NextInterviewCard extends StatelessWidget {
                     Text(
                       nextInterview.confirmedDateTime == null
                           ? ""
-                          : "${isTomorrow(nextInterview.confirmedDateTime!.getDateTimeInUtc().toLocal()) ? "Tomorrow," : ""} ${formatDateMMMd(nextInterview.confirmedDateTime!.getDateTimeInUtc().toLocal())}",
+                          : "${isTomorrow(nextInterview.confirmedDateTime!.getDateTimeInUtc().toLocal()) ? "${t.interviewTomorrow}," : ""} ${formatDateMMMd(nextInterview.confirmedDateTime!.getDateTimeInUtc().toLocal())}",
                       style: textTheme.titleLarge?.copyWith(
                         color: AppColors.textPrimaryLight,
                         fontWeight: FontWeight.bold,
@@ -113,25 +112,26 @@ class NextInterviewCard extends StatelessWidget {
                       crossAxisSpacing: 16,
                       children: [
                         InterviewDetailItem(
-                          label: "Salary",
+                          label: t.interviewSalaryLabel,
                           value:
                               "\$${nextInterview.job?.salary}/${nextInterview.job?.payPeriod}",
                         ),
                         nextInterview.job?.familyMembers == null
                             ? const SizedBox()
                             : InterviewDetailItem(
-                                label: "Family",
-                                value:
-                                    "${nextInterview.job?.familyMembers} members",
+                                label: t.interviewFamilyLabel,
+                                value: t.interviewFamilyMembers(
+                                  nextInterview.job?.familyMembers ?? 0,
+                                ),
                               ),
                         InterviewDetailItem(
-                          label: "Duties",
+                          label: t.interviewDutiesLabel,
                           value:
                               nextInterview.job?.requiredSkills?.join(", ") ??
                               "",
                         ),
                         InterviewDetailItem(
-                          label: "Off Days",
+                          label: t.interviewOffDaysLabel,
                           value: nextInterview.job?.offdays ?? "",
                         ),
                       ],
@@ -179,9 +179,9 @@ class NextInterviewCard extends StatelessWidget {
                                     ? const ButtonLoading(
                                         height: 30,
                                       )
-                                    : const Text(
-                                        "Cancel",
-                                        style: TextStyle(
+                                    : Text(
+                                        t.interviewCancel,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),

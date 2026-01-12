@@ -12,6 +12,7 @@ import 'package:sg_easy_hire/features/auth/domain/verify_code/verify_code_event.
 import 'package:sg_easy_hire/features/auth/domain/verify_code/verify_code_state.dart';
 import 'package:sg_easy_hire/features/auth/models/confirm_sign_up_param.dart';
 import 'package:sg_easy_hire/features/auth/presentation/widgets/widgets.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
 
 class VerifyCodeView extends StatefulWidget {
@@ -31,6 +32,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final verifyCodeBloc = context.read<VerifyCodeBloc>();
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -50,24 +52,23 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                 // --- Top Logo & Header ---
                 LogoHeader(
                   title: widget.param.role == UserRole.EMPLOYER
-                      ? 'Employer App'
-                      : 'Helper App',
+                      ? t.employerApp
+                      : t.helperApp,
                   subTitle: widget.param.role == UserRole.EMPLOYER
-                      ? 'Find Helper for your needs'
-                      : 'Find your dream job in Singapore',
+                      ? t.employerSubtitle
+                      : t.helperSubtitle,
                 ),
                 const SizedBox(height: 48),
                 FormCardContainer(
-                  title: 'Enter Verification Code',
-                  subTitle:
-                      'Verify your number with the 6-digit code we just sent via SMS.',
+                  title: t.enterVerificationCode,
+                  subTitle: t.verifyCodeSubtitle,
                   child: BlocConsumer<VerifyCodeBloc, VerifyCodeState>(
                     listener: (context, state) {
                       if (state.actions == VerifyActions.resendCode &&
                           state.status == VerifyStatus.failure) {
                         showError(
                           context,
-                          "We couldn't resend the code. Please try again.",
+                          t.resendOtpFailed,
                         );
                       }
                       if (state.actions == VerifyActions.verify &&
@@ -82,14 +83,14 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                           state.status == VerifyStatus.success) {
                         showSuccess(
                           context,
-                          "A new code has been sent to your phone.",
+                          t.resendOtpSuccess,
                         );
                       }
                       if (state.actions == VerifyActions.verify &&
                           state.status == VerifyStatus.success) {
                         showSuccess(
                           context,
-                          "Verification successful! Your account is now ready.",
+                          t.verifySuccess,
                         );
                         context.go(
                           widget.param.role == UserRole.HELPER
@@ -111,7 +112,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                             submittedPinTheme: submittedPinTheme,
                             validator: (s) {
                               if (s == null || s.isEmpty) {
-                                return "Pin is incorrect.";
+                                return t.pinIncorrect;
                               } else {
                                 return null;
                               }
@@ -129,7 +130,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Don't receive the OTP?",
+                                t.dontReceiveOtp,
                                 style: textTheme.bodyMedium?.copyWith(
                                   color: Colors.grey,
                                 ),
@@ -145,7 +146,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                                         color: AppColors.primary,
                                       )
                                     : Text(
-                                        "RESEND OTP",
+                                        t.resendOtp,
                                         style: textTheme.bodyMedium?.copyWith(
                                           color: AppColors.primary,
                                         ),
@@ -176,7 +177,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                                   state.actions == VerifyActions.verify &&
                                       state.status == VerifyStatus.loading
                                   ? const ButtonLoading()
-                                  : const Text('Verify'),
+                                  : Text(t.verify),
                             ),
                           ),
                         ],

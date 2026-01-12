@@ -197,6 +197,17 @@ class HelperProfileView extends StatelessWidget {
                       subtitle: "FAQs, contact agency",
                     ),
                     HelperAccountMenuItem(
+                      onTap: () => context.push(
+                        RoutePaths.languageSetting,
+                        extra: false,
+                      ),
+                      icon: Icons.language,
+                      iconBgColor: Colors.grey[200]!,
+                      iconColor: AppColors.textGrayLight,
+                      title: "Language",
+                      subtitle: "App language",
+                    ),
+                    HelperAccountMenuItem(
                       onTap: () => context.push(RoutePaths.helperProfileUpdate),
                       icon: Icons.settings_outlined,
                       iconBgColor: Colors.grey[200]!,

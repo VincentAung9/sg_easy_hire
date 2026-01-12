@@ -33,6 +33,12 @@ class AppLocalizationsMy extends AppLocalizations {
   String get enterPassword => 'စကားဝှက် ရိုက်ထည့်ပါ';
 
   @override
+  String get signInContinue => 'ဝင်ရောက်ရန်';
+
+  @override
+  String get signUpContinue => 'စာရင်းသွင်းရန်';
+
+  @override
   String get noAccount => 'အကောင့်မရှိဘူးလား?';
 
   @override
@@ -61,6 +67,333 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get passwordHint => 'စကားဝှက်ရိုက်ထည့်ပါ';
+
+  @override
+  String get alreadyHaveAccount => 'အကောင့်ရှိပြီးသားလား?။';
+
+  @override
+  String get phoneNumberRequire => 'ဖုန်းနံပါတ် ထည့်ရန်လိုအပ်ပါသည်။';
+
+  @override
+  String get passwordRequire => 'စကားဝှက်ဖြည့်ပါ';
+
+  @override
+  String get fullNameRequire => 'အမည်အပြည့်အစုံ ထည့်ရန်လိုအပ်ပါသည်။';
+
+  @override
+  String get employerApp => 'အလုပ်ရှင် အက်ပ်';
+
+  @override
+  String get helperApp => 'အလုပ်ရှာသူ အက်ပ်';
+
+  @override
+  String get employerSubtitle => 'သင့်လိုအပ်ချက်အတွက် အကူအညီပေးသူကို ရှာဖွေပါ';
+
+  @override
+  String get helperSubtitle => 'စင်္ကာပူတွင် သင့်အိမ်မက်အလုပ်ကို ရှာဖွေပါ';
+
+  @override
+  String get enterVerificationCode => 'အတည်ပြုကုဒ် ထည့်ပါ';
+
+  @override
+  String get verifyCodeSubtitle => 'SMS ဖြင့် ပို့ထားသော ဂဏန်း ၆ လုံးပါ ကုဒ်ကို ထည့်၍ သင့်ဖုန်းနံပါတ်ကို အတည်ပြုပါ။';
+
+  @override
+  String get pinIncorrect => 'PIN ကုဒ် မမှန်ပါ။';
+
+  @override
+  String get dontReceiveOtp => 'OTP မရရှိသေးဘူးလား?';
+
+  @override
+  String get resendOtp => 'OTP ပြန်ပို့ပါ';
+
+  @override
+  String get resendOtpFailed => 'ကုဒ်ကို ပြန်ပို့၍ မရပါ။ ထပ်မံကြိုးစားပါ။';
+
+  @override
+  String get resendOtpSuccess => 'ကုဒ်အသစ်ကို သင့်ဖုန်းသို့ ပို့ပြီးပါပြီ။';
+
+  @override
+  String get verifyFailed => 'အတည်ပြုခြင်း မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
+
+  @override
+  String get verifySuccess => 'အတည်ပြုမှု အောင်မြင်ပါသည်။ သင့်အကောင့် အသုံးပြုနိုင်ပါပြီ။';
+
+  @override
+  String get verify => 'အတည်ပြုပါ';
+
+  @override
+  String get onboardingTitle => 'သင့်အကြောင်းကို ပိုမိုသိရှိရန် ကူညီပါ';
+
+  @override
+  String get onboardingSubtitle => 'သင့်ပရိုဖိုင်ကို ပြီးစီးစေရန် အလုပ်ရရှိနိုင်ချေ ပိုမိုမြင့်မားစေပါသည်';
+
+  @override
+  String get estimatedTimeTitle => 'ခန့်မှန်းချိန် – ၁၀ မှ ၁၅ မိနစ်';
+
+  @override
+  String get estimatedTimeDesc => 'ဤမေးခွန်းများသည် အလုပ်ရှင်များအား သင့်ကျွမ်းကျင်မှု၊ အတွေ့အကြုံနှင့် လိုလားချက်များကို နားလည်စေရန် ကူညီပေးပါသည်';
+
+  @override
+  String get whatWeAskTitle => 'မေးမြန်းမည့် အချက်များ:';
+
+  @override
+  String get askPersonalInfo => 'ကိုယ်ရေးကိုယ်တာအချက်အလက်များ (အမည်၊ အသက်၊ နိုင်ငံသား)';
+
+  @override
+  String get askContactFamily => 'ဆက်သွယ်ရန်အချက်အလက်နှင့် မိသားစုအခြေအနေ';
+
+  @override
+  String get askMedicalFood => 'ကျန်းမာရေးမှတ်တမ်းနှင့် အစားအစာနှစ်သက်မှု';
+
+  @override
+  String get askLanguageSkills => 'ပြောဆိုနိုင်သောဘာသာစကားများနှင့် ကျွမ်းကျင်မှုများ';
+
+  @override
+  String get askWorkPreference => 'အလုပ်အတွေ့အကြုံနှင့် အလုပ်လိုလားချက်များ';
+
+  @override
+  String get askDocuments => 'စာရွက်စာတမ်းများ (ပတ်စပို့၊ လက်မှတ်များ၊ ဓာတ်ပုံ)';
+
+  @override
+  String get importantInfoTitle => 'အရေးကြီးသော အချက်အလက်များ';
+
+  @override
+  String get infoSkip_part1 => 'သင်သည် ';
+
+  @override
+  String get infoSkip_bold => 'မဖြေလိုသေးသော မေးခွန်းများကို';
+
+  @override
+  String get infoSkip_part2 => ' ကျော်လွှားနိုင်ပါသည်';
+
+  @override
+  String get infoMandatory_part1 => '';
+
+  @override
+  String get infoMandatory_bold => 'မဖြစ်မနေဖြေဆိုရမည့် အချက်များ (*)';
+
+  @override
+  String get infoMandatory_part2 => ' သည် အလုပ်ရှင်များမြင်နိုင်ရန် လိုအပ်ပါသည်';
+
+  @override
+  String get infoApplyLater => 'ယခုကျော်လွှားပါက အလုပ်လျှောက်ရာတွင် နောက်တစ်ကြိမ် ဖြေဆိုရပါမည်';
+
+  @override
+  String get infoViews_part1 => 'ပရိုဖိုင်ပြည့်စုံပါက ';
+
+  @override
+  String get infoViews_bold => '၃ ဆ ပိုမိုမြင်တွေ့ရနိုင်';
+
+  @override
+  String get infoViews_part2 => ' ပါသည်';
+
+  @override
+  String get skipForNow => 'ယခုအချိန် ကျော်လွှားမည်';
+
+  @override
+  String get getStarted => 'စတင်လိုက်ကြစို့';
+
+  @override
+  String get back => 'နောက်သို့';
+
+  @override
+  String get languageSettingsTitle => 'ဘာသာစကား ပြင်ဆင်မှု';
+
+  @override
+  String get skip => 'ကျော်လွှားမည်';
+
+  @override
+  String get appLanguage => 'အက်ပ်ဘာသာစကား';
+
+  @override
+  String get appLanguageDesc => 'အက်ပ်အတွက် သင်နှစ်သက်သော ဘာသာစကားကို ရွေးချယ်ပါ';
+
+  @override
+  String get availableLanguages => 'ရရှိနိုင်သော ဘာသာစကားများ';
+
+  @override
+  String get availableLanguagesDesc => 'အက်ပ်၏ ဘာသာစကားကို ပြောင်းရန် ရွေးချယ်ပါ';
+
+  @override
+  String get saveLanguagePreference => 'ဘာသာစကား ပြောင်းလဲမှု သိမ်းဆည်းမည်';
+
+  @override
+  String get languageRefreshHint => 'ဘာသာစကားအသစ် အသုံးပြုရန် အက်ပ်ကို ပြန်လည်စတင်ပါမည်';
+
+  @override
+  String get english => 'အင်္ဂလိပ်';
+
+  @override
+  String get myanmar => 'မြန်မာ';
+
+  @override
+  String get notifications => 'အကြောင်းကြားချက်များ';
+
+  @override
+  String get settings => 'ဆက်တင်များ';
+
+  @override
+  String dashboardGreeting(Object name) {
+    return 'မင်္ဂလာပါ $name!';
+  }
+
+  @override
+  String get dashboardSubtitle => 'သင့်အလုပ်အကိုင်အသစ်ကို ရှာဖွေရန် အဆင်သင့်ဖြစ်ပြီလား?';
+
+  @override
+  String get profileViews => 'ပရိုဖိုင် ကြည့်ရှုမှုများ';
+
+  @override
+  String get appliedJobs => 'လျှောက်ထားပြီးသော အလုပ်များ';
+
+  @override
+  String get interviews => 'အင်တာဗျူးများ';
+
+  @override
+  String profileCompletionTitle(Object percent) {
+    return 'ပရိုဖိုင် ပြည့်စုံမှု $percent%';
+  }
+
+  @override
+  String get profileCompletionSubtitle => 'မြင်သာမှုတိုးစေရန် စာရွက်စာတမ်းများ ထည့်ပါ';
+
+  @override
+  String get quickActionsTitle => 'လျင်မြန်စွာ လုပ်ဆောင်ရန်';
+
+  @override
+  String get quickActionUpdateBiodata => 'ကိုယ်ရေးအချက်အလက် ပြင်ဆင်ရန်';
+
+  @override
+  String get quickActionPersonalityTest => 'ကိုယ်ရည်ကိုယ်သွေး စစ်ဆေးမှု';
+
+  @override
+  String get quickActionGuidelines => 'လမ်းညွှန်ချက်များ';
+
+  @override
+  String get quickActionUploadDocuments => 'စာရွက်စာတမ်း တင်ရန်';
+
+  @override
+  String get quickActionSearchJobs => 'အလုပ်ရှာရန်';
+
+  @override
+  String get nextInterviewTitle => 'နောက်လာမည့် အင်တာဗျူး';
+
+  @override
+  String get interviewDateLabel => 'အင်တာဗျူး ရက်စွဲ';
+
+  @override
+  String get interviewTomorrow => 'မနက်ဖြန်';
+
+  @override
+  String get interviewSalaryLabel => 'လစာ';
+
+  @override
+  String get interviewFamilyLabel => 'မိသားစု';
+
+  @override
+  String interviewFamilyMembers(Object count) {
+    return 'အဖွဲ့ဝင် $count ယောက်';
+  }
+
+  @override
+  String get interviewDutiesLabel => 'တာဝန်များ';
+
+  @override
+  String get interviewOffDaysLabel => 'နားရက်များ';
+
+  @override
+  String get interviewCancel => 'ပယ်ဖျက်ရန်';
+
+  @override
+  String jobInFamily(Object count) {
+    return 'မိသားစုဝင် $count ယောက်';
+  }
+
+  @override
+  String jobChildren(Object count) {
+    return 'ကလေး $count ယောက်';
+  }
+
+  @override
+  String jobOffDays(Object days) {
+    return 'နားရက်များ - $days';
+  }
+
+  @override
+  String get jobApplied => 'လျှောက်ထားပြီး';
+
+  @override
+  String get jobApplyNow => 'အလုပ်လျှောက်ရန်';
+
+  @override
+  String jobSalaryFormat(Object period, Object salary) {
+    return '$salary/$period';
+  }
+
+  @override
+  String get all => 'အားလုံး';
+
+  @override
+  String get viewDetails => 'အသေးစိတ်ကြည့်ရန်';
+
+  @override
+  String adultCountLabel(int count) {
+    return 'အရွယ်ရောက်သူ $count ဦး';
+  }
+
+  @override
+  String elderlyCountLabel(int count) {
+    return 'အသက်ကြီးသူ $count ဦး';
+  }
+
+  @override
+  String get countdownDays => 'ရက်';
+
+  @override
+  String get countdownHours => 'နာရီ';
+
+  @override
+  String get countdownMinutes => 'မိနစ်';
+
+  @override
+  String get interviewStatusAccept => 'လက်ခံမည်';
+
+  @override
+  String get interviewStatusCancel => 'ပယ်ဖျက်မည်';
+
+  @override
+  String get interviewStatusCompleted => 'ပြီးဆုံးပြီး';
+
+  @override
+  String get interviewStatusCancelled => 'ပယ်ဖျက်ပြီး';
+
+  @override
+  String get interviewStatusNoShow => 'မလာရောက်ပါ';
+
+  @override
+  String get interviewStatusProcessing => 'အင်တာဗျူးလုပ်ဆောင်နေသည်';
+
+  @override
+  String get time => 'အချိန်';
+
+  @override
+  String get selectInterviewTime => 'အင်တာဗျူး အချိန်ရွေးချယ်ပါ';
+
+  @override
+  String get selectInterviewTimeSubtitle => 'အင်တာဗျူးအတွက် သင်နှစ်သက်သော အချိန်ကို ရွေးချယ်ပါ';
+
+  @override
+  String get interviewScheduledSuccess => 'ရွေးချယ်ထားသော အချိန်အတိုင်း အင်တာဗျူး အချိန်သတ်မှတ်ပြီးပါပြီ';
+
+  @override
+  String get confirmSelection => 'အတည်ပြုမည်';
+
+  @override
+  String get cancel => 'မလုပ်တော့ပါ';
+
+  @override
+  String get date => 'ရက်စွဲ';
 
   @override
   String get employerDashboard_headerTitle => 'The Tan Family';

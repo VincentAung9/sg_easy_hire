@@ -18,6 +18,7 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
     on<GetInitialUserData>(_getInitialUserData);
     on<StartSubscribeToUser>(_onStartSubscribeToUser);
     on<StartSubscribeToHiveUser>(_onStartSubscribeToHiveUser);
+    on<UpdateDeviceToken>(_onUpdateDeviceToken);
   }
 
   FutureOr<void> _onStartSubscribeToUser(
@@ -80,5 +81,15 @@ class HelperCoreBloc extends Bloc<HelperCoreEvent, HelperCoreState> {
     if (user != null) {
       emit(state.copyWith(currentUser: user));
     }
+  }
+
+  FutureOr<void> _onUpdateDeviceToken(
+    UpdateDeviceToken event,
+    Emitter<HelperCoreState> emit,
+  ) async {
+    if (state.currentUser == null) return;
+    await provider.updateUser(
+      state.currentUser!.copyWith(deviceToken: event.token),
+    );
   }
 }

@@ -8,6 +8,7 @@ class RouteNames {
   static const String helperGuideline = "/guide_line";
   static const String helperSignin = "helper_signin";
   static const String helperRegister = "helper_register";
+  static const String languageSetting = "language_settings";
   static const String home = "home";
   static const String jobs = "jobs";
   static const String jobDetail = "jobs_detail";
@@ -38,7 +39,7 @@ class RouteNames {
   static const String helpSupport = "help_support";
   static const String helperSupportChat = "helper_support_chat";
   static const String supportChatType = "support_chat_type";
-    static const String supportChatTypeOther = "support_chat_type_other";
+  static const String supportChatTypeOther = "support_chat_type_other";
   static const String settings = "settings";
   static const String foodHandling = "food_handling";
   static const String helperQuiz = "helper_quiz";

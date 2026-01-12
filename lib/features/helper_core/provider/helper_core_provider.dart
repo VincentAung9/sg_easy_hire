@@ -11,7 +11,7 @@ class HelperCoreProvider {
 
   Future<void> updateUser(User user) async {
     try {
-      await Amplify.DataStore.save(user);
+      await Amplify.API.mutate(request: ModelMutations.update(user)).response;
       debugPrint("🌈 User is updated");
     } on DataStoreException catch (e) {
       debugPrint("❗️ User Update Error: $e");

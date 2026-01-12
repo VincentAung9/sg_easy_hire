@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_cubit.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class JoinCallBtn extends StatelessWidget {
   const JoinCallBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return BlocBuilder<CountdownCubit, CountdownState>(
       builder: (context, state) {
         final isJoinEnabled = canJoinCall(state);
@@ -25,14 +27,14 @@ class JoinCallBtn extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.call, size: 18),
-              SizedBox(width: 8),
+              const Icon(Icons.call, size: 18),
+              const SizedBox(width: 8),
               Text(
-                "Join Call",
-                style: TextStyle(
+                t.employerDashboard_joinCall,
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
               ),

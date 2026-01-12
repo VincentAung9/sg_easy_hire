@@ -4,6 +4,7 @@ import 'package:sg_easy_hire/core/widgets/shimmer_container.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_state.dart';
 import 'package:sg_easy_hire/features/helper_jobs/presentation/widget/job_filter_chip.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class FindJobFilterChip extends StatelessWidget {
@@ -11,12 +12,14 @@ class FindJobFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final all = t.all;
     return SizedBox(
       height: 40, // Increased height for chips
       child: BlocBuilder<HelperJobsBloc, HelperJobsState>(
         builder: (context, state) {
           if (state.status == HelperJobsStatus.initialPending &&
-              state.action == HelperJobsActions.getJobTags) {
+              state.jobTags.isEmpty) {
             return ListView.builder(
               itemCount: 10,
               scrollDirection: Axis.horizontal,
@@ -37,7 +40,7 @@ class FindJobFilterChip extends StatelessWidget {
             itemCount: state.jobTags.length + 1,
             itemBuilder: (_, index) {
               final jobTag = [
-                JobTag(name: "All"),
+                JobTag(name: all),
                 ...state.jobTags,
               ][index].name;
               return Padding(

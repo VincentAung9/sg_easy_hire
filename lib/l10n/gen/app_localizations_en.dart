@@ -33,6 +33,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterPassword => 'Enter password';
 
   @override
+  String get signInContinue => 'Continue';
+
+  @override
+  String get signUpContinue => 'Continue';
+
+  @override
   String get noAccount => 'Don\'t have an account?';
 
   @override
@@ -61,6 +67,333 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordHint => 'Enter password';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get phoneNumberRequire => 'Phone number is required';
+
+  @override
+  String get passwordRequire => 'Password is required';
+
+  @override
+  String get fullNameRequire => 'Full name is required';
+
+  @override
+  String get employerApp => 'Employer App';
+
+  @override
+  String get helperApp => 'Helper App';
+
+  @override
+  String get employerSubtitle => 'Find Helper for your needs';
+
+  @override
+  String get helperSubtitle => 'Find your dream job in Singapore';
+
+  @override
+  String get enterVerificationCode => 'Enter Verification Code';
+
+  @override
+  String get verifyCodeSubtitle => 'Verify your number with the 6-digit code we just sent via SMS.';
+
+  @override
+  String get pinIncorrect => 'PIN is incorrect.';
+
+  @override
+  String get dontReceiveOtp => 'Don\'t receive the OTP?';
+
+  @override
+  String get resendOtp => 'RESEND OTP';
+
+  @override
+  String get resendOtpFailed => 'We couldn\'t resend the code. Please try again.';
+
+  @override
+  String get resendOtpSuccess => 'A new code has been sent to your phone.';
+
+  @override
+  String get verifyFailed => 'Verification failed. Please try again.';
+
+  @override
+  String get verifySuccess => 'Verification successful! Your account is now ready.';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get onboardingTitle => 'Help Us Know You Better';
+
+  @override
+  String get onboardingSubtitle => 'Complete your profile to increase your chances of finding the perfect job';
+
+  @override
+  String get estimatedTimeTitle => 'Estimated Time: 10–15 minutes';
+
+  @override
+  String get estimatedTimeDesc => 'This questionnaire helps employers understand your skills, experience, and preferences to match you with suitable job opportunities.';
+
+  @override
+  String get whatWeAskTitle => 'What We\'ll Ask About:';
+
+  @override
+  String get askPersonalInfo => 'Personal information (name, age, nationality)';
+
+  @override
+  String get askContactFamily => 'Contact details and family background';
+
+  @override
+  String get askMedicalFood => 'Medical history and food preferences';
+
+  @override
+  String get askLanguageSkills => 'Languages spoken and skills';
+
+  @override
+  String get askWorkPreference => 'Work experience and job preferences';
+
+  @override
+  String get askDocuments => 'Document uploads (passport, certificates, photo)';
+
+  @override
+  String get importantInfoTitle => 'Important Information';
+
+  @override
+  String get infoSkip_part1 => 'You can ';
+
+  @override
+  String get infoSkip_bold => 'skip any questions';
+
+  @override
+  String get infoSkip_part2 => ' you\'re not ready to answer';
+
+  @override
+  String get infoMandatory_part1 => '';
+
+  @override
+  String get infoMandatory_bold => 'Mandatory fields (*)';
+
+  @override
+  String get infoMandatory_part2 => ' are required for your biodata to be visible to employers';
+
+  @override
+  String get infoApplyLater => 'If you skip now, you\'ll be asked to complete this when applying for jobs';
+
+  @override
+  String get infoViews_part1 => 'Complete profiles get ';
+
+  @override
+  String get infoViews_bold => '3x more views';
+
+  @override
+  String get infoViews_part2 => ' from employers';
+
+  @override
+  String get skipForNow => 'Skip for Now';
+
+  @override
+  String get getStarted => 'Let\'s Get Started';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get languageSettingsTitle => 'Language Settings';
+
+  @override
+  String get skip => 'Skip For Now';
+
+  @override
+  String get appLanguage => 'App Language';
+
+  @override
+  String get appLanguageDesc => 'Choose your preferred language for the app interface';
+
+  @override
+  String get availableLanguages => 'Available Languages';
+
+  @override
+  String get availableLanguagesDesc => 'Select a language to change the app interface';
+
+  @override
+  String get saveLanguagePreference => 'Save Language Preference';
+
+  @override
+  String get languageRefreshHint => 'The app will refresh to apply the new language';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get myanmar => 'Myanmar';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String dashboardGreeting(Object name) {
+    return 'Hello, $name!';
+  }
+
+  @override
+  String get dashboardSubtitle => 'Ready to find your next opportunity?';
+
+  @override
+  String get profileViews => 'Profile Views';
+
+  @override
+  String get appliedJobs => 'Applied Jobs';
+
+  @override
+  String get interviews => 'Interviews';
+
+  @override
+  String profileCompletionTitle(Object percent) {
+    return 'Profile: $percent% Complete';
+  }
+
+  @override
+  String get profileCompletionSubtitle => 'Add documents to boost visibility';
+
+  @override
+  String get quickActionsTitle => 'Quick Actions';
+
+  @override
+  String get quickActionUpdateBiodata => 'Update Biodata';
+
+  @override
+  String get quickActionPersonalityTest => 'Personality Test';
+
+  @override
+  String get quickActionGuidelines => 'Guidelines';
+
+  @override
+  String get quickActionUploadDocuments => 'Upload Documents';
+
+  @override
+  String get quickActionSearchJobs => 'Search Jobs';
+
+  @override
+  String get nextInterviewTitle => 'Next Interview';
+
+  @override
+  String get interviewDateLabel => 'Interview Date';
+
+  @override
+  String get interviewTomorrow => 'Tomorrow';
+
+  @override
+  String get interviewSalaryLabel => 'Salary';
+
+  @override
+  String get interviewFamilyLabel => 'Family';
+
+  @override
+  String interviewFamilyMembers(Object count) {
+    return '$count members';
+  }
+
+  @override
+  String get interviewDutiesLabel => 'Duties';
+
+  @override
+  String get interviewOffDaysLabel => 'Off Days';
+
+  @override
+  String get interviewCancel => 'Cancel';
+
+  @override
+  String jobInFamily(Object count) {
+    return '$count in family';
+  }
+
+  @override
+  String jobChildren(Object count) {
+    return '$count children';
+  }
+
+  @override
+  String jobOffDays(Object days) {
+    return 'Off days: $days';
+  }
+
+  @override
+  String get jobApplied => 'Applied';
+
+  @override
+  String get jobApplyNow => 'Apply Now';
+
+  @override
+  String jobSalaryFormat(Object period, Object salary) {
+    return '$salary/$period';
+  }
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String adultCountLabel(int count) {
+    return '$count Adult';
+  }
+
+  @override
+  String elderlyCountLabel(int count) {
+    return '$count Elderly';
+  }
+
+  @override
+  String get countdownDays => 'days';
+
+  @override
+  String get countdownHours => 'hrs';
+
+  @override
+  String get countdownMinutes => 'mins';
+
+  @override
+  String get interviewStatusAccept => 'Accept';
+
+  @override
+  String get interviewStatusCancel => 'Cancel';
+
+  @override
+  String get interviewStatusCompleted => 'Completed';
+
+  @override
+  String get interviewStatusCancelled => 'Cancelled';
+
+  @override
+  String get interviewStatusNoShow => 'No Show';
+
+  @override
+  String get interviewStatusProcessing => 'Interviewing';
+
+  @override
+  String get time => 'Time';
+
+  @override
+  String get selectInterviewTime => 'Select Interview Time';
+
+  @override
+  String get selectInterviewTimeSubtitle => 'Choose your preferred time slot for the interview';
+
+  @override
+  String get interviewScheduledSuccess => 'Interview scheduled for selected time!';
+
+  @override
+  String get confirmSelection => 'Confirm Selection';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get date => 'Date';
 
   @override
   String get employerDashboard_headerTitle => 'The Tan Family';

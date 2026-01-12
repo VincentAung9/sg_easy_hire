@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:sg_easy_hire/core/constants/constants.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 
 class OnboardingBiodataView extends StatefulWidget {
   const OnboardingBiodataView({super.key});
@@ -22,6 +23,7 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
@@ -30,13 +32,13 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
             ListView(
               padding: const EdgeInsets.all(24.0),
               children: [
-                _buildHeader(),
+                _buildHeader(t),
                 const SizedBox(height: 32),
-                _buildTimeEstimateCard(),
+                _buildTimeEstimateCard(t),
                 const SizedBox(height: 24),
-                _buildWhatWeAskCard(),
+                _buildWhatWeAskCard(t),
                 const SizedBox(height: 24),
-                _buildImportantInfoCard(),
+                _buildImportantInfoCard(t),
                 // const SizedBox(height: 100), // Space for bottom bar
               ],
             ),
@@ -50,7 +52,7 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations t) {
     return Column(
       children: [
         Container(
@@ -63,9 +65,9 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
           child: const Icon(Icons.assignment, color: Colors.white, size: 36),
         ),
         const SizedBox(height: 16),
-        const Text(
-          "Help Us Know You Better",
-          style: TextStyle(
+        Text(
+          t.onboardingTitle,
+          style: const TextStyle(
             color: AppColors.textPrimaryLight,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -74,9 +76,9 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
-        const Text(
-          "Complete your profile to increase your chances of finding the perfect job",
-          style: TextStyle(
+        Text(
+          t.onboardingSubtitle,
+          style: const TextStyle(
             color: AppColors.textSecondaryLight,
             fontSize: 15,
             fontFamily: 'Inter',
@@ -87,33 +89,33 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
     );
   }
 
-  Widget _buildTimeEstimateCard() {
+  Widget _buildTimeEstimateCard(AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFFEFF6FF), // blue-50
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.schedule, color: AppColors.primary),
-          SizedBox(width: 12),
+          const Icon(Icons.schedule, color: AppColors.primary),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Estimated Time: 10-15 minutes",
-                  style: TextStyle(
+                  t.estimatedTimeTitle,
+                  style: const TextStyle(
                     color: Color(0xFF1E40AF), // blue-800
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Inter',
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  "This questionnaire helps employers understand your skills, experience, and preferences to match you with suitable job opportunities.",
+                  t.estimatedTimeDesc,
                   style: const TextStyle(
                     color: Color(0xFF1D4ED8), // blue-700
                     fontSize: 14,
@@ -128,7 +130,7 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
     );
   }
 
-  Widget _buildWhatWeAskCard() {
+  Widget _buildWhatWeAskCard(AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -144,17 +146,17 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.list_alt,
                 color: AppColors.textSecondaryLight,
                 size: 20,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
-                "What We'll Ask About:",
-                style: TextStyle(
+                t.whatWeAskTitle,
+                style: const TextStyle(
                   color: AppColors.textPrimaryLight,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -164,18 +166,18 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
             ],
           ),
           const SizedBox(height: 16),
-          _buildChecklistItem("Personal information (name, age, nationality)"),
+          _buildChecklistItem(t.askPersonalInfo),
           const SizedBox(height: 12),
-          _buildChecklistItem("Contact details and family background"),
+          _buildChecklistItem(t.askContactFamily),
           const SizedBox(height: 12),
-          _buildChecklistItem("Medical history and food preferences"),
+          _buildChecklistItem(t.askMedicalFood),
           const SizedBox(height: 12),
-          _buildChecklistItem("Languages spoken and skills"),
+          _buildChecklistItem(t.askLanguageSkills),
           const SizedBox(height: 12),
-          _buildChecklistItem("Work experience and job preferences"),
+          _buildChecklistItem(t.askWorkPreference),
           const SizedBox(height: 12),
           _buildChecklistItem(
-            "Document uploads (passport, certificates, photo)",
+            t.askDocuments,
           ),
         ],
       ),
@@ -202,7 +204,7 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
     );
   }
 
-  Widget _buildImportantInfoCard() {
+  Widget _buildImportantInfoCard(AppLocalizations t) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -213,13 +215,16 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.warning_amber, color: Color(0xFFF59E0B)), // yellow-500
-              SizedBox(width: 8),
+              const Icon(
+                Icons.warning_amber,
+                color: Color(0xFFF59E0B),
+              ), // yellow-500
+              const SizedBox(width: 8),
               Text(
-                "Important Information",
-                style: TextStyle(
+                t.importantInfoTitle,
+                style: const TextStyle(
                   color: Color(0xFFB45309), // yellow-800
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -230,22 +235,22 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
           ),
           const SizedBox(height: 12),
           _buildBulletPoint(
-            "You can skip any questions you're not ready to answer",
-            isBold: ["skip any questions"],
+            "${t.infoSkip_part1} ${t.infoSkip_bold} ${t.infoSkip_part2}",
+            isBold: [t.infoSkip_bold],
           ),
           const SizedBox(height: 8),
           _buildBulletPoint(
-            "Mandatory fields (*) are required for your biodata to be visible to employers",
-            isBold: ["Mandatory fields (*)"],
+            "${t.infoMandatory_part1} ${t.infoMandatory_bold} ${t.infoMandatory_part2}",
+            isBold: [t.infoMandatory_bold],
           ),
           const SizedBox(height: 8),
           _buildBulletPoint(
-            "If you skip now, you'll be asked to complete this when applying for jobs",
+            t.infoApplyLater,
           ),
           const SizedBox(height: 8),
           _buildBulletPoint(
-            "Complete profiles get 3x more views from employers",
-            isBold: ["3x more views"],
+            "${t.infoViews_part1} ${t.infoViews_bold} ${t.infoViews_part2}",
+            isBold: [t.infoViews_bold],
           ),
         ],
       ),
@@ -305,6 +310,7 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
   }
 
   Widget _buildFooter(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -329,9 +335,12 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                "Skip for Now",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              child: Text(
+                t.skip,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
@@ -348,9 +357,12 @@ class _OnboardingBiodataViewState extends State<OnboardingBiodataView> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                "Let's Get Started",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              child: Text(
+                t.getStarted,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

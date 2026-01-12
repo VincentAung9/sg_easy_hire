@@ -12,6 +12,9 @@
 
   "enterPassword": "Enter password",
 
+  "signInContinue": "Continue",
+  "signUpContinue": "Continue",
+
   "noAccount": "Don't have an account?",
   "signUp": "Sign Up",
 
@@ -28,6 +31,181 @@
 
   "passwordLabel": "Password",
   "passwordHint": "Enter password",
+  "alreadyHaveAccount": "Already have an account?",
+  "phoneNumberRequire": "Phone number is required",
+  "passwordRequire": "Password is required",
+  "fullNameRequire": "Full name is required",
+
+
+  "employerApp": "Employer App",
+  "helperApp": "Helper App",
+
+  "employerSubtitle": "Find Helper for your needs",
+  "helperSubtitle": "Find your dream job in Singapore",
+
+  "enterVerificationCode": "Enter Verification Code",
+  "verifyCodeSubtitle": "Verify your number with the 6-digit code we just sent via SMS.",
+
+  "pinIncorrect": "PIN is incorrect.",
+
+  "dontReceiveOtp": "Don't receive the OTP?",
+  "resendOtp": "RESEND OTP",
+
+  "resendOtpFailed": "We couldn't resend the code. Please try again.",
+  "resendOtpSuccess": "A new code has been sent to your phone.",
+
+  "verifyFailed": "Verification failed. Please try again.",
+  "verifySuccess": "Verification successful! Your account is now ready.",
+
+  "verify": "Verify",
+
+
+   "onboardingTitle": "Help Us Know You Better",
+  "onboardingSubtitle": "Complete your profile to increase your chances of finding the perfect job",
+
+  "estimatedTimeTitle": "Estimated Time: 10–15 minutes",
+  "estimatedTimeDesc": "This questionnaire helps employers understand your skills, experience, and preferences to match you with suitable job opportunities.",
+
+  "whatWeAskTitle": "What We'll Ask About:",
+
+  "askPersonalInfo": "Personal information (name, age, nationality)",
+  "askContactFamily": "Contact details and family background",
+  "askMedicalFood": "Medical history and food preferences",
+  "askLanguageSkills": "Languages spoken and skills",
+  "askWorkPreference": "Work experience and job preferences",
+  "askDocuments": "Document uploads (passport, certificates, photo)",
+
+  "importantInfoTitle": "Important Information",
+
+  "infoSkip_part1": "You can ",
+  "infoSkip_bold": "skip any questions",
+  "infoSkip_part2": " you're not ready to answer",
+
+  "infoMandatory_part1": "",
+  "infoMandatory_bold": "Mandatory fields (*)",
+  "infoMandatory_part2": " are required for your biodata to be visible to employers",
+
+  "infoApplyLater": "If you skip now, you'll be asked to complete this when applying for jobs",
+
+  "infoViews_part1": "Complete profiles get ",
+  "infoViews_bold": "3x more views",
+  "infoViews_part2": " from employers",
+
+  "skipForNow": "Skip for Now",
+  "getStarted": "Let's Get Started",
+  "back": "Back",
+
+   "languageSettingsTitle": "Language Settings",
+
+  "skip": "Skip For Now",
+
+  "appLanguage": "App Language",
+  "appLanguageDesc": "Choose your preferred language for the app interface",
+
+  "availableLanguages": "Available Languages",
+  "availableLanguagesDesc": "Select a language to change the app interface",
+
+  "saveLanguagePreference": "Save Language Preference",
+  "languageRefreshHint": "The app will refresh to apply the new language",
+
+  "english": "English",
+  "myanmar": "Myanmar",
+
+  "notifications": "Notifications",
+  "settings": "Settings",
+
+    "dashboardGreeting": "Hello, {name}!",
+  "@dashboardGreeting": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+
+  "dashboardSubtitle": "Ready to find your next opportunity?",
+
+  "profileViews": "Profile Views",
+  "appliedJobs": "Applied Jobs",
+  "interviews": "Interviews",
+
+  "notifications": "Notifications",
+
+   "profileCompletionTitle": "Profile: {percent}% Complete",
+  "@profileCompletionTitle": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+
+  "profileCompletionSubtitle": "Add documents to boost visibility",
+
+
+    "quickActionsTitle": "Quick Actions",
+
+  "quickActionUpdateBiodata": "Update Biodata",
+  "quickActionPersonalityTest": "Personality Test",
+  "quickActionGuidelines": "Guidelines",
+  "quickActionUploadDocuments": "Upload Documents",
+  "quickActionSearchJobs": "Search Jobs",
+
+   "nextInterviewTitle": "Next Interview",
+
+  "interviewDateLabel": "Interview Date",
+  "interviewTomorrow": "Tomorrow",
+
+  "interviewSalaryLabel": "Salary",
+  "interviewFamilyLabel": "Family",
+  "interviewFamilyMembers": "{count} members",
+  "interviewDutiesLabel": "Duties",
+  "interviewOffDaysLabel": "Off Days",
+
+  "interviewCancel": "Cancel",
+
+   "jobInFamily": "{count} in family",
+  "jobChildren": "{count} children",
+  "jobOffDays": "Off days: {days}",
+
+  "jobApplied": "Applied",
+  "jobApplyNow": "Apply Now",
+
+  "jobSalaryFormat": "{salary}/{period}",
+  "all": "All",
+  "viewDetails": "View Details",
+    "adultCountLabel": "{count} Adult",
+  "@adultCountLabel": {
+    "description": "Number of adults in the household",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "elderlyCountLabel": "{count} Elderly",
+  "@elderlyCountLabel": {
+    "description": "Number of elderly people in the household",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+   "countdownDays": "days",
+  "countdownHours": "hrs",
+  "countdownMinutes": "mins",
+  "interviewStatusAccept": "Accept",
+  "interviewStatusCancel": "Cancel",
+  "interviewStatusCompleted": "Completed",
+  "interviewStatusCancelled": "Cancelled",
+  "interviewStatusNoShow": "No Show",
+  "interviewStatusProcessing": "Interviewing",
+  "time": "Time",
+  "selectInterviewTime": "Select Interview Time",
+  "selectInterviewTimeSubtitle": "Choose your preferred time slot for the interview",
+  "interviewScheduledSuccess": "Interview scheduled for selected time!",
+  "confirmSelection": "Confirm Selection",
+  "cancel": "Cancel",
+  "date": "Date",
+  "time": "Time",
 
 
 

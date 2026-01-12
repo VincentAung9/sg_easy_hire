@@ -10,7 +10,9 @@ import 'package:intl/intl.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/core/domain/document_upload/document_upload_state.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/other/count_down_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ApplicationStatus.dart';
 import 'package:sg_easy_hire/models/ChatStatus.dart';
 import 'package:sg_easy_hire/models/InterviewStatus.dart';
@@ -245,9 +247,10 @@ InterviewStatusUI getOfferedJobStatusUI(ApplicationStatus status) {
 }
 
 String formatInterviewDateTime(TemporalDateTime temporalDateTime) {
-  final formatMethod = DateFormat.yMd().add_jm();
+  //final formatMethod = DateFormat.yMd().add_jm();
   final date = temporalDateTime.getDateTimeInUtc().toLocal();
-  return formatMethod.format(date);
+  return "🗓 ${formatDateMMMdyyyy(date)} 🕓 ${formatTimeHMMA(date)}";
+  //return formatMethod.format(date);
 }
 
 String timeAgo(TemporalDateTime temporalDateTime) {
@@ -275,52 +278,283 @@ String timeAgo(TemporalDateTime temporalDateTime) {
   }
 }
 
-Map<String, dynamic> getInterviewAction(InterviewStatus status) {
+Map<String, dynamic> getInterviewAction(
+  InterviewStatus status,
+  AppLocalizations t,
+) {
   switch (status) {
     case InterviewStatus.PENDING:
       return {
-        "text": "Accept",
+        "text": t.interviewStatusAccept,
         "bgColor": Colors.green[100],
         "fgColor": Colors.green[600],
       };
 
     case InterviewStatus.ACCEPTED:
       return {
-        "text": "Cancel",
+        "text": t.interviewStatusCancel,
         "bgColor": Colors.red[100],
         "fgColor": Colors.red[500],
       };
 
     case InterviewStatus.COMPLETED:
       return {
-        "text": "Completed",
+        "text": t.interviewStatusCompleted,
         "bgColor": Colors.grey[200],
         "fgColor": Colors.grey[600],
       };
 
     case InterviewStatus.CANCELLED:
       return {
-        "text": "Cancelled",
+        "text": t.interviewStatusCancelled,
         "bgColor": Colors.grey[300],
         "fgColor": Colors.grey[700],
       };
 
     case InterviewStatus.NO_SHOW:
       return {
-        "text": "No Show",
+        "text": t.interviewStatusNoShow,
         "bgColor": Colors.grey[300],
         "fgColor": Colors.grey[700],
       };
     case InterviewStatus.PROCESSING:
       return {
-        "text": "Interviewing",
+        "text": t.interviewStatusProcessing,
         "bgColor": Colors.grey[300],
         "fgColor": Colors.grey[700],
       };
   }
 }
 
-Future<TemporalDateTime?> showInterviewDateDialog(
+Future<TemporalDateTime?> showInterviewTimeSelectionDialog(
+  BuildContext context,
+  List<TemporalDateTime> options,
+) async {
+  final t = AppLocalizations.of(context);
+  return showDialog<TemporalDateTime>(
+    context: context,
+    builder: (context) {
+      TemporalDateTime? selected;
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.access_time_rounded,
+                        color: AppColors.primary,
+                        size: 28,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        t.selectInterviewTime,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Subtitle
+                  Text(
+                    t.selectInterviewTimeSubtitle,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Time Slots
+                  ...options
+                      .map(
+                        (op) => {
+                          'date': formatDateMMMdyyyy(
+                            op.getDateTimeInUtc().toLocal(),
+                          ),
+                          'time': formatTimeHMMA(
+                            op.getDateTimeInUtc().toLocal(),
+                          ),
+                          'value': op,
+                        },
+                      )
+                      .map((slot) {
+                        final isSelected = selected == slot['value'];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selected = slot['value'] as TemporalDateTime;
+                              });
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : Colors.grey.shade300,
+                                  width: isSelected ? 2 : 1,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                color: isSelected
+                                    ? AppColors.primary.withOpacity(0.08)
+                                    : null,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 14,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.radio_button_checked,
+                                      color: isSelected
+                                          ? AppColors.primary
+                                          : Colors.grey.shade300,
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.calendar_today_outlined,
+                                              size: 16,
+                                              color: Colors.grey,
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              slot['date'] as String,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.access_time,
+                                              size: 16,
+                                              color: Colors.grey,
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              slot['time'] as String,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                      .toList(),
+
+                  const SizedBox(height: 28),
+
+                  // Confirm Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: selected == null
+                          ? null
+                          : () {
+                              // Handle confirmation
+                              Navigator.pop(context, selected);
+                              showSuccess(
+                                context,
+                                t.interviewScheduledSuccess,
+                              );
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey.shade300,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        t.confirmSelection,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Cancel Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.grey.shade400),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        t.cancel,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+/* Future<TemporalDateTime?> showInterviewDateDialog(
   BuildContext context,
   List<TemporalDateTime> options,
 ) async {
@@ -385,7 +619,7 @@ Future<TemporalDateTime?> showInterviewDateDialog(
     },
   );
 }
-
+ */
 bool isTomorrow(DateTime input) {
   final now = DateTime.now();
   final tomorrow = DateTime(now.year, now.month, now.day + 1);

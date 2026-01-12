@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/core/theme/app_colors.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/User.dart';
 
 class ProfileCompletion extends StatelessWidget {
@@ -10,6 +11,7 @@ class ProfileCompletion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(16),
@@ -44,14 +46,16 @@ class ProfileCompletion extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Profile: ${user?.completeProgress.round() ?? 0}% Complete",
+                        t.profileCompletionTitle(
+                          user?.completeProgress.round() ?? 0,
+                        ),
                         style: textTheme.titleMedium?.copyWith(
                           color: AppColors.textPrimaryLight,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "Add documents to boost visibility",
+                        t.profileCompletionSubtitle,
                         style: textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondaryLight,
                         ),

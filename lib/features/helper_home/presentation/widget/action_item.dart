@@ -20,6 +20,7 @@ class ActionItem extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
           color: AppColors.cardLight,
           borderRadius: BorderRadius.circular(12),

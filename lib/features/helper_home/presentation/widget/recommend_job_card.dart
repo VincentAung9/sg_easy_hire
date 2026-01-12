@@ -13,6 +13,7 @@ import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dar
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart'
     hide ApplyJobEvent;
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class RecommendJobCard extends StatelessWidget {
@@ -24,6 +25,7 @@ class RecommendJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return BlocSelector<HelperCoreBloc, HelperCoreState, User?>(
@@ -73,17 +75,19 @@ class RecommendJobCard extends StatelessWidget {
                   job.familyMembers == null
                       ? const SizedBox()
                       : JobTagComponent(
-                          label: "${job.familyMembers} in family",
+                          label: t.jobInFamily(job.familyMembers ?? 0),
                         ),
                   job.childCount == null
                       ? const SizedBox()
-                      : JobTagComponent(label: "${job.childCount} children"),
+                      : JobTagComponent(
+                          label: t.jobChildren(job.childCount ?? 0),
+                        ),
                   job.roomType == null
                       ? const SizedBox()
                       : JobTagComponent(label: job.roomType ?? ""),
                   job.offdays == null
                       ? const SizedBox()
-                      : JobTagComponent(label: "Off days: ${job.offdays}"),
+                      : JobTagComponent(label: t.jobOffDays(job.offdays ?? 0)),
                 ],
               ),
               const SizedBox(height: 16),
@@ -123,9 +127,9 @@ class RecommendJobCard extends StatelessWidget {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          "Applied",
-                          style: TextStyle(
+                        child: Text(
+                          t.jobApplied,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -187,9 +191,9 @@ class RecommendJobCard extends StatelessWidget {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          "Apply Now",
-                          style: TextStyle(
+                        child: Text(
+                          t.jobApplyNow,
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),

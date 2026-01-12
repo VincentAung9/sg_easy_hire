@@ -14,6 +14,7 @@ import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_event.da
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_bloc.dart';
 import 'package:sg_easy_hire/features/helper_jobs/domain/helper_jobs/helper_jobs_event.dart'
     hide ApplyJobForUIEvent;
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/Job.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
@@ -25,7 +26,7 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-
+    final t = AppLocalizations.of(context);
     return BlocSelector<HelperCoreBloc, HelperCoreState, User?>(
       selector: (state) => state.currentUser,
       builder: (context, currentUser) {
@@ -189,9 +190,9 @@ class JobCard extends StatelessWidget {
                           vertical: 12,
                         ),
                       ),
-                      child: const Text(
-                        "View Details",
-                        style: TextStyle(
+                      child: Text(
+                        t.viewDetails,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -215,9 +216,9 @@ class JobCard extends StatelessWidget {
                               ),
                               elevation: 0,
                             ),
-                            child: const Text(
-                              "Applied",
-                              style: TextStyle(
+                            child: Text(
+                              t.jobApplied,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -276,9 +277,9 @@ class JobCard extends StatelessWidget {
                               ),
                               elevation: 0,
                             ),
-                            child: const Text(
-                              "Apply Now",
-                              style: TextStyle(
+                            child: Text(
+                              t.jobApplyNow,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
