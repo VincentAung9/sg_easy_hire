@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/features/help_support/presentation/widget/support_card_contact.dart';
+import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 
 class HelperEmptyChat extends StatelessWidget {
   const HelperEmptyChat({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -66,7 +68,7 @@ class HelperEmptyChat extends StatelessWidget {
 
         // Title
         Text(
-          'No conversations yet',
+          t.noConversationsTitle,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -78,7 +80,7 @@ class HelperEmptyChat extends StatelessWidget {
 
         // Subtitle
         Text(
-          'Apply to jobs and connect with employers to start chatting. Your conversations will appear here.',
+          t.noConversationsSubtitle,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -104,12 +106,12 @@ class HelperEmptyChat extends StatelessWidget {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.work_outline, size: 24),
-                SizedBox(width: 12),
+              children: [
+                const Icon(Icons.work_outline, size: 24),
+                const SizedBox(width: 12),
                 Text(
-                  'Browse Jobs',
-                  style: TextStyle(
+                  t.browseJobs,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -138,11 +140,11 @@ class HelperEmptyChat extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person_outline, color: AppColors.textPrimary),
+                const Icon(Icons.person_outline, color: AppColors.textPrimary),
                 const SizedBox(width: 12),
                 Text(
-                  'Update Biodata',
-                  style: TextStyle(
+                  t.updateBiodata,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textPrimary,
                   ),
@@ -155,10 +157,10 @@ class HelperEmptyChat extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: SupportCardContact(
             icon: FontAwesomeIcons.message,
-            title: 'Admin Support',
-            description: "24/7 Customer Service",
-            subtitle: 'Need help? Chat with our support team',
-            badgeText: 'Support',
+            title: t.adminSupport,
+            description: t.customerService247,
+            subtitle: t.needHelpChat,
+            badgeText: t.support,
             onTap: () => context.push(RoutePaths.helperSupportChat),
           ),
         ),

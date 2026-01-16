@@ -175,3 +175,78 @@ const String hiredJobsQuery = '''
       }
     }
   ''';
+
+const String jobOffersQuery = '''
+query GetJobOffers(\$filter: ModelJobOfferFilterInput) {
+  listJobOffers(filter: \$filter) {
+    items {
+      createdAt
+      updatedAt
+      id
+      code
+      status
+      adminActionStatus
+      updatedBy
+      customFields
+      completedProcesses
+      job {
+        createdAt
+        updatedAt
+        id
+        code
+        title
+        location
+        salary
+        currency
+        payPeriod
+        familyMembers
+        childCount
+        adultCount
+        childAges
+        elderlyCount
+        homeType
+        roomType
+        requiredSkills
+        note
+        accommodation
+        offdays
+        tags
+        requiredPersonalityType
+        status
+        jobType
+        startDate
+        contract
+        responsibilities
+        isActive
+        creator {
+          id
+          code
+          cognitoId
+          fullName
+          email
+          phone
+          avatarURL
+        }
+      }
+      helper {
+        id
+        code
+        cognitoId
+        fullName
+        email
+        phone
+        avatarURL
+      }
+      employer {
+        id
+        code
+        cognitoId
+        fullName
+        email
+        phone
+        avatarURL
+      }
+    }
+  }
+}
+''';

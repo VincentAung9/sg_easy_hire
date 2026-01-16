@@ -1,10 +1,146 @@
 import 'dart:math';
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter/material.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class MockRepository {
+  Future<void> likeHelper(String helperID) async {
+    debugPrint("🌈 Liking Helper request....");
+    await Amplify.API
+        .mutate(
+          request: ModelMutations.create(
+            SavedHelper(
+              createdAt: TemporalDateTime(DateTime.now()),
+              helper: User(
+                id: helperID,
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+              employer: User(
+                id: "e3177aff-a44f-43ad-8266-ace65f620dda",
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+            ),
+          ),
+        )
+        .response;
+    debugPrint("🌈 Done Liking Helper request....");
+  }
+
+  Future<void> updateHelperVerifyStatus(
+    String helperID,
+    VerifyStatus status,
+  ) async {
+    debugPrint("🌈 Updating Helper Verify Status....");
+    final response = await Amplify.API
+        .query(
+          request: ModelQueries.get(
+            User.classType,
+            UserModelIdentifier(id: helperID),
+          ),
+        )
+        .response;
+    final helper = response.data!;
+    await Amplify.API
+        .mutate(
+          request: ModelMutations.update(
+            helper.copyWith(
+              updatedBy: UserRole.ADMIN,
+              verifyStatus: status,
+            ),
+          ),
+        )
+        .response;
+    debugPrint("🌈 Done Updating Helper Verify Status....");
+  }
+
+  Future<void> sendInterviewRequest(String helperID) async {
+    debugPrint("🌈 Sending interview request....");
+    await Amplify.API
+        .mutate(
+          request: ModelMutations.create(
+            Interview(
+              code: nanoid(10),
+              status: InterviewStatus.PENDING,
+              createdAt: TemporalDateTime(DateTime.now()),
+              interviewDateOptions: [
+                TemporalDateTime(DateTime(2026, 1, 16, 18)),
+                TemporalDateTime(DateTime(2026, 1, 17, 18)),
+                TemporalDateTime(DateTime(2026, 1, 15, 18)),
+              ],
+              updatedBy: UserRole.EMPLOYER,
+              job: Job(
+                code: "",
+                title: "",
+                location: "",
+                salary: 0,
+                status: JobStatus.APPROVE,
+                id: "42a01576-b60f-4802-8719-a77f3b404db4",
+              ),
+              helper: User(
+                id: helperID,
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+              employer: User(
+                id: "e3177aff-a44f-43ad-8266-ace65f620dda",
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+            ),
+          ),
+        )
+        .response;
+    debugPrint("🌈 Done Sending interview request....");
+  }
+
+  Future<void> sendJobOffers(String helperID) async {
+    debugPrint("🌈 Sending job offers....");
+    final jobOffer = JobOffer(
+      code: nanoid(),
+      status: ApplicationStatus.PENDING,
+      adminActionStatus: AdminActionStatus.PENDING,
+      createdAt: TemporalDateTime(DateTime.now()),
+      updatedBy: UserRole.EMPLOYER,
+      job: Job(
+        id: "42a01576-b60f-4802-8719-a77f3b404db4",
+        code: "",
+        title: "",
+        location: "",
+        salary: 0,
+        status: JobStatus.PENDING,
+      ),
+      helper: User(
+        id: helperID,
+        code: "",
+        fullName: "",
+        role: UserRole.HELPER,
+        completeProgress: 0,
+      ),
+      employer: User(
+        id: "e3177aff-a44f-43ad-8266-ace65f620dda",
+        code: "",
+        fullName: "",
+        role: UserRole.HELPER,
+        completeProgress: 0,
+      ),
+    );
+    await Amplify.API.mutate(request: ModelMutations.create(jobOffer)).response;
+    debugPrint("🌈 Done Sending job offers....");
+  }
+
   static final List<String> jobTagPool = [
     "Cleaner",
     "Maid",

@@ -580,6 +580,7 @@
         "StartingPosition": "LATEST"
       }
     },
+   
     "AmplifyResourcesPolicy": {
       "DependsOn": [
         "LambdaExecutionRole"

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_state.dart';
 import 'package:sg_easy_hire/features/helper_home/presentation/widget/widget.dart';
+import 'package:sg_easy_hire/features/notification/notification_count_cubit.dart';
 import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 import 'package:sg_easy_hire/models/User.dart';
@@ -134,34 +136,32 @@ class JobSearchDashboardHeader extends StatelessWidget {
                               color: Colors.yellow,
                               size: 28,
                             ),
-                            /* BlocBuilder<NotificationCountCubit, int>(
+                            BlocBuilder<NotificationCountCubit, int>(
                               builder: (_, count) {
                                 return count == 0
                                     ? const SizedBox()
-                                    :  */
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: Container(
-                                width: 16,
-                                height: 16,
-                                decoration: BoxDecoration(
-                                  color: Colors.red[500],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "0",
-                                    /* "$count", */
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              /*  );
-                              }, */
+                                    : Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Container(
+                                          width: 16,
+                                          height: 16,
+                                          decoration: BoxDecoration(
+                                            color: Colors.red[500],
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "$count",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                              },
                             ),
                           ],
                         ),

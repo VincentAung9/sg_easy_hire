@@ -2641,6 +2641,30 @@ abstract class AppLocalizations {
   /// **'Update'**
   String get updateButton;
 
+  /// No description provided for @noConversationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet'**
+  String get noConversationsTitle;
+
+  /// No description provided for @noConversationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to jobs and connect with employers to start chatting. Your conversations will appear here.'**
+  String get noConversationsSubtitle;
+
+  /// No description provided for @browseJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Jobs'**
+  String get browseJobs;
+
+  /// No description provided for @updateBiodata.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Biodata'**
+  String get updateBiodata;
+
   /// No description provided for @employerDashboard_headerTitle.
   ///
   /// In en, this message translates to:

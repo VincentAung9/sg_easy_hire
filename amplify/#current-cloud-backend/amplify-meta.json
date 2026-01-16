@@ -20,7 +20,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
         "logicalId": "analyticseasyhire"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:42.561Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.029Z",
       "output": {
         "appName": "easyhire-deveasy",
         "Region": "ap-southeast-1",
@@ -69,8 +69,8 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apieasyhire"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:43.412Z",
-      "lastPushDirHash": "iNRQo/lZnwR4LQbOLWmIXgxLLQA="
+      "lastPushTimeStamp": "2026-01-16T02:39:36.032Z",
+      "lastPushDirHash": "VDzKSfNIPrtgIFfXcxidbYnQBN4="
     }
   },
   "auth": {
@@ -97,7 +97,7 @@
           "PHONE_NUMBER"
         ],
         "verificationMechanisms": [
-          "EMAIL"
+          "PHONE_NUMBER"
         ]
       },
       "providerPlugin": "awscloudformation",
@@ -106,18 +106,18 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/auth/easyhireauth1-cloudformation-template.json",
         "logicalId": "autheasyhireauth1"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:42.566Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.034Z",
       "output": {
         "CreatedSNSRole": "arn:aws:iam::756393303462:role/sns7d41006b42907-deveasy",
         "UserPoolId": "ap-southeast-1_yd2qOz3Fk",
         "AppClientIDWeb": "7bfs9ha63o10p6puvfu2v4t41k",
         "AppClientID": "12q3httgn08bqksipni1jbj3lg",
-        "IdentityPoolId": "ap-southeast-1:115ae487-db69-485f-b833-c21646dea92d",
+        "IdentityPoolId": "ap-southeast-1:a368c2e2-b420-4fd5-acaa-37d6d44d1045",
         "UserPoolArn": "arn:aws:cognito-idp:ap-southeast-1:756393303462:userpool/ap-southeast-1_yd2qOz3Fk",
-        "IdentityPoolName": "easyhirebc403e95_identitypool_bc403e95__deveasy",
+        "IdentityPoolName": "easyhire80945bde_identitypool_80945bde__deveasy",
         "UserPoolName": "userpool1"
       },
-      "lastPushDirHash": "6k+bRwPcF288k9qe/9Ba7tJvuEw="
+      "lastPushDirHash": "aUKNcHI3Qpx59TjBuCOzHU/04DA="
     }
   },
   "function": {
@@ -148,7 +148,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/function/interviewWeeklyQuota-cloudformation-template.json",
         "logicalId": "functioninterviewWeeklyQuota"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:42.569Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.035Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::756393303462:role/easyhireLambdaRolea486b933-deveasy",
         "Region": "ap-southeast-1",
@@ -173,19 +173,19 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2026-01-10T14:21:18.469Z",
+      "lastBuildTimeStamp": "2026-01-16T02:37:32.252Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2026-01-10T14:21:25.571Z",
-      "distZipFilename": "pinpointNotificationHandler-67664b5144396d6d5473-build.zip",
+      "lastPackageTimeStamp": "2026-01-16T02:37:38.875Z",
+      "distZipFilename": "pinpointNotificationHandler-705734346e4e7a707768-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
-        "s3Key": "amplify-builds/pinpointNotificationHandler-67664b5144396d6d5473-build.zip"
+        "s3Key": "amplify-builds/pinpointNotificationHandler-705734346e4e7a707768-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/function/pinpointNotificationHandler-cloudformation-template.json",
         "logicalId": "functionpinpointNotificationHandler"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:42.570Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.682Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::756393303462:role/easyhireLambdaRolefe108562-deveasy",
         "Region": "ap-southeast-1",
@@ -193,7 +193,7 @@
         "Name": "pinpointNotificationHandler-deveasy",
         "LambdaExecutionRole": "easyhireLambdaRolefe108562-deveasy"
       },
-      "lastPushDirHash": "3TeYb9uT0yj0vjhyTqKcmQfr4lY="
+      "lastPushDirHash": "O/SGRZU5Td9pknmYGg56CG+wCPk="
     },
     "helperProfileProgressTrack": {
       "build": true,
@@ -222,7 +222,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/function/helperProfileProgressTrack-cloudformation-template.json",
         "logicalId": "functionhelperProfileProgressTrack"
       },
-      "lastPushTimeStamp": "2026-01-11T17:25:42.573Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.038Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::756393303462:role/easyhireLambdaRole91503b81-deveasy",
         "Region": "ap-southeast-1",
@@ -266,7 +266,7 @@
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3",
-      "lastPushTimeStamp": "2026-01-11T17:25:42.575Z",
+      "lastPushTimeStamp": "2026-01-16T02:39:36.040Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-easyhire-deveasy-42907-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storagemedia"

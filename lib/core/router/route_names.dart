@@ -12,6 +12,7 @@ class RouteNames {
   static const String home = "home";
   static const String jobs = "jobs";
   static const String jobDetail = "jobs_detail";
+  static const String jobDetailFullPath = "jobs/jobs_detail";
   static const String helperInterviews = "helper_interviews";
   static const String helperInterviewsAccepted = "helper_interviews_accepted";
   static const String helperInterviewsPending = "helper_interview_spending";

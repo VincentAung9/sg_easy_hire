@@ -654,6 +654,10 @@
 
   "avatarLabel": "Avatar",
   "updateButton": "Update",
+   "noConversationsTitle": "No conversations yet",
+  "noConversationsSubtitle": "Apply to jobs and connect with employers to start chatting. Your conversations will appear here.",
+  "browseJobs": "Browse Jobs",
+  "updateBiodata": "Update Biodata",
 
 
     "employerDashboard_headerTitle": "The Tan Family",

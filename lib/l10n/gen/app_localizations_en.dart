@@ -1322,6 +1322,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateButton => 'Update';
 
   @override
+  String get noConversationsTitle => 'No conversations yet';
+
+  @override
+  String get noConversationsSubtitle => 'Apply to jobs and connect with employers to start chatting. Your conversations will appear here.';
+
+  @override
+  String get browseJobs => 'Browse Jobs';
+
+  @override
+  String get updateBiodata => 'Update Biodata';
+
+  @override
   String get employerDashboard_headerTitle => 'The Tan Family';
 
   @override

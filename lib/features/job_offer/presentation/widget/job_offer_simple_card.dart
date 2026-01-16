@@ -7,6 +7,7 @@ import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/job_offer/data/repository/job_repository.dart';
+import 'package:sg_easy_hire/l10n/l10n.dart';
 import 'package:sg_easy_hire/models/JobOffer.dart';
 import 'package:sg_easy_hire/models/JobOfferStatus.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
@@ -17,6 +18,7 @@ class JobOfferSimpleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final interviewStatusUI = getOfferedJobStatusUI(
       offeredJob?.status ?? ApplicationStatus.PENDING,
     );
@@ -45,10 +47,10 @@ class JobOfferSimpleCard extends StatelessWidget {
                   {"label": "Elderly Care", "color": "gray"},
                 ] */,
             stats: {
-              "Adult": "${offeredJob?.job?.adultCount ?? 0}",
-              "Child": "${offeredJob?.job?.childCount ?? 0}",
-              "elderly": "${offeredJob?.job?.elderlyCount ?? 0}",
-              "Children Age": "${offeredJob?.job?.childAges ?? 0}",
+              t.adult: "${offeredJob?.job?.adultCount ?? 0}",
+              t.children: "${offeredJob?.job?.childCount ?? 0}",
+              t.elderly: "${offeredJob?.job?.elderlyCount ?? 0}",
+              t.childrenAre: "${offeredJob?.job?.childAges ?? 0}",
             },
           ),
           const SizedBox(height: 16),
@@ -76,8 +78,8 @@ class JobOfferSimpleCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text(
-              "View Details",
+            child: Text(
+              t.viewDetails,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
           ),
@@ -132,8 +134,8 @@ class JobOfferSimpleCard extends StatelessWidget {
                                     width: 50,
                                     child: CupertinoActivityIndicator(),
                                   )
-                                : const Text(
-                                    "ACCEPT",
+                                : Text(
+                                    t.interviewStatusAccept,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -188,8 +190,8 @@ class JobOfferSimpleCard extends StatelessWidget {
                                     width: 50,
                                     child: CupertinoActivityIndicator(),
                                   )
-                                : const Text(
-                                    "CANCEL",
+                                : Text(
+                                    t.interviewCancel,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,

@@ -177,8 +177,10 @@ class JobCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () =>
-                          context.go(RoutePaths.jobDetailFullPath, extra: job),
+                      onPressed: () => context.push(
+                        RoutePaths.jobDetailFullPath,
+                        extra: job,
+                      ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.textSecondaryLight,
                         side: BorderSide(color: Colors.grey[200]!),

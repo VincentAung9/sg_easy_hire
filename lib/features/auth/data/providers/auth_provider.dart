@@ -73,6 +73,8 @@ class AuthProvider {
       final userAttributes = {
         AuthUserAttributeKey.phoneNumber: param.phone,
         AuthUserAttributeKey.name: param.fullName,
+        AuthUserAttributeKey.preferredUsername: param.fullName,
+        AuthUserAttributeKey.email: '${param.phone}@gmail.com',
       };
 
       final result = await Amplify.Auth.signUp(

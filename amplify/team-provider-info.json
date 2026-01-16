@@ -88,7 +88,7 @@
         },
         "pinpointNotificationHandler": {
           "deploymentBucketName": "amplify-easyhire-deveasy-42907-deployment",
-          "s3Key": "amplify-builds/pinpointNotificationHandler-67664b5144396d6d5473-build.zip",
+          "s3Key": "amplify-builds/pinpointNotificationHandler-705734346e4e7a707768-build.zip",
           "pinpointAppId": "7d7ed5ee07364bac93ccb7b91a7ecc37"
         },
         "easyhire": {},

@@ -54,29 +54,6 @@ class ProfileStatusUI {
   });
 }
 
-void showNoti(BuildContext context, String title, String body) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: ListTile(
-        leading: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: Colors.orange[100]!,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Text("🔔", style: const TextStyle(fontSize: 24)),
-          ),
-        ),
-        title: Text(title, style: TextStyle(fontSize: 14)),
-        subtitle: Text(body, style: TextStyle(fontSize: 12)),
-      ),
-      backgroundColor: Colors.orange[100]!,
-    ),
-  );
-}
-
 void showSnack(BuildContext context, String message, {Color? backgroundColor}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

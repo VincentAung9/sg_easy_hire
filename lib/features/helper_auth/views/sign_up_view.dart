@@ -105,7 +105,8 @@ class _SignUpViewState extends State<SignUpView> {
                       context.go(
                         RoutePaths.verifyCode,
                         extra: ConfirmSignUpParam(
-                          phone: _phoneController.text,
+                          phone:
+                              "${_selectedCountryCode.code}${_phoneController.text}",
                           code: "",
                           fullName: _fullNameController.text,
                           role: UserRole.HELPER,
@@ -216,7 +217,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       SignUpPressEvent(
                                         param: SignUpParam(
                                           fullName: _fullNameController.text,
-                                          phone: _phoneController.text,
+                                          phone:
+                                              "${_selectedCountryCode.code}${_phoneController.text}",
                                           password: _passwordController.text,
                                         ),
                                       ),
@@ -246,7 +248,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 style: theme.textTheme.titleSmall,
                                 children: [
                                   TextSpan(
-                                    text: t.signInContinue,
+                                    text: " ${t.signInContinue}",
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       color: AppColors.primary,
                                     ),

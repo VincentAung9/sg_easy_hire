@@ -106,6 +106,7 @@ class JobOfferView extends StatelessWidget {
         return QueryBuilder(
           query: JobService.getJobOffers(helper?.id ?? ""),
           builder: (_, state) {
+            
             return SliverPadding(
               padding: const EdgeInsets.all(16.0),
               sliver: SliverList(

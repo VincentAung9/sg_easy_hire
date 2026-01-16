@@ -38,14 +38,14 @@ import 'package:sg_easy_hire/features/personal_test/presentation/page/test_resul
 import 'package:sg_easy_hire/features/verify_code/pages/verify_code_page.dart';
 
 class AppRouter {
-  static final GlobalKey<NavigatorState> _rootNavigatorKey =
+  static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>(
         debugLabel: 'root',
       );
   static GoRouter createRouter(AuthLocalDataSource auth) {
     return GoRouter(
       refreshListenable: GoRouterRefreshStream(auth.authChanges),
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
       initialLocation: auth.isFirstTime
           ? RoutePaths.onboardingBiodata
           : auth.isLoggedIn
@@ -232,8 +232,14 @@ class AppRouter {
           path: RoutePaths.languageSetting,
           name: RouteNames.languageSetting,
           builder: (context, state) {
-            final isOnBoarding = state.extra as bool?;
             return const LanguageSettingsScreen();
+          },
+        ),
+        GoRoute(
+          path: RoutePaths.jobDetailFullPath,
+          name: RouteNames.jobDetailFullPath,
+          builder: (context, state) {
+            return const HelperJobDetailsPage();
           },
         ),
         // ---------------------
@@ -260,21 +266,13 @@ class AppRouter {
                 ),
               ],
             ),
+
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
                   path: RoutePaths.jobs,
                   name: RouteNames.jobs,
                   builder: (context, state) => const HelperJobsPage(),
-                  routes: [
-                    GoRoute(
-                      path: RoutePaths.jobDetail,
-                      name: RouteNames.jobDetail,
-                      builder: (context, state) {
-                        return const HelperJobDetailsPage();
-                      },
-                    ),
-                  ],
                 ),
               ],
             ),

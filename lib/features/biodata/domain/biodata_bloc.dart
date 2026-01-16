@@ -113,6 +113,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           personalInformation: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<PersonalInformation>(
@@ -181,6 +182,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           contactFamilyDetails: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<ContactFamilyDetails>(
@@ -249,6 +251,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           medicalHistory: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<MedicalHistory>(
@@ -316,6 +319,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           otherPersonalInfo: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<OtherPersonalInfo>(
@@ -416,6 +420,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           jobPreferences: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
 
@@ -515,6 +520,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
               // ignore: avoid_dynamic_calls
               : jsonDecode(event.data.profilePhoto!)["url"] as String,
           uploadedDocuments: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       //need to clear previous draft if exist
@@ -618,6 +624,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           personalInformation: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<PersonalInformation>(
@@ -658,6 +665,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           contactFamilyDetails: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<ContactFamilyDetails>(
@@ -697,6 +705,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           medicalHistory: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<MedicalHistory>(
@@ -736,6 +745,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           otherPersonalInfo: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       Hive.box<OtherPersonalInfo>(
@@ -775,6 +785,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
       await authRepository.updateUser(
         user: event.data.user?.copyWith(
           jobPreferences: event.data,
+          updatedBy: UserRole.HELPER,
         ),
       );
       if (event.workHistories.isNotEmpty) {
@@ -846,6 +857,7 @@ class BiodataBloc extends Bloc<BiodataEvent, BiodataState> {
           avatarURL: event.data.profilePhoto == null
               ? null
               : jsonDecode(event.data.profilePhoto!)["url"] as String,
+          updatedBy: UserRole.HELPER,
         ),
       );
       //need to clear previous draft if exist

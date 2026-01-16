@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:sg_easy_hire/core/constants/box_keys.dart';
 import 'package:sg_easy_hire/core/localization/domain/language_switch_cubit.dart';
+import 'package:sg_easy_hire/core/router/app_router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/fun.dart';
+import 'package:sg_easy_hire/core/utils/toast.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_state.dart';
 import 'package:sg_easy_hire/features/helper_home/domain/home_bloc/home_bloc.dart';
@@ -31,6 +34,8 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   bool isInitialized = false;
   @override
   void initState() {
@@ -50,9 +55,15 @@ class _AppViewState extends State<AppView> {
         );
         if (!message.data.containsKey("pinpoint.jsonBody")) {
           //mean not chat noti
-          showNoti(context, message.title ?? "", message.body ?? "");
+          showNoti(
+            AppRouter.rootNavigatorKey.currentContext!,
+            message.title ?? "",
+            message.body ?? "",
+          );
         }
-        context.read<NotificationCountCubit>().increaseCount();
+        AppRouter.rootNavigatorKey.currentContext!
+            .read<NotificationCountCubit>()
+            .increaseCount();
       });
       NotificationService.subscriptionNotificationOpened.onData((message) {
         safePrint("🔥 subscriptionNotificationOpened: ${message.data}");
@@ -123,21 +134,23 @@ class _AppViewState extends State<AppView> {
         builder: (_, child) {
           return BlocBuilder<LanguageSwitchCubit, String>(
             builder: (context, lan) {
-              return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                theme: AppTheme.lightTheme,
-                locale: Locale(lan),
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en'),
-                  Locale('my'),
-                ],
-                routerConfig: widget.router,
+              return StyledToast(
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  theme: AppTheme.lightTheme,
+                  locale: Locale(lan),
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en'),
+                    Locale('my'),
+                  ],
+                  routerConfig: widget.router,
+                ),
               );
             },
           );

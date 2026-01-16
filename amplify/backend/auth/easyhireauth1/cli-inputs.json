@@ -1,12 +1,12 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "easyhirebc403e95_identitypool_bc403e95",
-    "allowUnauthenticatedIdentities": true,
+    "identityPoolName": "easyhire80945bde_identitypool_80945bde",
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "easyhi7d41006b",
     "userPoolName": "userpool1",
     "autoVerifiedAttributes": [
-      "email"
+      "phone_number"
     ],
     "mfaConfiguration": "OPTIONAL",
     "mfaTypes": [
@@ -14,7 +14,7 @@
       "TOTP"
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
-    "smsVerificationMessage": "Your verification code is {####}",
+    "smsVerificationMessage": "Your EasyHire verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,

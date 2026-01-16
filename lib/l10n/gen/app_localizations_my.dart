@@ -1322,6 +1322,18 @@ class AppLocalizationsMy extends AppLocalizations {
   String get updateButton => 'ပြောင်းလဲမည်';
 
   @override
+  String get noConversationsTitle => 'စကားပြောမရှိသေးပါ';
+
+  @override
+  String get noConversationsSubtitle => 'အလုပ်များအတွက် လျှောက်ထားပြီး အလုပ်ပေးသူများနှင့် ဆက်သွယ်၍ စကားပြောစတင်ပါ။ သင်၏ စကားပြောများကို ဒီနေရာတွင် ပြသမည်ဖြစ်သည်။';
+
+  @override
+  String get browseJobs => 'အလုပ်များကြည့်ရှုရန်';
+
+  @override
+  String get updateBiodata => 'ကိုယ်ရေးအချက်အလက်အသစ်ပြင်ရန်';
+
+  @override
   String get employerDashboard_headerTitle => 'The Tan Family';
 
   @override

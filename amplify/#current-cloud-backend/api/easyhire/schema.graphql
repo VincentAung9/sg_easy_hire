@@ -17,6 +17,7 @@ type User @model @auth(
   phone: String
   avatarURL: String
   verifyStatus: VerifyStatus @default(value: "PENDING")
+  updatedBy: UserRole
   role: UserRole! @default(value: "HELPER")
   completeProgress: Float! @default(value: "0")
   isOnline: Boolean

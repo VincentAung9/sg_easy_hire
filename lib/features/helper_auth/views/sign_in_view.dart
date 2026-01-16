@@ -6,10 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:sg_easy_hire/core/constants/country_codes.dart';
 import 'package:sg_easy_hire/core/router/router.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
+import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/core/widgets/widgets.dart';
 import 'package:sg_easy_hire/features/auth/domain/sign_in/sign_in.dart';
 import 'package:sg_easy_hire/features/auth/models/sign_in_param.dart';
 import 'package:sg_easy_hire/features/auth/presentation/widgets/widgets.dart';
+import 'package:sg_easy_hire/features/mock/mock_repository.dart';
 import 'package:sg_easy_hire/l10n/gen/app_localizations.dart';
 import 'package:sg_easy_hire/models/UserRole.dart';
 
@@ -78,6 +80,20 @@ class _SignInViewState extends State<SignInView> {
                   child: LanguageSwitchComponent(),
                 ), */
                 // --- Top Logo & Header ---
+                /*    TextButton(
+                  onPressed: () async {
+                    MockRepository().sendJobOffers();
+                  },
+                  child: Text(
+                    "send job offer",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+               */
                 LogoHeader(
                   title: t.appTitle,
                   subTitle: t.appSubtitle,
@@ -151,7 +167,7 @@ class _SignInViewState extends State<SignInView> {
                                       ? const ButtonLoading()
                                       : Text(
                                           t.resendOtp,
-                                          style:const TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                           ),
@@ -200,7 +216,7 @@ class _SignInViewState extends State<SignInView> {
                                     decoration: AppInputDecoration.phone(
                                       placeholder: '8123 4567',
                                     ),
-                                    keyboardType: TextInputType.emailAddress,
+                                    keyboardType: TextInputType.phone,
                                   ),
                                 ),
                               ],
@@ -246,7 +262,8 @@ class _SignInViewState extends State<SignInView> {
                                       context.read<SignInBloc>().add(
                                         SignInPressEvent(
                                           signInParam: SignInParam(
-                                            phone: _phoneController.text,
+                                            phone:
+                                                "${_selectedCountryCode.code}${_phoneController.text}",
                                             password: _passwordController.text,
                                             role: UserRole.HELPER,
                                           ),

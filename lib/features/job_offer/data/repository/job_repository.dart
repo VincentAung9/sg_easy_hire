@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cached_query/cached_query.dart';
+import 'package:flutter/material.dart';
+import 'package:sg_easy_hire/core/utils/queries.dart';
 import 'package:sg_easy_hire/models/JobOffer.dart';
 
 class ApplyJobParam {
@@ -47,17 +49,35 @@ class JobService {
 
   static Query<List<JobOffer?>?> getJobOffers(String helperId) {
     return Query<List<JobOffer?>?>(
-      key: "joboffers",
+      key: "joboffers-${DateTime.now().microsecondsSinceEpoch}",
       queryFn: () async {
-        final request = ModelQueries.list(
-          JobOffer.classType,
-          where: JobOffer.HELPER.eq(helperId),
-        );
-        final response = await Amplify.API.query(request: request).response;
-        final todos = response.data?.items;
-        final sorted = (todos ?? [])
-          ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
-        return sorted;
+        try {
+          final request = ModelQueries.list(
+            JobOffer.classType,
+            where: JobOffer.HELPER.eq(helperId),
+          );
+          final graphQLRequest = GraphQLRequest<PaginatedResult<JobOffer>>(
+            document: jobOffersQuery,
+            modelType: const PaginatedModelType(JobOffer.classType),
+            variables: request.variables,
+            decodePath: 'listJobOffers',
+          );
+
+          final response = await Amplify.API
+              .query(request: graphQLRequest)
+              .response;
+          debugPrint(
+            "🔥 Job Offer Error Response: ${response.errors}\nData: ${response.data}",
+          );
+          final todos = response.data?.items;
+          final sorted = (todos ?? [])
+            ..sort((a, b) => b!.createdAt!.compareTo(a!.createdAt!));
+          return sorted;
+        } catch (e) {
+          debugPrint(
+            "🔥 Catch Job Offer Error Response: ${e}",
+          );
+        }
       },
     );
   }

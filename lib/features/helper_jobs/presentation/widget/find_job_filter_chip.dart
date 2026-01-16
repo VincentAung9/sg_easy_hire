@@ -12,8 +12,6 @@ class FindJobFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    final all = t.all;
     return SizedBox(
       height: 40, // Increased height for chips
       child: BlocBuilder<HelperJobsBloc, HelperJobsState>(
@@ -40,7 +38,7 @@ class FindJobFilterChip extends StatelessWidget {
             itemCount: state.jobTags.length + 1,
             itemBuilder: (_, index) {
               final jobTag = [
-                JobTag(name: all),
+                JobTag(name: "All"),
                 ...state.jobTags,
               ][index].name;
               return Padding(

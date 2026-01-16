@@ -64,11 +64,11 @@ class AuthRepository {
   }
 
   Future<SignUpReturnType> signUpUserWithPhone(SignUpParam param) async {
-    return authProvider.signUpUserWithEmail(param);
+    return authProvider.signUpUserWithPhone(param);
   }
 
   Future<SignInReturnType> signInUserWithPhone(SignInParam param) async {
-    return authProvider.signInUserWithEmail(param);
+    return authProvider.signInUserWithPhone(param);
   }
 
   Future<bool> signOut() async {

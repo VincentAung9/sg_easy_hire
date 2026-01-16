@@ -52,7 +52,7 @@ async function getRecipientToken(userId) {
             Key: { id: userId },
             ProjectionExpression: '#t, fullName', 
             ExpressionAttributeNames: {
-                '#t': 'token' 
+                '#t': 'deviceToken' 
             }
         };
         const result = await db.get(params).promise();
@@ -92,10 +92,10 @@ async function sendNotification(token, title, body) {
 
     try {
         const data = await pinpoint.sendMessages(params).promise();
-        console.log("Pinpoint Send Success:", JSON.stringify(data));
+        console.log("🔔 Pinpoint Send Success:", JSON.stringify(data));
         return data;
     } catch (err) {
-        console.error("Pinpoint Send Error:", err);
+        console.error("❗️Pinpoint Send Error:", err);
         return null;
     }
 }
@@ -123,9 +123,9 @@ async function saveNotification(recipientId, title, body, notificationType, data
     
     try {
         await db.put(params).promise();
-        console.log("NotificationModel saved successfully:", newId);
+        console.log("✅ NotificationModel saved successfully:", newId);
     } catch (error) {
-        console.error("Error saving NotificationModel:", error);
+        console.error("❗️ Error saving NotificationModel:", error);
     }
 }
 
@@ -143,7 +143,9 @@ exports.handler = async (event) => {
         // Unmarshall the DynamoDB data into a usable JSON object
         // NOTE: The unmarshall utility from '@aws-sdk/util-dynamodb' is used here
         const item = unmarshall(record.dynamodb.NewImage);
-        
+        const oldItem = record.dynamodb.OldImage
+            ? unmarshall(record.dynamodb.OldImage)
+            : null;
         // Extract the base table name from the ARN (e.g., 'SavedHelper')
         const fullTableName = record.eventSourceARN.split('/')[1];
         const tableName = fullTableName.split('-')[0];
@@ -157,7 +159,33 @@ exports.handler = async (event) => {
         
         // --- Core Logic: Identify Recipient and Content ---
         switch (tableName) {
-            
+            case 'User':
+                
+                if(eventName === 'MODIFY' && (item.verifyStatus !== oldItem.verifyStatus) && item.updatedBy === 'ADMIN' ){
+                    recipientId = item.id; 
+                    switch (item.verifyStatus) {
+                        case "PENDING":
+                            title = "Profile Under Review ⏳";
+                            body = "Your profile is being reviewed. We’ll notify you soon.";
+                            break;
+
+                        case "VERIFIED":
+                            title = "Profile Approved 🎉";
+                            body = "Your profile is approved. You can now apply for jobs!";
+                            break;
+
+                        case "UNVERIFIED":
+                            title = "Verification Needed ⚠️";
+                            body = "Your profile couldn’t be verified. Please update and resubmit.";
+                            break;
+
+                        default:
+                            title = "Profile Updated 🔔";
+                            body = "Your profile status has been updated.";
+                            break;
+                        }
+                }
+                break;
             case 'SavedHelper':
                 if (eventName === 'INSERT') {
                     // Recipient is the Helper
@@ -202,7 +230,7 @@ exports.handler = async (event) => {
                 }
                 if (eventName === 'INSERT' || eventName === 'MODIFY') {
                     // Recipient is the Helper
-                    if(item.updateBy === 'EMPLOYER'){
+                    if(item.updatedBy === 'EMPLOYER'){
                         recipientId = item.helperID;
                     }else{
                         recipientId = item.employerID;
@@ -235,6 +263,7 @@ exports.handler = async (event) => {
         // --- Execution ---
         // --- Execution ---
 if (recipientId) {
+    console.log(`🌈 Recipient ID: ${recipientId}`);
     const user = await getRecipientToken(recipientId);
     
     // Determine the type string based on the table name
@@ -243,12 +272,13 @@ if (recipientId) {
         case 'SavedHelper': notificationType = 'LIKEPROFILE'; break;
         case 'AppliedJob': notificationType = 'APPLIEDJOB'; break;
         case 'Interview': notificationType = 'INTERVIEW'; break;
+        case 'JobOffer': notificationType = 'JOBOFFER';break;
         default: notificationType = 'OTHER'; break;
     }
-
-    if (user && user.token) {
+    console.log(`🌈 User: ${JSON.stringify(user)}`);
+    if (user && user.deviceToken) {
         // 1. Send Pinpoint Notification
-        const pinpointResult = await sendNotification(user.token, title, body);
+        const pinpointResult = await sendNotification(user.deviceToken, title, body);
         
         if (pinpointResult) {
             // 2. ONLY Save to DB if Pinpoint send was attempted/successful
@@ -258,7 +288,7 @@ if (recipientId) {
             await saveNotification(recipientId, title, body, notificationType, notificationData);
         }
     } else {
-        console.log(`Recipient ${recipientId} has no token or user not found. Skipping.`);
+        console.log(`❗️Recipient ${recipientId} has no token or user not found. Skipping.`);
     }
 }
     }
