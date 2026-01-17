@@ -250,3 +250,51 @@ query GetJobOffers(\$filter: ModelJobOfferFilterInput) {
   }
 }
 ''';
+
+const String notificationModelsQuery = '''
+query GetNotificationModels(\$filter: ModelNotificationModelFilterInput) {
+  listNotificationModels(filter: \$filter) {
+    items {
+     id
+    title
+    body
+    data
+    notificationType
+    createdAt
+    }
+  }
+}
+''';
+
+const String listChatMessagesQuery = '''
+query ListChatMessages(
+  \$filter: ModelChatMessageFilterInput
+  \$limit: Int
+  \$nextToken: String
+) {
+  listChatMessages(
+    filter: \$filter
+    limit: \$limit
+    nextToken: \$nextToken
+  ) {
+    items {
+      id
+      content
+      status
+      createdAt
+      chatRoom {
+        id
+      }
+      sender {
+        id
+        avatarURL
+      }
+      receiver {
+        id
+        avatarURL
+      }
+    }
+    nextToken
+  }
+}
+''';

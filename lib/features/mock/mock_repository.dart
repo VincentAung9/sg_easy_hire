@@ -7,6 +7,34 @@ import 'package:nanoid/nanoid.dart';
 import 'package:sg_easy_hire/models/ModelProvider.dart';
 
 class MockRepository {
+  Future<void> viewHelper(String helperID) async {
+    debugPrint("🌈 Viewing helper request....");
+    await Amplify.API
+        .mutate(
+          request: ModelMutations.create(
+            ViewHelper(
+              createdAt: TemporalDateTime(DateTime.now()),
+              helper: User(
+                id: helperID,
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+              employer: User(
+                id: "e3177aff-a44f-43ad-8266-ace65f620dda",
+                code: "",
+                fullName: "",
+                role: UserRole.HELPER,
+                completeProgress: 0,
+              ),
+            ),
+          ),
+        )
+        .response;
+    debugPrint("🌈 Done Viewing helper request....");
+  }
+
   Future<void> likeHelper(String helperID) async {
     debugPrint("🌈 Liking Helper request....");
     await Amplify.API

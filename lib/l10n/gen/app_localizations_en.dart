@@ -24,6 +24,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInSubtitle => 'Sign in to continue to your account';
 
   @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get notificationsEmpty => 'You have no notifications at the moment.';
+
+  @override
+  String get notificationDetailsUnavailableTitle => 'Notification details unavailable';
+
+  @override
   String get phoneNumber => 'Phone Number';
 
   @override
@@ -226,9 +235,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myanmar => 'Myanmar';
-
-  @override
-  String get notifications => 'Notifications';
 
   @override
   String get settings => 'Settings';

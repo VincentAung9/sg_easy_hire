@@ -6,6 +6,10 @@
 
   "welcomeBack": "Welcome Back",
   "signInSubtitle": "Sign in to continue to your account",
+  "notifications": "Notifications",
+    "notificationsEmpty": "You have no notifications at the moment.",
+  "notificationDetailsUnavailableTitle": "Notification details unavailable",
+
 
   "phoneNumber": "Phone Number",
   "password": "Password",

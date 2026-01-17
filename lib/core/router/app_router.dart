@@ -32,6 +32,7 @@ import 'package:sg_easy_hire/features/helper_profile/presentation/page/helper_pr
 import 'package:sg_easy_hire/features/helper_profile/presentation/view/helper_profile_update.dart';
 import 'package:sg_easy_hire/features/job_offer/presentation/page/job_offer_page.dart';
 import 'package:sg_easy_hire/features/main/presentation/page/main_page.dart';
+import 'package:sg_easy_hire/features/notification/presentation/page/notification_page.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/page/personality_test_page.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/page/quiz_page.dart';
 import 'package:sg_easy_hire/features/personal_test/presentation/page/test_result_page.dart';
@@ -110,6 +111,13 @@ class AppRouter {
           name: RouteNames.onboardingBiodata,
           builder: (context, state) {
             return const OnboardingBiodatapage();
+          },
+        ),
+        GoRoute(
+          path: RoutePaths.notifications,
+          name: RouteNames.notifications,
+          builder: (context, state) {
+            return const NotificationPage();
           },
         ),
         GoRoute(

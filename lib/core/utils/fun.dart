@@ -982,3 +982,28 @@ TicketStatusUI getTicketStatusUI(TicketStatus status) {
       );
   }
 }
+
+IconData notificationModelTypeIcon(NotificationType type) {
+  switch (type) {
+    case NotificationType.APPLIEDJOB:
+      return FontAwesomeIcons.fileCircleCheck; // Job applied
+
+    case NotificationType.INTERVIEW:
+      return FontAwesomeIcons.calendarCheck; // Interview scheduled
+
+    case NotificationType.JOBOFFER:
+      return FontAwesomeIcons.handshake; // Job offer
+
+    case NotificationType.LIKEPROFILE:
+      return FontAwesomeIcons.heart; // Profile liked
+
+    case NotificationType.CHAT:
+      return FontAwesomeIcons.commentDots; // New message
+
+    case NotificationType.OTHER:
+      return FontAwesomeIcons.bell; // Generic notification
+
+    default:
+      return FontAwesomeIcons.bell;
+  }
+}

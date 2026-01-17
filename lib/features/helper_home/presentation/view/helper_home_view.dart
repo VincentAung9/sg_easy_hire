@@ -35,7 +35,15 @@ class HelperHomeView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /*        ElevatedButton(
+                        /*            ElevatedButton(
+                          onPressed: () async {
+                            await MockRepository().viewHelper(
+                              "f4665a72-24be-44ae-879b-804fe2e8e192",
+                            );
+                          },
+                          child: Text("View helper"),
+                        ),
+                        ElevatedButton(
                           onPressed: () async {
                             await MockRepository().likeHelper(
                               "f4665a72-24be-44ae-879b-804fe2e8e192",

@@ -2,6 +2,8 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sg_easy_hire/core/router/route_paths.dart';
 import 'package:sg_easy_hire/core/theme/theme.dart';
 import 'package:sg_easy_hire/core/utils/utils.dart';
 import 'package:sg_easy_hire/features/helper_core/domain/helper_core_bloc.dart';
@@ -49,47 +51,54 @@ class JobSearchDashboardHeader extends StatelessWidget {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: user?.avatarURL ?? "",
-                        imageBuilder: (context, imageProvider) => Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                      InkWell(
+                        onTap: () => showNoti(
+                          context,
+                          "Lorem Ipsum is simply dummy ",
+                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                         ),
-                        placeholder: (context, url) => Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(
-                              (0.2 * 255).toInt(),
+                        child: CachedNetworkImage(
+                          imageUrl: user?.avatarURL ?? "",
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            shape: BoxShape.circle,
                           ),
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(
-                              (0.2 * 255).toInt(),
+                          placeholder: (context, url) => Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(
+                                (0.2 * 255).toInt(),
+                              ),
+                              shape: BoxShape.circle,
                             ),
-                            shape: BoxShape.circle,
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 30,
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.grey,
+                          errorWidget: (context, url, error) => Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(
+                                (0.2 * 255).toInt(),
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.person,
+                              size: 30,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ),
@@ -121,13 +130,7 @@ class JobSearchDashboardHeader extends StatelessWidget {
                       const Spacer(),
                       InkWell(
                         onTap: () {
-                          /* context.read<NotificationCountCubit>().resetCount();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const NotificationScreen(),
-                            ),
-                          ); */
+                          context.go(RoutePaths.notifications);
                         },
                         child: Stack(
                           children: [

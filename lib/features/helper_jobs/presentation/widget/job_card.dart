@@ -228,8 +228,15 @@ class JobCard extends StatelessWidget {
                           )
                         : ElevatedButton(
                             onPressed:
-                                currentUser?.verifyStatus !=
-                                    VerifyStatus.VERIFIED
+                                (currentUser?.verifyStatus !=
+                                        VerifyStatus.VERIFIED ||
+                                    (job.jobsOffer?.where(
+                                              (jo) =>
+                                                  jo.helper?.id ==
+                                                  currentUser?.id,
+                                            ) ??
+                                            [])
+                                        .isNotEmpty)
                                 ? null
                                 : () {
                                     context.read<HomeBloc>().add(

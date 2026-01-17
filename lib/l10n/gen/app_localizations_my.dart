@@ -24,6 +24,15 @@ class AppLocalizationsMy extends AppLocalizations {
   String get signInSubtitle => 'သင့်အကောင့်သို့ ဝင်ရောက်ရန် စာရင်းဝင်ပါ';
 
   @override
+  String get notifications => 'အကြောင်းကြားချက်များ';
+
+  @override
+  String get notificationsEmpty => 'လက်ရှိအချိန်တွင် အသိပေးချက်များ မရှိသေးပါ။';
+
+  @override
+  String get notificationDetailsUnavailableTitle => 'အသိပေးချက် အသေးစိတ် မပြနိုင်ပါ';
+
+  @override
   String get phoneNumber => 'ဖုန်းနံပါတ်';
 
   @override
@@ -226,9 +235,6 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get myanmar => 'မြန်မာ';
-
-  @override
-  String get notifications => 'အကြောင်းကြားချက်များ';
 
   @override
   String get settings => 'ဆက်တင်များ';

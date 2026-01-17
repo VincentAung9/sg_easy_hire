@@ -121,6 +121,24 @@ abstract class AppLocalizations {
   /// **'Sign in to continue to your account'**
   String get signInSubtitle;
 
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @notificationsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no notifications at the moment.'**
+  String get notificationsEmpty;
+
+  /// No description provided for @notificationDetailsUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification details unavailable'**
+  String get notificationDetailsUnavailableTitle;
+
   /// No description provided for @phoneNumber.
   ///
   /// In en, this message translates to:
@@ -528,12 +546,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Myanmar'**
   String get myanmar;
-
-  /// No description provided for @notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
 
   /// No description provided for @settings.
   ///

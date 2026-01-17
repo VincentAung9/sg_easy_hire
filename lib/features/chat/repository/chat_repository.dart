@@ -81,22 +81,44 @@ class ChatRepository {
     return finalData;
   }
 
-  static Future<List<ChatMessage?>> getChatMessages(String roomID) async {
-    final request = ModelQueries.list(
-      ChatMessage.classType,
-      where: ChatMessage.CHATROOM.eq(roomID),
-    );
-    final response = await Amplify.API.query(request: request).response;
+  static Future<List<ChatMessage>> getChatMessages(String roomID) async {
+    List<ChatMessage> allMessages = [];
+    String? nextToken;
 
-    final chatMessages = response.data?.items;
-    final finalData = (chatMessages ?? [])
-      ..sort((a, b) => a!.createdAt!.compareTo(b!.createdAt!));
-    return finalData;
+    do {
+      final request = GraphQLRequest<PaginatedResult<ChatMessage>>(
+        document: listChatMessagesQuery,
+        variables: {
+          "filter": {
+            "chatRoomID": {"eq": roomID},
+          },
+          "limit": 100,
+          "nextToken": nextToken,
+        },
+        modelType: const PaginatedModelType(ChatMessage.classType),
+        decodePath: "listChatMessages",
+      );
+
+      final response = await Amplify.API.query(request: request).response;
+
+      final items =
+          response.data?.items.whereType<ChatMessage>().toList() ?? [];
+
+      allMessages.addAll(items);
+      nextToken = response.data?.nextToken;
+    } while (nextToken != null);
+
+    allMessages.sort(
+      (a, b) => a.createdAt!.compareTo(b.createdAt!),
+    );
+
+    debugPrint("All Chat Messages Final Count: ${allMessages.length}");
+    return allMessages;
   }
 
   static Query<List<ChatRoom?>?> getChatRooms(String userID) {
     return Query<List<ChatRoom?>?>(
-      key: 'chat-rooms',
+      key: 'chat-rooms-${DateTime.now().millisecondsSinceEpoch}',
       queryFn: () async {
         final response = await Amplify.API
             .query(

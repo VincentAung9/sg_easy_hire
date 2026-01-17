@@ -6,6 +6,11 @@
 
   "welcomeBack": "ပြန်လည်ကြိုဆိုပါတယ်",
   "signInSubtitle": "သင့်အကောင့်သို့ ဝင်ရောက်ရန် စာရင်းဝင်ပါ",
+    "notifications": "အသိပေးချက်များ",
+      "notificationsEmpty": "လက်ရှိအချိန်တွင် အသိပေးချက်များ မရှိသေးပါ။",
+        "notificationDetailsUnavailableTitle": "အသိပေးချက် အသေးစိတ် မပြနိုင်ပါ",
+
+
 
   "phoneNumber": "ဖုန်းနံပါတ်",
   "password": "စကားဝှက်",

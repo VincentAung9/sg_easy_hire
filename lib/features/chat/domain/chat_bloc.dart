@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart' hide Emitter;
 import 'package:cached_query/cached_query.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sg_easy_hire/features/chat/domain/chat_event.dart';
 import 'package:sg_easy_hire/features/chat/domain/chat_state.dart';
@@ -25,9 +26,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     Emitter<ChatState> emit,
   ) async {
     //get previous messages
+    debugPrint(
+      "🔥 Start Subscribe Chat Messages: ChatRoomID: ${event.chatRoomID}....",
+    );
     emit(state.copyWith(status: ChatMessageStatus.loading));
     final previousMessageResponse = await ChatRepository.getChatMessages(
       event.chatRoomID,
+    );
+    debugPrint(
+      "🔥 Previous Chat Messages: ${previousMessageResponse.length}....",
     );
     emit(
       state.copyWith(
@@ -68,7 +75,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     Emitter<ChatState> emit,
   ) async {
     final create = await ChatRepository.sendMessage(event.chatMessage);
-
+    debugPrint(
+      "🔥 Created New Chat Message's room id: ${create?.chatRoom?.id}",
+    );
     if (create == null) {
       //that means error,so we need to add message locally
       final data = [...state.chatMessages, event.chatMessage];

@@ -502,6 +502,7 @@ type NotificationModel @model @auth(
   id: ID!
   title: String
   body: String
+  data: AWSJSON
   notificationType: NotificationType!
 
   receiverID: ID! @index(name: "byReceiver", queryField: "notificationsByReceiver")

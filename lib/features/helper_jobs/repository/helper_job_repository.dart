@@ -26,6 +26,19 @@ class HelperJobRepository {
     if (getResult.data?.items.isNotEmpty ?? false) {
       throw Exception("You have already applied for this job.");
     }
+    final offerJobResponse = await Amplify.API
+        .query(
+          request: ModelQueries.list(
+            JobOffer.classType,
+            where: JobOffer.JOB
+                .eq(job.job?.id)
+                .and(JobOffer.HELPER.eq(job.helper?.id)),
+          ),
+        )
+        .response;
+    if (offerJobResponse.data?.items.isNotEmpty ?? false) {
+      throw Exception("Employer have already offered you.");
+    }
     final request = ModelMutations.create(job);
     await Amplify.API.mutate(request: request).response;
   }
